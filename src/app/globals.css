@@ -1,3 +1,83 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .flexcol {
+    @apply flex flex-col;
+  }
+  .flex-box {
+    @apply flex items-center justify-center;
+  }
+}
+
+@font-face {
+  font-family: 'Pretendard-Light';
+  src:
+    local('Pretendard Light'),
+    url('../../public/fonts/PretendardVariable.woff2') format('woff2'),
+    url('../../public/fonts/PretendardVariable.woff2') format('woff');
+  font-weight: 300;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pretendard-Regular';
+  src:
+    local('Pretendard Medium'),
+    url('../../public/fonts/PretendardVariable.woff2') format('woff2'),
+    url('../../public/fonts/PretendardVariable.woff2') format('woff');
+  font-weight: 500;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pretendard-SemiBold';
+  src:
+    local('Pretendard SemiBold'),
+    url('../../public/fonts/PretendardVariable.woff2') format('woff2'),
+    url('../../public/fonts/PretendardVariable.woff2') format('woff');
+  font-weight: 600;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pretendard-Bold';
+  src:
+    local('Pretendard Bold'),
+    url('../../public/fonts/PretendardVariable.woff2') format('woff2'),
+    url('../../public/fonts/PretendardVariable.woff2') format('woff');
+  font-weight: 700;
+  font-display: swap;
+  font-style: normal;
+}
+
+body {
+  margin: 0;
+  font-family: 'Pretendard-Light', 'Pretendard-Regular', 'Pretendard-SemiBold',
+    'Pretendard-Bold';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+  letter-spacing: -0.02rem;
+}
+
+.header-auth-box > button {
+  color: #fff;
+}
+
+.header-auth-box > a {
+  color: #fff;
+}
+
+@media all and (min-width: 660px) {
+  .header-auth-box > button {
+    color: #000;
+  }
+  .header-auth-box > a {
+    color: #000;
+  }
+}
