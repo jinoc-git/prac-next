@@ -1,5 +1,7 @@
 import localFont from 'next/font/local';
 
+import Header from '@/components/header/Header';
+
 import type { Metadata } from 'next';
 
 import './globals.css';
@@ -18,6 +20,7 @@ function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
       <body className={pretendardFont.className}>
+        <Header />
         <main>{children}</main>
       </body>
     </html>
