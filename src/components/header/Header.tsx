@@ -4,6 +4,7 @@ import React from 'react';
 
 import { usePathname } from 'next/navigation';
 
+import Authentication from './authentication/Authentication';
 import Logo from './logo/Logo';
 
 export default function Header() {
@@ -21,6 +22,7 @@ export default function Header() {
       `}
     >
       <Logo />
+      <Authentication />
     </header>
   );
 }
