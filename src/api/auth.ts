@@ -5,7 +5,7 @@ import { type Database, type UserType } from '@/types/supabase';
 
 const supabase = createClient<Database>(
   'https://rkdykaeilrlrtrowawoe.supabase.co',
-  process.env.REACT_APP_SB_API_KEY as string,
+  process.env.NEXT_PUBLIC_SB_API_KEY as string,
 );
 
 export { supabase };

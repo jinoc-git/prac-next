@@ -1,10 +1,12 @@
 import React from 'react';
 
+import Link from 'next/link';
+
 export default function Authentication() {
   return (
     <div>
-      <button>로그인</button>
-      <button>회원가입</button>
+      <Link href="/signin">로그인</Link>
+      <Link href="/signup">회원가입</Link>
     </div>
   );
 }
