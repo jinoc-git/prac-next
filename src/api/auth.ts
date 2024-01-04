@@ -4,7 +4,7 @@ import { createClient } from '@supabase/supabase-js';
 import { type Database, type UserType } from '@/types/supabase';
 
 const supabase = createClient<Database>(
-  'https://rkdykaeilrlrtrowawoe.supabase.co',
+  process.env.NEXT_PUBLIC_SB_URL as string,
   process.env.NEXT_PUBLIC_SB_API_KEY as string,
 );
 
@@ -107,7 +107,7 @@ export const uploadProfileImg = async (avatarFile: File, email: string) => {
 
 export const updateUserProfileImage = async (path: string, userId: string) => {
   const URL = `${
-    process.env.REACT_APP_SB_STORAGE_URL as string
+    process.env.NEXT_PUBLIC_SB_STORAGE_URL as string
   }/profile_img/${path}`;
   const { data } = await supabase.auth.updateUser({
     data: { profileImg: URL },
