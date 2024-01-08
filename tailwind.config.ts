@@ -12,6 +12,19 @@ const config: Config = {
       md: '1110px',
       lg: '1440px',
     },
+    fontSize: {
+      xs: '12px',
+      sm: '14px',
+      normal: '16px',
+      lg: '18px',
+      xlg: '24px',
+    },
+    fontFamily: {
+      light: ['Pretendard-Light'],
+      Regular: ['Pretendard-Regular'],
+      SemiBold: ['Pretendard-SemiBold'],
+      Bold: ['Pretendard-Bold'],
+    },
     extend: {
       colors: {
         red_light_1: '#FFD5DD',
