@@ -19,7 +19,7 @@ const pretendardFont = localFont({
 function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
-      <body className={pretendardFont.className}>
+      <body className={`${pretendardFont.className}`}>
         <Header />
         <main>{children}</main>
       </body>

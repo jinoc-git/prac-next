@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { insertUser, supabase } from '@/api/auth';
 
 export default function AuthLoading() {
+  // async 가능할지 확인
   const router = useRouter();
 
   useEffect(() => {
