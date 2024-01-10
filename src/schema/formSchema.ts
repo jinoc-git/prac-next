@@ -34,11 +34,13 @@ const nickname = yup
   .min(2, '닉네임은 2자리 이상이어야 합니다.')
   .max(10, '닉네임은 10자리 이하이어야 합니다.');
 
-const user = {
+const signinUser = { email, password };
+
+const signupUser = {
   nickname,
   email,
   password,
   passwordConfirm,
 };
 
-export const signupSchema = yup.object().shape(user);
+export const signinSchema = yup.object().shape(signinUser);
