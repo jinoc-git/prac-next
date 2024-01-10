@@ -21,7 +21,7 @@ function RootLayout({ children }: { children: React.ReactNode }) {
     <html lang="ko">
       <body className={`${pretendardFont.className}`}>
         <Header />
-        <main>{children}</main>
+        <main className="flex-box">{children}</main>
       </body>
     </html>
   );
