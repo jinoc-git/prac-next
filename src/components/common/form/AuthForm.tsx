@@ -5,12 +5,13 @@ import React from 'react';
 import OrLineWithGoogleBtn from '../button/OrLineWithGoogleBtn';
 
 interface AuthFormProps {
-  onSubmit?: (e?: React.BaseSyntheticEvent) => Promise<void>;
+  formName: string;
+  onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
   children?: React.ReactNode;
 }
 
 export default function AuthForm(props: AuthFormProps) {
-  const { children } = props;
+  const { formName, children } = props;
   return (
     <form
       className="relative flexcol rounded-xl bg-[#F9F9FB]
@@ -18,6 +19,9 @@ export default function AuthForm(props: AuthFormProps) {
     sm:w-[320px] sm:px-[30px] sm:py-[22px] sm:gap-y-2
     "
     >
+      <h3 className="text-blue border-blue border-b-2 w-[64px] text-lg font-semibold">
+        {formName}
+      </h3>
       {children}
       <OrLineWithGoogleBtn />
       <p
