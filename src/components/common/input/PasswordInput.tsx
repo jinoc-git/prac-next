@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import type { FieldErrors, UseFormRegister } from 'react-hook-form';
+import type { FieldErrors, UseFormRegisterReturn } from 'react-hook-form';
 
 import Image from 'next/image';
 
@@ -9,8 +9,8 @@ import type { SignupFormInputList } from '@/app/signup/page';
 
 interface PasswordInputProps {
   placeholder: string;
-  register: UseFormRegister<SignupFormInputList>;
-  errors: FieldErrors<SignupFormInputList>;
+  register?: UseFormRegisterReturn<string>;
+  errors?: FieldErrors<SignupFormInputList>;
 }
 
 export default function PasswordInput(props: PasswordInputProps) {
@@ -23,7 +23,7 @@ export default function PasswordInput(props: PasswordInputProps) {
     <div className="relative">
       <label
         htmlFor="password"
-        className="absolute top-[21px] -translate-y-1/2 left-[5px] w-[24px] h-[24px] flex-center cursor-pointer"
+        className="absolute top-[21px] -translate-y-1/2 left-[5px] w-[24px] h-[24px] flex-box cursor-pointer"
       >
         <Image
           src="/images/locked.svg"
@@ -35,14 +35,14 @@ export default function PasswordInput(props: PasswordInputProps) {
       <input
         type={showPassword ? 'text' : 'password'}
         id="password"
-        // {...register('password', passwordValidator)}
+        {...register}
         placeholder={placeholder}
         className="w-full h-[42px] px-8 rounded"
       />
       <button
         onClick={toggleShowPassword}
         aria-label="signup-toggle-show-password-btn"
-        className="absolute top-[20px] -translate-y-1/2 flex-center right-[10px] w-[24px] h-[24px]"
+        className="absolute top-[20px] -translate-y-1/2 flex-box right-[10px] w-[24px] h-[24px]"
       >
         {showPassword ? (
           <Image

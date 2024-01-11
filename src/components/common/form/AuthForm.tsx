@@ -6,7 +6,7 @@ import OrLineWithGoogleBtn from '../button/OrLineWithGoogleBtn';
 
 interface AuthFormProps {
   formName: string;
-  onSubmit?: (e?: React.BaseSyntheticEvent) => Promise<void>;
+  onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
   children?: React.ReactNode;
 }
 

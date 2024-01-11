@@ -44,3 +44,4 @@ const signupUser = {
 };
 
 export const signinSchema = yup.object().shape(signinUser);
+export const signupSchema = yup.object().shape(signupUser);
