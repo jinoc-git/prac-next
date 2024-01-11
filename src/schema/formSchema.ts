@@ -22,7 +22,7 @@ const password = yup
   .min(8, '비밀번호는 8자리 이상이어야 합니다.')
   .max(20, '비밀번호는 20자리 이하이어야 합니다.');
 
-const passwordConfirm = yup
+const confirmPassword = yup
   .string()
   .required('비밀번호를 입력해주세요.')
   .oneOf([yup.ref('password')], '비밀번호가 일치하지 않습니다.');
@@ -40,7 +40,7 @@ const signupUser = {
   nickname,
   email,
   password,
-  passwordConfirm,
+  confirmPassword,
 };
 
 export const signinSchema = yup.object().shape(signinUser);
