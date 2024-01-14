@@ -5,7 +5,7 @@ import type { FieldErrors, UseFormRegisterReturn } from 'react-hook-form';
 
 import Image from 'next/image';
 
-import type { SignupFormInputList } from '@/app/signup/page';
+import type { SignupFormInputList } from '../form/SignupForm';
 
 interface PasswordInputProps {
   placeholder: string;
@@ -13,7 +13,7 @@ interface PasswordInputProps {
   errors?: FieldErrors<SignupFormInputList>;
 }
 
-export default function PasswordInput(props: PasswordInputProps) {
+const PasswordInput = (props: PasswordInputProps) => {
   const { placeholder, register, errors } = props;
   const [showPassword, setShowPassword] = useState(false);
 
@@ -65,4 +65,6 @@ export default function PasswordInput(props: PasswordInputProps) {
       </p>
     </div>
   );
-}
+};
+
+export default React.memo(PasswordInput);
