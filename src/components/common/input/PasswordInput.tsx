@@ -41,7 +41,8 @@ const PasswordInput = (props: PasswordInputProps) => {
       />
       <button
         onClick={toggleShowPassword}
-        aria-label="signup-toggle-show-password-btn"
+        type="button"
+        aria-label="toggle-show-password-btn"
         className="absolute top-[20px] -translate-y-1/2 flex-box right-[10px] w-[24px] h-[24px]"
       >
         {showPassword ? (
