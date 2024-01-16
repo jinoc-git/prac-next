@@ -9,7 +9,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { AuthError } from '@supabase/supabase-js';
 import { useRouter } from 'next/navigation';
 
-import { signUpWithSB } from '@/api/auth';
+import { checkUserEmail, checkUserNickname, signUpWithSB } from '@/api/auth';
 import { signupSchema } from '@/schema/formSchema';
 
 import OrLineWithGoogleBtn from '../button/OrLineWithGoogleBtn';
@@ -57,6 +57,41 @@ export default function SignupForm() {
     }
   };
 
+  const checkNicknameDuplication = async () => {
+    const nicknameValue = watch('nickname');
+    if (!nicknameValue) {
+      toast.warning('닉네임을 확인해주세요.');
+      return;
+    }
+
+    const res = await checkUserNickname(nicknameValue);
+    console.log(res);
+    if (res) {
+      setDuplicate({ ...duplicate, nickname: false });
+      toast.success('사용 가능한 닉네임입니다.');
+    } else {
+      toast.warning('닉네임이 중복 되었습니다.');
+    }
+  };
+
+  const checkEmailDuplication = async () => {
+    const emailValue = watch('email');
+
+    if (!emailValue) {
+      toast.warning('이메일을 확인해주세요.');
+      return;
+    }
+
+    const res = await checkUserEmail(emailValue);
+    console.log(res);
+    if (res) {
+      setDuplicate({ ...duplicate, email: false });
+      toast.success('사용 가능한 이메일입니다.');
+    } else {
+      toast.warning('이메일이 중복 되었습니다.');
+    }
+  };
+
   return (
     <form
       className="relative flexcol rounded-xl bg-[#F9F9FB]
@@ -74,6 +109,7 @@ export default function SignupForm() {
         leftIcon={{ src: '/images/person.svg', alt: '사람 아이콘' }}
         errors={errors}
         duplicate={watch('nickname') === undefined || watch('nickname') === ''}
+        checkFunc={checkNicknameDuplication}
       />
       <DuplicateInput
         name="email"
@@ -82,6 +118,7 @@ export default function SignupForm() {
         leftIcon={{ src: '/images/message.svg', alt: '이메일 아이콘' }}
         errors={errors}
         duplicate={watch('email') === undefined || watch('email') === ''}
+        checkFunc={checkEmailDuplication}
       />
       <PasswordInput
         name="password"
