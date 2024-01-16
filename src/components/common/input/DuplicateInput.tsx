@@ -35,7 +35,7 @@ export default function DuplicateInput(props: DuplicateInputProps) {
         type="button"
         name={`${name}-duplication-btn`}
         onClick={onClickDuplication}
-        disabled={Boolean(errors[name]?.message) || duplicate}
+        disabled={Boolean(errors[name]) || duplicate}
         className="absolute top-[4px] right-[4px] w-[68px] h-[34px] p-1 text-sm border text-[#6E6F76] bg-white  hover:font-semibold disabled:bg-gray_light_3 disabled:text-white rounded"
       >
         중복확인
