@@ -1,3 +1,4 @@
+import ToastProvider from '@/components/common/toastProvider/ToastProvider';
 import Header from '@/components/header/Header';
 
 import type { Metadata } from 'next';
@@ -15,6 +16,7 @@ function RootLayout({ children }: { children: React.ReactNode }) {
       <body>
         <Header />
         <main className="flex-box">{children}</main>
+        <ToastProvider />
       </body>
     </html>
   );
