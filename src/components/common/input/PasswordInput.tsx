@@ -29,7 +29,7 @@ const PasswordInput = (props: PasswordInputProps) => {
         <Image
           src="/images/locked.svg"
           alt="자물쇠 아이콘"
-          width={12}
+          width={10}
           height={12}
         />
       </label>

@@ -73,6 +73,7 @@ export default function SignupForm() {
         register={register('nickname')}
         leftIcon={{ src: '/images/person.svg', alt: '사람 아이콘' }}
         errors={errors}
+        duplicate={duplicate.nickname}
       />
       <DuplicateInput
         name="email"
@@ -80,6 +81,7 @@ export default function SignupForm() {
         register={register('email')}
         leftIcon={{ src: '/images/message.svg', alt: '이메일 아이콘' }}
         errors={errors}
+        duplicate={duplicate.email}
       />
       <PasswordInput
         name="password"
