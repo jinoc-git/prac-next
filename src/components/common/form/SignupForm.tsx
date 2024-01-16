@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -53,24 +53,29 @@ export default function SignupForm() {
       toast.success('회원가입에 성공하였습니다');
       router.push('/main');
     } catch (error) {
-      console.log(error);
+      toast.error('잠시후 다시 시도해주세요.');
     }
   };
 
   const checkNicknameDuplication = async () => {
     const nicknameValue = watch('nickname');
+
     if (!nicknameValue) {
       toast.warning('닉네임을 확인해주세요.');
       return;
     }
 
-    const res = await checkUserNickname(nicknameValue);
-    console.log(res);
-    if (res) {
-      setDuplicate({ ...duplicate, nickname: false });
-      toast.success('사용 가능한 닉네임입니다.');
-    } else {
-      toast.warning('닉네임이 중복 되었습니다.');
+    try {
+      const res = await checkUserNickname(nicknameValue);
+
+      if (res) {
+        setDuplicate({ ...duplicate, nickname: false });
+        toast.success('사용 가능한 닉네임입니다.');
+      } else {
+        toast.warning('닉네임이 중복 되었습니다.');
+      }
+    } catch (error) {
+      toast.warning('잠시후 다시 시도해주세요.');
     }
   };
 
@@ -82,15 +87,31 @@ export default function SignupForm() {
       return;
     }
 
-    const res = await checkUserEmail(emailValue);
-    console.log(res);
-    if (res) {
-      setDuplicate({ ...duplicate, email: false });
-      toast.success('사용 가능한 이메일입니다.');
-    } else {
-      toast.warning('이메일이 중복 되었습니다.');
+    try {
+      const res = await checkUserEmail(emailValue);
+
+      if (res) {
+        setDuplicate({ ...duplicate, email: false });
+        toast.success('사용 가능한 이메일입니다.');
+      } else {
+        toast.warning('이메일이 중복 되었습니다.');
+      }
+    } catch (error) {
+      toast.warning('잠시후 다시 시도해주세요.');
     }
   };
+
+  const goToSignIn = () => {
+    router.push('/signin');
+  };
+
+  useEffect(() => {
+    setDuplicate({ ...duplicate, nickname: true });
+  }, [watch('nickname')]);
+
+  useEffect(() => {
+    setDuplicate({ ...duplicate, email: true });
+  }, [watch('email')]);
 
   return (
     <form
@@ -150,7 +171,7 @@ export default function SignupForm() {
       >
         이미 계정이 있나요?
         <span
-          // onClick={goToSignIn}
+          onClick={goToSignIn}
           className="ml-2 underline text-black cursor-pointer"
         >
           지금 로그인하세요!
