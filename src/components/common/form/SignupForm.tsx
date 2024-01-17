@@ -119,6 +119,7 @@ export default function SignupForm() {
     md:w-[450px] md:h-[540px] md:px-[50px] md:py-[37px] md:gap-y-2.5
     sm:w-[320px] sm:px-[30px] sm:py-[22px] sm:gap-y-2
     "
+      onSubmit={handleSubmit(onSubmit)}
     >
       <h3 className="text-blue border-blue border-b-2 w-[64px] text-lg font-semibold">
         회원가입
