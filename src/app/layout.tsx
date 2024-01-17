@@ -15,7 +15,7 @@ function RootLayout({ children }: { children: React.ReactNode }) {
     <html lang="ko">
       <body>
         <Header />
-        <main className="flex-box">{children}</main>
+        <main className="flex-box w-screen h-screen">{children}</main>
         <ToastProvider />
       </body>
     </html>

@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { AuthError } from '@supabase/supabase-js';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import { checkUserEmail, checkUserNickname, signUpWithSB } from '@/api/auth';
@@ -114,69 +115,81 @@ export default function SignupForm() {
   }, [watch('email')]);
 
   return (
-    <form
-      className="relative flexcol rounded-xl bg-[#F9F9FB]
+    <>
+      <Image
+        src="/images/img-signup-bg.webp"
+        alt="회원가입 배경"
+        layout="fill"
+        objectFit="cover"
+        className="absolute inset-0 max-w-[856px]"
+      />
+      <form
+        className="relative flexcol rounded-xl bg-[#F9F9FB]
     md:w-[450px] md:h-[540px] md:px-[50px] md:py-[37px] md:gap-y-2.5
     sm:w-[320px] sm:px-[30px] sm:py-[22px] sm:gap-y-2
     "
-    >
-      <h3 className="text-blue border-blue border-b-2 w-[64px] text-lg font-semibold">
-        회원가입
-      </h3>
-      <DuplicateInput
-        name="nickname"
-        placeholder="닉네임을 입력해주세요."
-        register={register('nickname')}
-        leftIcon={{ src: '/images/person.svg', alt: '사람 아이콘' }}
-        errors={errors}
-        duplicate={watch('nickname') === undefined || watch('nickname') === ''}
-        checkFunc={checkNicknameDuplication}
-      />
-      <DuplicateInput
-        name="email"
-        placeholder="이메일을 입력해주세요."
-        register={register('email')}
-        leftIcon={{ src: '/images/message.svg', alt: '이메일 아이콘' }}
-        errors={errors}
-        duplicate={watch('email') === undefined || watch('email') === ''}
-        checkFunc={checkEmailDuplication}
-      />
-      <PasswordInput
-        name="password"
-        placeholder="특수문자 포함 8~20자 이내"
-        register={register('password')}
-        errors={errors}
-      />
-      <PasswordInput
-        name="confirmPassword"
-        placeholder="비밀번호를 다시 입력해주세요."
-        register={register('confirmPassword')}
-        errors={errors}
-      />
-      <button
-        disabled={
-          isSubmitting || !isValid || duplicate.email || duplicate.nickname
-        }
-        name="signup-submit-btn"
-        className="h-[45px] rounded-lg text-white bg-blue hover:bg-blue_dark disabled:bg-gray_light_3"
+        onSubmit={handleSubmit(onSubmit)}
       >
-        회원가입
-      </button>
-      <OrLineWithGoogleBtn />
-      <p
-        className="absolute left-1/2 -translate-x-1/2 w-[235px] text-sm p-2 rounded-lg font-semibold text-gray_dark_1 
+        <h3 className="text-blue border-blue border-b-2 w-[64px] text-lg font-semibold">
+          회원가입
+        </h3>
+        <DuplicateInput
+          name="nickname"
+          placeholder="닉네임을 입력해주세요."
+          register={register('nickname')}
+          leftIcon={{ src: '/images/person.svg', alt: '사람 아이콘' }}
+          errors={errors}
+          duplicate={
+            watch('nickname') === undefined || watch('nickname') === ''
+          }
+          checkFunc={checkNicknameDuplication}
+        />
+        <DuplicateInput
+          name="email"
+          placeholder="이메일을 입력해주세요."
+          register={register('email')}
+          leftIcon={{ src: '/images/message.svg', alt: '이메일 아이콘' }}
+          errors={errors}
+          duplicate={watch('email') === undefined || watch('email') === ''}
+          checkFunc={checkEmailDuplication}
+        />
+        <PasswordInput
+          name="password"
+          placeholder="특수문자 포함 8~20자 이내"
+          register={register('password')}
+          errors={errors}
+        />
+        <PasswordInput
+          name="confirmPassword"
+          placeholder="비밀번호를 다시 입력해주세요."
+          register={register('confirmPassword')}
+          errors={errors}
+        />
+        <button
+          disabled={
+            isSubmitting || !isValid || duplicate.email || duplicate.nickname
+          }
+          name="signup-submit-btn"
+          className="h-[45px] rounded-lg text-white bg-blue hover:bg-blue_dark disabled:bg-gray_light_3"
+        >
+          회원가입
+        </button>
+        <OrLineWithGoogleBtn />
+        <p
+          className="absolute left-1/2 -translate-x-1/2 w-[235px] text-sm p-2 rounded-lg font-semibold text-gray_dark_1 
           md:bottom-[-50px] md:bg-white/20
           sm:bottom-[-50px] sm:bg-white/50
         "
-      >
-        이미 계정이 있나요?
-        <span
-          onClick={goToSignIn}
-          className="ml-2 underline text-black cursor-pointer"
         >
-          지금 로그인하세요!
-        </span>
-      </p>
-    </form>
+          이미 계정이 있나요?
+          <span
+            onClick={goToSignIn}
+            className="ml-2 underline text-black cursor-pointer"
+          >
+            지금 로그인하세요!
+          </span>
+        </p>
+      </form>
+    </>
   );
 }
