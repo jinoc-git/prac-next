@@ -1,12 +1,16 @@
 'use client';
 
 import React from 'react';
+import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 import { yupResolver } from '@hookform/resolvers/yup';
+import { AuthError } from '@supabase/supabase-js';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
+import { signInWithSB } from '@/api/auth';
 import { signinSchema } from '@/schema/formSchema';
 
 import OrLineWithGoogleBtn from '../button/OrLineWithGoogleBtn';
@@ -27,10 +31,25 @@ export default function SigninForm() {
   const {
     register,
     handleSubmit,
-    watch,
     reset,
     formState: { errors, isSubmitting, isValid },
   } = useForm<SigninFormInputList>({ mode: 'onChange', resolver });
+
+  const onSubmit: SubmitHandler<SigninFormInputList> = async (data) => {
+    const { email, password } = data;
+
+    const res = await signInWithSB(email, password);
+
+    if (res instanceof AuthError) {
+      toast.error('로그인에 실패하였습니다.');
+      return false;
+    }
+
+    // setVisibilityIcon(true);
+    reset();
+    toast.success('로그인에 성공하였습니다.');
+    router.push('/main');
+  };
 
   const goToSignUp = () => {
     router.push('/signin');
@@ -50,7 +69,7 @@ export default function SigninForm() {
         md:w-[450px] md:h-[410px] md:px-[50px] md:py-[37px]
         sm:w-[320px] sm:px-[30px] sm:py-[22px]
         "
-        // onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(onSubmit)}
       >
         <h3 className="border-b-2 w-[48px] text-lg font-semibold	text-blue border-blue">
           로그인
