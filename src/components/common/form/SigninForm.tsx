@@ -100,9 +100,9 @@ export default function SigninForm() {
         </button>
         <OrLineWithGoogleBtn />
         <p
-          className="absolute left-1/2 -translate-x-1/2 w-[235px] text-sm p-2 rounded-lg font-semibold text-gray_dark_1 
+          className="absolute left-1/2 -translate-x-1/2 w-[190px] text-sm p-2 rounded-lg font-semibold text-gray_dark_1
           md:bottom-[-50px] md:bg-white/20
-          sm:bottom-[-50px] sm:bg-white/50
+          sm:bottom-[-60px] sm:bg-white/50
         "
         >
           처음이신가요?

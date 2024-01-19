@@ -64,3 +64,20 @@ body {
   line-height: 1.5;
   letter-spacing: -0.02rem;
 }
+
+.header-auth-box > button {
+  color: #fff;
+}
+
+.header-auth-box > a {
+  color: #fff;
+}
+
+@media all and (min-width: 660px) {
+  .header-auth-box > button {
+    color: #000;
+  }
+  .header-auth-box > a {
+    color: #000;
+  }
+}
