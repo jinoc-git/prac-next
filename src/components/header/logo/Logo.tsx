@@ -11,7 +11,7 @@ export default function Logo({ onClickFunc }: LogoProps) {
     <h1
       onClick={onClickFunc}
       className="cursor-pointer w-[134px] h-[33px]
-      sm:ml-[10px]
+      sm:ml-[20px]
       md:ml-[88px]"
     >
       <Image
