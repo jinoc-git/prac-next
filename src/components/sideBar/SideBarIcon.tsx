@@ -4,10 +4,15 @@ import React from 'react';
 
 import Image from 'next/image';
 
+import { sideBarStore } from '@/store/sideBarStore';
+
 export default function SideBarIcon() {
+  const toggleMenu = sideBarStore((state) => state.toggleMenu);
+
   return (
     <button
-      aria-label="sidebar-toggle-btn"
+      onClick={toggleMenu}
+      aria-label="side-bar-toggle-btn"
       className=" fixed left-[24px] flex-box z-[32]
       sm:w-[34px] sm:h-[34px] sm:top-[36px] 
       md:w-[39px] md:h-[40px] md:top-[15px]

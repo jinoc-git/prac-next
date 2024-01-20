@@ -2,13 +2,19 @@
 
 import React from 'react';
 
+import { sideBarStore } from '@/store/sideBarStore';
+
 import SideBarIcon from './SideBarIcon';
 
 export default function SideBar() {
-  return (
+  const { isVisibleSideBar, isSideBarOpen } = sideBarStore();
+
+  return isVisibleSideBar ? (
     <>
       <SideBarIcon />
-      <aside></aside>
+      <aside>
+        <div></div>
+      </aside>
     </>
-  );
+  ) : null;
 }

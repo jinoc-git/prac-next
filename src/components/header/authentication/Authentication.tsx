@@ -8,9 +8,12 @@ import { usePathname, useRouter } from 'next/navigation';
 
 import { signOutForSB } from '@/api/auth';
 import { authStore } from '@/store/authStore';
+import { sideBarStore } from '@/store/sideBarStore';
 
 export default function Authentication() {
   const { authObserver, user, resetUser } = authStore();
+  const { isVisibleSideBar, isSideBarOpen } = sideBarStore();
+
   const router = useRouter();
   const pathname = usePathname();
 
