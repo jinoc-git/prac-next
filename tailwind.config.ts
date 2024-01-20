@@ -25,6 +25,7 @@ const config: Config = {
       SemiBold: ['Pretendard-SemiBold'],
       Bold: ['Pretendard-Bold'],
     },
+    animation: {},
     extend: {
       colors: {
         red_light_1: '#FFD5DD',
