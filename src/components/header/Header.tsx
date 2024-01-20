@@ -31,7 +31,7 @@ export default function Header() {
       ${bgWhite ? 'bg-bg_white' : 'bg-transparent'}
       `}
     >
-      <Logo onClickFunc={onClickLogo} />
+      <Logo onClickFunc={onClickLogo} isMain={pathname === '/main'} />
       <Authentication />
     </header>
   );

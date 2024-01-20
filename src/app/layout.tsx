@@ -1,5 +1,7 @@
+import Providers from '@/components/common/providers/Providers';
 import ToastProvider from '@/components/common/toastProvider/ToastProvider';
 import Header from '@/components/header/Header';
+import SideBar from '@/components/sideBar/SideBar';
 
 import type { Metadata } from 'next';
 
@@ -14,9 +16,12 @@ function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
       <body>
-        <Header />
-        <main className="flex-box w-screen h-screen">{children}</main>
-        <ToastProvider />
+        <Providers>
+          <SideBar />
+          <Header />
+          <main className="flex-box w-screen h-screen">{children}</main>
+          <ToastProvider />
+        </Providers>
       </body>
     </html>
   );
