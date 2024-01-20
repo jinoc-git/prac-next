@@ -9,6 +9,9 @@
   .flex-box {
     @apply flex items-center justify-center;
   }
+  .side-bar-transition {
+    @apply transition-all duration-300 ease-in-out;
+  }
 }
 
 @font-face {
