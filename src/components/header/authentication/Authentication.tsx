@@ -25,7 +25,7 @@ export default function Authentication() {
   authObserver();
 
   return (
-    <div className="header-auth-box">
+    <div className="header-auth-box flex-box md:w-[134px] sm:w-[84px]">
       {user === null ? (
         pathname === '/signup' ? (
           <Link href="/signin">로그인</Link>
