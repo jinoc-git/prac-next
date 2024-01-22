@@ -4,9 +4,10 @@ import Image from 'next/image';
 
 interface LogoProps {
   onClickFunc: () => void;
+  isMain: boolean;
 }
 
-export default function Logo({ onClickFunc }: LogoProps) {
+export default function Logo({ onClickFunc, isMain }: LogoProps) {
   return (
     <h1
       onClick={onClickFunc}
@@ -15,7 +16,7 @@ export default function Logo({ onClickFunc }: LogoProps) {
       md:ml-[98px]"
     >
       <Image
-        src="/images/img-traduler-logo-color-4x.webp"
+        src={isMain ? '/images/logo-main.webp' : '/images/logo-color.webp'}
         alt="logo"
         width={134}
         height={33}
