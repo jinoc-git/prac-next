@@ -12,7 +12,7 @@ export default function Logo({ onClickFunc }: LogoProps) {
       onClick={onClickFunc}
       className="cursor-pointer w-[134px] h-[33px]
       sm:ml-[20px]
-      md:ml-[88px]"
+      md:ml-[98px]"
     >
       <Image
         src="/images/img-traduler-logo-color-4x.webp"
