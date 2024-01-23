@@ -5,6 +5,7 @@ import React from 'react';
 import { sideBarStore } from '@/store/sideBarStore';
 
 import SideBarIcon from './SideBarIcon';
+import SideBarLogo from './SideBarLogo';
 
 export default function SideBar() {
   const { isVisibleSideBar, isSideBarOpen } = sideBarStore();
@@ -19,6 +20,7 @@ export default function SideBar() {
             : 'sm:w-[0px] sm:px-[0px] md:w-[88px] md:px-[24px]'
         }`}
       >
+        <SideBarLogo />
         <div></div>
       </aside>
     </>
