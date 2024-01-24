@@ -14,9 +14,9 @@ export default function SideBarLogo() {
 
   return (
     <div
-      className="flex items-center justify-end bg-white
-      sm:w-[310px] sm:h-[70px] sm:gap-[58px] sm:mt-[8px]
-      md:w-[222px] md:h-[55px] md:gap-[34px]"
+      className="flex items-center bg-white
+      sm:w-[310px] sm:h-[70px] sm:mt-[8px]
+      md:w-[222px] md:h-[55px]"
     >
       <Image
         src="/images/logo-color.webp"
@@ -24,7 +24,7 @@ export default function SideBarLogo() {
         width={134}
         height={33}
         onClick={onClickLogo}
-        className=" mr-[14px]"
+        className=" ml-[74px]"
       />
     </div>
   );
