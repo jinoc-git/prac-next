@@ -12,14 +12,19 @@ import SideBarIcon from './SideBarIcon';
 import SideBarLogo from './SideBarLogo';
 import SideBarStatus from './SideBarStatus';
 
+import type { PlanType } from '@/types/supabase';
+
 export default function SideBar() {
   const { isVisibleSideBar, isSideBarOpen } = sideBarStore();
   const user = authStore((state) => state.user);
 
-  const { data: bookMarkPlanData } = useQuery(
-    ['book_mark', 'plans', user?.id],
-    async () => await getPlansWithBookmarks(user === null ? '' : user.id),
-  );
+  const { data: bookMarkPlanData } = useQuery<PlanType[] | []>({
+    queryKey: ['book_mark', 'plans', user?.id],
+    queryFn: async () =>
+      await getPlansWithBookmarks(user === null ? '' : user.id),
+    enabled: user !== null,
+    refetchOnWindowFocus: false,
+  });
 
   return isVisibleSideBar ? (
     <>

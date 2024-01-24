@@ -4,7 +4,7 @@ import type { PlanType } from '@/types/supabase';
 
 export const getPlansWithBookmarks = async (
   userId: string,
-): Promise<PlanType[]> => {
+): Promise<PlanType[] | []> => {
   const { data: bookMarkData, error: bookMarkError } = await supabase
     .from('book_mark')
     .select('plan_id')
