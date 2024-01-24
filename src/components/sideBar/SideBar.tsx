@@ -6,6 +6,7 @@ import { sideBarStore } from '@/store/sideBarStore';
 
 import SideBarIcon from './SideBarIcon';
 import SideBarLogo from './SideBarLogo';
+import SideBarStatus from './SideBarStatus';
 
 export default function SideBar() {
   const { isVisibleSideBar, isSideBarOpen } = sideBarStore();
@@ -21,6 +22,7 @@ export default function SideBar() {
         }`}
       >
         <SideBarLogo />
+        <SideBarStatus isOpen={isSideBarOpen} />
         <div></div>
       </aside>
     </>
