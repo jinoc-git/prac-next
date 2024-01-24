@@ -1,6 +1,10 @@
 import { supabase } from './auth';
 
-export const getPlansWithBookmarks = async (userId: string) => {
+import type { PlanType } from '@/types/supabase';
+
+export const getPlansWithBookmarks = async (
+  userId: string,
+): Promise<PlanType[]> => {
   const { data: bookMarkData, error: bookMarkError } = await supabase
     .from('book_mark')
     .select('plan_id')

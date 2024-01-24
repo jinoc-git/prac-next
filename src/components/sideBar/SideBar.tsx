@@ -2,6 +2,10 @@
 
 import React from 'react';
 
+import { useQuery } from '@tanstack/react-query';
+
+import { getPlansWithBookmarks } from '@/api/plan';
+import { authStore } from '@/store/authStore';
 import { sideBarStore } from '@/store/sideBarStore';
 
 import SideBarIcon from './SideBarIcon';
@@ -10,6 +14,12 @@ import SideBarStatus from './SideBarStatus';
 
 export default function SideBar() {
   const { isVisibleSideBar, isSideBarOpen } = sideBarStore();
+  const user = authStore((state) => state.user);
+
+  const { data: bookMarkPlanData } = useQuery(
+    ['book_mark', 'plans', user?.id],
+    async () => await getPlansWithBookmarks(user === null ? '' : user.id),
+  );
 
   return isVisibleSideBar ? (
     <>
