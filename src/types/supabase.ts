@@ -258,9 +258,11 @@ export interface Database {
 export type PinType = Database['public']['Tables']['pins']['Update'];
 export type PinInsertType = Database['public']['Tables']['pins']['Insert'];
 export type UserType = Database['public']['Tables']['users']['Insert'];
-export type PlanType = Database['public']['Tables']['plans']['Insert'];
+export type InsertPlanType = Database['public']['Tables']['plans']['Insert'];
+export type PlanType = Database['public']['Tables']['plans']['Row'];
 export type BookMarkType = Database['public']['Tables']['book_mark']['Row'];
-export type InsertBookMarkType = Database['public']['Tables']['book_mark']['Insert'];
+export type InsertBookMarkType =
+  Database['public']['Tables']['book_mark']['Insert'];
 export type PlanMatesType =
   Database['public']['Tables']['plan_mates']['Insert'];
 export type CommentsType = Database['public']['Tables']['comments']['Insert'];

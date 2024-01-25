@@ -2,13 +2,29 @@
 
 import React from 'react';
 
+import { useQuery } from '@tanstack/react-query';
+
+import { getPlansWithBookmarks } from '@/api/plan';
+import { authStore } from '@/store/authStore';
 import { sideBarStore } from '@/store/sideBarStore';
 
 import SideBarIcon from './SideBarIcon';
 import SideBarLogo from './SideBarLogo';
+import SideBarStatus from './SideBarStatus';
+
+import type { PlanType } from '@/types/supabase';
 
 export default function SideBar() {
   const { isVisibleSideBar, isSideBarOpen } = sideBarStore();
+  const user = authStore((state) => state.user);
+
+  const { data: bookMarkPlanData } = useQuery<PlanType[] | []>({
+    queryKey: ['book_mark', 'plans', user?.id],
+    queryFn: async () =>
+      await getPlansWithBookmarks(user === null ? '' : user.id),
+    enabled: user !== null,
+    refetchOnWindowFocus: false,
+  });
 
   return isVisibleSideBar ? (
     <>
@@ -21,6 +37,7 @@ export default function SideBar() {
         }`}
       >
         <SideBarLogo />
+        <SideBarStatus isOpen={isSideBarOpen} />
         <div></div>
       </aside>
     </>
