@@ -2,7 +2,7 @@ import { create } from 'zustand';
 
 import { supabase } from '@/api/auth';
 
-interface UserInfo {
+export interface UserInfo {
   id: string;
   email: string;
   nickname: string;
