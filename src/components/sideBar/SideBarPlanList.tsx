@@ -1,4 +1,8 @@
+'use client';
+
 import React from 'react';
+
+import { useRouter } from 'next/navigation';
 
 import type { PlanType } from '@/types/supabase';
 
@@ -7,7 +11,8 @@ interface SideBarPlanListProps {
   setFunc: (val: boolean) => void;
   planList: PlanType[];
   filter: 'bookMark' | 'planning' | 'end';
-  isOpen: boolean;
+  isSideBarOpen: boolean;
+  isDropDownOpen: boolean;
 }
 
 const ICON_LIST = {
@@ -41,7 +46,15 @@ const COLOR = {
 };
 
 export default function SideBarPlanList(props: SideBarPlanListProps) {
-  const { toggleFunc, setFunc, planList, filter, isOpen } = props;
+  const {
+    toggleFunc,
+    setFunc,
+    planList,
+    filter,
+    isDropDownOpen,
+    isSideBarOpen,
+  } = props;
+  const router = useRouter();
 
   return (
     <div>
