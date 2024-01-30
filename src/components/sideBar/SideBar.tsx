@@ -11,6 +11,7 @@ import { sideBarStore } from '@/store/sideBarStore';
 import SideBarIcon from './SideBarIcon';
 import SideBarLogo from './SideBarLogo';
 import SideBarStatus from './SideBarStatus';
+import SideBarTrips from './SideBarTrips';
 
 import type { PlanType } from '@/types/supabase';
 
@@ -37,7 +38,10 @@ export default function SideBar() {
         }`}
       >
         <SideBarLogo />
-        <SideBarStatus isOpen={isSideBarOpen} />
+        <div className="flex flex-col md:gap-[20px] sm:gap-[10px]">
+          <SideBarStatus isOpen={isSideBarOpen} />
+          <SideBarTrips isOpen={isSideBarOpen} />
+        </div>
         <div></div>
       </aside>
     </>
