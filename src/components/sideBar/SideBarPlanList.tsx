@@ -2,13 +2,13 @@
 
 import React from 'react';
 
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import type { PlanType } from '@/types/supabase';
 
 interface SideBarPlanListProps {
-  toggleFunc: () => void;
-  setFunc: (val: boolean) => void;
+  setFunc: React.Dispatch<React.SetStateAction<boolean>>;
   planList: PlanType[];
   filter: 'bookMark' | 'planning' | 'end';
   isSideBarOpen: boolean;
@@ -46,19 +46,62 @@ const COLOR = {
 };
 
 export default function SideBarPlanList(props: SideBarPlanListProps) {
-  const {
-    toggleFunc,
-    setFunc,
-    planList,
-    filter,
-    isDropDownOpen,
-    isSideBarOpen,
-  } = props;
+  const { setFunc, planList, filter, isDropDownOpen, isSideBarOpen } = props;
   const router = useRouter();
+
+  const toggleFunc = () => {
+    setFunc((prev) => prev!);
+  };
 
   return (
     <div>
-      <div></div>
+      <div
+        className={`flex justify-between items-center cursor-pointer rounded-lg 
+        sm:w-[308px] 
+        md:w-[222px]
+        ${isSideBarOpen ? COLOR.hover[filter] : ''} ${
+          isSideBarOpen && isDropDownOpen ? COLOR.active[filter] : ''
+        } `}
+        onClick={toggleFunc}
+      >
+        <button
+          aria-label="sidebar-trips-list-btn"
+          onBlur={() => {
+            setFunc(false);
+          }}
+          className={`flex-center w-[40px] h-[40px] rounded-lg transition-all duration-300 ease-in-out 
+          ${isDropDownOpen ? COLOR.focus[filter] : ''} ${COLOR.hover[filter]} `}
+        >
+          {ICON_LIST[filter]}
+        </button>
+        <div className="flex items-center">
+          <span
+            className="font-bold text-sm text-gray_dark_1
+          sm:w-[198px]  
+          md:w-[110px]
+          "
+          >
+            {LIST_NAME[filter]}
+          </span>
+          <div className="w-[14px] mr-5">
+            {isDropDownOpen ? (
+              <Image
+                src={'/images/arrowUp.svg'}
+                width={14}
+                height={14}
+                alt="위 방향 화살표"
+              />
+            ) : (
+              <Image
+                src={'/images/arrowDown.svg'}
+                width={14}
+                height={14}
+                alt="아래 방향 화살표"
+              />
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
