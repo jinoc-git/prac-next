@@ -50,7 +50,7 @@ export default function SideBarPlanList(props: SideBarPlanListProps) {
   const router = useRouter();
 
   const toggleFunc = () => {
-    setFunc((prev) => prev!);
+    setFunc((prev) => !prev);
   };
 
   return (
@@ -82,8 +82,8 @@ export default function SideBarPlanList(props: SideBarPlanListProps) {
         <div className="flex items-center">
           <span
             className="font-bold text-sm text-gray_dark_1
-          sm:w-[198px]  
-          md:w-[110px]
+            sm:w-[198px]  
+            md:w-[110px]
           "
           >
             {LIST_NAME[filter]}
