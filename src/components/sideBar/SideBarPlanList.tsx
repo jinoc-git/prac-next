@@ -9,7 +9,7 @@ import type { PlanType } from '@/types/supabase';
 
 interface SideBarPlanListProps {
   setFunc: React.Dispatch<React.SetStateAction<boolean>>;
-  planList: PlanType[];
+  planList?: PlanType[];
   filter: 'bookMark' | 'planning' | 'end';
   isSideBarOpen: boolean;
   isDropDownOpen: boolean;
@@ -69,10 +69,15 @@ export default function SideBarPlanList(props: SideBarPlanListProps) {
           onBlur={() => {
             setFunc(false);
           }}
-          className={`flex-center w-[40px] h-[40px] rounded-lg transition-all duration-300 ease-in-out 
+          className={`flex-box w-[40px] h-[40px] rounded-lg side-bar-transition 
           ${isDropDownOpen ? COLOR.focus[filter] : ''} ${COLOR.hover[filter]} `}
         >
-          {ICON_LIST[filter]}
+          <Image
+            src={ICON_LIST[filter]}
+            width={20}
+            height={20}
+            alt={LIST_NAME[filter] + '아이콘'}
+          />
         </button>
         <div className="flex items-center">
           <span
