@@ -1,18 +1,19 @@
 'use client';
 
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+
+import SideBarDropDown from './SideBarDropDown';
 
 import type { PlanType } from '@/types/supabase';
 
 interface SideBarPlanListProps {
   setFunc: React.Dispatch<React.SetStateAction<boolean>>;
-  planList?: PlanType[];
+  planList: PlanType[] | [];
   filter: 'bookMark' | 'planning' | 'end';
   isSideBarOpen: boolean;
-  isDropDownOpen: boolean;
+  activeDropDown: boolean;
 }
 
 const ICON_LIST = {
@@ -25,7 +26,7 @@ const LIST_NAME = {
   bookMark: '즐겨찾기 한 목록',
   planning: '예정된 여행',
   end: '다녀온 여행',
-};
+} as const;
 
 const COLOR = {
   hover: {
@@ -46,21 +47,22 @@ const COLOR = {
 };
 
 export default function SideBarPlanList(props: SideBarPlanListProps) {
-  const { setFunc, planList, filter, isDropDownOpen, isSideBarOpen } = props;
-  const router = useRouter();
+  const { setFunc, planList, filter, activeDropDown, isSideBarOpen } = props;
 
-  const toggleFunc = () => {
+  const toggleFunc = useCallback(() => {
     setFunc((prev) => !prev);
-  };
+  }, []);
+
+  const aboveDropDownIsOpen = activeDropDown && !isSideBarOpen;
 
   return (
-    <div>
+    <div className="relative">
       <div
         className={`flex justify-between items-center cursor-pointer rounded-lg 
         sm:w-[308px] 
         md:w-[222px]
         ${isSideBarOpen ? COLOR.hover[filter] : ''} ${
-          isSideBarOpen && isDropDownOpen ? COLOR.active[filter] : ''
+          isSideBarOpen && activeDropDown ? COLOR.active[filter] : ''
         } `}
         onClick={toggleFunc}
       >
@@ -70,7 +72,7 @@ export default function SideBarPlanList(props: SideBarPlanListProps) {
             setFunc(false);
           }}
           className={`flex-box w-[40px] h-[40px] rounded-lg side-bar-transition 
-          ${isDropDownOpen ? COLOR.focus[filter] : ''} ${COLOR.hover[filter]} `}
+          ${activeDropDown ? COLOR.focus[filter] : ''} ${COLOR.hover[filter]} `}
         >
           <Image
             src={ICON_LIST[filter]}
@@ -89,7 +91,7 @@ export default function SideBarPlanList(props: SideBarPlanListProps) {
             {LIST_NAME[filter]}
           </span>
           <div className="w-[14px] mr-5">
-            {isDropDownOpen ? (
+            {activeDropDown ? (
               <Image
                 src={'/images/arrowUp.svg'}
                 width={14}
@@ -107,6 +109,13 @@ export default function SideBarPlanList(props: SideBarPlanListProps) {
           </div>
         </div>
       </div>
+      <SideBarDropDown
+        activeDropDown={activeDropDown}
+        aboveDropDownIsOpen={aboveDropDownIsOpen}
+        filterName={LIST_NAME[filter]}
+        planList={planList}
+        setFunc={setFunc}
+      />
     </div>
   );
 }
