@@ -43,21 +43,23 @@ export default function SideBarTrips(props: SideBarTripsProps) {
       <SideBarPlanList
         setFunc={setBookMarkIsOpen}
         isSideBarOpen={isOpen}
-        isDropDownOpen={bookMarkIsOpen}
+        activeDropDown={bookMarkIsOpen}
         filter="bookMark"
-        planList={bookMarkPlanData}
+        planList={bookMarkPlanData ?? []}
       />
       <SideBarPlanList
         setFunc={setPlanningIsOpen}
         isSideBarOpen={isOpen}
-        isDropDownOpen={planningIsOpen}
+        activeDropDown={planningIsOpen}
         filter="planning"
+        planList={[]}
       />
       <SideBarPlanList
         setFunc={setEndIsOpen}
         isSideBarOpen={isOpen}
-        isDropDownOpen={endIsOpen}
+        activeDropDown={endIsOpen}
         filter="end"
+        planList={[]}
       />
     </div>
   );
