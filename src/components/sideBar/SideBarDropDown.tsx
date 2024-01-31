@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
+import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import { useRouter } from 'next/navigation';
 
 import type { PlanType } from '@/types/supabase';
@@ -9,18 +10,26 @@ interface SideBarDropDownProps {
   isDropDownOpen: boolean;
   filterName: '즐겨찾기 한 목록' | '예정된 여행' | '다녀온 여행';
   planList: PlanType[];
+  setFunc: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function SideBarDropDown(props: SideBarDropDownProps) {
-  const { isSideBarOpen, isDropDownOpen, filterName, planList } = props;
+  const { isSideBarOpen, isDropDownOpen, filterName, planList, setFunc } =
+    props;
   const router = useRouter();
 
-  const onClickListItem = (state: string, id: string) => {
+  const onClickListItem = useCallback((state: string, id: string) => {
     if (state === 'planning') router.push(`/plan/${id}`);
     if (state === 'traveling') router.push(`/plan/${id}`);
     if (state === 'recording') router.push(`/addPhoto/${id}`);
     if (state === 'end') router.push(`/ending/${id}`);
-  };
+  }, []);
+
+  const onClickMoreBtn = useCallback(() => {
+    // setSelectedMenu(filter);
+    setFunc(false);
+    router.push('/main');
+  }, []);
 
   return (
     <ul
@@ -57,7 +66,7 @@ export default function SideBarDropDown(props: SideBarDropDownProps) {
             </p>
             {!isDropDownOpen && (
               <span className="text-[13px] ml-[4px]">
-                ({changeSideBarFormat(plan.dates[0])})
+                {/* ({changeSideBarFormat(plan.dates[0])}) */}
               </span>
             )}
           </li>
@@ -83,7 +92,7 @@ export default function SideBarDropDown(props: SideBarDropDownProps) {
             sm:w-[234px]
             "
         >
-          <p className="text-[13px]">{listName[filter]}이 없습니다</p>
+          <p className="text-[13px]">{filterName}이 없습니다</p>
         </li>
       )}
     </ul>

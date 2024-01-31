@@ -2,7 +2,14 @@
 
 import React, { useState } from 'react';
 
+import { useQuery } from '@tanstack/react-query';
+
+import { getPlansWithBookmarks } from '@/api/plan';
+import { authStore } from '@/store/authStore';
+
 import SideBarPlanList from './SideBarPlanList';
+
+import type { PlanType } from '@/types/supabase';
 
 interface SideBarTripsProps {
   isOpen: boolean;
@@ -13,6 +20,16 @@ export default function SideBarTrips(props: SideBarTripsProps) {
   const [bookMarkIsOpen, setBookMarkIsOpen] = useState(false);
   const [planningIsOpen, setPlanningIsOpen] = useState(false);
   const [endIsOpen, setEndIsOpen] = useState(false);
+
+  const user = authStore((state) => state.user);
+
+  const { data: bookMarkPlanData } = useQuery<PlanType[] | []>({
+    queryKey: ['book_mark', 'plans', user?.id],
+    queryFn: async () =>
+      await getPlansWithBookmarks(user === null ? '' : user.id),
+    enabled: user !== null,
+    refetchOnWindowFocus: false,
+  });
 
   return (
     <div className="flex flex-col gap-2 md:min-h-[382px] sm:min-h-[338px]">
@@ -28,6 +45,7 @@ export default function SideBarTrips(props: SideBarTripsProps) {
         isSideBarOpen={isOpen}
         isDropDownOpen={bookMarkIsOpen}
         filter="bookMark"
+        planList={bookMarkPlanData}
       />
       <SideBarPlanList
         setFunc={setPlanningIsOpen}

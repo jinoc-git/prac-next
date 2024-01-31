@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import Image from 'next/image';
 
@@ -47,9 +47,9 @@ const COLOR = {
 export default function SideBarPlanList(props: SideBarPlanListProps) {
   const { setFunc, planList, filter, isDropDownOpen, isSideBarOpen } = props;
 
-  const toggleFunc = () => {
+  const toggleFunc = useCallback(() => {
     setFunc((prev) => !prev);
-  };
+  }, []);
 
   return (
     <div>
