@@ -8,6 +8,7 @@ import { getPlanListAndMateList } from '@/api/plan';
 import { authStore } from '@/store/authStore';
 import { sideBar } from '@/utils/arrayCallbackFunctionList';
 
+import SideBarPlanInfo from './SideBarPlanInfo';
 import SideBarStatusChip from './SideBarStatusChip';
 
 interface SideBarStatusProps {
@@ -58,6 +59,7 @@ export default function SideBarStatus(props: SideBarStatusProps) {
         <span className="font-semibold text-xs text-gray_dark_1">STATUS</span>
         <SideBarStatusChip isOpen={isOpen} status={status} />
       </div>
+      <SideBarPlanInfo />
     </div>
   );
 }
