@@ -4,6 +4,12 @@ import React, { useCallback } from 'react';
 
 import Image from 'next/image';
 
+import {
+  SIDE_COLOR,
+  SIDE_ICON_LIST,
+  SIDE_LIST_NAME,
+} from '@/utils/sideBarColorList';
+
 import SideBarDropDown from './SideBarDropDown';
 
 import type { PlanType } from '@/types/supabase';
@@ -15,36 +21,6 @@ interface SideBarPlanListProps {
   isSideBarOpen: boolean;
   activeDropDown: boolean;
 }
-
-const ICON_LIST = {
-  bookMark: '/images/bookmark.svg',
-  planning: '/images/side-planning.svg',
-  end: '/images/side-end.svg',
-};
-
-const LIST_NAME = {
-  bookMark: '즐겨찾기 한 목록',
-  planning: '예정된 여행',
-  end: '다녀온 여행',
-} as const;
-
-const COLOR = {
-  hover: {
-    bookMark: 'md:hover:bg-red_light_1',
-    planning: 'md:hover:bg-yellow_light_1',
-    end: 'md:hover:bg-orange_light_1',
-  },
-  focus: {
-    bookMark: 'focus:bg-red_light_1',
-    planning: 'focus:bg-yellow_light_1',
-    end: 'focus:bg-orange_light_1 ',
-  },
-  active: {
-    bookMark: 'bg-red_light_1',
-    planning: 'bg-yellow_light_1',
-    end: 'bg-orange_light_1',
-  },
-};
 
 export default function SideBarPlanList(props: SideBarPlanListProps) {
   const { setFunc, planList, filter, activeDropDown, isSideBarOpen } = props;
@@ -61,8 +37,8 @@ export default function SideBarPlanList(props: SideBarPlanListProps) {
         className={`flex justify-between items-center cursor-pointer rounded-lg 
         sm:w-[308px] 
         md:w-[222px]
-        ${isSideBarOpen ? COLOR.hover[filter] : ''} ${
-          isSideBarOpen && activeDropDown ? COLOR.active[filter] : ''
+        ${isSideBarOpen ? SIDE_COLOR.hover[filter] : ''} ${
+          isSideBarOpen && activeDropDown ? SIDE_COLOR.active[filter] : ''
         } `}
         onClick={toggleFunc}
       >
@@ -72,13 +48,15 @@ export default function SideBarPlanList(props: SideBarPlanListProps) {
             setFunc(false);
           }}
           className={`flex-box w-[40px] h-[40px] rounded-lg side-bar-transition 
-          ${activeDropDown ? COLOR.focus[filter] : ''} ${COLOR.hover[filter]} `}
+          ${activeDropDown ? SIDE_COLOR.focus[filter] : ''} ${
+            SIDE_COLOR.hover[filter]
+          } `}
         >
           <Image
-            src={ICON_LIST[filter]}
+            src={SIDE_ICON_LIST[filter]}
             width={20}
             height={20}
-            alt={LIST_NAME[filter] + '아이콘'}
+            alt={SIDE_ICON_LIST[filter] + '아이콘'}
           />
         </button>
         <div className="flex items-center">
@@ -88,7 +66,7 @@ export default function SideBarPlanList(props: SideBarPlanListProps) {
             md:w-[110px]
           "
           >
-            {LIST_NAME[filter]}
+            {SIDE_LIST_NAME[filter]}
           </span>
           <div className="w-[14px] mr-5">
             {activeDropDown ? (
@@ -112,7 +90,7 @@ export default function SideBarPlanList(props: SideBarPlanListProps) {
       <SideBarDropDown
         activeDropDown={activeDropDown}
         aboveDropDownIsOpen={aboveDropDownIsOpen}
-        filterName={LIST_NAME[filter]}
+        filterName={SIDE_LIST_NAME[filter]}
         planList={planList}
         setFunc={setFunc}
       />

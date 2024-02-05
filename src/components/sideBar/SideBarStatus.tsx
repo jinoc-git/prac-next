@@ -59,7 +59,12 @@ export default function SideBarStatus(props: SideBarStatusProps) {
         <span className="font-semibold text-xs text-gray_dark_1">STATUS</span>
         <SideBarStatusChip isOpen={isOpen} status={status} />
       </div>
-      <SideBarPlanInfo />
+      <SideBarPlanInfo
+        activePlan={activePlan}
+        nextPlan={nextPlan}
+        isOpen={isOpen}
+        status={status}
+      />
     </div>
   );
 }
