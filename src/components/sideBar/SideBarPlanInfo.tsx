@@ -4,7 +4,12 @@ import React from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import { SIED_CHIP_COLOR } from '@/utils/sideBarColorList';
+import {
+  changeDotFormatOfDate,
+  formatMonthDay,
+  removeYearOfDate,
+} from '@/utils/aboutDay';
+import { SIDE_INFO_BG } from '@/utils/sideBarColorList';
 
 import type { PlanType } from '@/types/supabase';
 
@@ -29,11 +34,11 @@ export default function SideBarPlanInfo(props: SideBarPlanInfoProps) {
       onClick={onClickPlan}
       className={`flex flex-col items-center cursor-pointer ${
         isOpen ? 'gap-2' : ''
-      } rounded-xl overflow-hidden transition-all duration-300 ease-in-out ${
+      } rounded-xl overflow-hidden side-bar-transition ${
         isOpen
-          ? 'flex-center flex-col sm:w-[308px] sm:h-[125px] md:w-[197px] h-[125px]'
+          ? 'flex-box flex-col sm:w-[308px] sm:h-[125px] md:w-[197px] h-[125px]'
           : 'md:w-[40px] h-[125px]'
-      } ${SIED_CHIP_COLOR[status]}`}
+      } ${SIDE_INFO_BG[status]}`}
     >
       {/* 닫혔을 때 여행 중, 예정일 때 날짜 표시 */}
       {!isOpen && status === '여행 중' && (
@@ -55,9 +60,9 @@ export default function SideBarPlanInfo(props: SideBarPlanInfoProps) {
               isOpen ? 'text-sm ' : 'text-xs'
             }`}
           >
-            {progress + '%'}
+            {/* {progress + '%'} */}
           </p>
-          <SideBarProgressBar percent={progress} isOpen={isOpen} />
+          {/* <SideBarProgressBar percent={progress} isOpen={isOpen} /> */}
           {isOpen && (
             <div className="flex justify-between w-[160px]">
               <span className=" text-sm">

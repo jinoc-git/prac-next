@@ -33,3 +33,9 @@ export const SIDE_COLOR = {
     end: 'bg-orange_light_1',
   },
 } as const;
+
+export const SIDE_INFO_BG = {
+  '여행 중': 'bg-blue_light_1',
+  '여행 예정': 'bg-yellow_light_1',
+  '여행 없음': 'bg-orange_light_2',
+} as const;
