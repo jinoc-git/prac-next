@@ -9,7 +9,8 @@ import {
   formatMonthDay,
   removeYearOfDate,
 } from '@/utils/aboutDay';
-import { SIDE_INFO_BG } from '@/utils/sideBarColorList';
+
+import SideBarProgress from './SideBarProgress';
 
 import type { PlanType } from '@/types/supabase';
 
@@ -20,13 +21,19 @@ interface SideBarPlanInfoProps {
   status: '여행 중' | '여행 예정' | '여행 없음';
 }
 
+const SIDE_INFO_BG = {
+  '여행 중': 'bg-blue_light_1',
+  '여행 예정': 'bg-yellow_light_1',
+  '여행 없음': 'bg-orange_light_2',
+};
+
 export default function SideBarPlanInfo(props: SideBarPlanInfoProps) {
   const { activePlan, nextPlan, isOpen, status } = props;
   const router = useRouter();
 
   const onClickPlan = () => {
-    if (activePlan != null) router.push(`/plan/${activePlan.id}`);
-    else if (nextPlan != null) router.push(`/plan/${nextPlan.id}`);
+    if (activePlan) router.push(`/plan/${activePlan.id}`);
+    else if (nextPlan) router.push(`/plan/${nextPlan.id}`);
   };
 
   return (
@@ -55,14 +62,7 @@ export default function SideBarPlanInfo(props: SideBarPlanInfoProps) {
             isOpen ? 'flex-col sm:gap- md:gap-1' : ' md:flex-col-reverse gap-1'
           } items-center`}
         >
-          <p
-            className={` bg-gradient-to-r from-blue_dark to-blue text-transparent bg-clip-text font-bold ${
-              isOpen ? 'text-sm ' : 'text-xs'
-            }`}
-          >
-            {/* {progress + '%'} */}
-          </p>
-          {/* <SideBarProgressBar percent={progress} isOpen={isOpen} /> */}
+          <SideBarProgress activePlan={activePlan} isOpen={isOpen} />
           {isOpen && (
             <div className="flex justify-between w-[160px]">
               <span className=" text-sm">
