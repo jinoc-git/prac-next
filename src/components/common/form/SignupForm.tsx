@@ -115,7 +115,7 @@ export default function SignupForm() {
   }, [watch('email')]);
 
   return (
-    <>
+    <section className="flex-box w-screen h-screen">
       <Image
         src="/images/img-signup-bg.webp"
         alt="회원가입 배경"
@@ -190,6 +190,6 @@ export default function SignupForm() {
           </span>
         </p>
       </form>
-    </>
+    </section>
   );
 }

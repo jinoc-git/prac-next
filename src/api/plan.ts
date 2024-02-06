@@ -3,22 +3,13 @@ import { supabase } from './auth';
 import type { PlanType } from '@/types/supabase';
 
 export const getPlanList = async (planIds: string[]) => {
-  if (planIds.length === 0) {
-    return;
-  }
   const { data: plans, error } = await supabase
     .from('plans')
     .select()
     .eq('isDeleted', false)
     .in('id', planIds);
 
-  if (error !== null) {
-    console.log(error);
-    throw new Error('오류발생');
-  }
-  if (plans !== null) {
-    return plans;
-  }
+  return plans;
 };
 
 export const getMatesByUserIdList = async (matesUserId: string[]) => {
@@ -91,7 +82,6 @@ export const getPlanListAndMateList = async (userId: string | undefined) => {
     .contains('users_id', [userId]);
 
   if (matesError != null) {
-    console.log('에러 발생', matesError);
     throw new Error('getPlansWithMates 에러 1발생');
   }
 
@@ -105,7 +95,8 @@ export const getPlanListAndMateList = async (userId: string | undefined) => {
     };
   }
 
-  const planDataList = await getPlanList(planIdList);
+  const planDataList = (await getPlanList(planIdList)) ?? [];
+
   const usersDataList = [];
   for (let i = 0; i < userIdList.length; i++) {
     const users = await getMatesByUserIdList(userIdList[i]);

@@ -12,7 +12,9 @@ import { sideBarStore } from '@/store/sideBarStore';
 
 export default function Authentication() {
   const { authObserver, user, resetUser } = authStore();
-  const { setVisibilitySideBar } = sideBarStore();
+  const setVisibilitySideBar = sideBarStore(
+    (state) => state.setVisibilitySideBar,
+  );
 
   const router = useRouter();
   const pathname = usePathname();
