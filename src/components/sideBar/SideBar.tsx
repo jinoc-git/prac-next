@@ -6,8 +6,8 @@ import { sideBarStore } from '@/store/sideBarStore';
 
 import SideBarIcon from './SideBarIcon';
 import SideBarLogo from './SideBarLogo';
-import SideBarStatus from './SideBarStatus';
-import SideBarTrips from './SideBarTrips';
+import SideBarStatus from './sideBarStatus/SideBarStatus';
+import SideBarTrips from './sideBarTrips/SideBarTrips';
 
 export default function SideBar() {
   const { isVisibleSideBar, isSideBarOpen } = sideBarStore();
