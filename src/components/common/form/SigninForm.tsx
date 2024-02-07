@@ -56,7 +56,7 @@ export default function SigninForm() {
   };
 
   return (
-    <>
+    <section className="flex-box w-screen h-screen">
       <Image
         src="/images/img-signin-bg.webp"
         alt="로그인 배경"
@@ -114,6 +114,6 @@ export default function SigninForm() {
           </span>
         </p>
       </form>
-    </>
+    </section>
   );
 }

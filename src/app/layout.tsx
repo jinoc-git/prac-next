@@ -19,7 +19,7 @@ function RootLayout({ children }: { children: React.ReactNode }) {
         <Providers>
           <SideBar />
           <Header />
-          <main className="flex-box w-screen h-screen">{children}</main>
+          <main className="w-screen h-screen">{children}</main>
           <ToastProvider />
         </Providers>
       </body>
