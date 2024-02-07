@@ -1,5 +1,6 @@
 import React from 'react';
 
+import PlanList from '@/components/main/planList/PlanList';
 import Profile from '@/components/main/profile/Profile';
 
 export default function Main() {
@@ -11,6 +12,7 @@ export default function Main() {
         md:h-[363px]"
       ></div>
       <Profile />
+      <PlanList />
     </>
   );
 }

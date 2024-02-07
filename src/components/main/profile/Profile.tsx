@@ -24,7 +24,7 @@ export default function Profile() {
   };
 
   return (
-    <section>
+    <section className="h-screen">
       <div
         className="flex items-center w-[800px] my-0 mx-auto
       sm:gap-[16px] 
