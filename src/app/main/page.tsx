@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Profile from '@/components/main/profile/Profile';
+
 export default function Main() {
   return (
     <>
@@ -8,6 +10,7 @@ export default function Main() {
         sm:h-[313px]
         md:h-[363px]"
       ></div>
+      <Profile />
     </>
   );
 }
