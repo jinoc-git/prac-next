@@ -17,7 +17,9 @@ export default function PlanList() {
         md:w-[800px] "
     >
       <AddPlanBtn />
-      <PlanTabMenu />
+      <div className="flex flex-col gap-[16px]">
+        <PlanTabMenu />
+      </div>
     </section>
   );
 }

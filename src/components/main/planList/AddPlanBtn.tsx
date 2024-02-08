@@ -4,7 +4,7 @@ import React from 'react';
 
 import { useRouter } from 'next/navigation';
 
-export default function AddPlanBtn() {
+function AddPlanBtn() {
   const router = useRouter();
 
   return (
@@ -35,3 +35,5 @@ export default function AddPlanBtn() {
     </button>
   );
 }
+
+export default React.memo(AddPlanBtn);
