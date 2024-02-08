@@ -19,20 +19,22 @@ export default function PlanTabMenuItem(props: PlanTabMenuItemProps) {
   } as const;
 
   return (
-    <p
-      className={`cursor-pointer text-white hover:text-yellow_light_2 
+    <li>
+      <p
+        className={`cursor-pointer text-white hover:text-yellow_light_2 
         sm:text-[11px]
         md:text-[16px]
-        ${
-          name === selectedMenu
-            ? 'text-yellow_light_2 font-SemiBold'
-            : 'text-white'
-        }`}
-      onClick={() => {
-        setSelectedMenu(name);
-      }}
-    >
-      {menuName[name]} ({planCount})
-    </p>
+      ${
+        name === selectedMenu
+          ? 'text-yellow_light_2 font-SemiBold'
+          : 'text-white'
+      }`}
+        onClick={() => {
+          setSelectedMenu(name);
+        }}
+      >
+        {menuName[name]} ({planCount})
+      </p>
+    </li>
   );
 }
