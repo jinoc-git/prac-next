@@ -5,7 +5,7 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 
 import AddPlanBtn from './AddPlanBtn';
-import PlanTabMenu from './PlanTabMenu';
+import PlanTabMenu from './planTabMenu/PlanTabMenu';
 
 export default function PlanList() {
   const router = useRouter();
