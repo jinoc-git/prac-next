@@ -20,7 +20,7 @@ export default function PlanList() {
   const router = useRouter();
   const user = authStore((state) => state.user);
 
-  const [planCount, setPlanCount] = useState<PlanCountList>({
+  const [planCountList, setPlanCountList] = useState<PlanCountList>({
     bookMark: 0,
     planning: 0,
     traveling: 0,
@@ -49,8 +49,8 @@ export default function PlanList() {
   });
 
   useEffect(() => {
-    if (matesData || bookMarkData) {
-      setPlanCount({
+    if (bookMarkData && matesData) {
+      setPlanCountList({
         bookMark: bookMarkData.length,
         planning: planDataList.filter(tabMenu.counting('planning')).length,
         traveling: planDataList.filter(tabMenu.counting('traveling')).length,
@@ -73,11 +73,7 @@ export default function PlanList() {
     >
       <AddPlanBtn />
       <div className="flex flex-col gap-[16px]">
-        <PlanTabMenu
-          bookMarkData={bookMarkData}
-          planDataList={planDataList}
-          usersDataList={usersDataList}
-        />
+        <PlanTabMenu planCountList={planCountList} />
         <PlanCardList />
       </div>
     </section>
