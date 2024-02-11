@@ -24,11 +24,11 @@ export default function Profile() {
   };
 
   return (
-    <section className=" pt-[108px]">
+    <section className="pt-[108px]">
       <div
-        className="flex items-center w-[800px] my-0 mx-auto
-      sm:gap-[16px] 
-      md:gap-[40px]"
+        className="flex items-center my-0 mx-auto
+      sm:gap-[16px] sm:w-[310px]
+      md:gap-[40px] md:w-[800px]"
       >
         <div
           onClick={onClickOpenModalHandler}
