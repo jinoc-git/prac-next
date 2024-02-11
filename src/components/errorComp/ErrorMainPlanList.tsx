@@ -2,7 +2,6 @@ import React from 'react';
 
 import AddPlanBtn from '../main/planList/AddPlanBtn';
 import PlanCardList from '../main/planList/PlanCardList';
-import PlanTabMenu from '../main/planList/planTabMenu/PlanTabMenu';
 
 export default function ErrorMainPlanList() {
   return (
@@ -13,7 +12,7 @@ export default function ErrorMainPlanList() {
     >
       <AddPlanBtn />
       <div className="flex flex-col gap-[16px]">
-        <PlanTabMenu />
+        {/* <PlanTabMenu /> */}
         <PlanCardList />
       </div>
     </section>

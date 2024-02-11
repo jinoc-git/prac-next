@@ -4,10 +4,17 @@ import React from 'react';
 
 import PlanTabMenuItem from './PlanTabMenuItem';
 
-interface PlanTabMenuProps {}
+import type { UsersDataList } from '@/types/aboutPlan';
+import type { BookMarkType, PlanType } from '@/types/supabase';
+
+interface PlanTabMenuProps {
+  bookMarkData: BookMarkType[];
+  planDataList: PlanType[] | undefined;
+  usersDataList: UsersDataList[];
+}
 
 export default function PlanTabMenu(props: PlanTabMenuProps) {
-  const {} = props;
+  const { bookMarkData, planDataList, usersDataList } = props;
 
   return (
     <ul className="flex-box sm:gap-[10px] sm:w-[320px] md:w-[800px]">
