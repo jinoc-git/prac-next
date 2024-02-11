@@ -91,7 +91,6 @@ export const getPlanListAndMateList = async (userId: string | undefined) => {
     .contains('users_id', [userId]);
 
   if (matesError != null) {
-    console.log('에러 발생', matesError);
     throw new Error('getPlansWithMates 에러 1발생');
   }
 

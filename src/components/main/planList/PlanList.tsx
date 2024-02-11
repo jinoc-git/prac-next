@@ -38,6 +38,8 @@ export default function PlanList() {
     refetchOnWindowFocus: false,
   });
 
+  const { planDataList, usersDataList } = matesData;
+
   return (
     <section
       className="flex flex-col mx-auto my-0
