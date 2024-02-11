@@ -11,7 +11,7 @@ import { authStore } from '@/store/authStore';
 import { tabMenu } from '@/utils/arrayCallbackFunctionList';
 
 import AddPlanBtn from './AddPlanBtn';
-import PlanCardList from './PlanCardList';
+import PlanCardList from './planCardList/PlanCardList';
 import PlanTabMenu from './planTabMenu/PlanTabMenu';
 
 import type { PlanCountList } from '@/types/aboutPlan';

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import AddPlanBtn from '../main/planList/AddPlanBtn';
-import PlanCardList from '../main/planList/PlanCardList';
+import PlanCardList from '../main/planList/planCardList/PlanCardList';
 
 export default function ErrorMainPlanList() {
   return (
