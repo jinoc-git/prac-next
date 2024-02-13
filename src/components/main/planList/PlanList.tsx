@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import { getBookMarkDataByUserId } from '@/api/bookMark';
 import { getPlanListAndMateList } from '@/api/plan';
 import { authStore } from '@/store/authStore';
-import { tabMenu } from '@/utils/arrayCallbackFunctionList';
+import { tabMenuCallback } from '@/utils/arrayCallbackFunctionList';
 
 import AddPlanBtn from './AddPlanBtn';
 import PlanCardList from './planCardList/PlanCardList';
@@ -52,9 +52,11 @@ export default function PlanList() {
     if (bookMarkData && matesData) {
       setPlanCountList({
         bookMark: bookMarkData.length,
-        planning: planDataList.filter(tabMenu.counting('planning')).length,
-        traveling: planDataList.filter(tabMenu.counting('traveling')).length,
-        end: planDataList.filter(tabMenu.counting('end')).length,
+        planning: planDataList.filter(tabMenuCallback('planning').counting)
+          .length,
+        traveling: planDataList.filter(tabMenuCallback('traveling').counting)
+          .length,
+        end: planDataList.filter(tabMenuCallback('end').counting).length,
       });
     }
   }, [matesData, bookMarkData]);
@@ -74,7 +76,11 @@ export default function PlanList() {
       <AddPlanBtn />
       <div className="flex flex-col gap-[16px]">
         <PlanTabMenu planCountList={planCountList} />
-        <PlanCardList />
+        <PlanCardList
+          bookMarkData={bookMarkData}
+          planDataList={planDataList}
+          usersDataList={usersDataList}
+        />
       </div>
     </section>
   );
