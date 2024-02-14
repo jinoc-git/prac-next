@@ -8,18 +8,19 @@ import { useRouter } from 'next/navigation';
 import { tabMenuStore } from '@/store/tabMenuStore';
 import { formatPlanDates } from '@/utils/aboutDay';
 import { tabMenuCallback } from '@/utils/arrayCallbackFunctionList';
+import { cardListing } from '@/utils/planCardListing';
 
 import type { PlanStatus, UsersDataList } from '@/types/aboutPlan';
 import type { BookMarkType, PlanType } from '@/types/supabase';
 
 interface PlanCardListProps {
-  bookMarkData: BookMarkType[];
+  bookMarkDataList: BookMarkType[];
   planDataList: PlanType[];
   usersDataList: UsersDataList[];
 }
 
 export default function PlanCardList(props: PlanCardListProps) {
-  const { bookMarkData, planDataList, usersDataList } = props;
+  const { bookMarkDataList, planDataList, usersDataList } = props;
   const router = useRouter();
   const { selectedMenu } = tabMenuStore();
 
@@ -30,12 +31,16 @@ export default function PlanCardList(props: PlanCardListProps) {
     if (status === 'end') router.push(`/ending/${id}`);
   };
 
-  const bookMarkPlanIdList = bookMarkData.map((bookMark) => bookMark.plan_id);
+  const bookMarkPlanIdList = bookMarkDataList.map(
+    (bookMark) => bookMark.plan_id,
+  );
 
   const tabMenuCallbackFuncList = tabMenuCallback(selectedMenu);
   const selectedPlanList = planDataList
     .filter(tabMenuCallbackFuncList.filtering(bookMarkPlanIdList))
-    .sort(tabMenuCallbackFuncList.sorting(bookMarkData));
+    .sort(tabMenuCallbackFuncList.sorting(bookMarkDataList));
+
+  const cardListFunc = cardListing(bookMarkDataList, usersDataList);
 
   return selectedPlanList.length === 0 ? (
     <div>
@@ -44,6 +49,9 @@ export default function PlanCardList(props: PlanCardListProps) {
   ) : (
     selectedPlanList.map((plan) => {
       const { startDate, endDate } = formatPlanDates(plan);
+
+      const { bookMarkData, avatarList, nicknameList } = cardListFunc(plan.id);
+
       return (
         <div
           key={uuid()}

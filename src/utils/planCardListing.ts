@@ -2,9 +2,9 @@ import type { UsersDataList } from '@/types/aboutPlan';
 import type { BookMarkType, UserType } from '@/types/supabase';
 
 export const cardListing =
-  (bookMarkData: BookMarkType[], usersDataList: UsersDataList[]) =>
+  (bookMarkDataList: BookMarkType[], usersDataList: UsersDataList[]) =>
   (planId: string) => {
-    const isBookMark = bookMarkData.find(
+    const bookMarkData = bookMarkDataList.find(
       (bookMark: BookMarkType) => bookMark.plan_id === planId,
     );
     const participants = usersDataList.find(
@@ -17,5 +17,5 @@ export const cardListing =
       (user: UserType) => user.nickname,
     );
 
-    return { isBookMark, avatarList, nicknameList };
+    return { bookMarkData, avatarList, nicknameList };
   };

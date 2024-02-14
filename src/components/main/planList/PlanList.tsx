@@ -38,7 +38,7 @@ export default function PlanList() {
   });
 
   const {
-    data: bookMarkData,
+    data: bookMarkDataList,
     isLoading: bookMarkLoading,
     isError: bookMarkError,
   } = useQuery({
@@ -49,9 +49,9 @@ export default function PlanList() {
   });
 
   useEffect(() => {
-    if (bookMarkData && matesData) {
+    if (bookMarkDataList && matesData) {
       setPlanCountList({
-        bookMark: bookMarkData.length,
+        bookMark: bookMarkDataList.length,
         planning: planDataList.filter(tabMenuCallback('planning').counting)
           .length,
         traveling: planDataList.filter(tabMenuCallback('traveling').counting)
@@ -59,9 +59,9 @@ export default function PlanList() {
         end: planDataList.filter(tabMenuCallback('end').counting).length,
       });
     }
-  }, [matesData, bookMarkData]);
+  }, [matesData, bookMarkDataList]);
 
-  if (matesData == null || bookMarkData == null) {
+  if (matesData == null || bookMarkDataList == null) {
     return <div>데이터 없음</div>;
   }
 
@@ -77,7 +77,7 @@ export default function PlanList() {
       <div className="flex flex-col gap-[16px]">
         <PlanTabMenu planCountList={planCountList} />
         <PlanCardList
-          bookMarkData={bookMarkData}
+          bookMarkDataList={bookMarkDataList}
           planDataList={planDataList}
           usersDataList={usersDataList}
         />
