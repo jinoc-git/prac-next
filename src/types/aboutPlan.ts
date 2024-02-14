@@ -1,4 +1,5 @@
 import type { PlanType, UserType } from './supabase';
+import type { SelectedMenu } from '@/store/tabMenuStore';
 
 // 옮길 예정
 export interface PinContentsType {
@@ -10,6 +11,8 @@ export interface PinContentsType {
   address?: string;
   distance?: number | undefined;
 }
+
+export type PlanStatus = Omit<SelectedMenu, 'bookMark'> | 'recording';
 
 export type UsersDataList = Record<string, UserType[]>;
 
