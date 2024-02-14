@@ -6,7 +6,7 @@ import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import { useRouter } from 'next/navigation';
 
 import { tabMenuStore } from '@/store/tabMenuStore';
-import { formatPlanDates } from '@/utils/aboutDay';
+import { calculateDday, formatPlanDates } from '@/utils/aboutDay';
 import { tabMenuCallback } from '@/utils/arrayCallbackFunctionList';
 import { cardListing } from '@/utils/planCardListing';
 
@@ -40,7 +40,7 @@ export default function PlanCardList(props: PlanCardListProps) {
     .filter(tabMenuCallbackFuncList.filtering(bookMarkPlanIdList))
     .sort(tabMenuCallbackFuncList.sorting(bookMarkDataList));
 
-  const cardListFunc = cardListing(bookMarkDataList, usersDataList);
+  const cardListWithPlanId = cardListing(bookMarkDataList, usersDataList);
 
   return selectedPlanList.length === 0 ? (
     <div>
@@ -50,7 +50,9 @@ export default function PlanCardList(props: PlanCardListProps) {
     selectedPlanList.map((plan) => {
       const { startDate, endDate } = formatPlanDates(plan);
 
-      const { bookMarkData, avatarList, nicknameList } = cardListFunc(plan.id);
+      const { bookMarkData, avatarList, nicknameList } = cardListWithPlanId(
+        plan.id,
+      );
 
       return (
         <div
@@ -62,7 +64,23 @@ export default function PlanCardList(props: PlanCardListProps) {
             onClickPlanCard(plan.plan_state, plan.id);
           }}
         >
-          <div></div>
+          <div
+            className="sm:w-[45px] sm:mt-[23px] 
+              md:w-[80px] md:h-[16px] md:mt-[25px] md:ml-[28px]"
+          >
+            {/* 북마크 추가 예정 */}
+            <div className="mt-[0px] h-[12px]">
+              {plan.plan_state === 'end' ? null : (
+                <p
+                  className="text-yellow text-center font-bold
+                        sm:text-[10px] 
+                      md:text-[18px] md:mt-[11px]"
+                >
+                  {calculateDday(new Date(plan.dates[0]))}
+                </p>
+              )}
+            </div>
+          </div>
         </div>
       );
     })
