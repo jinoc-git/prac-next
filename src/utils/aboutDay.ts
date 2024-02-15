@@ -1,5 +1,3 @@
-import type { PlanType } from '@/types/supabase';
-
 export const getKoreanDayOfWeek = (date: Date) => {
   const daysInKorean = ['일', '월', '화', '수', '목', '금', '토'];
   const dayOfWeek = date.getDay();
@@ -15,9 +13,9 @@ export const formatMonthDay = (date: string) => {
   return `${year}년 ${month}월 ${day}일 (${koreanDayOfWeek})`;
 };
 
-export const formatPlanDates = (plan: PlanType) => {
-  const startDate = formatMonthDay(plan.dates[0]);
-  const endDate = formatMonthDay(plan.dates[plan.dates.length - 1]);
+export const formatPlanDates = (dates: string[]) => {
+  const startDate = formatMonthDay(dates[0]);
+  const endDate = formatMonthDay(dates[dates.length - 1]);
 
   return { startDate, endDate };
 };
@@ -64,4 +62,23 @@ export const calcDateProgress = (start: string, end: string) => {
   const result = progress.toFixed();
 
   return result;
+};
+
+export const calculateDday = (date: Date): string => {
+  const currentDate = new Date();
+  const targetDate = new Date(date);
+
+  if (targetDate.toLocaleDateString() === currentDate.toLocaleDateString()) {
+    return 'D-Day';
+  } else if (targetDate < currentDate) {
+    const daysCount = Math.ceil(
+      (currentDate.getTime() - targetDate.getTime()) / (1000 * 60 * 60 * 24),
+    );
+    return `D+${daysCount}`;
+  } else {
+    const daysCount = Math.ceil(
+      (targetDate.getTime() - currentDate.getTime()) / (1000 * 60 * 60 * 24),
+    );
+    return `D-${daysCount}`;
+  }
 };

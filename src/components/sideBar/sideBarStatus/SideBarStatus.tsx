@@ -6,7 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { getPlanListAndMateList } from '@/api/plan';
 import { authStore } from '@/store/authStore';
-import { sideBar } from '@/utils/arrayCallbackFunctionList';
+import { sideBarCallback } from '@/utils/arrayCallbackFunctionList';
 
 import SideBarPlanInfo from './SideBarPlanInfo';
 import SideBarStatusChip from './SideBarStatusChip';
@@ -28,11 +28,11 @@ export default function SideBarStatus(props: SideBarStatusProps) {
     staleTime: 20 * 1000,
   });
 
-  const sortedData = matesData?.planDataList?.sort(sideBar.sorting);
+  const sortedData = matesData?.planDataList?.sort(sideBarCallback.sorting);
 
-  const startPlans = sortedData?.filter(sideBar.filtering('planning'));
-  const endPlans = sortedData?.filter(sideBar.filtering('end'));
-  const activePlan = sortedData?.find(sideBar.filtering('traveling'));
+  const startPlans = sortedData?.filter(sideBarCallback.filtering('planning'));
+  const endPlans = sortedData?.filter(sideBarCallback.filtering('end'));
+  const activePlan = sortedData?.find(sideBarCallback.filtering('traveling'));
 
   const nextPlan = startPlans != null ? startPlans[0] : undefined;
   const hasNextPlan = Boolean(nextPlan);

@@ -1,10 +1,10 @@
 import { create } from 'zustand';
 
+export type SelectedMenu = 'bookMark' | 'traveling' | 'planning' | 'end';
+
 interface TabMenuStore {
-  selectedMenu: 'bookMark' | 'traveling' | 'planning' | 'end';
-  setSelectedMenu: (
-    plan: 'bookMark' | 'traveling' | 'planning' | 'end',
-  ) => void;
+  selectedMenu: SelectedMenu;
+  setSelectedMenu: (plan: SelectedMenu) => void;
 }
 
 export const tabMenuStore = create<TabMenuStore>((set) => ({
