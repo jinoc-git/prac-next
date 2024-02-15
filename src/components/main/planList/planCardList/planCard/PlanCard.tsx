@@ -2,12 +2,12 @@
 
 import React from 'react';
 
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import { calculateDday } from '@/utils/aboutDay';
 
 import PlanCardDate from './PlanCardDate';
+import PlanCardQuitButton from './PlanCardQuitButton';
 import PlanCardStatusChip from './PlanCardStatusChip';
 import PlanCardUserList from './PlanCardUserList';
 
@@ -78,22 +78,7 @@ export default function PlanCard(props: PlanCardProps) {
           sm:w-[15px] sm:ml-[10px] sm:mr-[10px] sm:mt-[20px] 
           md:w-[80px] md:mr-[25px] md:mt-[22px]"
       >
-        <button
-          className="sm:mt-[2px] md:mt-[4px]"
-          aria-label="card-quit-plan-btn"
-          onClick={() => {
-            onClickQuitBtn(plan.id);
-          }}
-        >
-          <Image
-            alt="여행 나가기"
-            src={'/images/quit.svg'}
-            width={24}
-            height={24}
-            // 호버 시 색상 변경 수정 필요할듯?
-            className=" hover:fill-orange_dark hover:stroke-orange_light_2 sm:w-[16px] sm:h-[16px] md:w-[24px] md:h-[24px]"
-          />
-        </button>
+        <PlanCardQuitButton planId={plan.id} onClickQuitBtn={onClickQuitBtn} />
       </div>
     </div>
   );
