@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 
 import { calculateDday } from '@/utils/aboutDay';
 
+import PlanCardDate from './PlanCardDate';
 import PlanCardStatusChip from './PlanCardStatusChip';
 
 import type { PlanStatus } from '@/types/aboutPlan';
@@ -54,7 +55,7 @@ export default function PlanCard(props: PlanCardProps) {
       </div>
       <div
         className="sm:w-[238px] sm:h-2/3 sm:ml-[5px]
-                md:w-4/5 md:h-[16px] md:items-center "
+          md:w-4/5 md:h-[16px] md:items-center "
       >
         <div className="flex items-center sm:mt-[20px] md:mt-[22px]">
           <p className="text-gray_dark_1 sm:text-sm md:text-xlg font-bold mr-[16px]">
@@ -62,13 +63,7 @@ export default function PlanCard(props: PlanCardProps) {
           </p>
           <PlanCardStatusChip state={plan.plan_state} />
         </div>
-        <div
-          className="text-gray_dark_1 font-semibold
-                  sm:text-[10px] sm:mt-[5px] 
-                  md:text-lg md:mt-[8px]"
-        >
-          {startDate}~{endDate} {plan.dates.length - 1}박 {plan.dates.length}일
-        </div>
+        <PlanCardDate dates={plan.dates} />
         <CardUserList avatarList={avatarList} nicknameList={nicknameList} />
       </div>
     </div>

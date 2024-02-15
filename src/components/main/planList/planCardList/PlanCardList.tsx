@@ -41,7 +41,7 @@ export default function PlanCardList(props: PlanCardListProps) {
     </div>
   ) : (
     selectedPlanList.map((plan) => {
-      const { startDate, endDate } = formatPlanDates(plan);
+      const { startDate, endDate } = formatPlanDates(plan.dates);
 
       const { bookMarkData, avatarList, nicknameList } = cardDataListWithPlanId(
         plan.id,
