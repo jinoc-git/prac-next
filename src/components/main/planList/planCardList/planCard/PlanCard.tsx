@@ -8,16 +8,20 @@ import { calculateDday } from '@/utils/aboutDay';
 
 import PlanCardDate from './PlanCardDate';
 import PlanCardStatusChip from './PlanCardStatusChip';
+import PlanCardUserList from './PlanCardUserList';
 
 import type { PlanStatus } from '@/types/aboutPlan';
-import type { PlanType } from '@/types/supabase';
+import type { BookMarkType, PlanType } from '@/types/supabase';
 
 interface PlanCardProps {
   plan: PlanType;
+  bookMarkData: BookMarkType | undefined;
+  avatarList: (string | null | undefined)[];
+  nicknameList: string[];
 }
 
 export default function PlanCard(props: PlanCardProps) {
-  const { plan } = props;
+  const { plan, bookMarkData, avatarList, nicknameList } = props;
   const router = useRouter();
 
   const onClickPlanCard = (status: PlanStatus, id: string) => {
@@ -64,7 +68,7 @@ export default function PlanCard(props: PlanCardProps) {
           <PlanCardStatusChip state={plan.plan_state} />
         </div>
         <PlanCardDate dates={plan.dates} />
-        <CardUserList avatarList={avatarList} nicknameList={nicknameList} />
+        <PlanCardUserList avatarList={avatarList} nicknameList={nicknameList} />
       </div>
     </div>
   );
