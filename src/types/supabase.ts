@@ -82,19 +82,19 @@ export interface Database {
       };
       pins: {
         Row: {
-          contents: Json[];
+          contents: PinContentsType[];
           date: string;
           id: string;
           plan_id: string;
         };
         Insert: {
-          contents: Json[];
+          contents: PinContentsType[];
           date: string;
           id?: string;
           plan_id: string;
         };
         Update: {
-          contents?: Json[];
+          contents?: PinContentsType[];
           date?: string;
           id?: string;
           plan_id?: string;
@@ -253,6 +253,16 @@ export interface Database {
       [_ in never]: never;
     };
   };
+}
+
+export interface PinContentsType {
+  id?: string;
+  lat: number;
+  lng: number;
+  placeName?: string;
+  cost?: string | null;
+  address?: string;
+  distance?: number | undefined;
 }
 
 export type PinType = Database['public']['Tables']['pins']['Update'];

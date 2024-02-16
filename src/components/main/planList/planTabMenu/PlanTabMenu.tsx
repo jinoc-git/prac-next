@@ -4,13 +4,13 @@ import React from 'react';
 
 import PlanTabMenuItem from './PlanTabMenuItem';
 
-import type { PlanCountList } from '@/types/aboutPlan';
+import type { PlanCountList } from '@/types/aboutPlan.type';
 
-interface PlanTabMenuProps {
+interface Props {
   planCountList: PlanCountList;
 }
 
-export default function PlanTabMenu(props: PlanTabMenuProps) {
+export default function PlanTabMenu(props: Props) {
   const { planCountList } = props;
 
   return (

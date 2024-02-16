@@ -10,16 +10,16 @@ import { cardListing } from '@/utils/planCardListing';
 
 import PlanCard from './planCard/PlanCard';
 
-import type { UsersDataList } from '@/types/aboutPlan';
+import type { UsersDataList } from '@/types/aboutPlan.type';
 import type { BookMarkType, PlanType } from '@/types/supabase';
 
-interface PlanCardListProps {
+interface Props {
   bookMarkDataList: BookMarkType[];
   planDataList: PlanType[];
   usersDataList: UsersDataList[];
 }
 
-export default function PlanCardList(props: PlanCardListProps) {
+export default function PlanCardList(props: Props) {
   const { bookMarkDataList, planDataList, usersDataList } = props;
   const { selectedMenu } = tabMenuStore();
 

@@ -1,24 +1,19 @@
 import { create } from 'zustand';
 
-import { supabase } from '@/api/auth';
+import { supabaseClientClient } from '@/api/auth';
 
-export interface UserInfo {
-  id: string;
-  email: string;
-  nickname: string;
-  profileImg: string | null;
-}
+import type { UserType } from '@/types/supabase';
 
 interface AuthStore {
-  user: UserInfo | null;
+  user: UserType | null;
   authObserver: () => void;
-  setUser: (user: UserInfo) => void;
+  setUser: (user: UserType) => void;
   resetUser: () => void;
 }
 
 export const authStore = create<AuthStore>((set, get) => {
   const authObserver = () => {
-    supabase.auth.onAuthStateChange((event, session) => {
+    supabaseClientClient.auth.onAuthStateChange((event, session) => {
       const currentUser = get().user;
       if (session !== null && currentUser === null) {
         localStorage.setItem('isLogin', 'true');
@@ -30,11 +25,11 @@ export const authStore = create<AuthStore>((set, get) => {
             user_metadata: { name, nickname, profileImg },
           } = session.user;
 
-          const user: UserInfo = {
+          const user: UserType = {
             id,
             email: email as string,
             nickname: nickname ?? name,
-            profileImg: profileImg ?? null,
+            avatar_url: profileImg ?? null,
           };
 
           set({ user });
@@ -45,11 +40,11 @@ export const authStore = create<AuthStore>((set, get) => {
             user_metadata: { nickname, profileImg },
           } = session.user;
 
-          const user: UserInfo = {
+          const user: UserType = {
             id,
             email: email as string,
             nickname,
-            profileImg: profileImg ?? null,
+            avatar_url: profileImg ?? null,
           };
 
           set({ user });
@@ -60,7 +55,7 @@ export const authStore = create<AuthStore>((set, get) => {
     });
   };
 
-  const setUser = (user: UserInfo) => {
+  const setUser = (user: UserType) => {
     set({ user });
   };
 

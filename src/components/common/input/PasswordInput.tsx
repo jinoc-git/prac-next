@@ -1,18 +1,13 @@
 'use client';
 
 import React, { useState } from 'react';
-import type { FieldErrors, UseFormRegisterReturn } from 'react-hook-form';
 
 import Image from 'next/image';
 
 import type { SignupFormInputList } from '../form/SignupForm';
+import type { InputCompProps } from '@/types/inputComp.type';
 
-export interface PasswordInputProps {
-  name: keyof SignupFormInputList;
-  placeholder: string;
-  register: UseFormRegisterReturn<string>;
-  errors: FieldErrors<SignupFormInputList>;
-}
+interface PasswordInputProps extends InputCompProps<SignupFormInputList> {}
 
 const PasswordInput = (props: PasswordInputProps) => {
   const { name, placeholder, register, errors } = props;

@@ -1,23 +1,17 @@
-import type { PlanType, UserType } from './supabase';
+import type {
+  InsertPlanType,
+  PinContentsType,
+  PlanType,
+  UserType,
+} from './supabase';
 import type { SelectedMenu } from '@/store/tabMenuStore';
-
-// 옮길 예정
-export interface PinContentsType {
-  id?: string;
-  lat?: number;
-  lng?: number;
-  placeName?: string;
-  cost?: string | null;
-  address?: string;
-  distance?: number | undefined;
-}
 
 export type PlanStatus = Omit<SelectedMenu, 'bookMark'> | 'recording';
 
 export type UsersDataList = Record<string, UserType[]>;
 
 export interface AddPlanObj {
-  newPlan: PlanType;
+  newPlan: InsertPlanType;
   pins: PinContentsType[][];
   invitedUser: UserType[];
 }

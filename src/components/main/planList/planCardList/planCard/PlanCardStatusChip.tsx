@@ -1,10 +1,10 @@
 import React from 'react';
 
-interface PlanCardStatusChipProps {
+interface Props {
   state: 'planning' | 'traveling' | 'recording' | 'end';
 }
 
-export default function PlanCardStatusChip(props: PlanCardStatusChipProps) {
+export default function PlanCardStatusChip(props: Props) {
   const { state } = props;
 
   const chipText = {

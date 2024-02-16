@@ -36,10 +36,10 @@ export default function Profile() {
           sm:w-[66px] sm:h-[66px] 
           md:w-[85px] md:h-[85px]"
         >
-          {user !== null && typeof user.profileImg === 'string' ? (
+          {user !== null && typeof user.avatar_url === 'string' ? (
             <Image
               alt="main-profile-img"
-              src={user.profileImg}
+              src={user.avatar_url}
               width={85}
               height={85}
               className="rounded-full border-[2.5px] border-blue_light_1 object-cover cursor-pointer
@@ -62,8 +62,8 @@ export default function Profile() {
           md:w-[24px] md:h-[24px] md:top-[60px] md:left-[60px] md:border-[2px]"
           >
             <Image
-              alt="main-profile-img"
-              src={'/images/editIcon.svg'}
+              alt="edit-icon"
+              src={'/images/edit-gray.svg'}
               width={14}
               height={12}
             />

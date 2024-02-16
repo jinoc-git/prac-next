@@ -8,7 +8,7 @@ import SideBarDropDown from './SideBarDropDown';
 
 import type { PlanType } from '@/types/supabase';
 
-interface SideBarPlanListProps {
+interface Props {
   setFunc: React.Dispatch<React.SetStateAction<boolean>>;
   planList: PlanType[] | [];
   filter: 'bookMark' | 'planning' | 'end';
@@ -40,13 +40,13 @@ const SIDE_ICON_LIST = {
   end: '/images/side-end.svg',
 } as const;
 
-const SIDE_LIST_NAME = {
+export const SIDE_LIST_NAME = {
   bookMark: '즐겨찾기 한 목록',
   planning: '예정된 여행',
   end: '다녀온 여행',
 } as const;
 
-export default function SideBarPlanList(props: SideBarPlanListProps) {
+export default function SideBarPlanList(props: Props) {
   const { setFunc, planList, filter, activeDropDown, isSideBarOpen } = props;
 
   const toggleFunc = useCallback(() => {
@@ -114,7 +114,7 @@ export default function SideBarPlanList(props: SideBarPlanListProps) {
       <SideBarDropDown
         activeDropDown={activeDropDown}
         aboveDropDownIsOpen={aboveDropDownIsOpen}
-        filterName={SIDE_LIST_NAME[filter]}
+        filter={filter}
         planList={planList}
         setFunc={setFunc}
       />

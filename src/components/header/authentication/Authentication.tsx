@@ -10,7 +10,11 @@ import { signOutForSB } from '@/api/auth';
 import { authStore } from '@/store/authStore';
 import { sideBarStore } from '@/store/sideBarStore';
 
-export default function Authentication() {
+interface Props {
+  isLogin: boolean;
+}
+
+export default function Authentication({ isLogin }: Props) {
   const { authObserver, user, resetUser } = authStore();
   const setVisibilitySideBar = sideBarStore(
     (state) => state.setVisibilitySideBar,
@@ -19,8 +23,6 @@ export default function Authentication() {
   const router = useRouter();
   const pathname = usePathname();
 
-  const isLogin = localStorage.getItem('isLogin');
-
   const onClickSignoutHandler = async () => {
     await signOutForSB();
     toast.success('로그아웃에 성공하였습니다.');
@@ -28,12 +30,13 @@ export default function Authentication() {
     setVisibilitySideBar(false);
     resetUser();
     router.push('/signin');
+    router.refresh();
   };
 
   useEffect(() => {
     authObserver();
 
-    if (isLogin === 'true') setVisibilitySideBar(true);
+    if (isLogin) setVisibilitySideBar(true);
     else setVisibilitySideBar(false);
   }, [pathname, user]);
 
