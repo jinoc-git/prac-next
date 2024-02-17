@@ -8,7 +8,7 @@ function AddPlanBtn() {
   const router = useRouter();
 
   const onClickBtn = () => {
-    router.push('/addPlan');
+    router.push('/addplan');
   };
 
   return (
