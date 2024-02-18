@@ -62,8 +62,8 @@ export default function Profile() {
           md:w-[24px] md:h-[24px] md:top-[60px] md:left-[60px] md:border-[2px]"
           >
             <Image
-              alt="main-profile-img"
-              src={'/images/editIcon.svg'}
+              alt="edit-icon"
+              src={'/images/edit-gray.svg'}
               width={14}
               height={12}
             />
