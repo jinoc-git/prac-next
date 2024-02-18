@@ -1,8 +1,11 @@
+'use client';
+
 import React from 'react';
 
 import Image from 'next/image';
 
 import { modifyPlanStore } from '@/store/modifyPlanStore';
+import { sideBarStore } from '@/store/sideBarStore';
 
 interface PlanTopBarProps {
   handleButtonClick: () => void;
@@ -11,12 +14,15 @@ interface PlanTopBarProps {
 export default function PlanTopBar(props: PlanTopBarProps) {
   const { handleButtonClick } = props;
   const { modifyState } = modifyPlanStore();
+  const isSideBarOpen = sideBarStore((state) => state.isSideBarOpen);
 
   return (
     <nav
-      className="flex justify-between border-b-[1px] border-navy py-[11.5px] items-center bg-white z-30
-      sm:fixed sm:w-[100vw] sm:mt-0 sm:top-[89px]
-      md:static md:w-full md:mt-[12px]"
+      className={`flex justify-between items-center border-b-[1px] border-navy py-[11.5px] bg-white z-30
+      sm:fixed sm:w-[100vw] sm:mt-0 sm:top-[89px] side-bar-transition
+      md:static md:pt-[86px] ${
+        isSideBarOpen ? 'md:pl-[270px]' : 'md:pl-[88px]'
+      }`}
     >
       <div
         className="text-navy_dark font-semibold
