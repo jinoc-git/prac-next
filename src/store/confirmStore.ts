@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-type ConfirmDesc = 'default' | 'modify' | 'delete' | 'quit';
+export type ConfirmDesc = 'default' | 'modify' | 'delete' | 'quit';
 
 interface confirmStoreType {
   isOpen: boolean;
