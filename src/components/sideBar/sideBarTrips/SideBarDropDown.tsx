@@ -3,20 +3,27 @@ import React, { useCallback } from 'react';
 import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import { useRouter } from 'next/navigation';
 
+import { tabMenuStore } from '@/store/tabMenuStore';
+import { changeSideBarFormat } from '@/utils/aboutDay';
+
+import { SIDE_LIST_NAME } from './SideBarPlanList';
+
 import type { PlanType } from '@/types/supabase';
 
 interface SideBarDropDownProps {
   activeDropDown: boolean;
   aboveDropDownIsOpen: boolean;
-  filterName: '즐겨찾기 한 목록' | '예정된 여행' | '다녀온 여행';
+  filter: 'bookMark' | 'planning' | 'end';
   planList: PlanType[] | [];
   setFunc: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function SideBarDropDown(props: SideBarDropDownProps) {
-  const { activeDropDown, aboveDropDownIsOpen, filterName, planList, setFunc } =
+  const { activeDropDown, aboveDropDownIsOpen, filter, planList, setFunc } =
     props;
   const router = useRouter();
+
+  const setSelectedMenu = tabMenuStore((state) => state.setSelectedMenu);
 
   const onClickListItem = useCallback((state: string, id: string) => {
     if (state === 'planning') router.push(`/plan/${id}`);
@@ -26,7 +33,7 @@ export default function SideBarDropDown(props: SideBarDropDownProps) {
   }, []);
 
   const onClickMoreBtn = useCallback(() => {
-    // setSelectedMenu(filter);
+    setSelectedMenu(filter);
     setFunc(false);
     router.push('/main');
   }, []);
@@ -66,7 +73,7 @@ export default function SideBarDropDown(props: SideBarDropDownProps) {
             </p>
             {!aboveDropDownIsOpen && (
               <span className="text-[13px] ml-[4px]">
-                {/* ({changeSideBarFormat(plan.dates[0])}) */}
+                ({changeSideBarFormat(plan.dates[0])})
               </span>
             )}
           </li>
@@ -92,7 +99,7 @@ export default function SideBarDropDown(props: SideBarDropDownProps) {
             sm:w-[234px]
             "
         >
-          <p className="text-[13px]">{filterName}이 없습니다</p>
+          <p className="text-[13px]">{SIDE_LIST_NAME[filter]}이 없습니다</p>
         </li>
       )}
     </ul>
