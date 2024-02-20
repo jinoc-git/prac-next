@@ -4,8 +4,8 @@ import AddPlanForm from '@/components/addPlan/AddPlanForm';
 
 export default function AddPlan() {
   return (
-    <div>
+    <section>
       <AddPlanForm />
-    </div>
+    </section>
   );
 }
