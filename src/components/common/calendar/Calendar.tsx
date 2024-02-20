@@ -1,4 +1,7 @@
+'use client';
+
 import React from 'react';
+import ReactDatePicker from 'react-datepicker';
 
 interface CalendarProps {
   startDate: Date | null;
@@ -28,7 +31,7 @@ export default function Calendar(props: CalendarProps) {
             여행 시작일
           </label>
         </div>
-        <DatePicker
+        <ReactDatePicker
           renderCustomHeader={({
             date,
             decreaseMonth,
