@@ -1,7 +1,10 @@
 'use client';
 
 import React from 'react';
-import ReactDatePicker from 'react-datepicker';
+import ReactDatePicker, { registerLocale } from 'react-datepicker';
+
+import { ko } from 'date-fns/locale';
+import dayjs from 'dayjs';
 
 interface CalendarProps {
   startDate: Date | null;
@@ -10,9 +13,13 @@ interface CalendarProps {
   EndDateChangeHandler: (date: Date | null) => void;
 }
 
+registerLocale('ko', ko);
+
 export default function Calendar(props: CalendarProps) {
   const { startDate, endDate, StartDateChangeHandler, EndDateChangeHandler } =
     props;
+
+  const today = new Date();
 
   return (
     <div
