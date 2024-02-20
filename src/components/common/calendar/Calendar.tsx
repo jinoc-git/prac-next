@@ -5,6 +5,9 @@ import ReactDatePicker, { registerLocale } from 'react-datepicker';
 
 import { ko } from 'date-fns/locale';
 import dayjs from 'dayjs';
+import Image from 'next/image';
+
+import { modifyPlanStore } from '@/store/modifyPlanStore';
 
 interface CalendarProps {
   startDate: Date | null;
@@ -18,14 +21,15 @@ registerLocale('ko', ko);
 export default function Calendar(props: CalendarProps) {
   const { startDate, endDate, StartDateChangeHandler, EndDateChangeHandler } =
     props;
+  const modifyState = modifyPlanStore((state) => state.modifyState);
 
   const today = new Date();
 
   return (
     <div
       className="relative z-10 flex items-center  
-    sm:w-[286px] sm:block sm:pt-[15px] sm:mx-auto sm:justify-between
-    md:w-[680px] md:py-[10px] md:flex md:mx-[6px]"
+      sm:w-[286px] sm:block sm:pt-[15px] sm:mx-auto sm:justify-between
+      md:w-[680px] md:py-[10px] md:flex md:mx-[6px]"
     >
       <div className="sm:flex sm:justify-between sm:w-[286px] md:w-[280px] ">
         <div
@@ -33,7 +37,12 @@ export default function Calendar(props: CalendarProps) {
         sm:gap-[7px] sm:mb-[16px]
         md:gap-2 md:mr-[30px]"
         >
-          <IconCalendarDefault w="w-[20px]" h="h-[20px]" fill="#4E4F54" />
+          <Image
+            alt="캘린더 아이콘"
+            src={'/images/calenderIcon.svg'}
+            width={20}
+            height={20}
+          />
           <label className="sm:text-sm sm:w-[63px] md:w-[80px] md:text-normal">
             여행 시작일
           </label>
@@ -47,7 +56,7 @@ export default function Calendar(props: CalendarProps) {
             nextMonthButtonDisabled,
           }) => {
             return (
-              <div className="flex justify-center items-center bg-white m-[10px]">
+              <div className="flex-box bg-white m-[10px]">
                 <div className="flex justify-between items-center w-[140px] ">
                   <button
                     className="w-[24px] h-[24px] font-Bold text-gray_dark_1"
@@ -104,12 +113,17 @@ export default function Calendar(props: CalendarProps) {
         sm:gap-[7px] sm:mb-[16px]
         md:gap-2 md:mr-[30px]"
         >
-          <IconCalendarDefault w="w-[20px]" h="h-[20px]" fill="#4E4F54" />
+          <Image
+            alt="캘린더 아이콘"
+            src={'/images/calenderIcon.svg'}
+            width={20}
+            height={20}
+          />
           <label className="sm:text-sm sm:w-[63px] md:w-[80px] md:text-normal">
             여행 종료일
           </label>
         </div>
-        <DatePicker
+        <ReactDatePicker
           renderCustomHeader={({
             date,
             decreaseMonth,
@@ -118,7 +132,7 @@ export default function Calendar(props: CalendarProps) {
             nextMonthButtonDisabled,
           }) => {
             return (
-              <div className="flex justify-center items-center bg-white m-[10px]">
+              <div className="flex-box bg-white m-[10px]">
                 <div className="flex justify-between items-center w-[140px] ">
                   <button
                     className="w-[24px] h-[24px] font-Bold text-gray_dark_1"
