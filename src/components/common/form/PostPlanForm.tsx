@@ -1,0 +1,40 @@
+'use client';
+
+import React from 'react';
+import type { FieldErrors, UseFormRegisterReturn } from 'react-hook-form';
+
+import type { AddPlanContentsInputType } from '@/components/addPlan/AddPlanContents';
+
+interface PostPlanFormProps {
+  register: UseFormRegisterReturn<string>;
+  errors: FieldErrors<AddPlanContentsInputType>;
+}
+
+export default function PostPlanForm(props: PostPlanFormProps) {
+  const { register, errors } = props;
+
+  return (
+    <form
+      className="flex flex-col mx-auto
+        sm:mt-[32px] sm:w-[310px]
+        md:mt-[100px] md:w-[720px] md:px-[10px]"
+    >
+      <input
+        id="title"
+        type="text"
+        placeholder="여행 제목을 입력하세요."
+        {...register}
+        className="border-b-[1px] border-gray w-full outline-none font-bold placeholder:text-gray  text-black
+            sm:text-[20px]
+            md:text-[24px] "
+      />
+      <p
+        className="text-xs font-bold text-red-600
+            sm:h-[8px] sm:w-[297px]
+            md:h-[15px]"
+      >
+        {errors?.title?.message}
+      </p>
+    </form>
+  );
+}
