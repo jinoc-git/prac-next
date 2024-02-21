@@ -12,14 +12,14 @@ import { modifyPlanStore } from '@/store/modifyPlanStore';
 interface CalendarProps {
   startDate: Date | null;
   endDate: Date | null;
-  StartDateChangeHandler: (date: Date | null) => void;
-  EndDateChangeHandler: (date: Date | null) => void;
+  startDateChangeHandler: (date: Date | null) => void;
+  endDateChangeHandler: (date: Date | null) => void;
 }
 
 registerLocale('ko', ko);
 
 export default function Calendar(props: CalendarProps) {
-  const { startDate, endDate, StartDateChangeHandler, EndDateChangeHandler } =
+  const { startDate, endDate, startDateChangeHandler, endDateChangeHandler } =
     props;
   const [modifyState, clearRequiredDates] = modifyPlanStore((state) => {
     return [state.modifyState, state.clearRequiredDates];
@@ -92,7 +92,7 @@ export default function Calendar(props: CalendarProps) {
           showIcon
           selected={startDate}
           onChange={(date) => {
-            StartDateChangeHandler(date);
+            startDateChangeHandler(date);
           }}
           minDate={today}
           maxDate={endDate}
@@ -167,7 +167,7 @@ export default function Calendar(props: CalendarProps) {
           shouldCloseOnSelect
           showIcon
           selected={endDate}
-          onChange={EndDateChangeHandler}
+          onChange={endDateChangeHandler}
           selectsEnd
           startDate={startDate}
           endDate={endDate}

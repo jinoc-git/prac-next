@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 
 import { modifyPlanStore } from '@/store/modifyPlanStore';
 
+import Calendar from '../common/calendar/Calendar';
+
 interface AddPlanDateProps {
   state?: string;
   planDatesData?: string[];
@@ -35,8 +37,11 @@ export default function AddPlanDate(props: AddPlanDateProps) {
   };
 
   return (
-    <div>
-      <div></div>
-    </div>
+    <Calendar
+      startDate={startDate}
+      endDate={endDate}
+      startDateChangeHandler={startDateChangeHandler}
+      endDateChangeHandler={endDateChangeHandler}
+    />
   );
 }
