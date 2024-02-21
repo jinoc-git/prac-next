@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactDatePicker, { registerLocale } from 'react-datepicker';
 
 import { ko } from 'date-fns/locale';
@@ -21,9 +21,17 @@ registerLocale('ko', ko);
 export default function Calendar(props: CalendarProps) {
   const { startDate, endDate, StartDateChangeHandler, EndDateChangeHandler } =
     props;
-  const modifyState = modifyPlanStore((state) => state.modifyState);
+  const [modifyState, clearRequiredDates] = modifyPlanStore((state) => {
+    return [state.modifyState, state.clearRequiredDates];
+  });
 
   const today = new Date();
+
+  useEffect(() => {
+    return () => {
+      clearRequiredDates();
+    };
+  }, []);
 
   return (
     <div
@@ -103,7 +111,7 @@ export default function Calendar(props: CalendarProps) {
           readOnly={modifyState === 'readOnly'}
           placeholderText="YYYY / MM / DD"
           required
-          withPortal={screenSize === 'sm'}
+          // withPortal={screenSize === 'sm'}
           portalId="datepiker-portal"
         />
       </div>
@@ -176,7 +184,7 @@ export default function Calendar(props: CalendarProps) {
           readOnly={modifyState === 'readOnly'}
           placeholderText="YYYY / MM / DD"
           required
-          withPortal={screenSize === 'sm'}
+          // withPortal={screenSize === 'sm'}
           portalId="datepiker-portal"
         />
       </div>
