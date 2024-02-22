@@ -9,6 +9,8 @@ import Image from 'next/image';
 
 import { modifyPlanStore } from '@/store/modifyPlanStore';
 
+import 'react-datepicker/dist/react-datepicker.css';
+
 interface CalendarProps {
   startDate: Date | null;
   endDate: Date | null;
@@ -43,11 +45,11 @@ export default function Calendar(props: CalendarProps) {
         <div
           className="flex items-center font-semibold text-gray_dark_1 
         sm:gap-[7px] sm:mb-[16px]
-        md:gap-2 md:mr-[30px]"
+        md:gap-2"
         >
           <Image
             alt="캘린더 아이콘"
-            src={'/images/calenderIcon.svg'}
+            src={'/images/calendarIcon.svg'}
             width={20}
             height={20}
           />
@@ -70,6 +72,7 @@ export default function Calendar(props: CalendarProps) {
                     className="w-[24px] h-[24px] font-Bold text-gray_dark_1"
                     onClick={decreaseMonth}
                     disabled={prevMonthButtonDisabled}
+                    type="button"
                   >
                     {'<'}
                   </button>
@@ -80,6 +83,7 @@ export default function Calendar(props: CalendarProps) {
                     className="w-[24px] h-[24px] font-Bold text-gray_dark_1"
                     onClick={increaseMonth}
                     disabled={nextMonthButtonDisabled}
+                    type="button"
                   >
                     {'>'}
                   </button>
@@ -89,7 +93,6 @@ export default function Calendar(props: CalendarProps) {
           }}
           dateFormat="yyyy년 MM월 dd일"
           shouldCloseOnSelect
-          showIcon
           selected={startDate}
           onChange={(date) => {
             startDateChangeHandler(date);
@@ -107,7 +110,7 @@ export default function Calendar(props: CalendarProps) {
           }
           className="text-center react-datepicker read-only:cursor-default 
             sm:w-[132px] sm:h-[28px]
-            md:w-[120px] md:mr-[46px]"
+            md:w-[120px] md:mr-[40px]"
           readOnly={modifyState === 'readOnly'}
           placeholderText="YYYY / MM / DD"
           required
@@ -119,11 +122,11 @@ export default function Calendar(props: CalendarProps) {
         <div
           className="flex items-center font-semibold text-gray_dark_1
         sm:gap-[7px] sm:mb-[16px]
-        md:gap-2 md:mr-[30px]"
+        md:gap-2 "
         >
           <Image
             alt="캘린더 아이콘"
-            src={'/images/calenderIcon.svg'}
+            src={'/images/calendarIcon.svg'}
             width={20}
             height={20}
           />
@@ -146,6 +149,7 @@ export default function Calendar(props: CalendarProps) {
                     className="w-[24px] h-[24px] font-Bold text-gray_dark_1"
                     onClick={decreaseMonth}
                     disabled={prevMonthButtonDisabled}
+                    type="button"
                   >
                     {'<'}
                   </button>
@@ -156,6 +160,7 @@ export default function Calendar(props: CalendarProps) {
                     className="w-[24px] h-[24px] font-Bold text-gray_dark_1"
                     onClick={increaseMonth}
                     disabled={nextMonthButtonDisabled}
+                    type="button"
                   >
                     {'>'}
                   </button>
@@ -165,7 +170,6 @@ export default function Calendar(props: CalendarProps) {
           }}
           dateFormat="yyyy년 MM월 dd일"
           shouldCloseOnSelect
-          showIcon
           selected={endDate}
           onChange={endDateChangeHandler}
           selectsEnd
