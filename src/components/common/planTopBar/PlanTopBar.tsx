@@ -17,7 +17,7 @@ export default function PlanTopBar(props: PlanTopBarProps) {
   const isSideBarOpen = sideBarStore((state) => state.isSideBarOpen);
 
   return (
-    <nav
+    <div
       className={`flex justify-between items-center border-b-[1px] border-navy py-[11.5px] bg-white z-30
       sm:fixed sm:w-[100vw] sm:mt-0 sm:top-[89px] side-bar-transition
       md:static md:pt-[86px] ${
@@ -53,6 +53,6 @@ export default function PlanTopBar(props: PlanTopBarProps) {
           {modifyState === 'modify' ? `저장하기` : `수정하기`}
         </button>
       </div>
-    </nav>
+    </div>
   );
 }

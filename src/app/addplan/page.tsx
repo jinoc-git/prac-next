@@ -1,15 +1,11 @@
-'use client';
-
 import React from 'react';
 
-import PlanTopBar from '@/components/common/planTopBar/PlanTopBar';
+import AddPlanForm from '@/components/addPlan/AddPlanContents';
 
 export default function AddPlan() {
-  const handleButtonClick = async () => {};
-
   return (
-    <div>
-      <PlanTopBar handleButtonClick={handleButtonClick} />
-    </div>
+    <section>
+      <AddPlanForm />
+    </section>
   );
 }

@@ -15,7 +15,7 @@ export default function SideBarLogo() {
   return (
     <div
       className="flex items-center bg-white
-      sm:w-[310px] sm:h-[70px] sm:mt-[8px]
+      sm:w-[310px] sm:h-[70px] mt-[8px] mb-[4px]
       md:w-[222px] md:h-[55px]"
     >
       <Image
