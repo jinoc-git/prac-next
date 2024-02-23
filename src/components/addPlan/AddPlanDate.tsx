@@ -20,8 +20,10 @@ export default function AddPlanDate(props: AddPlanDateProps) {
     planDatesData?.[planDatesData.length - 1] as string,
   );
 
+  const today = new Date();
+
   const [startDate, setStartDate] = useState<Date | null>(
-    state === 'addPlan' ? null : planStartDate,
+    state === 'addPlan' ? today : planStartDate,
   );
   const [endDate, setEndDate] = useState<Date | null>(
     state === 'addPlan' ? null : planEndDate,
@@ -38,6 +40,7 @@ export default function AddPlanDate(props: AddPlanDateProps) {
 
   return (
     <Calendar
+      today={today}
       startDate={startDate}
       endDate={endDate}
       startDateChangeHandler={startDateChangeHandler}

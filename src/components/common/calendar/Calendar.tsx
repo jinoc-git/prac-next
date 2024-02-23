@@ -12,6 +12,7 @@ import { modifyPlanStore } from '@/store/modifyPlanStore';
 import 'react-datepicker/dist/react-datepicker.css';
 
 interface CalendarProps {
+  today: Date;
   startDate: Date | null;
   endDate: Date | null;
   startDateChangeHandler: (date: Date | null) => void;
@@ -21,13 +22,19 @@ interface CalendarProps {
 registerLocale('ko', ko);
 
 export default function Calendar(props: CalendarProps) {
-  const { startDate, endDate, startDateChangeHandler, endDateChangeHandler } =
-    props;
+  const {
+    today,
+    startDate,
+    endDate,
+    startDateChangeHandler,
+    endDateChangeHandler,
+  } = props;
+
   const [modifyState, clearRequiredDates] = modifyPlanStore((state) => {
     return [state.modifyState, state.clearRequiredDates];
   });
 
-  const today = new Date();
+  console.log(modifyState);
 
   useEffect(() => {
     return () => {
@@ -114,7 +121,7 @@ export default function Calendar(props: CalendarProps) {
           readOnly={modifyState === 'readOnly'}
           placeholderText="YYYY / MM / DD"
           required
-          // withPortal={screenSize === 'sm'}
+          // withPortal={true}
           portalId="datepiker-portal"
         />
       </div>
