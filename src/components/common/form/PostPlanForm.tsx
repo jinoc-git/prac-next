@@ -1,9 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import type { FieldErrors, UseFormRegisterReturn } from 'react-hook-form';
 
 import AddPlanDate from '@/components/addPlan/AddPlanDate';
+import { modifyPlanStore } from '@/store/modifyPlanStore';
 
 import type { AddPlanContentsInputType } from '@/components/addPlan/AddPlanContents';
 
@@ -14,6 +15,11 @@ interface PostPlanFormProps {
 
 export default function PostPlanForm(props: PostPlanFormProps) {
   const { register, errors } = props;
+  const setModify = modifyPlanStore((state) => state.setModify);
+
+  useEffect(() => {
+    setModify();
+  }, []);
 
   return (
     <form

@@ -21,8 +21,8 @@ function RootLayout({ children }: { children: React.ReactNode }) {
           <Header />
           <main className="w-screen h-screen">{children}</main>
           <ToastProvider />
-          <div id="datepiker-portal" />
         </Providers>
+        <div id="datepiker-portal" />
       </body>
     </html>
   );
