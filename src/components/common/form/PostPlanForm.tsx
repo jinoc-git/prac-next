@@ -6,6 +6,8 @@ import type { FieldErrors, UseFormRegisterReturn } from 'react-hook-form';
 import AddPlanDate from '@/components/addPlan/AddPlanDate';
 import { modifyPlanStore } from '@/store/modifyPlanStore';
 
+import Invite from '../invite/Invite';
+
 import type { AddPlanContentsInputType } from '@/components/addPlan/AddPlanContents';
 
 interface PostPlanFormProps {
@@ -44,6 +46,7 @@ export default function PostPlanForm(props: PostPlanFormProps) {
         {errors?.title?.message}
       </p>
       <AddPlanDate state="addPlan" />
+      <Invite />
     </form>
   );
 }

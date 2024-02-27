@@ -34,8 +34,6 @@ export default function Calendar(props: CalendarProps) {
     return [state.modifyState, state.clearRequiredDates];
   });
 
-  console.log(modifyState);
-
   useEffect(() => {
     return () => {
       clearRequiredDates();
@@ -51,8 +49,8 @@ export default function Calendar(props: CalendarProps) {
       <div className="sm:flex sm:justify-between sm:w-[286px] md:w-[280px] ">
         <div
           className="flex items-center font-semibold text-gray_dark_1 
-        sm:gap-[7px] sm:mb-[16px]
-        md:gap-2"
+          sm:gap-[7px] sm:mb-[16px]
+          md:gap-2 md:mr-[30px]"
         >
           <Image
             alt="캘린더 아이콘"
@@ -117,7 +115,7 @@ export default function Calendar(props: CalendarProps) {
           }
           className="text-center react-datepicker read-only:cursor-default 
             sm:w-[132px] sm:h-[28px]
-            md:w-[120px] md:mr-[40px]"
+            md:w-[120px] md:mr-[20px]"
           readOnly={modifyState === 'readOnly'}
           placeholderText="YYYY / MM / DD"
           required
@@ -129,7 +127,7 @@ export default function Calendar(props: CalendarProps) {
         <div
           className="flex items-center font-semibold text-gray_dark_1
         sm:gap-[7px] sm:mb-[16px]
-        md:gap-2 "
+        md:gap-2 md:mr-[30px]"
         >
           <Image
             alt="캘린더 아이콘"
@@ -191,7 +189,7 @@ export default function Calendar(props: CalendarProps) {
           }
           className="text-center react-datepicker read-only:cursor-default
             sm:w-[132px] sm:h-[28px]
-            md:w-[120px] md:mr-[46px]"
+            md:w-[120px] md:mr-[20px]"
           readOnly={modifyState === 'readOnly'}
           placeholderText="YYYY / MM / DD"
           required
