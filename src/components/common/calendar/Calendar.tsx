@@ -34,8 +34,6 @@ export default function Calendar(props: CalendarProps) {
     return [state.modifyState, state.clearRequiredDates];
   });
 
-  console.log(modifyState);
-
   useEffect(() => {
     return () => {
       clearRequiredDates();
