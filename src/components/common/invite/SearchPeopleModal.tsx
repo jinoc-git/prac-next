@@ -2,6 +2,8 @@
 
 import React from 'react';
 
+import ModalLayout from '../layout/ModalLayout';
+
 interface SearchPeopleModalProps {
   closeModal: () => void;
   isAnimate: boolean;
@@ -11,8 +13,8 @@ export default function SearchPeopleModal(props: SearchPeopleModalProps) {
   const { closeModal, isAnimate } = props;
 
   return (
-    <div>
+    <ModalLayout isAnimate={isAnimate}>
       <div></div>
-    </div>
+    </ModalLayout>
   );
 }
