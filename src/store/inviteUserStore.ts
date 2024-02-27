@@ -8,7 +8,7 @@ interface InviteUserStoreType {
   inviteUser: (data: UserType) => void;
   resetInvitedUser: () => void;
   setUser: (data: UserType[]) => void;
-  syncInviteduser: () => void;
+  syncInvitedUser: () => void;
 }
 
 export const inviteUserStore = create<InviteUserStoreType>((set, get) => ({
@@ -35,13 +35,13 @@ export const inviteUserStore = create<InviteUserStoreType>((set, get) => ({
       invitedUser: [...data],
     }));
   },
-  syncInviteduser: () => {
+  syncInvitedUser: () => {
     set((state) => ({
       oldInvitedUser: state.invitedUser,
     }));
   },
 }));
 
-export const sub = inviteUserStore.subscribe((state) => {
+export const subInvite = inviteUserStore.subscribe((state) => {
   return state.invitedUser;
 });
