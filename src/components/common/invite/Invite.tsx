@@ -8,6 +8,8 @@ import Image from 'next/image';
 import { inviteUserStore } from '@/store/inviteUserStore';
 import { modifyPlanStore } from '@/store/modifyPlanStore';
 
+import SearchPeopleModal from './SearchPeopleModal';
+
 export default function Invite() {
   const { oldInvitedUser, inviteUser, resetInvitedUser, syncInvitedUser } =
     inviteUserStore();
@@ -130,8 +132,7 @@ export default function Invite() {
         )}
       </div>
       {isOpenModal && (
-        // <SearchPeople closeModal={closeModal} isAnimation={isAnimation} />
-        <div></div>
+        <SearchPeopleModal closeModal={closeModal} isAnimate={isAnimate} />
       )}
     </>
   );
