@@ -215,3 +215,16 @@ export const updateUserNickname = async (nickname: string, userId: string) => {
     }
   }
 };
+
+export const getUserInfoWithId = async (id: string) => {
+  const { data: userData, error } = await supabase
+    .from('users')
+    .select()
+    .eq('id', id);
+
+  if (error !== null || userData === null) {
+    console.log('유저 데이터 불러오기 오류');
+  }
+
+  return userData;
+};
