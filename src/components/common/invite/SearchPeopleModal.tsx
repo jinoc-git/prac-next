@@ -8,10 +8,12 @@ import Image from 'next/image';
 import { useParams } from 'next/navigation';
 
 import { findUsers } from '@/api/planMate';
+import useConfirm from '@/hooks/useConfirm';
 import useDebounce from '@/hooks/useDebounce';
 import { inviteUserStore } from '@/store/inviteUserStore';
+import { searchCallback } from '@/utils/arrayCallbackFunctionList';
 
-import InviteUser from './InviteUser';
+import InvitedOrSearchUser from './InvitedOrSearchUser';
 import ModalLayout from '../layout/ModalLayout';
 
 import type { UserType } from '@/types/supabase';
@@ -29,6 +31,7 @@ export default function SearchPeopleModal(props: SearchPeopleModalProps) {
   const { closeModal, isAnimate } = props;
   const { invitedUser, inviteUser, setUser, syncInvitedUser } =
     inviteUserStore();
+  const confirm = useConfirm();
   const planId = useParams(); // 수정 필요
   const [people, setPeople] = useState<UserType[]>([]);
 
@@ -50,13 +53,23 @@ export default function SearchPeopleModal(props: SearchPeopleModalProps) {
       const searchedPeople: UserType[] = [];
       searchedPeople.push(...res.nickname);
       searchedPeople.push(
-        ...res.email.filter(search.notInvite(searchedPeople)),
+        ...res.email.filter(searchCallback.isNotInvite(searchedPeople)),
       );
       setPeople(searchedPeople);
     }
   };
 
   const debouncedSearchUser = useDebounce(searchUser, 300);
+  const userIdList = invitedUser.map((user) => user.id);
+
+  const handleInvite = async (user: UserType) => {
+    const confTitle = '동행 초대';
+    const confDesc = '해당 여행에 초대하시겠습니까?';
+    const confFunc = () => {
+      inviteUser(user);
+    };
+    confirm.default(confTitle, confDesc, confFunc);
+  };
 
   return (
     <ModalLayout isAnimate={isAnimate}>
@@ -81,7 +94,7 @@ export default function SearchPeopleModal(props: SearchPeopleModalProps) {
               invitedUser.map((person, idx) => {
                 return (
                   <div key={uuid()} className="w-full ">
-                    <InviteUser
+                    <InvitedOrSearchUser
                       person={person}
                       idx={idx}
                       deleteUser={deleteUser}
@@ -141,7 +154,7 @@ export default function SearchPeopleModal(props: SearchPeopleModalProps) {
           {searchResult.map((person: UserType, idx) => {
             return (
               <div key={uuid()} className="w-full">
-                <UserList
+                <InvitedOrSearchUser
                   person={person}
                   idx={idx}
                   handleInvite={handleInvite}

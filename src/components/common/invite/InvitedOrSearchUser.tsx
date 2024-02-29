@@ -4,14 +4,14 @@ import React from 'react';
 
 import type { UserType } from '@/types/supabase';
 
-interface InviteUserProps {
+interface InvitedOrSearchUserProps {
   person: UserType;
   idx: number;
   handleInvite?: (user: UserType) => Promise<void>;
   deleteUser?: (idx: number) => void;
 }
 
-export default function InviteUser(props: InviteUserProps) {
+export default function InvitedOrSearchUser(props: InvitedOrSearchUserProps) {
   const { person, idx, handleInvite, deleteUser } = props;
 
   return (
