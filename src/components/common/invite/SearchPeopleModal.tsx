@@ -29,7 +29,7 @@ export default function SearchPeopleModal(props: SearchPeopleModalProps) {
   const { closeModal, isAnimate } = props;
   const { invitedUser, inviteUser, setUser, syncInvitedUser } =
     inviteUserStore();
-  const planId = useParams();
+  const planId = useParams(); // 수정 필요
   const [people, setPeople] = useState<UserType[]>([]);
 
   const {
