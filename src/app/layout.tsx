@@ -22,6 +22,7 @@ function RootLayout({ children }: { children: React.ReactNode }) {
           <main className="w-screen h-screen">{children}</main>
           <ToastProvider />
         </Providers>
+        <div id="modal-portal" />
         <div id="datepiker-portal" />
       </body>
     </html>

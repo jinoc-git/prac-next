@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { type SubmitHandler, useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import Image from 'next/image';
@@ -70,6 +71,31 @@ export default function SearchPeopleModal(props: SearchPeopleModalProps) {
     };
     confirm.default(confTitle, confDesc, confFunc);
   };
+
+  const deleteUser = (idx: number) => {
+    const confTitle = '동행 초대 삭제';
+    const confDesc = '해당 여행에서 삭제하시겠습니까?';
+    const confFunc = () => {
+      const deletedUser = invitedUser.filter(searchCallback.cancelInvite(idx));
+      setUser(deletedUser);
+    };
+    confirm.delete(confTitle, confDesc, confFunc);
+  };
+
+  const saveInviteData = () => {
+    const Ids = invitedUser.map((item) => item.id);
+    if (Ids !== undefined && planId !== undefined) {
+      // inviteMutation.mutate([usersId, planId]);
+    }
+    setUser(invitedUser);
+    toast.success('저장되었습니다.');
+    closeModal();
+    syncInvitedUser();
+  };
+
+  const searchResult = people.filter(
+    searchCallback.excludeInvitedUsers(invitedUser),
+  );
 
   return (
     <ModalLayout isAnimate={isAnimate}>
@@ -174,7 +200,7 @@ export default function SearchPeopleModal(props: SearchPeopleModalProps) {
           </button>
           <button
             name="invite-add-person-btn"
-            onClick={inviteData}
+            onClick={saveInviteData}
             className="md:w-[12.5rem] md:h-[2.75rem] sm:w-[150px] sm:h-[40px] bottom-0 mx-auto  rounded-lg border border-navy bg-navy text-white  hover:bg-navy_light_3 hover:border-bg-navy_light_3"
           >
             저장
