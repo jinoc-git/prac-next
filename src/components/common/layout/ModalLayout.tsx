@@ -1,4 +1,5 @@
 import React from 'react';
+import { createPortal } from 'react-dom';
 
 interface ModalLayoutProps {
   children: React.ReactNode;
@@ -7,7 +8,7 @@ interface ModalLayoutProps {
 
 export default function ModalLayout(props: ModalLayoutProps) {
   const { children, isAnimate } = props;
-  return (
+  return createPortal(
     <div
       className={`fixed inset-0 z-50 flex-box w-screen h-screen bg-black/30 
       ${isAnimate ? 'sm:animate-fadeIn' : 'sm:animate-fadeOut'}`}
@@ -25,6 +26,7 @@ export default function ModalLayout(props: ModalLayoutProps) {
       >
         {children}
       </div>
-    </div>
+    </div>,
+    document.getElementById('modal-portal')!,
   );
 }
