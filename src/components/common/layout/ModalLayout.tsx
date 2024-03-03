@@ -15,7 +15,7 @@ export default function ModalLayout(props: ModalLayoutProps) {
     >
       <div
         className={`flex flex-col justify-center bg-bg_white rounded-lg
-        md:w-modal  md:px-[52px] md:py-[48px] md:rounded-lg md:static
+        md:w-[500px]  md:px-[52px] md:py-[48px] md:rounded-lg md:static
         sm:w-[360px] sm:px-[25px] sm:py-[36px] sm:gap-[16px] sm:fixed sm:bottom-0 sm:rounded-b-none
       ${
         isAnimate
