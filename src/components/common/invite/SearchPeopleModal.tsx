@@ -160,7 +160,7 @@ export default function SearchPeopleModal(props: SearchPeopleModalProps) {
                   const inputValue = e.target.value.trim();
                   debouncedSearchUser({ userInfo: inputValue });
                 }}
-                className="h-10 pl-10 pr-3 border border-none rounded-3xl w-auth md:text-sm sm:text-xs "
+                className="h-10 pl-10 pr-3 border border-none rounded-lg w-[396px] md:text-sm sm:text-xs "
               />
             </div>
             <p>{errors?.userInfo?.message}</p>
