@@ -1,11 +1,11 @@
 import React from 'react';
 
-import AddPlanForm from '@/components/addPlan/AddPlanContents';
+import AddPlanContents from '@/components/addPlan/AddPlanContents';
 
 export default function AddPlan() {
   return (
     <section>
-      <AddPlanForm />
+      <AddPlanContents />
     </section>
   );
 }
