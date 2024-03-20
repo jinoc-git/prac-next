@@ -4,6 +4,8 @@ import React, { useEffect } from 'react';
 import type { FieldErrors, UseFormRegisterReturn } from 'react-hook-form';
 
 import AddPlanDate from '@/components/addPlan/AddPlanDate';
+import { authStore } from '@/store/authStore';
+import { inviteUserStore } from '@/store/inviteUserStore';
 import { modifyPlanStore } from '@/store/modifyPlanStore';
 
 import Invite from '../invite/Invite';
@@ -18,10 +20,21 @@ interface PostPlanFormProps {
 export default function PostPlanForm(props: PostPlanFormProps) {
   const { register, errors } = props;
   const setModify = modifyPlanStore((state) => state.setModify);
+  const { inviteUser, syncInvitedUser } = inviteUserStore(
+    ({ inviteUser, syncInvitedUser }) => ({ inviteUser, syncInvitedUser }),
+  );
+  const user = authStore(({ user }) => user);
 
   useEffect(() => {
     setModify();
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      inviteUser(user);
+      syncInvitedUser();
+    }
+  }, [user]);
 
   return (
     <form
