@@ -1,10 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
+import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
+import { useParams } from 'next/navigation';
 
+import { getMates } from '@/api/planMate';
 import { inviteUserStore } from '@/store/inviteUserStore';
 import { modifyPlanStore } from '@/store/modifyPlanStore';
 
@@ -17,6 +20,15 @@ export default function Invite() {
 
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isAnimate, setIsAnimate] = useState(false);
+
+  const { planId } = useParams<{ planId: string }>();
+
+  const { data } = useQuery({
+    queryKey: ['planMates', planId],
+    queryFn: async () => {
+      if (planId) return await getMates(planId);
+    },
+  });
 
   const openModal = () => {
     setIsOpenModal(true);
@@ -33,6 +45,20 @@ export default function Invite() {
   const isOldInvitedUser =
     oldInvitedUser.length !== 0 && oldInvitedUser !== null;
   const maxDisplayCount = 3;
+
+  useEffect(() => {
+    return () => resetInvitedUser();
+  }, [data]);
+
+  useEffect(() => {
+    if (data) {
+      resetInvitedUser();
+      data.forEach((user) => {
+        inviteUser(user);
+      });
+      syncInvitedUser();
+    }
+  }, []);
 
   return (
     <>
