@@ -58,9 +58,9 @@ export default function Calendar(props: CalendarProps) {
             width={20}
             height={20}
           />
-          <label className="sm:text-sm sm:w-[63px] md:w-[80px] md:text-normal">
+          <p className="sm:text-sm sm:w-[63px] md:w-[80px] md:text-normal">
             여행 시작일
-          </label>
+          </p>
         </div>
         <ReactDatePicker
           renderCustomHeader={({
@@ -135,9 +135,9 @@ export default function Calendar(props: CalendarProps) {
             width={20}
             height={20}
           />
-          <label className="sm:text-sm sm:w-[63px] md:w-[80px] md:text-normal">
+          <p className="sm:text-sm sm:w-[63px] md:w-[80px] md:text-normal">
             여행 종료일
-          </label>
+          </p>
         </div>
         <ReactDatePicker
           renderCustomHeader={({

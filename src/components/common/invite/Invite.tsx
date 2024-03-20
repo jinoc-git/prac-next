@@ -27,6 +27,7 @@ export default function Invite() {
     queryKey: ['planMates', planId],
     queryFn: async () => {
       if (planId) return await getMates(planId);
+      else return null;
     },
   });
 
@@ -79,13 +80,13 @@ export default function Invite() {
               width={20}
               height={15}
             />
-            <label
+            <p
               className="font-semibold  text-gray_dark_1 
                 sm:w-[24px] sm:text-sm sm:mr-[15px]
                 md:w-[30px] md:text-normal md:mr-[80px]"
             >
               동행
-            </label>
+            </p>
           </div>
           <div className="flex items-center">
             {isOldInvitedUser ? (
@@ -96,14 +97,10 @@ export default function Invite() {
                       <Image
                         alt={`profile-img ${idx}`}
                         key={uuid()}
-                        src={
-                          user.avatar_url != null
-                            ? user.avatar_url
-                            : '/images/useDefault.svg'
-                        }
+                        src={user.avatar_url ?? '/images/userDefault.svg'}
                         width={24}
                         height={24}
-                        className="object-cover rounded-full
+                        className="object-cover rounded-full border-[#DCDCDC] border-[1px]
                           sm:w-[16px] sm:h-[16px]
                           md:w-6 md:h-6"
                       />
