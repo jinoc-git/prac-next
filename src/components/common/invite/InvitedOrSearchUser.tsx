@@ -20,23 +20,13 @@ export default function InvitedOrSearchUser(props: InvitedOrSearchUserProps) {
   return (
     <div className="flex items-center justify-between mr-5 ">
       <div className="flex items-center justify-start gap-3 my-2 ml-5">
-        {person.avatar_url ? (
-          <Image
-            className="object-cover rounded-full md:w-[45px] md:h-[45px] sm:w-[55px] sm:h-[55px]"
-            src={person.avatar_url}
-            width={45}
-            height={45}
-            alt={`Avatar for ${person.nickname}`}
-          />
-        ) : (
-          <Image
-            className="object-cover rounded-full md:w-[45px] md:h-[45px] sm:w-[55px] sm:h-[55px]"
-            src={'/images/userDefault.svg'}
-            width={45}
-            height={45}
-            alt="Avatar img"
-          />
-        )}
+        <Image
+          className="object-cover rounded-full md:w-[45px] md:h-[45px] sm:w-[55px] sm:h-[55px]"
+          src={person.avatar_url ?? '/images/userDefault.svg'}
+          width={45}
+          height={45}
+          alt={`${person.nickname} avatar image`}
+        />
         <div>
           <p className="text-normal text-blue">{person.nickname}</p>
           <p className="sm:text-xs md:text-sm text-gray">{person.email}</p>
