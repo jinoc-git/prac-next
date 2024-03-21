@@ -5,12 +5,12 @@ import { type SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
 import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
+import _ from 'lodash';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 
 import { findUsers } from '@/api/planMate';
 import useConfirm from '@/hooks/useConfirm';
-import useDebounce from '@/hooks/useDebounce';
 import { inviteUserStore } from '@/store/inviteUserStore';
 import { searchCallback } from '@/utils/arrayCallbackFunctionList';
 
@@ -60,7 +60,7 @@ export default function SearchPeopleModal(props: SearchPeopleModalProps) {
     }
   };
 
-  const debouncedSearchUser = useDebounce(searchUser, 300);
+  const debouncedSearchUser = _.debounce(searchUser, 300);
   const userIdList = invitedUser.map((user) => user.id);
 
   const handleInvite = async (user: UserType) => {
