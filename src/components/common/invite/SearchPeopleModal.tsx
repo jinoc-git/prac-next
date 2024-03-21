@@ -11,6 +11,7 @@ import { useParams } from 'next/navigation';
 
 import { findUsers } from '@/api/planMate';
 import useConfirm from '@/hooks/useConfirm';
+import { authStore } from '@/store/authStore';
 import { inviteUserStore } from '@/store/inviteUserStore';
 import { searchCallback } from '@/utils/arrayCallbackFunctionList';
 
@@ -32,6 +33,7 @@ export default function SearchPeopleModal(props: SearchPeopleModalProps) {
   const { closeModal, isAnimate } = props;
   const { invitedUser, inviteUser, setUser, syncInvitedUser } =
     inviteUserStore();
+  const user = authStore(({ user }) => user);
   const confirm = useConfirm();
   const planId = useParams(); // 수정 필요
   const [people, setPeople] = useState<UserType[]>([]);
@@ -121,6 +123,7 @@ export default function SearchPeopleModal(props: SearchPeopleModalProps) {
                 return (
                   <div key={uuid()} className="w-full ">
                     <InvitedOrSearchUser
+                      user={user}
                       person={person}
                       idx={idx}
                       deleteUser={deleteUser}
@@ -181,6 +184,7 @@ export default function SearchPeopleModal(props: SearchPeopleModalProps) {
             return (
               <div key={uuid()} className="w-full">
                 <InvitedOrSearchUser
+                  user={user}
                   person={person}
                   idx={idx}
                   handleInvite={handleInvite}
