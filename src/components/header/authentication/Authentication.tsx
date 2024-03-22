@@ -19,8 +19,6 @@ export default function Authentication() {
   const router = useRouter();
   const pathname = usePathname();
 
-  const isLogin = localStorage.getItem('isLogin');
-
   const onClickSignoutHandler = async () => {
     await signOutForSB();
     toast.success('로그아웃에 성공하였습니다.');
@@ -33,6 +31,7 @@ export default function Authentication() {
   useEffect(() => {
     authObserver();
 
+    const isLogin = localStorage.getItem('isLogin');
     if (isLogin === 'true') setVisibilitySideBar(true);
     else setVisibilitySideBar(false);
   }, [pathname, user]);
