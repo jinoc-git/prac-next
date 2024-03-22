@@ -1,21 +1,18 @@
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
-import { createClient } from '@supabase/supabase-js';
 
 import { type Database, type UserType } from '@/types/supabase';
 
-const supabase = createClient<Database>(
-  process.env.NEXT_PUBLIC_SB_URL as string,
-  process.env.NEXT_PUBLIC_SB_API_KEY as string,
-);
+const supabaseClientClient = createClientComponentClient<Database>();
 
-export { supabase };
+export { supabaseClientClient };
 
 export const signUpWithSB = async (
   email: string,
   password: string,
   nickname: string,
 ) => {
-  const { data, error: authError } = await supabase.auth.signUp({
+  const { data, error: authError } = await supabaseClientClient.auth.signUp({
     email,
     password,
     options: {
@@ -47,7 +44,7 @@ export const signUpWithSB = async (
 
 export const insertUser = async (user: UserType) => {
   const { id, email, nickname } = user;
-  const { error } = await supabase.from('users').insert({
+  const { error } = await supabaseClientClient.from('users').insert({
     id,
     email,
     nickname,
@@ -60,10 +57,11 @@ export const insertUser = async (user: UserType) => {
 };
 
 export const signInWithSB = async (email: string, password: string) => {
-  const { error: authError } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
+  const { error: authError } =
+    await supabaseClientClient.auth.signInWithPassword({
+      email,
+      password,
+    });
 
   const isAuthError = Boolean(authError);
   if (isAuthError) {
@@ -72,7 +70,7 @@ export const signInWithSB = async (email: string, password: string) => {
 };
 
 export const signInWithGoogle = async () => {
-  await supabase.auth.signInWithOAuth({
+  await supabaseClientClient.auth.signInWithOAuth({
     provider: 'google',
     options: {
       redirectTo: 'http://localhost:3000/authloading',
@@ -85,11 +83,11 @@ export const signInWithGoogle = async () => {
 };
 
 export const signOutForSB = async () => {
-  await supabase.auth.signOut();
+  await supabaseClientClient.auth.signOut();
 };
 
 export const uploadProfileImg = async (avatarFile: File, email: string) => {
-  const { data, error: storageError } = await supabase.storage
+  const { data, error: storageError } = await supabaseClientClient.storage
     .from('profile_img')
     .upload(`${email}/${uuid()}`, avatarFile, {
       cacheControl: '3600',
@@ -109,11 +107,11 @@ export const updateUserProfileImage = async (path: string, userId: string) => {
   const URL = `${
     process.env.NEXT_PUBLIC_SB_STORAGE_URL as string
   }/profile_img/${path}`;
-  const { data } = await supabase.auth.updateUser({
+  const { data } = await supabaseClientClient.auth.updateUser({
     data: { profileImg: URL },
   });
 
-  const { error } = await supabase
+  const { error } = await supabaseClientClient
     .from('users')
     .update({ avatar_url: URL })
     .eq('id', userId)
@@ -132,11 +130,11 @@ export const updateUserProfileImage = async (path: string, userId: string) => {
 };
 
 export const deleteUserProfileImage = async (userId: string) => {
-  const { data } = await supabase.auth.updateUser({
+  const { data } = await supabaseClientClient.auth.updateUser({
     data: { profileImg: null },
   });
 
-  const { error } = await supabase
+  const { error } = await supabaseClientClient
     .from('users')
     .update({ avatar_url: null })
     .eq('id', userId)
@@ -154,7 +152,7 @@ export const deleteUserProfileImage = async (userId: string) => {
 };
 
 export const checkUserNickname = async (nickname: string) => {
-  const { data } = await supabase
+  const { data } = await supabaseClientClient
     .from('users')
     .select('nickname')
     .eq('nickname', nickname);
@@ -168,7 +166,7 @@ export const checkUserNickname = async (nickname: string) => {
 };
 
 export const checkUserEmail = async (email: string) => {
-  const { data } = await supabase
+  const { data } = await supabaseClientClient
     .from('users')
     .select('email')
     .eq('email', email);
@@ -181,11 +179,11 @@ export const checkUserEmail = async (email: string) => {
 };
 
 export const updateUserNickname = async (nickname: string, userId: string) => {
-  const { data } = await supabase.auth.updateUser({
+  const { data } = await supabaseClientClient.auth.updateUser({
     data: { nickname },
   });
 
-  const { error } = await supabase
+  const { error } = await supabaseClientClient
     .from('users')
     .update({ nickname })
     .eq('id', userId)
@@ -217,7 +215,7 @@ export const updateUserNickname = async (nickname: string, userId: string) => {
 };
 
 export const getUserInfoWithId = async (id: string) => {
-  const { data: userData, error } = await supabase
+  const { data: userData, error } = await supabaseClientClient
     .from('users')
     .select()
     .eq('id', id);

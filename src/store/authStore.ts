@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import { supabase } from '@/api/auth';
+import { supabaseClientClient } from '@/api/auth';
 
 import type { UserType } from '@/types/supabase';
 
@@ -13,7 +13,7 @@ interface AuthStore {
 
 export const authStore = create<AuthStore>((set, get) => {
   const authObserver = () => {
-    supabase.auth.onAuthStateChange((event, session) => {
+    supabaseClientClient.auth.onAuthStateChange((event, session) => {
       const currentUser = get().user;
       if (session !== null && currentUser === null) {
         localStorage.setItem('isLogin', 'true');

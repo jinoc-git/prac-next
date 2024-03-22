@@ -1,9 +1,9 @@
-import { supabase } from './auth';
+import { supabaseClientClient } from './auth';
 
 import type { PlanType } from '@/types/supabase';
 
 export const getPlanList = async (planIds: string[]) => {
-  const { data: plans, error } = await supabase
+  const { data: plans, error } = await supabaseClientClient
     .from('plans')
     .select()
     .eq('isDeleted', false)
@@ -13,7 +13,7 @@ export const getPlanList = async (planIds: string[]) => {
 };
 
 export const getMatesByUserIdList = async (matesUserId: string[]) => {
-  const { data, error } = await supabase
+  const { data, error } = await supabaseClientClient
     .from('users')
     .select()
     .in('id', matesUserId);
@@ -26,7 +26,7 @@ export const getMatesByUserIdList = async (matesUserId: string[]) => {
 };
 
 export const getPlansByUserIdList = async (userIds: string[]) => {
-  const { data, error } = await supabase
+  const { data, error } = await supabaseClientClient
     .from('plans')
     .select()
     .eq('isDeleted', false)
@@ -43,10 +43,11 @@ export const getPlansByUserIdList = async (userIds: string[]) => {
 export const getPlansWithBookmarks = async (
   userId: string,
 ): Promise<PlanType[] | []> => {
-  const { data: bookMarkData, error: bookMarkError } = await supabase
-    .from('book_mark')
-    .select('plan_id')
-    .eq('user_id', userId);
+  const { data: bookMarkData, error: bookMarkError } =
+    await supabaseClientClient
+      .from('book_mark')
+      .select('plan_id')
+      .eq('user_id', userId);
 
   if (bookMarkError !== null) {
     console.error('book_mark 데이터 불러오기 오류', bookMarkError);
@@ -59,11 +60,12 @@ export const getPlansWithBookmarks = async (
 
   const planIds = bookMarkData.map((item) => item.plan_id);
 
-  const { data: bookMarkPlanData, error: plansError } = await supabase
-    .from('plans')
-    .select()
-    .eq('isDeleted', false)
-    .in('id', planIds);
+  const { data: bookMarkPlanData, error: plansError } =
+    await supabaseClientClient
+      .from('plans')
+      .select()
+      .eq('isDeleted', false)
+      .in('id', planIds);
 
   if (plansError !== null) {
     console.error('plans 데이터 불러오기 오류', plansError);
@@ -76,7 +78,7 @@ export const getPlansWithBookmarks = async (
 export const getPlanListAndMateList = async (userId: string | undefined) => {
   if (userId === undefined) return;
 
-  const { data: matesData, error: matesError } = await supabase
+  const { data: matesData, error: matesError } = await supabaseClientClient
     .from('plan_mates')
     .select()
     .contains('users_id', [userId]);
