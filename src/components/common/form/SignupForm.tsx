@@ -53,6 +53,7 @@ export default function SignupForm() {
 
       toast.success('회원가입에 성공하였습니다');
       router.push('/main');
+      router.refresh();
     } catch (error) {
       toast.error('잠시후 다시 시도해주세요.');
     }

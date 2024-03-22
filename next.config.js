@@ -3,6 +3,9 @@ const nextConfig = {
   images: {
     domains: ['rkdykaeilrlrtrowawoe.supabase.co'],
   },
+  experimental: {
+    serverActions: true,
+  },
   webpack(config) {
     const fileLoaderRule = config.module.rules.find((rule) =>
       rule.test?.test?.('.svg'),

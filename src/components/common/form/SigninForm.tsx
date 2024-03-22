@@ -49,6 +49,7 @@ export default function SigninForm() {
     reset();
     toast.success('로그인에 성공하였습니다.');
     router.push('/main');
+    router.refresh();
   };
 
   const goToSignUp = () => {

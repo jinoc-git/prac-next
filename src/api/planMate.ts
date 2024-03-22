@@ -1,13 +1,13 @@
-import { getUserInfoWithId, supabase } from './auth';
+import { getUserInfoWithId, supabaseClientClient } from './auth';
 
 import type { UserType } from '@/types/supabase';
 
 export const findUsers = async (input: string) => {
-  const { data: nickname, error } = await supabase
+  const { data: nickname, error } = await supabaseClientClient
     .from('users')
     .select()
     .like('nickname', `%${input}%`);
-  const { data: email, error: emailerror } = await supabase
+  const { data: email, error: emailerror } = await supabaseClientClient
     .from('users')
     .select()
     .like('email', `%${input}%`);
@@ -20,7 +20,7 @@ export const findUsers = async (input: string) => {
 };
 
 export const getMates = async (planId: string) => {
-  const { data: matesId, error } = await supabase
+  const { data: matesId, error } = await supabaseClientClient
     .from('plan_mates')
     .select('users_id')
     .eq('id', planId);
@@ -44,7 +44,7 @@ export const getMates = async (planId: string) => {
 };
 
 export const updateMates = async (newMates: string[], planId: string) => {
-  const { data, error } = await supabase
+  const { data, error } = await supabaseClientClient
     .from('plan_mates')
     .update({ users_id: newMates })
     .eq('id', planId)

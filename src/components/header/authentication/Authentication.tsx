@@ -10,7 +10,7 @@ import { signOutForSB } from '@/api/auth';
 import { authStore } from '@/store/authStore';
 import { sideBarStore } from '@/store/sideBarStore';
 
-export default function Authentication() {
+export default function Authentication({ isLogin }: { isLogin: boolean }) {
   const { authObserver, user, resetUser } = authStore();
   const setVisibilitySideBar = sideBarStore(
     (state) => state.setVisibilitySideBar,
@@ -26,13 +26,13 @@ export default function Authentication() {
     setVisibilitySideBar(false);
     resetUser();
     router.push('/signin');
+    router.refresh();
   };
 
   useEffect(() => {
     authObserver();
 
-    const isLogin = localStorage.getItem('isLogin');
-    if (isLogin === 'true') setVisibilitySideBar(true);
+    if (isLogin) setVisibilitySideBar(true);
     else setVisibilitySideBar(false);
   }, [pathname, user]);
 

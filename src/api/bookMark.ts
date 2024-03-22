@@ -1,11 +1,11 @@
-import { supabase } from './auth';
+import { supabaseClientClient } from './auth';
 
 import type { InsertBookMarkType } from '@/types/supabase';
 
 export const getBookMarkDataByUserId = async (userId: string | undefined) => {
   if (userId === undefined) return;
 
-  const { data, error } = await supabase
+  const { data, error } = await supabaseClientClient
     .from('book_mark')
     .select('*')
     .eq('user_id', userId);
@@ -17,7 +17,7 @@ export const getBookMarkDataByUserId = async (userId: string | undefined) => {
 
 export const addBookMark = async (newBookMark: InsertBookMarkType) => {
   const { plan_id: planId, user_id: userId } = newBookMark;
-  const { error } = await supabase.from('book_mark').insert({
+  const { error } = await supabaseClientClient.from('book_mark').insert({
     plan_id: planId,
     user_id: userId,
   });
@@ -27,7 +27,10 @@ export const addBookMark = async (newBookMark: InsertBookMarkType) => {
 };
 
 export const deleteBookMark = async (id: string) => {
-  const { error } = await supabase.from('book_mark').delete().eq('id', id);
+  const { error } = await supabaseClientClient
+    .from('book_mark')
+    .delete()
+    .eq('id', id);
 
   if (error !== null) {
     throw new Error('오류발생');
