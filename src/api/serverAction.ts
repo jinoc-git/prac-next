@@ -1,9 +1,9 @@
-import { createServerActionClient } from '@supabase/auth-helpers-nextjs';
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 
 import type { Database } from '@/types/supabase';
 
-const supabaseServerClient = createServerActionClient<Database>({ cookies });
+const supabaseServerClient = createServerComponentClient<Database>({ cookies });
 
 export const getSessionFromServer = async () => {
   const {
