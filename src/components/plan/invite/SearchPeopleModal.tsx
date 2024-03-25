@@ -16,7 +16,7 @@ import { inviteUserStore } from '@/store/inviteUserStore';
 import { searchCallback } from '@/utils/arrayCallbackFunctionList';
 
 import InvitedOrSearchUser from './InvitedOrSearchUser';
-import ModalLayout from '../layout/ModalLayout';
+import ModalLayout from '../../common/layout/ModalLayout';
 
 import type { UserType } from '@/types/supabase';
 

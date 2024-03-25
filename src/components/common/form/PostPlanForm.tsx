@@ -1,24 +1,26 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import type { FieldErrors, UseFormRegisterReturn } from 'react-hook-form';
+import type { FieldErrors, UseFormRegister } from 'react-hook-form';
 
-import AddPlanDate from '@/components/addPlan/AddPlanDate';
+import AddPlanDate from '@/components/plan/addPlan/AddPlanDate';
+import Pay from '@/components/plan/pay/Pay';
 import { authStore } from '@/store/authStore';
 import { inviteUserStore } from '@/store/inviteUserStore';
 import { modifyPlanStore } from '@/store/modifyPlanStore';
 
-import Invite from '../invite/Invite';
+import Invite from '../../plan/invite/Invite';
 
-import type { AddPlanContentsInputType } from '@/components/addPlan/AddPlanContents';
+import type { AddPlanContentsInputType } from '@/components/plan/addPlan/AddPlanContents';
 
 interface PostPlanFormProps {
-  register: UseFormRegisterReturn<string>;
+  onChangeCost: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  register: UseFormRegister<AddPlanContentsInputType>;
   errors: FieldErrors<AddPlanContentsInputType>;
 }
 
 export default function PostPlanForm(props: PostPlanFormProps) {
-  const { register, errors } = props;
+  const { onChangeCost, register, errors } = props;
   const setModify = modifyPlanStore((state) => state.setModify);
   const { inviteUser, syncInvitedUser } = inviteUserStore(
     ({ inviteUser, syncInvitedUser }) => ({ inviteUser, syncInvitedUser }),
@@ -46,7 +48,7 @@ export default function PostPlanForm(props: PostPlanFormProps) {
         id="title"
         type="text"
         placeholder="여행 제목을 입력하세요."
-        {...register}
+        {...register('title')}
         className="border-b-[1px] border-gray w-full outline-none font-bold placeholder:text-gray  text-black
             sm:text-[20px]
             md:text-[24px] "
@@ -60,6 +62,7 @@ export default function PostPlanForm(props: PostPlanFormProps) {
       </p>
       <AddPlanDate state="addPlan" />
       <Invite />
+      <Pay onChangeCost={onChangeCost} register={register} errors={errors} />
     </form>
   );
 }
