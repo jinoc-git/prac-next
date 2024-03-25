@@ -49,7 +49,7 @@ export default function Invite() {
 
   useEffect(() => {
     return () => resetInvitedUser();
-  }, [data]);
+  }, []);
 
   useEffect(() => {
     if (data) {
@@ -59,7 +59,7 @@ export default function Invite() {
       });
       syncInvitedUser();
     }
-  }, []);
+  }, [data]);
 
   return (
     <>
