@@ -3,8 +3,12 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
-import PostPlanForm from '../common/form/PostPlanForm';
-import PlanTopBar from '../common/planTopBar/PlanTopBar';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+import { addPlanSchema } from '@/schema/planSchema';
+
+import PostPlanForm from '../../common/form/PostPlanForm';
+import PlanTopBar from '../../common/planTopBar/PlanTopBar';
 
 export interface AddPlanContentsInputType {
   title: string;
@@ -12,6 +16,8 @@ export interface AddPlanContentsInputType {
 }
 
 export default function AddPlanContents() {
+  const resolver = yupResolver(addPlanSchema);
+
   const {
     register,
     handleSubmit,
@@ -20,6 +26,7 @@ export default function AddPlanContents() {
     watch,
     formState: { errors, isValid },
   } = useForm<AddPlanContentsInputType>({
+    resolver,
     mode: 'onChange',
     defaultValues: {
       totalCost: '0',
@@ -28,22 +35,19 @@ export default function AddPlanContents() {
 
   const handleButtonClick = async () => {};
 
-  const titleRegister = register('title', {
-    required: '제목은 필수입니다.',
-    minLength: {
-      value: 1,
-      message: '제목은 1글자 이상이어야 합니다.',
-    },
-    maxLength: {
-      value: 12,
-      message: '제목은 12글자 이하여야 합니다.',
-    },
-  });
+  const onChangeCost = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value.replace(/\D/g, '');
+    setValue('totalCost', String(+val));
+  };
 
   return (
     <>
       <PlanTopBar handleButtonClick={handleButtonClick} />
-      <PostPlanForm register={titleRegister} errors={errors} />
+      <PostPlanForm
+        onChangeCost={onChangeCost}
+        register={register}
+        errors={errors}
+      />
     </>
   );
 }

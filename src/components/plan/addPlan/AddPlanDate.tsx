@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 import { modifyPlanStore } from '@/store/modifyPlanStore';
 
-import Calendar from '../common/calendar/Calendar';
+import Calendar from '../../common/calendar/Calendar';
 
 interface AddPlanDateProps {
   state?: string;
