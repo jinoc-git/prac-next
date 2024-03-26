@@ -60,10 +60,6 @@ const Pay = (props: PayProps) => {
               {...register('totalCost', {
                 required: '예산은 필수입니다.',
                 onChange: onChangeCost,
-
-                setValueAs(value) {
-                  return value === '' ? '0' : value;
-                },
               })}
               className="text-[14px] font-medium border rounded-lg px-[16px] outline-none w-[150px] h-[30px] border-gray read-only:cursor-default read-only:border-none read-only:text-normal read-only:font-semibold"
             />
