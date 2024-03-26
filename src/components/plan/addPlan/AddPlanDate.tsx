@@ -1,24 +1,32 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
+import { useParams } from 'next/navigation';
+
+import { dateStore } from '@/store/dateStore';
 import { modifyPlanStore } from '@/store/modifyPlanStore';
 
 import Calendar from '../../common/calendar/Calendar';
 
 interface AddPlanDateProps {
-  state?: string;
+  state?: 'addPlan';
   planDatesData?: string[];
 }
 
 export default function AddPlanDate(props: AddPlanDateProps) {
   const { state, planDatesData } = props;
+
+  const { planId } = useParams();
   const setRequiredDates = modifyPlanStore((state) => state.setRequiredDates);
+  const setDates = dateStore((state) => state.setDates);
 
   const planStartDate = new Date(planDatesData?.[0] as string);
   const planEndDate = new Date(
     planDatesData?.[planDatesData.length - 1] as string,
   );
+
+  let pinDatesData: string[] = [];
 
   const today = new Date();
 
@@ -37,6 +45,11 @@ export default function AddPlanDate(props: AddPlanDateProps) {
     setRequiredDates('end');
     setEndDate(date);
   };
+
+  useEffect(() => {
+    if (startDate && endDate) {
+    }
+  }, [startDate, endDate]);
 
   return (
     <Calendar

@@ -6,27 +6,27 @@ import Image from 'next/image';
 
 interface Props {
   dates: string[];
-  handleNextPage: () => void;
-  handlePreviousPage: () => void;
+  next: () => void;
+  prev: () => void;
   currentPage: number;
 }
 
 const DatePagination = (props: Props) => {
-  const { dates, handleNextPage, handlePreviousPage, currentPage } = props;
+  const { dates, next, prev, currentPage } = props;
 
   return (
     <div
-      className="flex-center mb-[10px] text-sm font-semibold text-gray_dark_1
-  sm:w-[310px] sm:mt-[36px] sm:mb-[31px]
-  md:w-[700px] md:mt-[24px] md:gap-[190px]"
+      className="flex-box mb-[10px] text-sm font-semibold text-gray_dark_1
+      sm:w-[310px] sm:mt-[36px] sm:mb-[31px]
+      md:w-[700px] md:mt-[24px] md:gap-[190px]"
     >
       {dates.length !== 0 ? (
         <div className="sm:flex sm:justify-center sm:w-[310px] sm:gap-[14px]">
           <button
-            onClick={handlePreviousPage}
+            onClick={prev}
             aria-label="date-prev-btn"
             disabled={currentPage === 0}
-            className="cursor-pointer disabled:cursor-none disabled:opacity-0"
+            className="cursor-pointer disabled:cursor-default disabled:opacity-0"
             name="date-page-previous-page-btn"
           >
             <Image
@@ -36,12 +36,12 @@ const DatePagination = (props: Props) => {
               alt="왼쪽 화살표"
             />
           </button>
-          <h1>{dates[currentPage]}</h1>
+          <h3>{dates[currentPage]}</h3>
           <button
-            onClick={handleNextPage}
+            onClick={next}
             aria-label="date-next-btn"
             disabled={currentPage === dates.length - 1}
-            className="cursor-pointer disabled:cursor-none disabled:opacity-0"
+            className="cursor-pointer disabled:cursor-default disabled:opacity-0"
             name="date-page-next-page-btn"
           >
             <Image

@@ -4,8 +4,11 @@ import React, { useEffect } from 'react';
 import type { FieldErrors, UseFormRegister } from 'react-hook-form';
 
 import AddPlanDate from '@/components/plan/addPlan/AddPlanDate';
+import DatePagination from '@/components/plan/datePagination/DatePagination';
 import Pay from '@/components/plan/pay/Pay';
+import usePagination from '@/hooks/usePagination';
 import { authStore } from '@/store/authStore';
+import { dateStore } from '@/store/dateStore';
 import { inviteUserStore } from '@/store/inviteUserStore';
 import { modifyPlanStore } from '@/store/modifyPlanStore';
 
@@ -26,6 +29,12 @@ export default function PostPlanForm(props: Props) {
     ({ inviteUser, syncInvitedUser }) => ({ inviteUser, syncInvitedUser }),
   );
   const user = authStore(({ user }) => user);
+  const { dates, resetDates } = dateStore(({ dates, resetDates }) => ({
+    dates,
+    resetDates,
+  }));
+
+  const { currentPage, next, prev, setCurrentPage } = usePagination();
 
   useEffect(() => {
     setModify();
@@ -63,6 +72,12 @@ export default function PostPlanForm(props: Props) {
       <AddPlanDate state="addPlan" />
       <Invite />
       <Pay onChangeCost={onChangeCost} register={register} errors={errors} />
+      <DatePagination
+        dates={dates}
+        next={next}
+        prev={prev}
+        currentPage={currentPage}
+      />
     </form>
   );
 }
