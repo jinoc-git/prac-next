@@ -11,7 +11,7 @@ import { modifyPlanStore } from '@/store/modifyPlanStore';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
-interface CalendarProps {
+interface Props {
   today: Date;
   startDate: Date | null;
   endDate: Date | null;
@@ -21,7 +21,7 @@ interface CalendarProps {
 
 registerLocale('ko', ko);
 
-export default function Calendar(props: CalendarProps) {
+export default function Calendar(props: Props) {
   const {
     today,
     startDate,

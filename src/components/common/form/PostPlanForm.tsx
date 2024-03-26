@@ -4,8 +4,11 @@ import React, { useEffect } from 'react';
 import type { FieldErrors, UseFormRegister } from 'react-hook-form';
 
 import AddPlanDate from '@/components/plan/addPlan/AddPlanDate';
+import DatePagination from '@/components/plan/datePagination/DatePagination';
 import Pay from '@/components/plan/pay/Pay';
+import usePagination from '@/hooks/usePagination';
 import { authStore } from '@/store/authStore';
+import { dateStore } from '@/store/dateStore';
 import { inviteUserStore } from '@/store/inviteUserStore';
 import { modifyPlanStore } from '@/store/modifyPlanStore';
 
@@ -13,19 +16,25 @@ import Invite from '../../plan/invite/Invite';
 
 import type { AddPlanContentsInputType } from '@/components/plan/addPlan/AddPlanContents';
 
-interface PostPlanFormProps {
+interface Props {
   onChangeCost: (e: React.ChangeEvent<HTMLInputElement>) => void;
   register: UseFormRegister<AddPlanContentsInputType>;
   errors: FieldErrors<AddPlanContentsInputType>;
 }
 
-export default function PostPlanForm(props: PostPlanFormProps) {
+export default function PostPlanForm(props: Props) {
   const { onChangeCost, register, errors } = props;
   const setModify = modifyPlanStore((state) => state.setModify);
   const { inviteUser, syncInvitedUser } = inviteUserStore(
     ({ inviteUser, syncInvitedUser }) => ({ inviteUser, syncInvitedUser }),
   );
   const user = authStore(({ user }) => user);
+  const { dates, resetDates } = dateStore(({ dates, resetDates }) => ({
+    dates,
+    resetDates,
+  }));
+
+  const { currentPage, next, prev, setCurrentPage } = usePagination();
 
   useEffect(() => {
     setModify();
@@ -63,6 +72,12 @@ export default function PostPlanForm(props: PostPlanFormProps) {
       <AddPlanDate state="addPlan" />
       <Invite />
       <Pay onChangeCost={onChangeCost} register={register} errors={errors} />
+      <DatePagination
+        dates={dates}
+        next={next}
+        prev={prev}
+        currentPage={currentPage}
+      />
     </form>
   );
 }

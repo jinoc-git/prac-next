@@ -10,7 +10,11 @@ import { signOutForSB } from '@/api/auth';
 import { authStore } from '@/store/authStore';
 import { sideBarStore } from '@/store/sideBarStore';
 
-export default function Authentication({ isLogin }: { isLogin: boolean }) {
+interface Props {
+  isLogin: boolean;
+}
+
+export default function Authentication({ isLogin }: Props) {
   const { authObserver, user, resetUser } = authStore();
   const setVisibilitySideBar = sideBarStore(
     (state) => state.setVisibilitySideBar,

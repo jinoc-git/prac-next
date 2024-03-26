@@ -11,11 +11,11 @@ import SideBarPlanList from './SideBarPlanList';
 
 import type { PlanType } from '@/types/supabase';
 
-interface SideBarTripsProps {
+interface Props {
   isOpen: boolean;
 }
 
-export default function SideBarTrips(props: SideBarTripsProps) {
+export default function SideBarTrips(props: Props) {
   const { isOpen } = props;
   const [bookMarkIsOpen, setBookMarkIsOpen] = useState(false);
   const [planningIsOpen, setPlanningIsOpen] = useState(false);

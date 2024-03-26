@@ -2,11 +2,11 @@ import React from 'react';
 
 import { formatPlanDates } from '@/utils/aboutDay';
 
-interface PlanCardDateProps {
+interface Props {
   dates: string[];
 }
 
-export default function PlanCardDate({ dates }: PlanCardDateProps) {
+export default function PlanCardDate({ dates }: Props) {
   const { startDate, endDate } = formatPlanDates(dates);
 
   return (

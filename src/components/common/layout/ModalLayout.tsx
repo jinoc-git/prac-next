@@ -1,12 +1,12 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
 
-interface ModalLayoutProps {
+interface Props {
   children: React.ReactNode;
   isAnimate: boolean;
 }
 
-export default function ModalLayout(props: ModalLayoutProps) {
+export default function ModalLayout(props: Props) {
   const { children, isAnimate } = props;
   return createPortal(
     <div

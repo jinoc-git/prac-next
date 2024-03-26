@@ -9,14 +9,14 @@ import { modifyPlanStore } from '@/store/modifyPlanStore';
 
 import type { AddPlanContentsInputType } from '../addPlan/AddPlanContents';
 
-interface PayProps {
+interface Props {
   onChangeCost: (e: React.ChangeEvent<HTMLInputElement>) => void;
   register: UseFormRegister<AddPlanContentsInputType>;
   errors: FieldErrors<AddPlanContentsInputType>;
   total_Cost?: string;
 }
 
-const Pay = (props: PayProps) => {
+const Pay = (props: Props) => {
   const { onChangeCost, register, errors, total_Cost } = props;
   const modifyState = modifyPlanStore((state) => state.modifyState);
 
@@ -41,7 +41,7 @@ const Pay = (props: PayProps) => {
             전체 예산
           </p>
         </div>
-        {modifyState === 'readOnly' ? (
+        {/* {modifyState === 'readOnly' ? (
           <p
             id="totalCost"
             className="text-[16px] font-SemiBold border rounded-lg outline-none border-gray read-only:cursor-default read-only:border-none read-only:font-semibold
@@ -50,25 +50,26 @@ const Pay = (props: PayProps) => {
           >
             {total_Cost !== undefined ? total_Cost + ' 원' : null}
           </p>
-        ) : (
-          <div className="relative flex flex-col mt-[10px]">
-            <input
-              id="totalCost"
-              type="text"
-              placeholder="예산을 입력하세요."
-              defaultValue={'0'}
-              {...register('totalCost', {
-                required: '예산은 필수입니다.',
-                onChange: onChangeCost,
-              })}
-              className="text-[14px] font-medium border rounded-lg px-[16px] outline-none w-[150px] h-[30px] border-gray read-only:cursor-default read-only:border-none read-only:text-normal read-only:font-semibold"
-            />
-            <span className=" absolute right-[5px] top-[4px]">원</span>
-            <p className="h-[10px] pl-2 pt-1 text-xs text-red-600">
-              {errors?.totalCost?.message}
-            </p>
-          </div>
-        )}
+        ) : ( */}
+        <div className="relative flex flex-col mt-[10px]">
+          <input
+            id="totalCost"
+            type="text"
+            placeholder="예산을 입력하세요."
+            readOnly={modifyState !== 'modify'}
+            defaultValue={'0'}
+            {...register('totalCost', {
+              required: '예산은 필수입니다.',
+              onChange: onChangeCost,
+            })}
+            className="text-[14px] font-medium border rounded-lg px-[16px] outline-none w-[150px] h-[30px] border-gray read-only:cursor-default read-only:border-none read-only:text-normal read-only:font-semibold"
+          />
+          <span className=" absolute right-[5px] top-[4px]">원</span>
+          <p className="h-[10px] pl-2 pt-1 text-xs text-red-600">
+            {errors?.totalCost?.message}
+          </p>
+        </div>
+        {/* )} */}
       </div>
     </div>
   );
