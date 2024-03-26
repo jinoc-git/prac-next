@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { addPlanSchema } from '@/schema/planSchema';
+import { addCommas } from '@/utils/numberFormat';
 
 import PostPlanForm from '../../common/form/PostPlanForm';
 import PlanTopBar from '../../common/planTopBar/PlanTopBar';
@@ -36,8 +37,10 @@ export default function AddPlanContents() {
   const handleButtonClick = async () => {};
 
   const onChangeCost = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value.replace(/\D/g, '');
-    setValue('totalCost', String(+val));
+    let val = e.target.value.replace(/\D/g, '');
+    if (val.length > 8) val = val.substring(0, 8);
+
+    setValue('totalCost', addCommas(+val));
   };
 
   return (
