@@ -13,13 +13,13 @@ import Invite from '../../plan/invite/Invite';
 
 import type { AddPlanContentsInputType } from '@/components/plan/addPlan/AddPlanContents';
 
-interface PostPlanFormProps {
+interface Props {
   onChangeCost: (e: React.ChangeEvent<HTMLInputElement>) => void;
   register: UseFormRegister<AddPlanContentsInputType>;
   errors: FieldErrors<AddPlanContentsInputType>;
 }
 
-export default function PostPlanForm(props: PostPlanFormProps) {
+export default function PostPlanForm(props: Props) {
   const { onChangeCost, register, errors } = props;
   const setModify = modifyPlanStore((state) => state.setModify);
   const { inviteUser, syncInvitedUser } = inviteUserStore(

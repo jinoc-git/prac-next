@@ -5,12 +5,12 @@ import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-interface LogoProps {
+interface Props {
   isLogin: boolean;
   isMain: boolean;
 }
 
-export default function Logo({ isLogin, isMain }: LogoProps) {
+export default function Logo({ isLogin, isMain }: Props) {
   const router = useRouter();
 
   const onClickLogo = () => {

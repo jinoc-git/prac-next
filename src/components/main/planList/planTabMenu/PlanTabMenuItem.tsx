@@ -2,12 +2,12 @@ import React from 'react';
 
 import { tabMenuStore } from '@/store/tabMenuStore';
 
-interface PlanTabMenuItemProps {
+interface Props {
   name: 'bookMark' | 'traveling' | 'planning' | 'end';
   planCount: number;
 }
 
-export default function PlanTabMenuItem(props: PlanTabMenuItemProps) {
+export default function PlanTabMenuItem(props: Props) {
   const { name, planCount } = props;
   const { selectedMenu, setSelectedMenu } = tabMenuStore();
 

@@ -3,12 +3,12 @@ import React from 'react';
 import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import Image from 'next/image';
 
-interface PlanCardUserListProps {
+interface Props {
   avatarList: (string | null | undefined)[];
   nicknameList: string[];
 }
 
-export default function PlanCardUserList(props: PlanCardUserListProps) {
+export default function PlanCardUserList(props: Props) {
   const { avatarList, nicknameList } = props;
   return (
     <div

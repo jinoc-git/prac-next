@@ -7,11 +7,11 @@ import Image from 'next/image';
 import { modifyPlanStore } from '@/store/modifyPlanStore';
 import { sideBarStore } from '@/store/sideBarStore';
 
-interface PlanTopBarProps {
+interface Props {
   handleButtonClick: () => void;
 }
 
-export default function PlanTopBar(props: PlanTopBarProps) {
+export default function PlanTopBar(props: Props) {
   const { handleButtonClick } = props;
   const { modifyState } = modifyPlanStore();
   const isSideBarOpen = sideBarStore((state) => state.isSideBarOpen);

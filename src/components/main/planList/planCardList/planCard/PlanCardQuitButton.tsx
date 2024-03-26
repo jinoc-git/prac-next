@@ -2,12 +2,12 @@ import React from 'react';
 
 import Image from 'next/image';
 
-interface PlanCardQuitButtonProps {
+interface Props {
   planId: string;
   onClickQuitBtn: (id: string) => void;
 }
 
-export default function PlanCardQuitButton(props: PlanCardQuitButtonProps) {
+export default function PlanCardQuitButton(props: Props) {
   const { planId, onClickQuitBtn } = props;
 
   return (

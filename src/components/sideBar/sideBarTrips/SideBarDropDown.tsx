@@ -10,7 +10,7 @@ import { SIDE_LIST_NAME } from './SideBarPlanList';
 
 import type { PlanType } from '@/types/supabase';
 
-interface SideBarDropDownProps {
+interface Props {
   activeDropDown: boolean;
   aboveDropDownIsOpen: boolean;
   filter: 'bookMark' | 'planning' | 'end';
@@ -18,7 +18,7 @@ interface SideBarDropDownProps {
   setFunc: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function SideBarDropDown(props: SideBarDropDownProps) {
+export default function SideBarDropDown(props: Props) {
   const { activeDropDown, aboveDropDownIsOpen, filter, planList, setFunc } =
     props;
   const router = useRouter();

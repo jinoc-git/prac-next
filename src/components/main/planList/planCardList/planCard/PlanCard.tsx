@@ -14,14 +14,14 @@ import PlanCardUserList from './PlanCardUserList';
 import type { PlanStatus } from '@/types/aboutPlan';
 import type { BookMarkType, PlanType } from '@/types/supabase';
 
-interface PlanCardProps {
+interface Props {
   plan: PlanType;
   bookMarkData: BookMarkType | undefined;
   avatarList: (string | null | undefined)[];
   nicknameList: string[];
 }
 
-export default function PlanCard(props: PlanCardProps) {
+export default function PlanCard(props: Props) {
   const { plan, bookMarkData, avatarList, nicknameList } = props;
   const router = useRouter();
 

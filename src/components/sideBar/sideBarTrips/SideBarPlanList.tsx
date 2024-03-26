@@ -8,7 +8,7 @@ import SideBarDropDown from './SideBarDropDown';
 
 import type { PlanType } from '@/types/supabase';
 
-interface SideBarPlanListProps {
+interface Props {
   setFunc: React.Dispatch<React.SetStateAction<boolean>>;
   planList: PlanType[] | [];
   filter: 'bookMark' | 'planning' | 'end';
@@ -46,7 +46,7 @@ export const SIDE_LIST_NAME = {
   end: '다녀온 여행',
 } as const;
 
-export default function SideBarPlanList(props: SideBarPlanListProps) {
+export default function SideBarPlanList(props: Props) {
   const { setFunc, planList, filter, activeDropDown, isSideBarOpen } = props;
 
   const toggleFunc = useCallback(() => {
