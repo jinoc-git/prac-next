@@ -2,12 +2,16 @@
 
 import React, { useEffect, useState } from 'react';
 
+import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 
+import { getAllPinsDate, newDatePin } from '@/api/pins';
 import { dateStore } from '@/store/dateStore';
 import { modifyPlanStore } from '@/store/modifyPlanStore';
 
 import Calendar from '../../common/calendar/Calendar';
+
+import type { PinInsertType } from '@/types/supabase';
 
 interface AddPlanDateProps {
   state?: 'addPlan';
@@ -17,7 +21,7 @@ interface AddPlanDateProps {
 export default function AddPlanDate(props: AddPlanDateProps) {
   const { state, planDatesData } = props;
 
-  const { planId } = useParams();
+  const { planId } = useParams<{ planId: string }>();
   const setRequiredDates = modifyPlanStore((state) => state.setRequiredDates);
   const setDates = dateStore((state) => state.setDates);
 
@@ -27,6 +31,18 @@ export default function AddPlanDate(props: AddPlanDateProps) {
   );
 
   let pinDatesData: string[] = [];
+
+  const { data } = useQuery({
+    queryKey: ['pinDate', planId],
+    queryFn: async () => {
+      if (state !== 'addPlan' && planId) {
+        const res = await getAllPinsDate(planId);
+        return res;
+      } else return;
+    },
+  });
+
+  if (data) pinDatesData = data;
 
   const today = new Date();
 
@@ -46,8 +62,38 @@ export default function AddPlanDate(props: AddPlanDateProps) {
     setEndDate(date);
   };
 
+  const allPlanDates = (startDate: Date, endDate: Date) => {
+    const dates: string[] = [];
+    const koreaOffset = 9 * 60 * 60 * 1000;
+    const currentDate = new Date(startDate.getTime() + koreaOffset);
+    const lastDate = new Date(endDate.getTime() + koreaOffset);
+
+    while (currentDate <= lastDate) {
+      dates.push(currentDate.toISOString().slice(0, 10));
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+    setDates(dates);
+
+    return dates;
+  };
+
   useEffect(() => {
-    if (startDate && endDate) {
+    if (startDate && endDate && pinDatesData.length !== 0) {
+      const dates = allPlanDates(startDate, endDate);
+      const newDates = dates.filter((date) => !pinDatesData.includes(date));
+      if (newDates.length !== 0 && state !== 'addPlan') {
+        newDates.forEach(async (date) => {
+          const newPin: PinInsertType = {
+            plan_id: planId,
+            contents: [],
+            date,
+          };
+
+          await newDatePin(newPin);
+        });
+      }
+      if (state === 'addPlan') {
+      }
     }
   }, [startDate, endDate]);
 
