@@ -68,7 +68,6 @@ export const getPlansWithBookmarks = async (
       .in('id', planIds);
 
   if (plansError !== null) {
-    console.error('plans 데이터 불러오기 오류', plansError);
     throw new Error('plans 데이터 불러오기 오류');
   }
 
@@ -111,4 +110,15 @@ export const getPlanListAndMateList = async (userId: string | undefined) => {
     planDataList,
     usersDataList,
   };
+};
+
+export const updateDatePlan = async (planId: string, dates: string[]) => {
+  const { error } = await supabaseClientClient
+    .from('plans')
+    .update({ dates })
+    .eq('id', planId);
+
+  if (error !== null) {
+    throw new Error('여행 날짜 업데이트 오류');
+  }
 };

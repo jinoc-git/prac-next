@@ -2,10 +2,11 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 
 import { getAllPinsDate, newDatePin } from '@/api/pins';
+import { updateDatePlan } from '@/api/plan';
 import { dateStore } from '@/store/dateStore';
 import { modifyPlanStore } from '@/store/modifyPlanStore';
 
@@ -77,6 +78,17 @@ export default function AddPlanDate(props: AddPlanDateProps) {
     return dates;
   };
 
+  const queryClient = useQueryClient();
+  const { mutate: updatePlanDate } = useMutation({
+    mutationFn: async ([planId, dates]: [string, string[]]) => {
+      await updateDatePlan(planId, dates);
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['pinDate', planId] });
+      void queryClient.invalidateQueries({ queryKey: ['plan', planId] });
+    },
+  });
+
   useEffect(() => {
     if (startDate && endDate && pinDatesData.length !== 0) {
       const dates = allPlanDates(startDate, endDate);
@@ -92,8 +104,7 @@ export default function AddPlanDate(props: AddPlanDateProps) {
           await newDatePin(newPin);
         });
       }
-      if (state === 'addPlan') {
-      }
+      if (state !== 'addPlan') updatePlanDate([planId, dates]);
     }
   }, [startDate, endDate]);
 
