@@ -2,10 +2,11 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 
 import { getAllPinsDate, newDatePin } from '@/api/pins';
+import { updateDatePlan } from '@/api/plan';
 import { dateStore } from '@/store/dateStore';
 import { modifyPlanStore } from '@/store/modifyPlanStore';
 
@@ -38,7 +39,7 @@ export default function AddPlanDate(props: AddPlanDateProps) {
       if (state !== 'addPlan' && planId) {
         const res = await getAllPinsDate(planId);
         return res;
-      } else return;
+      } else return null;
     },
   });
 
@@ -65,20 +66,34 @@ export default function AddPlanDate(props: AddPlanDateProps) {
   const allPlanDates = (startDate: Date, endDate: Date) => {
     const dates: string[] = [];
     const koreaOffset = 9 * 60 * 60 * 1000;
-    const currentDate = new Date(startDate.getTime() + koreaOffset);
-    const lastDate = new Date(endDate.getTime() + koreaOffset);
+    const currentDate = new Date(startDate.getTime());
+    const lastDate = new Date(endDate.getTime());
 
-    while (currentDate <= lastDate) {
+    while (currentDate < lastDate) {
       dates.push(currentDate.toISOString().slice(0, 10));
       currentDate.setDate(currentDate.getDate() + 1);
     }
+
+    dates.push(currentDate.toISOString().slice(0, 10)); // 마지막 날짜도 포함시키기 위하여
+
     setDates(dates);
 
     return dates;
   };
 
+  const queryClient = useQueryClient();
+  const { mutate: updatePlanDate } = useMutation({
+    mutationFn: async ([planId, dates]: [string, string[]]) => {
+      await updateDatePlan(planId, dates);
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['pinDate', planId] });
+      void queryClient.invalidateQueries({ queryKey: ['plan', planId] });
+    },
+  });
+
   useEffect(() => {
-    if (startDate && endDate && pinDatesData.length !== 0) {
+    if (startDate && endDate) {
       const dates = allPlanDates(startDate, endDate);
       const newDates = dates.filter((date) => !pinDatesData.includes(date));
       if (newDates.length !== 0 && state !== 'addPlan') {
@@ -92,8 +107,7 @@ export default function AddPlanDate(props: AddPlanDateProps) {
           await newDatePin(newPin);
         });
       }
-      if (state === 'addPlan') {
-      }
+      if (state !== 'addPlan') updatePlanDate([planId, dates]);
     }
   }, [startDate, endDate]);
 
