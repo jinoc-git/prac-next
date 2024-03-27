@@ -13,7 +13,7 @@ interface Props {
 
 const DatePagination = (props: Props) => {
   const { dates, next, prev, currentPage } = props;
-
+  console.log(dates);
   return (
     <div
       className="flex-box mb-[10px] text-sm font-semibold text-gray_dark_1
@@ -25,6 +25,7 @@ const DatePagination = (props: Props) => {
           <button
             onClick={prev}
             aria-label="date-prev-btn"
+            type="button"
             disabled={currentPage === 0}
             className="cursor-pointer disabled:cursor-default disabled:opacity-0"
             name="date-page-previous-page-btn"
@@ -40,6 +41,7 @@ const DatePagination = (props: Props) => {
           <button
             onClick={next}
             aria-label="date-next-btn"
+            type="button"
             disabled={currentPage === dates.length - 1}
             className="cursor-pointer disabled:cursor-default disabled:opacity-0"
             name="date-page-next-page-btn"
