@@ -13,7 +13,7 @@ interface Props {
 
 const DatePagination = (props: Props) => {
   const { dates, next, prev, currentPage } = props;
-  console.log(dates);
+
   return (
     <div
       className="flex-box mb-[10px] text-sm font-semibold text-gray_dark_1

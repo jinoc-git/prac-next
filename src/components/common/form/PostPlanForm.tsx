@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import type { FieldErrors, UseFormRegister } from 'react-hook-form';
 
 import AddPlanDate from '@/components/plan/addPlan/AddPlanDate';
+import AreaAndPlace from '@/components/plan/areaAndPlace/AreaAndPlace';
 import DatePagination from '@/components/plan/datePagination/DatePagination';
 import Pay from '@/components/plan/pay/Pay';
 import usePagination from '@/hooks/usePagination';
@@ -15,6 +16,7 @@ import { modifyPlanStore } from '@/store/modifyPlanStore';
 import Invite from '../../plan/invite/Invite';
 
 import type { AddPlanContentsInputType } from '@/components/plan/addPlan/AddPlanContents';
+import type { PinContentsType } from '@/types/supabase';
 
 interface Props {
   onChangeCost: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -33,8 +35,9 @@ export default function PostPlanForm(props: Props) {
     dates,
     resetDates,
   }));
-
   const { currentPage, next, prev, setCurrentPage } = usePagination();
+
+  const [pins, setPins] = useState<PinContentsType[][]>([]);
 
   useEffect(() => {
     setModify();
@@ -78,6 +81,7 @@ export default function PostPlanForm(props: Props) {
         prev={prev}
         currentPage={currentPage}
       />
+      <AreaAndPlace pins={pins} setPins={setPins} currentPage={currentPage} />
     </form>
   );
 }

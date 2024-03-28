@@ -87,8 +87,8 @@ export default function AddPlanDate(props: AddPlanDateProps) {
       await updateDatePlan(planId, dates);
     },
     onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: ['pinDate', planId] });
-      void queryClient.invalidateQueries({ queryKey: ['plan', planId] });
+      queryClient.invalidateQueries({ queryKey: ['pinDate', planId] });
+      queryClient.invalidateQueries({ queryKey: ['plan', planId] });
     },
   });
 
