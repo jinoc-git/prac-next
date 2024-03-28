@@ -5,10 +5,20 @@ import React from 'react';
 import Area from './area/Area';
 import Place from './place/Place';
 
-const AreaAndPlace = () => {
+import type { PinContentsType } from '@/types/supabase';
+
+interface Props {
+  currentPage: number;
+  pins: PinContentsType[][];
+  setPins: React.Dispatch<React.SetStateAction<PinContentsType[][]>>;
+}
+
+const AreaAndPlace = (props: Props) => {
+  const { currentPage, pins, setPins } = props;
+
   return (
     <div>
-      <Area />
+      <Area currentPage={currentPage} pins={pins} setPins={setPins} />
       <Place />
     </div>
   );

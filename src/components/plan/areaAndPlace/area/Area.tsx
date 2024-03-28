@@ -4,7 +4,19 @@ import React from 'react';
 
 import Image from 'next/image';
 
-const Area = () => {
+import KakaoMap from './kakaoMap/KakaoMap';
+
+import type { PinContentsType } from '@/types/supabase';
+
+interface Props {
+  currentPage: number;
+  pins: PinContentsType[][];
+  setPins: React.Dispatch<React.SetStateAction<PinContentsType[][]>>;
+}
+
+const Area = (props: Props) => {
+  const { currentPage, pins, setPins } = props;
+
   return (
     <div>
       <div
@@ -20,6 +32,7 @@ const Area = () => {
         />
         <p>여행 지역</p>
       </div>
+      <KakaoMap pins={pins[currentPage]} />
     </div>
   );
 };

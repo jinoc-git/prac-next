@@ -1,68 +1,47 @@
 'use client';
 
-import React from 'react';
-import {
-  Map,
-  MapMarker,
-  MapTypeControl,
-  Polyline,
-  ZoomControl,
-} from 'react-kakao-maps-sdk';
-
-import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
+import React, { useEffect, useRef } from 'react';
 
 import type { PinContentsType } from '@/types/supabase';
+
+declare global {
+  interface Window {
+    kakao: any;
+  }
+}
 
 interface Props {
   pins: PinContentsType[];
 }
 
+const KAKAO_MAP_URL = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY}&autoload=false&libraries=services,clusterer`;
+
 const KakaoMap = ({ pins }: Props) => {
   const style = {};
+  const mapRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const kakaoScript = document.createElement('script');
+    kakaoScript.src = KAKAO_MAP_URL;
+    document.head.appendChild(kakaoScript);
+
+    kakaoScript.onload = () => {
+      if (window.kakao && mapRef.current) {
+        window.kakao.maps.load(() => {
+          const mapContainer = document.getElementById('kakao-map');
+          const mapOption = {
+            center: new window.kakao.maps.LatLng(37.566826, 126.9786567),
+            level: 3,
+          };
+          const map = new window.kakao.maps.Map(mapContainer, mapOption);
+        });
+      }
+    };
+  }, []);
+
   return (
     <div className="flex justify-center sm:w-[286px] sm:ml-0 md:w-[650px] md:ml-[25px]">
-      <Map
-        center={{
-          lat:
-            pins !== undefined && pins.length !== 0
-              ? (pins[0].lat as number)
-              : 37.566826004661,
-          lng:
-            pins !== undefined && pins.length !== 0
-              ? (pins[0].lng as number)
-              : 126.978652258309,
-        }}
-        level={4}
-        style={style}
-      >
-        {pins?.map((pin) => {
-          return (
-            <MapMarker
-              key={uuid()}
-              position={{
-                lat: pin?.lat as number,
-                lng: pin?.lng as number,
-              }}
-            ></MapMarker>
-          );
-        })}
-        {pins !== undefined && pins.length !== 0 && (
-          <Polyline
-            path={pins.map((pin) => {
-              return {
-                lat: pin.lat as number,
-                lng: pin.lng as number,
-              };
-            })}
-            strokeWeight={5}
-            strokeColor={'#162F70'}
-            strokeOpacity={0.7}
-            strokeStyle={'solid'}
-          />
-        )}
-        <MapTypeControl position={kakao.maps.ControlPosition.TOPRIGHT} />
-        <ZoomControl position={kakao.maps.ControlPosition.RIGHT} />
-      </Map>
+      <div ref={mapRef} id="kakao-map" className=" w-full h-[400px]"></div>
     </div>
   );
 };
