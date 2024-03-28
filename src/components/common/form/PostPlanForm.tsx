@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import type { FieldErrors, UseFormRegister } from 'react-hook-form';
 
 import AddPlanDate from '@/components/plan/addPlan/AddPlanDate';
+import AreaAndPlace from '@/components/plan/areaAndPlace/AreaAndPlace';
 import DatePagination from '@/components/plan/datePagination/DatePagination';
 import Pay from '@/components/plan/pay/Pay';
 import usePagination from '@/hooks/usePagination';
@@ -78,6 +79,7 @@ export default function PostPlanForm(props: Props) {
         prev={prev}
         currentPage={currentPage}
       />
+      <AreaAndPlace />
     </form>
   );
 }
