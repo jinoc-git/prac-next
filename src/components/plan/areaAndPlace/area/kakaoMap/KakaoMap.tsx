@@ -58,6 +58,17 @@ const KakaoMap = ({ pins }: Props) => {
       pins.forEach(({ lat, lng }) => {
         const position = new window.kakao.maps.LatLng(lat, lng);
         new window.kakao.maps.Marker({ map, position });
+
+        const polyline = new window.kakao.maps.Polyline({
+          map,
+          path: pins.map(
+            ({ lat, lng }) => new window.kakao.maps.LatLng(lat, lng),
+          ),
+          strokeWeight: 5,
+          strokeColor: '#162F70',
+          strokeOpacity: 0.7,
+          strokeStyle: 'solid',
+        });
       });
     }
   }, [pins, map]);
