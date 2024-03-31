@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import Image from 'next/image';
 
+import PinLayout from '@/components/common/layout/PinLayout';
 import { dateStore } from '@/store/dateStore';
 
 import Pin from './pin/Pin';
@@ -29,6 +30,9 @@ const Place = (props: Props) => {
     setIsOpenModal(false);
   };
 
+  const updatePin = (idx: number) => {};
+  const deletePin = (idx: number) => {};
+
   return (
     <div className="flex flex-col justify-center gap-5">
       <div
@@ -45,19 +49,20 @@ const Place = (props: Props) => {
         />
         <p>방문할 장소</p>
       </div>
-      {pins[currentPage]?.map((pin, idx) => {
-        return (
-          <div key={uuid()}>
-            <Pin
-            // pin={pin}
-            // idx={idx}
-            // isEnding={false}
-            // updatePin={updatePin}
-            // deletePin={deletePin}
-            />
-          </div>
-        );
-      })}
+      <PinLayout>
+        {pins[currentPage]?.map((pin, idx) => {
+          return (
+            <div key={uuid()}>
+              <Pin
+                pin={pin}
+                idx={idx}
+                updatePin={updatePin}
+                deletePin={deletePin}
+              />
+            </div>
+          );
+        })}
+      </PinLayout>
       {dates.length !== 0 && (
         <div
           className="flex items-center justify-between pb-[60px]
