@@ -7,6 +7,8 @@ import Image from 'next/image';
 
 import { dateStore } from '@/store/dateStore';
 
+import Pin from './pin/Pin';
+
 import type { PinContentsType } from '@/types/supabase';
 
 interface Props {
@@ -43,16 +45,16 @@ const Place = (props: Props) => {
         />
         <p>방문할 장소</p>
       </div>
-      {pins[currentPage]?.map((pin, idx: number) => {
+      {pins[currentPage]?.map((pin, idx) => {
         return (
           <div key={uuid()}>
-            {/* <PinLayout
-              pin={pin}
-              idx={idx}
-              isEnding={false}
-              updatePin={updatePin}
-              deletePin={deletePin}
-            /> */}
+            <Pin
+            // pin={pin}
+            // idx={idx}
+            // isEnding={false}
+            // updatePin={updatePin}
+            // deletePin={deletePin}
+            />
           </div>
         );
       })}
@@ -73,7 +75,7 @@ const Place = (props: Props) => {
             onClick={openModal}
             className="border border-dashed rounded-lg font-bold  text-gray_dark_1 hover:bg-navy_light_1 duration-200
                 sm:w-[240px] sm:h-[65px] sm:mr-[2px] sm:text-[11px]
-                md:w-pin_card md:h-pin_card md:text-[18px]"
+                md:w-[600px] md:h-[120px] md:text-[18px]"
           >
             장소 추가하기
           </button>
