@@ -49,20 +49,20 @@ const Place = (props: Props) => {
         />
         <p>방문할 장소</p>
       </div>
-      <PinLayout>
+      <ol>
         {pins[currentPage]?.map((pin, idx) => {
           return (
-            <div key={uuid()}>
+            <PinLayout key={uuid()}>
               <Pin
                 pin={pin}
                 idx={idx}
                 updatePin={updatePin}
                 deletePin={deletePin}
               />
-            </div>
+            </PinLayout>
           );
         })}
-      </PinLayout>
+      </ol>
       {dates.length !== 0 && (
         <div
           className="flex items-center justify-between pb-[60px]

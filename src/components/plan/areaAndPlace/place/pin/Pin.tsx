@@ -2,17 +2,19 @@
 
 import React from 'react';
 
+import PinContents from './pinContents/PinContents';
 import PinDistance from './pinDistance/PinDistance';
 import PinOrder from './pinOrder/PinOrder';
 
 import type { PinContentsType } from '@/types/supabase';
 
 interface Props {
-  pin: PinContentsType | [];
+  pin: PinContentsType;
   idx: number;
   updatePin?: (idx: number) => void;
   deletePin?: (idx: number) => void;
   distance?: string;
+  dragArea?: React.ReactNode;
 }
 
 const Pin = (props: Props) => {
@@ -22,6 +24,7 @@ const Pin = (props: Props) => {
     <>
       <PinOrder idx={idx} />
       <PinDistance distance={distance} />
+      <PinContents pin={pin} isEnding={Boolean(distance)} />
     </>
   );
 };
