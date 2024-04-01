@@ -4,9 +4,10 @@ import React from 'react';
 
 import Image from 'next/image';
 
-import type { PasswordInputProps } from './PasswordInput';
+import type { SignupFormInputList } from '../form/SignupForm';
+import type { InputCompProps } from '@/types/inputComp.type';
 
-interface DuplicateInputProps extends PasswordInputProps {
+interface DuplicateInputProps extends InputCompProps<SignupFormInputList> {
   leftIcon: { src: string; alt: string };
   duplicate: boolean;
   checkFunc: () => void;
