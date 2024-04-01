@@ -8,6 +8,7 @@ interface Props {
 
 export default function ModalLayout(props: Props) {
   const { children, isAnimate } = props;
+
   return createPortal(
     <div
       className={`fixed inset-0 z-50 flex-box w-screen h-screen bg-black/30 

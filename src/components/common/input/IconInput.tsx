@@ -7,7 +7,7 @@ import Image from 'next/image';
 
 import type { SigninFormInputList } from '../form/SigninForm';
 
-export interface IconInputProps {
+interface IconInputProps {
   name: keyof SigninFormInputList;
   leftIcon: { src: string; alt: string; w: number; h: number };
   placeholder: string;

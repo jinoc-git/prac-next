@@ -17,9 +17,9 @@ const AreaAndPlace = (props: Props) => {
   const { currentPage, pins, setPins } = props;
 
   return (
-    <div>
+    <div className=" space-y-5">
       <Area currentPage={currentPage} pins={pins} setPins={setPins} />
-      <Place />
+      <Place pins={pins} currentPage={currentPage} setPins={setPins} />
     </div>
   );
 };
