@@ -12,6 +12,9 @@
   .side-bar-transition {
     @apply transition-all duration-300 ease-in-out;
   }
+  .input-border {
+    @apply border border-[#d1d1d1] rounded-lg py-[14px] px-4;
+  }
 }
 
 @font-face {

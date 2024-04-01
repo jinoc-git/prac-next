@@ -2,39 +2,29 @@
 
 import React from 'react';
 
+import type { AddPinInputType } from '@/components/plan/areaAndPlace/place/addPinModal/AddPinModal';
 import type { InputCompProps } from '@/types/inputComp.type';
 
-interface Props extends InputCompProps<> {}
+interface Props extends InputCompProps<AddPinInputType> {
+  title: string;
+}
 
 const TitleInput = (props: Props) => {
-  const { register } = props;
+  const { title, name, placeholder, defaultValue, register, errors } = props;
 
   return (
     <div className="flex flex-col">
-      <label htmlFor="placeName" className="mb-2 text-sm font-semibold">
-        장소 이름
+      <label htmlFor={name} className="mb-2 text-sm font-semibold">
+        {title}
       </label>
       <input
-        id="placeName"
+        id={name}
         type="text"
-        placeholder="장소 이름을 입력하세요"
-        {...register('placeName', {
-          required: '장소 이름은 필수 입력값입니다.',
-          minLength: {
-            value: 1,
-            message: '장소 이름은 1자 이상이어야 합니다.',
-          },
-          maxLength: {
-            value: 12,
-            message: '장소 이름은 12자 이하여야 합니다.',
-          },
-          pattern: {
-            value: /^[가-힣|a-z|A-Z|0-9|\s-]*$/,
-            message: '모음, 자음 안됨',
-          },
-        })}
+        placeholder={placeholder}
+        defaultValue={defaultValue}
+        {...register}
         className="input-border
-            sm:h-[44px] sm:text-sm sm:font-medium"
+          sm:h-[44px] sm:text-sm sm:font-medium"
       />
       <p className="text-red-400 text-[12px] h-[24px] my-[5px]">
         {errors?.placeName?.message}
