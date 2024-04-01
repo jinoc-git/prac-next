@@ -8,6 +8,7 @@ import Image from 'next/image';
 import PinLayout from '@/components/common/layout/PinLayout';
 import { dateStore } from '@/store/dateStore';
 
+import AddPinModal from './addPinModal/AddPinModal';
 import Pin from './pin/Pin';
 
 import type { PinContentsType } from '@/types/supabase';
@@ -15,19 +16,25 @@ import type { PinContentsType } from '@/types/supabase';
 interface Props {
   currentPage: number;
   pins: PinContentsType[][];
+  setPins: React.Dispatch<React.SetStateAction<PinContentsType[][]>>;
 }
 
 const Place = (props: Props) => {
-  const { pins, currentPage } = props;
+  const { pins, setPins, currentPage } = props;
+  const [isAnimate, setIsAnimate] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const dates = dateStore(({ dates }) => dates);
 
   const openModal = () => {
+    setIsAnimate(true);
     setIsOpenModal(true);
   };
 
   const closeModal = () => {
-    setIsOpenModal(false);
+    setIsAnimate(false);
+    setTimeout(() => {
+      setIsOpenModal(false);
+    }, 400);
   };
 
   const updatePin = (idx: number) => {};
@@ -85,6 +92,14 @@ const Place = (props: Props) => {
             장소 추가하기
           </button>
         </div>
+      )}
+      {isOpenModal && (
+        <AddPinModal
+          isAnimate={isAnimate}
+          currentPage={currentPage}
+          setPins={setPins}
+          closeModal={closeModal}
+        />
       )}
     </div>
   );
