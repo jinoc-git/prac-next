@@ -1,11 +1,10 @@
 'use client';
 
 import React from 'react';
-import type { UseFormRegisterReturn } from 'react-hook-form';
 
-interface Props {
-  register: UseFormRegisterReturn<string>;
-}
+import type { InputCompProps } from '@/types/inputComp.type';
+
+interface Props extends InputCompProps<> {}
 
 const TitleInput = (props: Props) => {
   const { register } = props;
