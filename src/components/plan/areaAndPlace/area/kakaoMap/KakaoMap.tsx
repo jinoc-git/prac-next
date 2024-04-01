@@ -28,7 +28,7 @@ const KakaoMap = ({ pins }: Props) => {
     kakaoScript.onload = () => {
       if (window.kakao) {
         window.kakao.maps.load(() => {
-          const mapContainer = document.getElementById('kakao-map');
+          const mapContainer = document.getElementById('add-plan-kakao-map');
           const mapOption = {
             center: new window.kakao.maps.LatLng(37.566826, 126.9786567),
             level: 3,
@@ -75,7 +75,7 @@ const KakaoMap = ({ pins }: Props) => {
 
   return (
     <div className="flex justify-center sm:w-[286px] sm:ml-0 md:w-[650px] md:ml-[25px]">
-      <div id="kakao-map" className=" w-full h-[400px]"></div>
+      <div id="add-plan-kakao-map" className=" w-full h-[400px]"></div>
     </div>
   );
 };
