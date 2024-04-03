@@ -19,7 +19,7 @@ import type { PinContentsType } from '@/types/supabase';
 export interface AddPinInputType {
   placeName: string;
   address: string;
-  cost: string;
+  cost?: string;
 }
 
 interface Props {
@@ -50,22 +50,32 @@ const AddPinModal = (props: Props) => {
     formState: { errors, isSubmitting },
   } = useForm<AddPinInputType>({
     mode: 'onChange',
+    resolver,
     defaultValues: {
       placeName: pin !== null ? pin.placeName : '',
       cost: pin !== null && typeof pin.cost === 'string' ? pin.cost : '0',
     },
   });
 
+  const searchCallback = useCallback((result: any) => {
+    const RoadAddress = result[0]?.road_address?.address_name;
+    const Address = result[0]?.address?.address_name;
+    setAddress(RoadAddress !== undefined ? RoadAddress : Address);
+  }, []);
+
   const searchAddress = useCallback(
-    (address: string) => {
-      if (address === '') return;
+    (keyWord: string) => {
+      if (keyWord === '') return;
 
       const ps = new window.kakao.maps.services.Places();
-      ps.keywordSearch(address, (data: any, status: any) => {
+      const geocoder = new window.kakao.maps.services.Geocoder();
+
+      ps.keywordSearch(keyWord, (data: any, status: any) => {
         if (status === window.kakao.maps.services.Status.OK) {
           const bounds = new window.kakao.maps.LatLngBounds();
           const { x, y } = data[0];
 
+          geocoder.coord2Address(+x, +y, searchCallback);
           const markerPosition = new window.kakao.maps.LatLng(+y, +x);
           bounds.extend(markerPosition);
           setPosition({ lat: +y, lng: +x });
@@ -112,13 +122,7 @@ const AddPinModal = (props: Props) => {
         register={register('address', { onChange: onChangeAddress })}
         errors={errors}
       />
-      <AddPinKakaoMap
-        pin={pin}
-        setMap={setMap}
-        position={position}
-        setPosition={setPosition}
-        setAddress={setAddress}
-      />
+      <AddPinKakaoMap pin={pin} setMap={setMap} />
       <TitleInput
         title="지출 비용"
         name="cost"
