@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { yupResolver } from '@hookform/resolvers/yup';
+import _ from 'lodash';
 
 import TitleInput from '@/components/common/input/TitleInput';
 import ModalLayout from '@/components/common/layout/ModalLayout';
@@ -37,7 +38,7 @@ const AddPinModal = (props: Props) => {
     lng: pin !== null ? (pin.lng as number) : 0,
   });
   const [address, setAddress] = useState('');
-  const [map, setMap] = useState(null);
+  const [map, setMap] = useState<any>(null);
 
   const resolver = yupResolver(addPinSchema);
 
@@ -54,6 +55,27 @@ const AddPinModal = (props: Props) => {
       cost: pin !== null && typeof pin.cost === 'string' ? pin.cost : '0',
     },
   });
+
+  const searchAddress = (address: string) => {
+    if (address === '') return;
+
+    const ps = new window.kakao.maps.services.Places();
+    ps.keywordSearch(address, (data: any, status: any) => {
+      if (status === window.kakao.maps.services.Status.OK) {
+        const bounds = new window.kakao.maps.LatLngBounds();
+        const { x, y } = data[0];
+        bounds.extend(new window.kakao.maps.LatLng(+y, +x));
+        setPosition({ lat: +y, lng: +x });
+        if (map) map.setBounds(bounds);
+      }
+    });
+  };
+
+  const debouncedSearchAddress = _.debounce(searchAddress, 500);
+
+  const onChangeAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
+    debouncedSearchAddress(e.target.value);
+  };
 
   const onChangeCost = (e: React.ChangeEvent<HTMLInputElement>) => {
     let val = e.target.value.replace(/\D/g, '');
@@ -75,7 +97,7 @@ const AddPinModal = (props: Props) => {
         title="주소"
         name="address"
         placeholder="주소를 검색하세요."
-        register={register('address')}
+        register={register('address', { onChange: onChangeAddress })}
         errors={errors}
       />
       <AddPinKakaoMap
