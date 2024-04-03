@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -56,20 +56,32 @@ const AddPinModal = (props: Props) => {
     },
   });
 
-  const searchAddress = (address: string) => {
-    if (address === '') return;
+  const searchAddress = useCallback(
+    (address: string) => {
+      if (address === '') return;
 
-    const ps = new window.kakao.maps.services.Places();
-    ps.keywordSearch(address, (data: any, status: any) => {
-      if (status === window.kakao.maps.services.Status.OK) {
-        const bounds = new window.kakao.maps.LatLngBounds();
-        const { x, y } = data[0];
-        bounds.extend(new window.kakao.maps.LatLng(+y, +x));
-        setPosition({ lat: +y, lng: +x });
-        if (map) map.setBounds(bounds);
-      }
-    });
-  };
+      const ps = new window.kakao.maps.services.Places();
+      ps.keywordSearch(address, (data: any, status: any) => {
+        if (status === window.kakao.maps.services.Status.OK) {
+          const bounds = new window.kakao.maps.LatLngBounds();
+          const { x, y } = data[0];
+
+          const markerPosition = new window.kakao.maps.LatLng(+y, +x);
+          bounds.extend(markerPosition);
+          setPosition({ lat: +y, lng: +x });
+          if (map) {
+            const marker = new window.kakao.maps.Marker({
+              position: markerPosition,
+            });
+
+            map.setBounds(bounds);
+            marker.setMap(map);
+          }
+        }
+      });
+    },
+    [map],
+  );
 
   const debouncedSearchAddress = _.debounce(searchAddress, 500);
 
