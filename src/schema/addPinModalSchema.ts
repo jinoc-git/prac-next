@@ -10,7 +10,10 @@ const placeName = yup
   .min(1, '장소 이름은 1자 이상이어야 합니다.')
   .max(12, '장소 이름은 12자 이하여야 합니다.');
 
-const address = yup.string().matches(addressRegExp, '모음, 자음 안됨');
+const address = yup
+  .string()
+  .required('주소는 필수 입니다.')
+  .matches(addressRegExp, '모음, 자음 안됨');
 
 const cost = yup.string();
 
