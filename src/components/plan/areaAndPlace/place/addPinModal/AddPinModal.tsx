@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import _ from 'lodash';
 
+import ModalButton from '@/components/common/button/ModalButton';
 import TitleInput from '@/components/common/input/TitleInput';
 import ModalLayout from '@/components/common/layout/ModalLayout';
 import { addPinSchema } from '@/schema/addPinModalSchema';
@@ -106,9 +107,12 @@ const AddPinModal = (props: Props) => {
     setValue('cost', addCommas(+val));
   };
 
+  const handleCloseModal = () => {};
+  const handleAddPin = () => {};
+
   return (
     <ModalLayout isAnimate={isAnimate}>
-      <form className=" space-y-3">
+      <form className="space-y-3">
         <div>
           <h4 className="mb-[8px] text-navy text-lg font-bold">방문할 장소</h4>
           <p className="text-[16px] font-normal mb-[16px]">
@@ -137,6 +141,22 @@ const AddPinModal = (props: Props) => {
           defaultValue="0"
           register={register('cost', { onChange: onChangeCost })}
         />
+        <div className="flex gap-2 h-[44px] items-center">
+          <ModalButton
+            value="취소"
+            fill={false}
+            type="button"
+            name="add-pin-modal-cancle-button"
+            onClick={handleCloseModal}
+          />
+          <ModalButton
+            value="새 장소 추가"
+            fill={true}
+            type="submit"
+            name="add-pin-modal-submit-button"
+            onClick={handleAddPin}
+          />
+        </div>
       </form>
     </ModalLayout>
   );
