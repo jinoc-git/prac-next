@@ -30,7 +30,7 @@ const ModalButton = (props: Props) => {
       name={name}
       disabled={disabled}
       onClick={onClick}
-      className={`modal-button ${colors(fill)}`}
+      className={`modal-button ${colors(fill)} disabled:hover:bg-gray`}
     >
       {value}
     </button>

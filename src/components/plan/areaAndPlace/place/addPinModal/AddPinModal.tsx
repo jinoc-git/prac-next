@@ -107,8 +107,12 @@ const AddPinModal = (props: Props) => {
     setValue('cost', addCommas(+val));
   };
 
-  const handleCloseModal = () => {};
   const handleAddPin = () => {};
+  const shouldBlockSubmit =
+    position.lat === 0 ||
+    position.lng === 0 ||
+    isSubmitting ||
+    watch('placeName').length === 0;
 
   return (
     <ModalLayout isAnimate={isAnimate}>
@@ -147,13 +151,14 @@ const AddPinModal = (props: Props) => {
             fill={false}
             type="button"
             name="add-pin-modal-cancle-button"
-            onClick={handleCloseModal}
+            onClick={closeModal}
           />
           <ModalButton
             value="새 장소 추가"
             fill={true}
             type="submit"
             name="add-pin-modal-submit-button"
+            disabled={shouldBlockSubmit}
             onClick={handleAddPin}
           />
         </div>
