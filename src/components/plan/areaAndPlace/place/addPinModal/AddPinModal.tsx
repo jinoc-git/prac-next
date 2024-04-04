@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import _ from 'lodash';
 
+import ModalButton from '@/components/common/button/ModalButton';
 import TitleInput from '@/components/common/input/TitleInput';
 import ModalLayout from '@/components/common/layout/ModalLayout';
 import { addPinSchema } from '@/schema/addPinModalSchema';
@@ -106,31 +107,62 @@ const AddPinModal = (props: Props) => {
     setValue('cost', addCommas(+val));
   };
 
+  const handleAddPin = () => {};
+  const shouldBlockSubmit =
+    position.lat === 0 ||
+    position.lng === 0 ||
+    isSubmitting ||
+    watch('placeName').length === 0;
+
   return (
     <ModalLayout isAnimate={isAnimate}>
-      <TitleInput
-        title="장소 이름"
-        name="placeName"
-        placeholder="장소 이름을 입력하세요."
-        register={register('placeName')}
-        errors={errors}
-      />
-      <TitleInput
-        title="주소"
-        name="address"
-        placeholder="주소를 검색하세요."
-        register={register('address', { onChange: onChangeAddress })}
-        errors={errors}
-      />
-      <AddPinKakaoMap pin={pin} setMap={setMap} />
-      <TitleInput
-        title="지출 비용"
-        name="cost"
-        placeholder="지출 비용을 입력하세요."
-        defaultValue="0"
-        register={register('cost', { onChange: onChangeCost })}
-        errors={errors}
-      />
+      <form className="space-y-3">
+        <div>
+          <h4 className="mb-[8px] text-navy text-lg font-bold">방문할 장소</h4>
+          <p className="text-[16px] font-normal mb-[16px]">
+            방문할 장소와 관련된 정보를 저장하세요.
+          </p>
+        </div>
+        <TitleInput
+          title="장소 이름"
+          name="placeName"
+          placeholder="장소 이름을 입력하세요."
+          register={register('placeName')}
+          showErrorText={true}
+          errors={errors}
+        />
+        <TitleInput
+          title="주소"
+          name="address"
+          placeholder="주소를 검색하세요."
+          register={register('address', { onChange: onChangeAddress })}
+        />
+        <AddPinKakaoMap pin={pin} setMap={setMap} />
+        <TitleInput
+          title="지출 비용"
+          name="cost"
+          placeholder="지출 비용을 입력하세요."
+          defaultValue="0"
+          register={register('cost', { onChange: onChangeCost })}
+        />
+        <div className="flex gap-2 h-[44px] items-center">
+          <ModalButton
+            value="취소"
+            fill={false}
+            type="button"
+            name="add-pin-modal-cancle-button"
+            onClick={closeModal}
+          />
+          <ModalButton
+            value="새 장소 추가"
+            fill={true}
+            type="submit"
+            name="add-pin-modal-submit-button"
+            disabled={shouldBlockSubmit}
+            onClick={handleAddPin}
+          />
+        </div>
+      </form>
     </ModalLayout>
   );
 };
