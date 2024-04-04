@@ -5,5 +5,5 @@ export type InputCompProps<T extends Object> = {
   placeholder: string;
   defaultValue?: string;
   register: UseFormRegisterReturn<string>;
-  errors: FieldErrors<T>;
+  errors?: FieldErrors<T>;
 };

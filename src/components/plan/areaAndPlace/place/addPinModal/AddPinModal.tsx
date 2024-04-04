@@ -108,29 +108,36 @@ const AddPinModal = (props: Props) => {
 
   return (
     <ModalLayout isAnimate={isAnimate}>
-      <TitleInput
-        title="장소 이름"
-        name="placeName"
-        placeholder="장소 이름을 입력하세요."
-        register={register('placeName')}
-        errors={errors}
-      />
-      <TitleInput
-        title="주소"
-        name="address"
-        placeholder="주소를 검색하세요."
-        register={register('address', { onChange: onChangeAddress })}
-        errors={errors}
-      />
-      <AddPinKakaoMap pin={pin} setMap={setMap} />
-      <TitleInput
-        title="지출 비용"
-        name="cost"
-        placeholder="지출 비용을 입력하세요."
-        defaultValue="0"
-        register={register('cost', { onChange: onChangeCost })}
-        errors={errors}
-      />
+      <form className=" space-y-3">
+        <div>
+          <h4 className="mb-[8px] text-navy text-lg font-bold">방문할 장소</h4>
+          <p className="text-[16px] font-normal mb-[16px]">
+            방문할 장소와 관련된 정보를 저장하세요.
+          </p>
+        </div>
+        <TitleInput
+          title="장소 이름"
+          name="placeName"
+          placeholder="장소 이름을 입력하세요."
+          register={register('placeName')}
+          showErrorText={true}
+          errors={errors}
+        />
+        <TitleInput
+          title="주소"
+          name="address"
+          placeholder="주소를 검색하세요."
+          register={register('address', { onChange: onChangeAddress })}
+        />
+        <AddPinKakaoMap pin={pin} setMap={setMap} />
+        <TitleInput
+          title="지출 비용"
+          name="cost"
+          placeholder="지출 비용을 입력하세요."
+          defaultValue="0"
+          register={register('cost', { onChange: onChangeCost })}
+        />
+      </form>
     </ModalLayout>
   );
 };
