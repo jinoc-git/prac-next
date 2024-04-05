@@ -5,11 +5,13 @@ import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
 import { yupResolver } from '@hookform/resolvers/yup';
+import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import _ from 'lodash';
 
 import ModalButton from '@/components/common/button/ModalButton';
 import TitleInput from '@/components/common/input/TitleInput';
 import ModalLayout from '@/components/common/layout/ModalLayout';
+import useConfirm from '@/hooks/useConfirm';
 import { addPinSchema } from '@/schema/addPinModalSchema';
 import { pinStore } from '@/store/pinStore';
 import { addCommas, removeCommas } from '@/utils/numberFormat';
@@ -34,6 +36,7 @@ interface Props {
 const AddPinModal = (props: Props) => {
   const { isAnimate, currentPage, setPins, closeModal } = props;
   const { pin, idx, resetPin } = pinStore();
+  const confirm = useConfirm();
 
   const [position, setPosition] = useState({
     lat: pin !== null ? (pin.lat as number) : 0,
@@ -111,7 +114,54 @@ const AddPinModal = (props: Props) => {
   const handleAddPin: SubmitHandler<AddPinInputType> = (data) => {
     const { placeName, address, cost } = data;
     const removeCommaCost = cost ? removeCommas(cost) : '0';
-    console.log(placeName, address, removeCommaCost);
+
+    const newPin: PinContentsType = {
+      id: uuid(),
+      lat: position.lat,
+      lng: position.lng,
+      placeName,
+      address,
+      cost: removeCommaCost,
+    };
+
+    if (pin !== null) {
+      const confTitle = '장소 수정';
+      const confDesc = '이대로 수정하시겠습니까?';
+      const confFunc = () => {
+        setPins((state) => {
+          return state.map((item, i) => {
+            if (i === currentPage) {
+              item[idx] = newPin;
+              return [...item];
+            }
+
+            return item;
+          });
+        });
+
+        closeModal();
+        resetPin();
+      };
+
+      confirm.default(confTitle, confDesc, confFunc);
+    } else {
+      const confTitle = '장소 추가';
+      const confDesc = '이대로 추가하시겠습니까?';
+      const confFunc = () => {
+        setPins((state) => {
+          return state.map((item, i) => {
+            if (i === currentPage) return [...item, newPin];
+
+            return item;
+          });
+        });
+
+        closeModal();
+        resetPin();
+      };
+
+      confirm.default(confTitle, confDesc, confFunc);
+    }
   };
 
   const shouldBlockSubmit =

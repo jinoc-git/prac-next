@@ -3,5 +3,5 @@ export const addCommas = (num: number) => {
 };
 
 export const removeCommas = (val: string) => {
-  return Number(val.replaceAll(',', ''));
+  return val.replaceAll(',', '');
 };
