@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useCallback, useState } from 'react';
+import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -11,7 +12,7 @@ import TitleInput from '@/components/common/input/TitleInput';
 import ModalLayout from '@/components/common/layout/ModalLayout';
 import { addPinSchema } from '@/schema/addPinModalSchema';
 import { pinStore } from '@/store/pinStore';
-import { addCommas } from '@/utils/numberFormat';
+import { addCommas, removeCommas } from '@/utils/numberFormat';
 
 import AddPinKakaoMap from './addPinKakaoMap/AddPinKakaoMap';
 
@@ -20,7 +21,7 @@ import type { PinContentsType } from '@/types/supabase';
 export interface AddPinInputType {
   placeName: string;
   address: string;
-  cost?: string;
+  cost: string;
 }
 
 interface Props {
@@ -54,7 +55,7 @@ const AddPinModal = (props: Props) => {
     resolver,
     defaultValues: {
       placeName: pin !== null ? pin.placeName : '',
-      cost: pin !== null && typeof pin.cost === 'string' ? pin.cost : '0',
+      cost: pin?.cost ? pin.cost : '0',
     },
   });
 
@@ -107,7 +108,12 @@ const AddPinModal = (props: Props) => {
     setValue('cost', addCommas(+val));
   };
 
-  const handleAddPin = () => {};
+  const handleAddPin: SubmitHandler<AddPinInputType> = (data) => {
+    const { placeName, address, cost } = data;
+    const removeCommaCost = cost ? removeCommas(cost) : '0';
+    console.log(placeName, address, removeCommaCost);
+  };
+
   const shouldBlockSubmit =
     position.lat === 0 ||
     position.lng === 0 ||
@@ -116,7 +122,7 @@ const AddPinModal = (props: Props) => {
 
   return (
     <ModalLayout isAnimate={isAnimate}>
-      <form className="space-y-3">
+      <form onSubmit={handleSubmit(handleAddPin)} className="space-y-3">
         <div>
           <h4 className="mb-[8px] text-navy text-lg font-bold">방문할 장소</h4>
           <p className="text-[16px] font-normal mb-[16px]">

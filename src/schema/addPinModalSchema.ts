@@ -15,7 +15,7 @@ const address = yup
   .required('주소는 필수 입니다.')
   .matches(addressRegExp, '모음, 자음 안됨');
 
-const cost = yup.string();
+const cost = yup.string().required();
 
 export const addPinSchema = yup.object().shape({
   placeName,
