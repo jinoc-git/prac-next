@@ -1,17 +1,15 @@
 import { create } from 'zustand';
 
-type ConfirmBtnText = 'default' | 'modify' | 'delete' | 'quit';
-
 interface confirmStoreType {
   isOpen: boolean;
   title: string;
   desc: string;
-  buttonText: ConfirmBtnText;
+  buttonText: string;
   func: () => void;
   openConfirm: (
     title: string,
     description: string,
-    buttonText: ConfirmBtnText,
+    buttonText: string,
     func: () => void,
   ) => void;
   closeConfirm: () => void;
@@ -26,7 +24,7 @@ export const confirmStore = create<confirmStoreType>((set) => ({
   openConfirm: (
     title: string,
     desc: string,
-    buttonText: ConfirmBtnText,
+    buttonText: string,
     func: () => void,
   ) => {
     set(() => ({
@@ -41,7 +39,7 @@ export const confirmStore = create<confirmStoreType>((set) => ({
     set(() => ({
       isOpen: false,
       title: '',
-      desc: 'default',
+      desc: '',
     }));
   },
 }));
