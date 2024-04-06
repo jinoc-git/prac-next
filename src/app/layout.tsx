@@ -22,7 +22,7 @@ async function RootLayout({ children }: { children: React.ReactNode }) {
         <Providers>
           <SideBar />
           <Header session={session} />
-          <main className="w-screen h-screen">{children}</main>
+          <main className="w-full min-h-screen">{children}</main>
           <ToastProvider />
         </Providers>
         <div id="modal-portal" />
