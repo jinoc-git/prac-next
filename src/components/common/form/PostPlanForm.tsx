@@ -31,10 +31,13 @@ export default function PostPlanForm(props: Props) {
     ({ inviteUser, syncInvitedUser }) => ({ inviteUser, syncInvitedUser }),
   );
   const user = authStore(({ user }) => user);
-  const { dates, resetDates } = dateStore(({ dates, resetDates }) => ({
-    dates,
-    resetDates,
-  }));
+  const { dates, oldDates, resetDates } = dateStore(
+    ({ dates, resetDates, oldDates }) => ({
+      oldDates,
+      dates,
+      resetDates,
+    }),
+  );
   const { currentPage, next, prev, setCurrentPage } = usePagination();
 
   const [pins, setPins] = useState<PinContentsType[][]>([]);
@@ -49,6 +52,18 @@ export default function PostPlanForm(props: Props) {
       syncInvitedUser();
     }
   }, [user]);
+
+  useEffect(() => {
+    setCurrentPage(() => 0);
+    const initPins: PinContentsType[][] = [];
+
+    dates.forEach((date) => {
+      if (!oldDates.includes(date)) initPins.push([]);
+      else initPins.push(pins[oldDates.indexOf(date)]);
+    });
+
+    setPins(initPins);
+  }, [dates]);
 
   return (
     <form
