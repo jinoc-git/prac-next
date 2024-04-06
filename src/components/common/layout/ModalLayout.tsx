@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
+
+import { disableScroll, enableScroll } from '@/utils/aboutScroll';
 
 interface Props {
   children: React.ReactNode;
@@ -8,6 +10,13 @@ interface Props {
 
 export default function ModalLayout(props: Props) {
   const { children, isAnimate } = props;
+
+  useEffect(() => {
+    disableScroll();
+    return () => {
+      enableScroll();
+    };
+  }, []);
 
   return createPortal(
     <div

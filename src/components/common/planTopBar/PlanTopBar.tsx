@@ -18,8 +18,8 @@ export default function PlanTopBar(props: Props) {
 
   return (
     <div
-      className={`flex justify-between items-center border-b-[1px] border-navy py-[11.5px] bg-white z-30
-      sm:fixed sm:w-[100vw] sm:mt-0 sm:top-[89px] side-bar-transition
+      className={`flex justify-between items-center w-full border-b-[1px] border-navy py-[11.5px] bg-white z-30
+      sm:fixed sm:top-[80px] side-bar-transition
       md:static md:pt-[86px] ${
         isSideBarOpen ? 'md:pl-[270px]' : 'md:pl-[88px]'
       }`}

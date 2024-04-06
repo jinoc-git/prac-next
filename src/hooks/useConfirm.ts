@@ -5,16 +5,16 @@ const useConfirm = () => {
 
   const confirm = {
     default: (title: string, desc: string, func: () => void) => {
-      openConfirm(title, desc, 'default', func);
+      openConfirm(title, desc, '확인', func);
     },
     modify: (title: string, desc: string, func: () => void) => {
-      openConfirm(title, desc, 'modify', func);
+      openConfirm(title, desc, '수정하기', func);
     },
     delete: (title: string, desc: string, func: () => void) => {
-      openConfirm(title, desc, 'delete', func);
+      openConfirm(title, desc, '삭제하기', func);
     },
     quit: (title: string, desc: string, func: () => void) => {
-      openConfirm(title, desc, 'quit', func);
+      openConfirm(title, desc, '나가기', func);
     },
   };
 
