@@ -36,10 +36,10 @@ export default function Profile() {
           sm:w-[66px] sm:h-[66px] 
           md:w-[85px] md:h-[85px]"
         >
-          {user !== null && typeof user.profileImg === 'string' ? (
+          {user !== null && typeof user.avatar_url === 'string' ? (
             <Image
               alt="main-profile-img"
-              src={user.profileImg}
+              src={user.avatar_url}
               width={85}
               height={85}
               className="rounded-full border-[2.5px] border-blue_light_1 object-cover cursor-pointer
