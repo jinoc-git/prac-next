@@ -19,7 +19,7 @@ export const confirmStore = create<confirmStoreType>((set) => ({
   isOpen: false,
   title: '',
   desc: '',
-  buttonText: 'default',
+  buttonText: '',
   func: () => {},
   openConfirm: (
     title: string,
