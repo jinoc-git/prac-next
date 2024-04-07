@@ -60,11 +60,17 @@ const useKakaoMap = () => {
     });
   };
 
-  const makeMarker = () => {};
+  const makeMarker = ({ lat, lng }: { lat: number; lng: number }) => {
+    if (map === null) throw new Error('kakao map is null');
+
+    const position = makeLatLng({ lat, lng });
+    const marker = new window.kakao.maps.Marker({ position });
+    marker.setMap(map);
+  };
 
   useEffect(() => {}, []);
 
-  return { map, makeMap };
+  return { map, makeMap, makeMarker };
 };
 
 export default useKakaoMap;

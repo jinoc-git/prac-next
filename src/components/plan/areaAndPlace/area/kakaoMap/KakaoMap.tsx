@@ -6,12 +6,6 @@ import useKakaoMap from '@/hooks/useKakaoMap';
 
 import type { PinContentsType } from '@/types/supabase';
 
-declare global {
-  interface Window {
-    kakao: any;
-  }
-}
-
 interface Props {
   pins: PinContentsType[];
 }
@@ -19,7 +13,7 @@ interface Props {
 const KakaoMap = ({ pins }: Props) => {
   // const [map, setMap] = useState<any>(null);
   const style = {};
-  const { map, makeMap } = useKakaoMap();
+  const { map, makeMap, makeMarker } = useKakaoMap();
 
   useEffect(() => {
     makeMap({
@@ -55,9 +49,10 @@ const KakaoMap = ({ pins }: Props) => {
         const boundPosition = new window.kakao.maps.LatLng(lat, lng);
         bounds.extend(boundPosition);
 
-        const position = new window.kakao.maps.LatLng(lat, lng);
-        const marker = new window.kakao.maps.Marker({ position });
-        marker.setMap(map);
+        makeMarker({ lat, lng });
+        // const position = new window.kakao.maps.LatLng(lat, lng);
+        // const marker = new window.kakao.maps.Marker({ position });
+        // marker.setMap(map);
       });
 
       map.setBounds(bounds);

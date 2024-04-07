@@ -257,8 +257,8 @@ export interface Database {
 
 export interface PinContentsType {
   id?: string;
-  lat?: number;
-  lng?: number;
+  lat: number;
+  lng: number;
   placeName?: string;
   cost?: string | null;
   address?: string;
