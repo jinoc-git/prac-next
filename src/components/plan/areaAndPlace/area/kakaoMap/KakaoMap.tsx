@@ -1,6 +1,8 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+
+import useKakaoMap from '@/hooks/useKakaoMap';
 
 import type { PinContentsType } from '@/types/supabase';
 
@@ -15,26 +17,33 @@ interface Props {
 }
 
 const KakaoMap = ({ pins }: Props) => {
-  const [map, setMap] = useState<any>(null);
+  // const [map, setMap] = useState<any>(null);
   const style = {};
+  const { map, makeMap } = useKakaoMap('add-plan-kakao-map');
 
   useEffect(() => {
-    window.kakao.maps.load(() => {
-      const mapContainer = document.getElementById('add-plan-kakao-map');
-      const mapOption = {
-        center: new window.kakao.maps.LatLng(37.566826, 126.9786567),
-        level: 4,
-      };
-      const map = new window.kakao.maps.Map(mapContainer, mapOption);
-
-      const zoomControl = new window.kakao.maps.ZoomControl();
-      map.addControl(zoomControl, window.kakao.maps.ControlPosition.TOPRIGHT);
-      const mapTypeControl = new window.kakao.maps.MapTypeControl();
-
-      map.addControl(mapTypeControl, window.kakao.maps.ControlPosition.RIGHT);
-
-      setMap(map);
+    makeMap({
+      center: { lat: 37.566826, lng: 126.9786567 },
+      level: 4,
+      zoom: 'TOPRIGHT',
+      mapType: 'RIGHT',
     });
+    // window.kakao.maps.load(() => {
+    //   const mapContainer = document.getElementById('add-plan-kakao-map');
+    //   const mapOption = {
+    //     center: new window.kakao.maps.LatLng(37.566826, 126.9786567),
+    //     level: 4,
+    //   };
+    //   const map = new window.kakao.maps.Map(mapContainer, mapOption);
+
+    //   const zoomControl = new window.kakao.maps.ZoomControl();
+    //   map.addControl(zoomControl, window.kakao.maps.ControlPosition.TOPRIGHT);
+
+    //   const mapTypeControl = new window.kakao.maps.MapTypeControl();
+    //   map.addControl(mapTypeControl, window.kakao.maps.ControlPosition.RIGHT);
+
+    //   setMap(map);
+    // });
   }, []);
 
   useEffect(() => {
