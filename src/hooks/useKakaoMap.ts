@@ -17,18 +17,14 @@ type ControlPosition =
   | 'BOTTOMRIGHT';
 
 interface MakeMapArgs {
-  // containerId: string;
+  containerId: string;
   center: { lat: number; lng: number };
   level: number;
   zoom?: ControlPosition;
   mapType?: ControlPosition;
 }
 
-interface Args {
-  containerId: string;
-}
-
-const useKakaoMap = (containerId: string) => {
+const useKakaoMap = () => {
   const [map, setMap] = useState<any>(null);
 
   const makeLatLng = ({ lat, lng }: { lat: number; lng: number }) => {
@@ -46,7 +42,7 @@ const useKakaoMap = (containerId: string) => {
   };
 
   const makeMap = (args: MakeMapArgs) => {
-    const { center, level, zoom, mapType } = args;
+    const { containerId, center, level, zoom, mapType } = args;
 
     window.kakao.maps.load(() => {
       const mapContainer = document.getElementById(containerId);

@@ -19,10 +19,11 @@ interface Props {
 const KakaoMap = ({ pins }: Props) => {
   // const [map, setMap] = useState<any>(null);
   const style = {};
-  const { map, makeMap } = useKakaoMap('add-plan-kakao-map');
+  const { map, makeMap } = useKakaoMap();
 
   useEffect(() => {
     makeMap({
+      containerId: 'add-plan-kakao-map',
       center: { lat: 37.566826, lng: 126.9786567 },
       level: 4,
       zoom: 'TOPRIGHT',
