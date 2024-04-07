@@ -17,7 +17,7 @@ interface Props {
 const KAKAO_MAP_URL = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY}&autoload=false&libraries=services,clusterer`;
 
 const KakaoMap = ({ pins }: Props) => {
-  const [map, setMap] = useState(null);
+  const [map, setMap] = useState<any>(null);
   const style = {};
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const KakaoMap = ({ pins }: Props) => {
           const mapContainer = document.getElementById('add-plan-kakao-map');
           const mapOption = {
             center: new window.kakao.maps.LatLng(37.566826, 126.9786567),
-            level: 3,
+            level: 4,
           };
           const map = new window.kakao.maps.Map(mapContainer, mapOption);
 
@@ -54,10 +54,19 @@ const KakaoMap = ({ pins }: Props) => {
   }, []);
 
   useEffect(() => {
-    if (window.kakao && map && pins?.length > 0) {
+    if (map && pins?.length > 0) {
+      const bounds = new window.kakao.maps.LatLngBounds();
+      const boundPosition = new window.kakao.maps.LatLng(
+        pins[0].lat,
+        pins[0].lng,
+      );
+      bounds.extend(boundPosition);
+      map.setBounds(bounds);
+
       pins.forEach(({ lat, lng }) => {
         const position = new window.kakao.maps.LatLng(lat, lng);
-        new window.kakao.maps.Marker({ map, position });
+        const marker = new window.kakao.maps.Marker({ position });
+        marker.setMap(map);
 
         const polyline = new window.kakao.maps.Polyline({
           map,
