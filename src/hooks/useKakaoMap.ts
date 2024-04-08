@@ -61,7 +61,11 @@ const useKakaoMap = () => {
     return new window.kakao.maps.Polyline(args);
   };
 
-  return { map, makeMap, makeMarker, makePolyline };
+  const makeBounds = () => {
+    return new window.kakao.maps.LatLngBounds();
+  };
+
+  return { map, makeMap, makeLatLng, makeMarker, makePolyline, makeBounds };
 };
 
 export default useKakaoMap;

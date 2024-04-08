@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 
 import useKakaoMap from '@/hooks/useKakaoMap';
 
+import type { LatLng } from '@/types/aboutKakaoMap';
 import type { PinContentsType } from '@/types/supabase';
 
 interface Props {
@@ -11,7 +12,8 @@ interface Props {
 }
 
 const KakaoMap = ({ pins }: Props) => {
-  const { map, makeMap, makeMarker, makePolyline } = useKakaoMap();
+  const { map, makeMap, makeLatLng, makeMarker, makePolyline, makeBounds } =
+    useKakaoMap();
 
   useEffect(() => {
     makeMap({
@@ -25,11 +27,11 @@ const KakaoMap = ({ pins }: Props) => {
 
   useEffect(() => {
     if (map && pins?.length > 0) {
-      const bounds = new window.kakao.maps.LatLngBounds();
-      const path: any[] = [];
+      const bounds = makeBounds();
+      const path: LatLng[] = [];
 
       pins.forEach(({ lat, lng }) => {
-        const position = new window.kakao.maps.LatLng(lat, lng);
+        const position = makeLatLng({ lat, lng });
         bounds.extend(position);
 
         makeMarker({ lat, lng });
