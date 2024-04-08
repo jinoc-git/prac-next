@@ -1,4 +1,4 @@
-import type { UsersDataList } from '@/types/aboutPlan';
+import type { UsersDataList } from '@/types/aboutPlan.type';
 import type { BookMarkType, UserType } from '@/types/supabase';
 
 export const cardListing =

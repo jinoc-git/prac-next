@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
@@ -12,6 +12,8 @@ import ModalButton from '@/components/common/button/ModalButton';
 import TitleInput from '@/components/common/input/TitleInput';
 import ModalLayout from '@/components/common/layout/ModalLayout';
 import useConfirm from '@/hooks/useConfirm';
+import useKakaoMap from '@/hooks/useKakaoMap';
+import useKakaoMapServices from '@/hooks/useKakaoMapServices';
 import { addPinSchema } from '@/schema/addPinModalSchema';
 import { pinStore } from '@/store/pinStore';
 import { addCommas, removeCommas } from '@/utils/numberFormat';
@@ -37,13 +39,14 @@ const AddPinModal = (props: Props) => {
   const { isAnimate, currentPage, setPins, closeModal } = props;
   const { pin, idx, resetPin } = pinStore();
   const confirm = useConfirm();
+  const { map, makeMap, makeLatLng, makeMarker, makeBounds } = useKakaoMap();
+  const { getAddress, searchKeyword } = useKakaoMapServices();
 
   const [position, setPosition] = useState({
     lat: pin !== null ? (pin.lat as number) : 0,
     lng: pin !== null ? (pin.lng as number) : 0,
   });
   const [address, setAddress] = useState('');
-  const [map, setMap] = useState<any>(null);
 
   const resolver = yupResolver(addPinSchema);
 
@@ -62,41 +65,23 @@ const AddPinModal = (props: Props) => {
     },
   });
 
-  const searchCallback = useCallback((result: any) => {
-    const RoadAddress = result[0]?.road_address?.address_name;
-    const Address = result[0]?.address?.address_name;
-    setAddress(RoadAddress !== undefined ? RoadAddress : Address);
-  }, []);
+  const searchAddress = async (keyWord: string) => {
+    if (keyWord === '') return;
+    const coord = await searchKeyword(keyWord);
+    setPosition(coord);
 
-  const searchAddress = useCallback(
-    (keyWord: string) => {
-      if (keyWord === '') return;
+    const bounds = makeBounds();
+    const markerPosition = makeLatLng(coord);
+    bounds.extend(markerPosition);
 
-      const ps = new window.kakao.maps.services.Places();
-      const geocoder = new window.kakao.maps.services.Geocoder();
+    if (map) {
+      makeMarker(coord);
+      map.setBounds(bounds);
+    }
 
-      ps.keywordSearch(keyWord, (data: any, status: any) => {
-        if (status === window.kakao.maps.services.Status.OK) {
-          const bounds = new window.kakao.maps.LatLngBounds();
-          const { x, y } = data[0];
-
-          geocoder.coord2Address(+x, +y, searchCallback);
-          const markerPosition = new window.kakao.maps.LatLng(+y, +x);
-          bounds.extend(markerPosition);
-          setPosition({ lat: +y, lng: +x });
-          if (map) {
-            const marker = new window.kakao.maps.Marker({
-              position: markerPosition,
-            });
-
-            map.setBounds(bounds);
-            marker.setMap(map);
-          }
-        }
-      });
-    },
-    [map],
-  );
+    const address = await getAddress(coord);
+    setAddress(address);
+  };
 
   const debouncedSearchAddress = _.debounce(searchAddress, 500);
 
@@ -193,7 +178,7 @@ const AddPinModal = (props: Props) => {
           placeholder="주소를 검색하세요."
           register={register('address', { onChange: onChangeAddress })}
         />
-        <AddPinKakaoMap pin={pin} setMap={setMap} />
+        <AddPinKakaoMap pin={pin} makeMap={makeMap} makeMarker={makeMarker} />
         <TitleInput
           title="지출 비용"
           name="cost"

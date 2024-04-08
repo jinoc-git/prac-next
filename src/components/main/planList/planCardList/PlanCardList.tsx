@@ -10,7 +10,7 @@ import { cardListing } from '@/utils/planCardListing';
 
 import PlanCard from './planCard/PlanCard';
 
-import type { UsersDataList } from '@/types/aboutPlan';
+import type { UsersDataList } from '@/types/aboutPlan.type';
 import type { BookMarkType, PlanType } from '@/types/supabase';
 
 interface Props {

@@ -1,83 +1,52 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
+import useKakaoMap from '@/hooks/useKakaoMap';
+
+import type { LatLng } from '@/types/aboutKakaoMap.type';
 import type { PinContentsType } from '@/types/supabase';
-
-declare global {
-  interface Window {
-    kakao: any;
-  }
-}
 
 interface Props {
   pins: PinContentsType[];
 }
 
-const KAKAO_MAP_URL = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY}&autoload=false&libraries=services,clusterer`;
-
 const KakaoMap = ({ pins }: Props) => {
-  const [map, setMap] = useState<any>(null);
-  const style = {};
+  const { map, makeMap, makeLatLng, makeMarker, makePolyline, makeBounds } =
+    useKakaoMap();
 
   useEffect(() => {
-    const kakaoScript = document.createElement('script');
-    kakaoScript.src = KAKAO_MAP_URL;
-    document.head.appendChild(kakaoScript);
-
-    kakaoScript.onload = () => {
-      if (window.kakao) {
-        window.kakao.maps.load(() => {
-          const mapContainer = document.getElementById('add-plan-kakao-map');
-          const mapOption = {
-            center: new window.kakao.maps.LatLng(37.566826, 126.9786567),
-            level: 4,
-          };
-          const map = new window.kakao.maps.Map(mapContainer, mapOption);
-
-          const zoomControl = new window.kakao.maps.ZoomControl();
-          map.addControl(
-            zoomControl,
-            window.kakao.maps.ControlPosition.TOPRIGHT,
-          );
-          const mapTypeControl = new window.kakao.maps.MapTypeControl();
-
-          map.addControl(
-            mapTypeControl,
-            window.kakao.maps.ControlPosition.RIGHT,
-          );
-
-          setMap(map);
-        });
-      }
-    };
+    makeMap({
+      containerId: 'add-plan-kakao-map',
+      center: { lat: 37.566826, lng: 126.9786567 },
+      level: 4,
+      zoom: 'TOPRIGHT',
+      mapType: 'RIGHT',
+    });
   }, []);
 
   useEffect(() => {
     if (map && pins?.length > 0) {
-      const bounds = new window.kakao.maps.LatLngBounds();
-      const boundPosition = new window.kakao.maps.LatLng(
-        pins[0].lat,
-        pins[0].lng,
-      );
-      bounds.extend(boundPosition);
-      map.setBounds(bounds);
+      const bounds = makeBounds();
+      const path: LatLng[] = [];
 
       pins.forEach(({ lat, lng }) => {
-        const position = new window.kakao.maps.LatLng(lat, lng);
-        const marker = new window.kakao.maps.Marker({ position });
-        marker.setMap(map);
+        const position = makeLatLng({ lat, lng });
+        bounds.extend(position);
 
-        const polyline = new window.kakao.maps.Polyline({
-          map,
-          path: pins.map(
-            ({ lat, lng }) => new window.kakao.maps.LatLng(lat, lng),
-          ),
-          strokeWeight: 5,
-          strokeColor: '#162F70',
-          strokeOpacity: 0.7,
-          strokeStyle: 'solid',
-        });
+        makeMarker({ lat, lng });
+        path.push(position);
+      });
+
+      map.setBounds(bounds);
+
+      makePolyline({
+        map,
+        path,
+        strokeWeight: 5,
+        strokeColor: '#162F70',
+        strokeOpacity: 0.7,
+        strokeStyle: 'solid',
       });
     }
   }, [pins, map]);
