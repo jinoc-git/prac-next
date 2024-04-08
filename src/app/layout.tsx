@@ -15,7 +15,9 @@ export const metadata: Metadata = {
   title: 'Traduler',
   description: '다 같이 여행을 떠날 때 저희 서비스와 함께해요!',
 };
+
 const KAKAO_MAP_URL = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY}&autoload=false&libraries=services,clusterer`;
+
 async function RootLayout({ children }: { children: React.ReactNode }) {
   const session = await getSessionFromServer();
 

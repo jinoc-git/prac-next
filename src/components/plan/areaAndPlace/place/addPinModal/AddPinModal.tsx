@@ -12,6 +12,7 @@ import ModalButton from '@/components/common/button/ModalButton';
 import TitleInput from '@/components/common/input/TitleInput';
 import ModalLayout from '@/components/common/layout/ModalLayout';
 import useConfirm from '@/hooks/useConfirm';
+import useKakaoMap from '@/hooks/useKakaoMap';
 import { addPinSchema } from '@/schema/addPinModalSchema';
 import { pinStore } from '@/store/pinStore';
 import { addCommas, removeCommas } from '@/utils/numberFormat';
@@ -37,13 +38,13 @@ const AddPinModal = (props: Props) => {
   const { isAnimate, currentPage, setPins, closeModal } = props;
   const { pin, idx, resetPin } = pinStore();
   const confirm = useConfirm();
+  const { map, makeMap, makeLatLng, makeMarker, makeBounds } = useKakaoMap();
 
   const [position, setPosition] = useState({
     lat: pin !== null ? (pin.lat as number) : 0,
     lng: pin !== null ? (pin.lng as number) : 0,
   });
   const [address, setAddress] = useState('');
-  const [map, setMap] = useState<any>(null);
 
   const resolver = yupResolver(addPinSchema);
 
@@ -193,7 +194,7 @@ const AddPinModal = (props: Props) => {
           placeholder="주소를 검색하세요."
           register={register('address', { onChange: onChangeAddress })}
         />
-        <AddPinKakaoMap pin={pin} setMap={setMap} />
+        <AddPinKakaoMap pin={pin} makeMap={makeMap} makeMarker={makeMarker} />
         <TitleInput
           title="지출 비용"
           name="cost"
