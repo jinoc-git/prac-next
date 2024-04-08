@@ -11,7 +11,7 @@ import PlanCardQuitButton from './PlanCardQuitButton';
 import PlanCardStatusChip from './PlanCardStatusChip';
 import PlanCardUserList from './PlanCardUserList';
 
-import type { PlanStatus } from '@/types/aboutPlan';
+import type { PlanStatus } from '@/types/aboutPlan.type';
 import type { BookMarkType, PlanType } from '@/types/supabase';
 
 interface Props {

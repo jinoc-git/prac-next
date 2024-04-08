@@ -2,7 +2,7 @@
 
 import React, { useEffect } from 'react';
 
-import type { LatLng, MakeMapArgs } from '@/types/aboutKakaoMap';
+import type { LatLng, MakeMapArgs } from '@/types/aboutKakaoMap.type';
 import type { PinContentsType } from '@/types/supabase';
 
 interface Props {

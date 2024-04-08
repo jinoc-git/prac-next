@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 
 import useKakaoMap from '@/hooks/useKakaoMap';
 
-import type { LatLng } from '@/types/aboutKakaoMap';
+import type { LatLng } from '@/types/aboutKakaoMap.type';
 import type { PinContentsType } from '@/types/supabase';
 
 interface Props {

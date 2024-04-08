@@ -5,7 +5,7 @@ import type {
   LatLng,
   MakeMapArgs,
   MakePolylineArgs,
-} from '@/types/aboutKakaoMap';
+} from '@/types/aboutKakaoMap.type';
 
 declare global {
   interface Window {

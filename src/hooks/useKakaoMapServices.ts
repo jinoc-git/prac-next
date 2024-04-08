@@ -1,4 +1,4 @@
-import type { LatLng } from '@/types/aboutKakaoMap';
+import type { LatLng } from '@/types/aboutKakaoMap.type';
 
 const useKakaoMapServices = () => {
   const ps = new window.kakao.maps.services.Places();

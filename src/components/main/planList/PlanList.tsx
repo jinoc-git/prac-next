@@ -14,7 +14,7 @@ import AddPlanBtn from './AddPlanBtn';
 import PlanCardList from './planCardList/PlanCardList';
 import PlanTabMenu from './planTabMenu/PlanTabMenu';
 
-import type { PlanCountList } from '@/types/aboutPlan';
+import type { PlanCountList } from '@/types/aboutPlan.type';
 
 export default function PlanList() {
   const router = useRouter();

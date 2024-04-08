@@ -4,7 +4,7 @@ import React from 'react';
 
 import PlanTabMenuItem from './PlanTabMenuItem';
 
-import type { PlanCountList } from '@/types/aboutPlan';
+import type { PlanCountList } from '@/types/aboutPlan.type';
 
 interface Props {
   planCountList: PlanCountList;
