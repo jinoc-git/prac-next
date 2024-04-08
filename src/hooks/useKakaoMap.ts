@@ -1,4 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+
+import type {
+  ControlPosition,
+  LatLng,
+  MakeMapArgs,
+  MakePolylineArgs,
+} from '@/types/aboutKakaoMap';
 
 declare global {
   interface Window {
@@ -6,28 +13,10 @@ declare global {
   }
 }
 
-type ControlPosition =
-  | 'TOP'
-  | 'TOPLEFT'
-  | 'TOPRIGHT'
-  | 'LEFT'
-  | 'RIGHT'
-  | 'BOTTOM'
-  | 'BOTTOMLEFT'
-  | 'BOTTOMRIGHT';
-
-interface MakeMapArgs {
-  containerId: string;
-  center: { lat: number; lng: number };
-  level: number;
-  zoom?: ControlPosition;
-  mapType?: ControlPosition;
-}
-
 const useKakaoMap = () => {
   const [map, setMap] = useState<any>(null);
 
-  const makeLatLng = ({ lat, lng }: { lat: number; lng: number }) => {
+  const makeLatLng = ({ lat, lng }: LatLng) => {
     return new window.kakao.maps.LatLng(lat, lng);
   };
 
@@ -60,7 +49,7 @@ const useKakaoMap = () => {
     });
   };
 
-  const makeMarker = ({ lat, lng }: { lat: number; lng: number }) => {
+  const makeMarker = ({ lat, lng }: LatLng) => {
     if (map === null) throw new Error('kakao map is null');
 
     const position = makeLatLng({ lat, lng });
@@ -68,9 +57,11 @@ const useKakaoMap = () => {
     marker.setMap(map);
   };
 
-  useEffect(() => {}, []);
+  const makePolyline = (args: MakePolylineArgs) => {
+    return new window.kakao.maps.Polyline(args);
+  };
 
-  return { map, makeMap, makeMarker };
+  return { map, makeMap, makeMarker, makePolyline };
 };
 
 export default useKakaoMap;
