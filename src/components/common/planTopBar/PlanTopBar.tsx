@@ -1,49 +1,19 @@
 'use client';
 
 import React from 'react';
-import type { SubmitHandler, UseFormHandleSubmit } from 'react-hook-form';
 
-import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import Image from 'next/image';
 
-import { authStore } from '@/store/authStore';
-import { dateStore } from '@/store/dateStore';
-import { modifyPlanStore } from '@/store/modifyPlanStore';
 import { sideBarStore } from '@/store/sideBarStore';
 
-import type { AddPlanContentsInputType } from '@/components/plan/addPlan/AddPlanContents';
-import type { InsertPlanType } from '@/types/supabase';
-
 interface Props {
-  handleSubmit: UseFormHandleSubmit<AddPlanContentsInputType, undefined>;
+  isModify: boolean;
+  handleSaveOrModifyBtnClick: () => void;
 }
 
 export default function PlanTopBar(props: Props) {
-  const { handleSubmit } = props;
-  const { modifyState } = modifyPlanStore();
+  const { isModify, handleSaveOrModifyBtnClick } = props;
   const isSideBarOpen = sideBarStore((state) => state.isSideBarOpen);
-  const user = authStore(({ user }) => user);
-  const dates = dateStore(({ dates }) => dates);
-
-  const onSubmitAddPlan: SubmitHandler<AddPlanContentsInputType> = async ({
-    title,
-    totalCost,
-  }) => {
-    if (user === null) return;
-    if (dates.length === 0) return;
-
-    const newPlan: InsertPlanType = {
-      id: uuid(),
-      users_id: user.id,
-      dates,
-      title,
-      total_cost: totalCost,
-      isDeleted: false,
-      plan_state: 'planning',
-    };
-
-    console.log(newPlan);
-  };
 
   return (
     <div
@@ -71,7 +41,7 @@ export default function PlanTopBar(props: Props) {
           sm:mr-[25px] 
           md:mr-[80px] "
           type="button"
-          onClick={handleSubmit(onSubmitAddPlan)}
+          onClick={handleSaveOrModifyBtnClick}
         >
           <Image
             alt="edit-icon"
@@ -79,7 +49,7 @@ export default function PlanTopBar(props: Props) {
             width={16}
             height={16}
           />
-          {modifyState === 'modify' ? `저장하기` : `수정하기`}
+          {isModify ? `저장하기` : `수정하기`}
         </button>
       </div>
     </div>

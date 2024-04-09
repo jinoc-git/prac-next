@@ -14,12 +14,12 @@ import Calendar from '../../common/calendar/Calendar';
 
 import type { PinInsertType } from '@/types/supabase';
 
-interface AddPlanDateProps {
+interface SelectDateProps {
   state?: 'addPlan';
   planDatesData?: string[];
 }
 
-export default function AddPlanDate(props: AddPlanDateProps) {
+export default function SelectDate(props: SelectDateProps) {
   const { state, planDatesData } = props;
 
   const { planId } = useParams<{ planId: string }>();

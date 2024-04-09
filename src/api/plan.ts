@@ -6,13 +6,22 @@ import type { AddPlanObj } from '@/types/aboutPlan.type';
 import type { PlanType } from '@/types/supabase';
 
 export const getPlanList = async (planIds: string[]) => {
-  const { data: plans, error } = await supabaseClientClient
+  const { data: planList, error } = await supabaseClientClient
     .from('plans')
     .select()
     .eq('isDeleted', false)
     .in('id', planIds);
 
-  return plans;
+  return planList;
+};
+
+export const getPlanById = async (planId: string) => {
+  const { data: plan, error } = await supabaseClientClient
+    .from('plans')
+    .select()
+    .eq('id', planId);
+
+  return plan;
 };
 
 export const getMatesByUserIdList = async (matesUserId: string[]) => {
