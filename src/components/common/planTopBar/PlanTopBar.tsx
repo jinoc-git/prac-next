@@ -8,11 +8,11 @@ import { modifyPlanStore } from '@/store/modifyPlanStore';
 import { sideBarStore } from '@/store/sideBarStore';
 
 interface Props {
-  handleButtonClick: () => void;
+  handleSaveBtnClick: () => void;
 }
 
 export default function PlanTopBar(props: Props) {
-  const { handleButtonClick } = props;
+  const { handleSaveBtnClick } = props;
   const { modifyState } = modifyPlanStore();
   const isSideBarOpen = sideBarStore((state) => state.isSideBarOpen);
 
@@ -42,7 +42,7 @@ export default function PlanTopBar(props: Props) {
           sm:mr-[25px] 
           md:mr-[80px] "
           type="button"
-          onClick={handleButtonClick}
+          onClick={handleSaveBtnClick}
         >
           <Image
             alt="edit-icon"

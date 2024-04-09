@@ -1,5 +1,8 @@
 import { supabaseClientClient } from './auth';
+import { addPins } from './pins';
+import { addNewPlanMates } from './planMate';
 
+import type { AddPlanObj } from '@/types/aboutPlan.type';
 import type { PlanType } from '@/types/supabase';
 
 export const getPlanList = async (planIds: string[]) => {
@@ -120,5 +123,23 @@ export const updateDatePlan = async (planId: string, dates: string[]) => {
 
   if (error !== null) {
     throw new Error('여행 날짜 업데이트 오류');
+  }
+};
+
+export const addPlan = async (addPlanObj: AddPlanObj) => {
+  const { newPlan, pins, invitedUser } = addPlanObj;
+
+  const { data, error } = await supabaseClientClient
+    .from('plans')
+    .insert(newPlan);
+
+  if (error) throw new Error(error.message);
+
+  await addPins(newPlan, pins);
+
+  await addNewPlanMates(newPlan.id, invitedUser);
+
+  if (data !== null) {
+    return { data };
   }
 };

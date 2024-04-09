@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -17,14 +17,13 @@ export interface AddPlanContentsInputType {
 }
 
 export default function AddPlanContents() {
+  const formRef = useRef<HTMLFormElement>(null);
   const resolver = yupResolver(addPlanSchema);
 
   const {
     register,
     handleSubmit,
-    setFocus,
     setValue,
-    watch,
     formState: { errors, isValid },
   } = useForm<AddPlanContentsInputType>({
     resolver,
@@ -34,7 +33,13 @@ export default function AddPlanContents() {
     },
   });
 
-  const handleButtonClick = async () => {};
+  const handleSaveBtnClick = () => {
+    if (formRef.current) {
+      formRef.current.dispatchEvent(
+        new Event('submit', { cancelable: true, bubbles: true }),
+      );
+    }
+  };
 
   const onChangeCost = (e: React.ChangeEvent<HTMLInputElement>) => {
     let val = e.target.value.replace(/\D/g, '');
@@ -45,8 +50,10 @@ export default function AddPlanContents() {
 
   return (
     <>
-      <PlanTopBar handleButtonClick={handleButtonClick} />
+      <PlanTopBar handleSaveBtnClick={handleSaveBtnClick} />
       <PostPlanForm
+        formRef={formRef}
+        handleSubmit={handleSubmit}
         onChangeCost={onChangeCost}
         register={register}
         errors={errors}

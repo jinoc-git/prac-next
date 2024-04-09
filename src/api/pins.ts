@@ -1,6 +1,10 @@
 import { supabaseClientClient } from './auth';
 
-import type { PinInsertType } from '@/types/supabase';
+import type {
+  InsertPlanType,
+  PinContentsType,
+  PinInsertType,
+} from '@/types/supabase';
 
 export const newDatePin = async (newPin: PinInsertType) => {
   const { error } = await supabaseClientClient.from('pins').insert(newPin);
@@ -20,4 +24,24 @@ export const getAllPinsDate = async (planId: string) => {
   const res = data.map((item) => item.date);
 
   return res;
+};
+
+export const addPins = async (
+  newPlan: InsertPlanType,
+  pins: PinContentsType[][],
+) => {
+  const newPins = [];
+
+  for (let i = 0; i < newPlan.dates.length; i++) {
+    const pin = {
+      plan_id: newPlan.id,
+      contents: pins[i],
+      date: newPlan.dates[i],
+    };
+    newPins.push(pin);
+  }
+
+  const { error } = await supabaseClientClient.from('pins').insert(newPins);
+
+  if (error) throw new Error(error.message);
 };
