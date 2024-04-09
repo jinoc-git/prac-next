@@ -53,7 +53,10 @@ const KakaoMap = ({ pins }: Props) => {
 
   return (
     <div className="flex justify-center sm:w-[286px] sm:ml-0 md:w-[650px] md:ml-[25px]">
-      <div id="add-plan-kakao-map" className=" w-full h-[400px]"></div>
+      <div
+        id="add-plan-kakao-map"
+        className=" w-full md:h-[400px] sm:h-[227px]"
+      ></div>
     </div>
   );
 };

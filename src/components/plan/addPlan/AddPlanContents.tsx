@@ -34,8 +34,6 @@ export default function AddPlanContents() {
     },
   });
 
-  const handleButtonClick = async () => {};
-
   const onChangeCost = (e: React.ChangeEvent<HTMLInputElement>) => {
     let val = e.target.value.replace(/\D/g, '');
     if (val.length > 8) val = val.substring(0, 8);
@@ -45,7 +43,7 @@ export default function AddPlanContents() {
 
   return (
     <>
-      <PlanTopBar handleButtonClick={handleButtonClick} />
+      <PlanTopBar handleSubmit={handleSubmit} />
       <PostPlanForm
         onChangeCost={onChangeCost}
         register={register}

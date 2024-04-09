@@ -1,6 +1,6 @@
 import { getUserInfoWithId, supabaseClientClient } from './auth';
 
-import type { UserType } from '@/types/supabase';
+import type { PlanMatesType, UserType } from '@/types/supabase';
 
 export const findUsers = async (input: string) => {
   const { data: nickname, error } = await supabaseClientClient
@@ -54,4 +54,20 @@ export const updateMates = async (newMates: string[], planId: string) => {
     console.log('친구 초대 오류 발생', error);
   }
   console.log('planMates update api', data);
+};
+
+export const addNewPlanMates = async (
+  newPlanId: string,
+  newMates: UserType[],
+) => {
+  const newplanMates: PlanMatesType = {
+    id: newPlanId,
+    users_id: newMates.map((user) => user.id),
+  };
+
+  const { error } = await supabaseClientClient
+    .from('plan_mates')
+    .insert(newplanMates);
+
+  if (error) throw new Error(error.message);
 };
