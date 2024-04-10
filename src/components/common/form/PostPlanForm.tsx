@@ -7,6 +7,7 @@ import type {
   UseFormHandleSubmit,
   UseFormRegister,
 } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import { useRouter } from 'next/navigation';
@@ -53,7 +54,10 @@ export default function PostPlanForm(props: Props) {
     totalCost,
   }) => {
     if (user === null) return;
-    if (dates.length === 0) return;
+    if (dates.length === 0) {
+      toast.error('여행 날짜는 필수입니다.');
+      return;
+    }
 
     const newPlan: InsertPlanType = {
       id: uuid(),
