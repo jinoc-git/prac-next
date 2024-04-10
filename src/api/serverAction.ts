@@ -12,3 +12,13 @@ export const getSessionFromServer = async () => {
 
   return session;
 };
+
+export const getPlanByIdFromServer = async (planId: string) => {
+  const { data: plan, error } = await supabaseServerClient
+    .from('plans')
+    .select()
+    .eq('id', planId)
+    .single();
+
+  return plan;
+};
