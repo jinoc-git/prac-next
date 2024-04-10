@@ -7,12 +7,12 @@ import Image from 'next/image';
 
 import { modifyPlanStore } from '@/store/modifyPlanStore';
 
-import type { AddPlanContentsInputType } from '../addPlan/AddPlanContents';
+import type { PlanContentsInputType } from '../planContents/PlanContents';
 
 interface Props {
   onChangeCost: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  register: UseFormRegister<AddPlanContentsInputType>;
-  errors: FieldErrors<AddPlanContentsInputType>;
+  register: UseFormRegister<PlanContentsInputType>;
+  errors: FieldErrors<PlanContentsInputType>;
   total_Cost?: string;
 }
 

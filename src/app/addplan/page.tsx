@@ -1,6 +1,6 @@
 import React from 'react';
 
-import AddPlanContents from '@/components/plan/addPlan/AddPlanContents';
+import AddPlanContents from '@/components/plan/planContents/PlanContents';
 
 export default function AddPlan() {
   return (

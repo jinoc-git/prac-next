@@ -11,12 +11,12 @@ import { addCommas } from '@/utils/numberFormat';
 import PostPlanForm from '../../common/form/PostPlanForm';
 import PlanTopBar from '../../common/planTopBar/PlanTopBar';
 
-export interface AddPlanContentsInputType {
+export interface PlanContentsInputType {
   title: string;
   totalCost: string;
 }
 
-export default function AddPlanContents() {
+export default function PlanContents() {
   const formRef = useRef<HTMLFormElement>(null);
   const resolver = yupResolver(addPlanSchema);
 
@@ -25,7 +25,7 @@ export default function AddPlanContents() {
     handleSubmit,
     setValue,
     formState: { errors, isValid },
-  } = useForm<AddPlanContentsInputType>({
+  } = useForm<PlanContentsInputType>({
     resolver,
     mode: 'onChange',
     defaultValues: {
