@@ -1,23 +1,31 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { addPlanSchema } from '@/schema/planSchema';
+import { modifyPlanStore } from '@/store/modifyPlanStore';
 import { addCommas } from '@/utils/numberFormat';
 
 import PostPlanForm from '../../common/form/PostPlanForm';
 import PlanTopBar from '../../common/planTopBar/PlanTopBar';
+
+import type { PlanType } from '@/types/supabase';
 
 export interface PlanContentsInputType {
   title: string;
   totalCost: string;
 }
 
-export default function PlanContents() {
+interface Props {
+  plan: PlanType | null;
+}
+
+export default function PlanContents({ plan }: Props) {
   const formRef = useRef<HTMLFormElement>(null);
+  const { modifyState, setReadOnly, setModify } = modifyPlanStore();
   const resolver = yupResolver(addPlanSchema);
 
   const {
@@ -33,7 +41,11 @@ export default function PlanContents() {
     },
   });
 
-  const handleSaveBtnClick = () => {
+  const handleSaveOrModifyBtnClick = () => {
+    if (modifyState === 'readOnly') {
+      setModify();
+      return;
+    }
     if (formRef.current) {
       formRef.current.dispatchEvent(
         new Event('submit', { cancelable: true, bubbles: true }),
@@ -48,9 +60,17 @@ export default function PlanContents() {
     setValue('totalCost', addCommas(+val));
   };
 
+  useEffect(() => {
+    if (plan) setReadOnly();
+    else setModify();
+  }, []);
+
   return (
     <>
-      <PlanTopBar handleSaveBtnClick={handleSaveBtnClick} />
+      <PlanTopBar
+        isModify={modifyState === 'modify'}
+        handleSaveOrModifyBtnClick={handleSaveOrModifyBtnClick}
+      />
       <PostPlanForm
         formRef={formRef}
         handleSubmit={handleSubmit}

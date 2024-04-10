@@ -21,7 +21,6 @@ import usePagination from '@/hooks/usePagination';
 import { authStore } from '@/store/authStore';
 import { dateStore } from '@/store/dateStore';
 import { inviteUserStore } from '@/store/inviteUserStore';
-import { modifyPlanStore } from '@/store/modifyPlanStore';
 
 import Invite from '../../plan/invite/Invite';
 
@@ -39,7 +38,6 @@ interface Props {
 export default function PostPlanForm(props: Props) {
   const { formRef, handleSubmit, onChangeCost, register, errors } = props;
 
-  const setModify = modifyPlanStore((state) => state.setModify);
   const user = authStore(({ user }) => user);
   const { invitedUser, inviteUser, syncInvitedUser } = inviteUserStore();
   const { dates, oldDates, resetDates } = dateStore();
@@ -81,7 +79,6 @@ export default function PostPlanForm(props: Props) {
   };
 
   useEffect(() => {
-    setModify();
     return () => {
       resetDates();
     };

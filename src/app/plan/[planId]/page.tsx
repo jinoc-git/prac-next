@@ -14,7 +14,7 @@ export default async function Plan({ params }: Props) {
 
   return (
     <section>
-      <PlanContents />
+      <PlanContents plan={plan} />
     </section>
   );
 }
