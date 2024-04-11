@@ -4,16 +4,15 @@ import React from 'react';
 
 import Image from 'next/image';
 
-import { modifyPlanStore } from '@/store/modifyPlanStore';
 import { sideBarStore } from '@/store/sideBarStore';
 
 interface Props {
-  handleSaveBtnClick: () => void;
+  isModify: boolean;
+  handleSaveOrModifyBtnClick: () => void;
 }
 
 export default function PlanTopBar(props: Props) {
-  const { handleSaveBtnClick } = props;
-  const { modifyState } = modifyPlanStore();
+  const { isModify, handleSaveOrModifyBtnClick } = props;
   const isSideBarOpen = sideBarStore((state) => state.isSideBarOpen);
 
   return (
@@ -42,7 +41,7 @@ export default function PlanTopBar(props: Props) {
           sm:mr-[25px] 
           md:mr-[80px] "
           type="button"
-          onClick={handleSaveBtnClick}
+          onClick={handleSaveOrModifyBtnClick}
         >
           <Image
             alt="edit-icon"
@@ -50,7 +49,7 @@ export default function PlanTopBar(props: Props) {
             width={16}
             height={16}
           />
-          {modifyState === 'modify' ? `저장하기` : `수정하기`}
+          {isModify ? `저장하기` : `수정하기`}
         </button>
       </div>
     </div>

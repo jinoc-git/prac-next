@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
 
 import { getBookMarkDataByUserId } from '@/api/bookMark';
 import { getPlanListAndMateList } from '@/api/plan';
@@ -17,7 +16,6 @@ import PlanTabMenu from './planTabMenu/PlanTabMenu';
 import type { PlanCountList } from '@/types/aboutPlan.type';
 
 export default function PlanList() {
-  const router = useRouter();
   const user = authStore((state) => state.user);
 
   const [planCountList, setPlanCountList] = useState<PlanCountList>({

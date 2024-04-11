@@ -2,8 +2,6 @@
 
 import React from 'react';
 
-import { useRouter } from 'next/navigation';
-
 import { calculateDday } from '@/utils/aboutDay';
 
 import PlanCardDate from './PlanCardDate';
@@ -19,18 +17,12 @@ interface Props {
   bookMarkData: BookMarkType | undefined;
   avatarList: (string | null | undefined)[];
   nicknameList: string[];
+  onClickPlanCard: (status: PlanStatus, id: string) => void;
 }
 
 export default function PlanCard(props: Props) {
-  const { plan, bookMarkData, avatarList, nicknameList } = props;
-  const router = useRouter();
-
-  const onClickPlanCard = (status: PlanStatus, id: string) => {
-    if (status === 'planning') router.push(`/plan/${id}`);
-    if (status === 'traveling') router.push(`/plan/${id}`);
-    if (status === 'recording') router.push(`/addPhoto/${id}`);
-    if (status === 'end') router.push(`/ending/${id}`);
-  };
+  const { plan, bookMarkData, avatarList, nicknameList, onClickPlanCard } =
+    props;
 
   const onClickQuitBtn = (id: string) => {};
 

@@ -13,33 +13,31 @@ import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import { useRouter } from 'next/navigation';
 
 import { addPlan } from '@/api/plan';
-import AddPlanDate from '@/components/plan/addPlan/AddPlanDate';
 import AreaAndPlace from '@/components/plan/areaAndPlace/AreaAndPlace';
 import DatePagination from '@/components/plan/datePagination/DatePagination';
 import Pay from '@/components/plan/pay/Pay';
+import SelectDate from '@/components/plan/selectDate/SelectDate';
 import usePagination from '@/hooks/usePagination';
 import { authStore } from '@/store/authStore';
 import { dateStore } from '@/store/dateStore';
 import { inviteUserStore } from '@/store/inviteUserStore';
-import { modifyPlanStore } from '@/store/modifyPlanStore';
 
 import Invite from '../../plan/invite/Invite';
 
-import type { AddPlanContentsInputType } from '@/components/plan/addPlan/AddPlanContents';
+import type { PlanContentsInputType } from '@/components/plan/planContents/PlanContents';
 import type { InsertPlanType, PinContentsType } from '@/types/supabase';
 
 interface Props {
   formRef: React.RefObject<HTMLFormElement>;
-  handleSubmit: UseFormHandleSubmit<AddPlanContentsInputType, undefined>;
+  handleSubmit: UseFormHandleSubmit<PlanContentsInputType, undefined>;
   onChangeCost: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  register: UseFormRegister<AddPlanContentsInputType>;
-  errors: FieldErrors<AddPlanContentsInputType>;
+  register: UseFormRegister<PlanContentsInputType>;
+  errors: FieldErrors<PlanContentsInputType>;
 }
 
 export default function PostPlanForm(props: Props) {
   const { formRef, handleSubmit, onChangeCost, register, errors } = props;
 
-  const setModify = modifyPlanStore((state) => state.setModify);
   const user = authStore(({ user }) => user);
   const { invitedUser, inviteUser, syncInvitedUser } = inviteUserStore();
   const { dates, oldDates, resetDates } = dateStore();
@@ -49,7 +47,7 @@ export default function PostPlanForm(props: Props) {
   const [pins, setPins] = useState<PinContentsType[][]>([]);
   const router = useRouter();
 
-  const onSubmitAddPlan: SubmitHandler<AddPlanContentsInputType> = async ({
+  const onSubmitAddPlan: SubmitHandler<PlanContentsInputType> = async ({
     title,
     totalCost,
   }) => {
@@ -81,7 +79,6 @@ export default function PostPlanForm(props: Props) {
   };
 
   useEffect(() => {
-    setModify();
     return () => {
       resetDates();
     };
@@ -130,7 +127,7 @@ export default function PostPlanForm(props: Props) {
       >
         {errors?.title?.message}
       </p>
-      <AddPlanDate state="addPlan" />
+      <SelectDate state="addPlan" />
       <Invite />
       <Pay onChangeCost={onChangeCost} register={register} errors={errors} />
       <DatePagination

@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import { insertUser, supabase } from '@/api/auth';
+import { insertUser, supabaseClientClient } from '@/api/auth';
 
 export default function AuthLoading() {
   // async 가능할지 확인
@@ -12,7 +12,7 @@ export default function AuthLoading() {
 
   useEffect(() => {
     const checkUser = async () => {
-      const { data } = await supabase.auth.getSession();
+      const { data } = await supabaseClientClient.auth.getSession();
       if (data !== null) {
         if (data.session !== null) {
           const {
@@ -21,7 +21,7 @@ export default function AuthLoading() {
             user_metadata: { name: nickname },
           } = data.session.user;
 
-          const { data: check } = await supabase
+          const { data: check } = await supabaseClientClient
             .from('users')
             .select('id')
             .eq('id', id);
