@@ -20,7 +20,7 @@ export interface PlanContentsInputType {
 }
 
 interface Props {
-  plan: PlanType | null;
+  plan?: PlanType | null;
 }
 
 export default function PlanContents({ plan }: Props) {
