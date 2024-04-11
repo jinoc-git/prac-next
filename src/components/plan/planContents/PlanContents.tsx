@@ -6,13 +6,16 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { addPlanSchema } from '@/schema/planSchema';
-import { modifyPlanStore } from '@/store/modifyPlanStore';
+import {
+  useModifyPlanStoreActions,
+  useModifyPlanStoreState,
+} from '@/store/modifyPlanStore';
 import { addCommas } from '@/utils/numberFormat';
 
 import PostPlanForm from '../../common/form/PostPlanForm';
 import PlanTopBar from '../../common/planTopBar/PlanTopBar';
 
-import type { PlanType } from '@/types/supabase';
+import type { PinType, PlanType } from '@/types/supabase';
 
 export interface PlanContentsInputType {
   title: string;
@@ -20,12 +23,14 @@ export interface PlanContentsInputType {
 }
 
 interface Props {
-  plan: PlanType | null;
+  plan?: PlanType | null;
+  originPins?: PinType[] | null;
 }
 
-export default function PlanContents({ plan }: Props) {
+export default function PlanContents({ plan, originPins }: Props) {
   const formRef = useRef<HTMLFormElement>(null);
-  const { modifyState, setReadOnly, setModify } = modifyPlanStore();
+  const { modifyState } = useModifyPlanStoreState();
+  const { setReadOnly, setModify } = useModifyPlanStoreActions();
   const resolver = yupResolver(addPlanSchema);
 
   const {
@@ -37,7 +42,8 @@ export default function PlanContents({ plan }: Props) {
     resolver,
     mode: 'onChange',
     defaultValues: {
-      totalCost: '0',
+      title: plan?.title,
+      totalCost: plan?.total_cost,
     },
   });
 
@@ -50,6 +56,8 @@ export default function PlanContents({ plan }: Props) {
       formRef.current.dispatchEvent(
         new Event('submit', { cancelable: true, bubbles: true }),
       );
+
+      setReadOnly();
     }
   };
 
@@ -72,6 +80,8 @@ export default function PlanContents({ plan }: Props) {
         handleSaveOrModifyBtnClick={handleSaveOrModifyBtnClick}
       />
       <PostPlanForm
+        plan={plan}
+        originPins={originPins}
         formRef={formRef}
         handleSubmit={handleSubmit}
         onChangeCost={onChangeCost}

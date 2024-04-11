@@ -2,12 +2,16 @@
 
 import React from 'react';
 
-import { confirmStore } from '@/store/confirmStore';
+import {
+  useConfirmStoreActions,
+  useConfirmStoreState,
+} from '@/store/confirmStore';
 
 import ConfirmModalLayout from '../../layout/ConfirmModalLayout';
 
 const ConfirmModal = () => {
-  const { title, desc, func, closeConfirm, buttonText } = confirmStore();
+  const { title, desc, func, buttonText } = useConfirmStoreState();
+  const { closeConfirm } = useConfirmStoreActions();
 
   const handleConfirm = () => {
     func();

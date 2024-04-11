@@ -6,7 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { getBookMarkDataByUserId } from '@/api/bookMark';
 import { getPlanListAndMateList } from '@/api/plan';
-import { authStore } from '@/store/authStore';
+import { useAuthStoreState } from '@/store/authStore';
 import { tabMenuCallback } from '@/utils/arrayCallbackFunctionList';
 
 import AddPlanBtn from './AddPlanBtn';
@@ -16,7 +16,7 @@ import PlanTabMenu from './planTabMenu/PlanTabMenu';
 import type { PlanCountList } from '@/types/aboutPlan.type';
 
 export default function PlanList() {
-  const user = authStore((state) => state.user);
+  const user = useAuthStoreState();
 
   const [planCountList, setPlanCountList] = useState<PlanCountList>({
     bookMark: 0,
@@ -63,7 +63,7 @@ export default function PlanList() {
     return <div>데이터 없음</div>;
   }
 
-  const { planDataList, usersDataList } = matesData;
+  const { planDataList, planIdAndMatesInfoList } = matesData;
 
   return (
     <section
@@ -77,7 +77,7 @@ export default function PlanList() {
         <PlanCardList
           bookMarkDataList={bookMarkDataList}
           planDataList={planDataList}
-          usersDataList={usersDataList}
+          planIdAndMatesInfoList={planIdAndMatesInfoList}
         />
       </div>
     </section>

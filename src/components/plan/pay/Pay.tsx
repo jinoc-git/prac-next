@@ -5,7 +5,7 @@ import type { FieldErrors, UseFormRegister } from 'react-hook-form';
 
 import Image from 'next/image';
 
-import { modifyPlanStore } from '@/store/modifyPlanStore';
+import { useModifyPlanStoreState } from '@/store/modifyPlanStore';
 
 import type { PlanContentsInputType } from '../planContents/PlanContents';
 
@@ -18,7 +18,7 @@ interface Props {
 
 const Pay = (props: Props) => {
   const { onChangeCost, register, errors, total_Cost } = props;
-  const modifyState = modifyPlanStore((state) => state.modifyState);
+  const { modifyState } = useModifyPlanStoreState();
 
   return (
     <div
@@ -29,7 +29,7 @@ const Pay = (props: Props) => {
       <div className="flex items-center sm:h-[27px] sm:w-[286px] md:w-full md:justify-normal sm:justify-between">
         <div className="flex items-center">
           <Image
-            src={'/images/wallet-gray.svg'}
+            src={'/images/svgs/wallet-gray.svg'}
             width={20}
             height={18}
             alt="지갑 아이콘"

@@ -20,7 +20,7 @@ export default function PlanCardQuitButton(props: Props) {
     >
       <Image
         alt="여행 나가기"
-        src={'/images/quit.svg'}
+        src={'/images/svgs/quit.svg'}
         width={24}
         height={24}
         // 호버 시 색상 변경 수정 필요할듯?

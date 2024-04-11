@@ -22,7 +22,7 @@ const PasswordInput = (props: PasswordInputProps) => {
         className="absolute top-[21px] -translate-y-1/2 left-[5px] w-[24px] h-[24px] flex-box cursor-pointer"
       >
         <Image
-          src="/images/locked.svg"
+          src="/images/svgs/locked.svg"
           alt="자물쇠 아이콘"
           width={10}
           height={12}
@@ -43,14 +43,14 @@ const PasswordInput = (props: PasswordInputProps) => {
       >
         {showPassword ? (
           <Image
-            src="/images/eyeVisible.svg"
+            src="/images/svgs/eyeVisible.svg"
             alt="눈 안 가려진 아이콘"
             width={14}
             height={14}
           />
         ) : (
           <Image
-            src="/images/eyeHidden.svg"
+            src="/images/svgs/eyeHidden.svg"
             alt="눈 가려진 아이콘"
             width={14}
             height={14}
@@ -58,7 +58,7 @@ const PasswordInput = (props: PasswordInputProps) => {
         )}
       </button>
       <p className="h-[20px] pt-1.5 text-center text-sm text-red-400">
-        {errors[name]?.message}
+        {errors?.[name]?.message}
       </p>
     </div>
   );

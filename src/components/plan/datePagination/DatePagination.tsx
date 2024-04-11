@@ -31,7 +31,7 @@ const DatePagination = (props: Props) => {
             name="date-page-previous-page-btn"
           >
             <Image
-              src={'/images/leftArrow.svg'}
+              src={'/images/svgs/leftArrow.svg'}
               width={14}
               height={22}
               alt="왼쪽 화살표"
@@ -47,7 +47,7 @@ const DatePagination = (props: Props) => {
             name="date-page-next-page-btn"
           >
             <Image
-              src={'/images/rightArrow.svg'}
+              src={'/images/svgs/rightArrow.svg'}
               width={14}
               height={22}
               alt="오른쪽 화살표"

@@ -5,24 +5,30 @@ import React from 'react';
 import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import { useRouter } from 'next/navigation';
 
-import { tabMenuStore } from '@/store/tabMenuStore';
+import { useTabMenuStoreState } from '@/store/tabMenuStore';
 import { tabMenuCallback } from '@/utils/arrayCallbackFunctionList';
 import { cardListing } from '@/utils/planCardListing';
 
+import AddNewPlanGuide from './addNewPlanGuide/AddNewPlanGuide';
 import PlanCard from './planCard/PlanCard';
 
-import type { PlanStatus, UsersDataList } from '@/types/aboutPlan.type';
+import type {
+  PlanIdAndMatesInfoList,
+  PlanStatus,
+} from '@/types/aboutPlan.type';
 import type { BookMarkType, PlanType } from '@/types/supabase';
 
 interface Props {
   bookMarkDataList: BookMarkType[];
   planDataList: PlanType[];
-  usersDataList: UsersDataList[];
+  planIdAndMatesInfoList: PlanIdAndMatesInfoList[];
 }
 
 export default function PlanCardList(props: Props) {
-  const { bookMarkDataList, planDataList, usersDataList } = props;
-  const { selectedMenu } = tabMenuStore();
+  const { bookMarkDataList, planDataList, planIdAndMatesInfoList } = props;
+
+  const selectedMenu = useTabMenuStoreState();
+
   const router = useRouter();
 
   const bookMarkPlanIdList = bookMarkDataList.map(
@@ -34,7 +40,10 @@ export default function PlanCardList(props: Props) {
     .filter(tabMenuCallbackFuncList.filtering(bookMarkPlanIdList))
     .sort(tabMenuCallbackFuncList.sorting(bookMarkDataList));
 
-  const cardDataListWithPlanId = cardListing(bookMarkDataList, usersDataList);
+  const cardDataListWithPlanId = cardListing(
+    bookMarkDataList,
+    planIdAndMatesInfoList,
+  );
 
   const onClickPlanCard = (status: PlanStatus, id: string) => {
     if (status === 'planning') router.push(`/plan/${id}`);
@@ -44,9 +53,7 @@ export default function PlanCardList(props: Props) {
   };
 
   return selectedPlanList.length === 0 ? (
-    <div>
-      <div></div>
-    </div>
+    <AddNewPlanGuide select={selectedMenu} />
   ) : (
     selectedPlanList.map((plan) => {
       const { bookMarkData, avatarList, nicknameList } = cardDataListWithPlanId(

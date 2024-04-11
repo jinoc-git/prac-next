@@ -15,7 +15,7 @@ import useConfirm from '@/hooks/useConfirm';
 import useKakaoMap from '@/hooks/useKakaoMap';
 import useKakaoMapServices from '@/hooks/useKakaoMapServices';
 import { addPinSchema } from '@/schema/addPinModalSchema';
-import { pinStore } from '@/store/pinStore';
+import { usePinStoreActions, usePinStoreState } from '@/store/pinStore';
 import { addCommas, removeCommas } from '@/utils/numberFormat';
 
 import AddPinKakaoMap from './addPinKakaoMap/AddPinKakaoMap';
@@ -37,7 +37,10 @@ interface Props {
 
 const AddPinModal = (props: Props) => {
   const { isAnimate, currentPage, setPins, closeModal } = props;
-  const { pin, idx, resetPin } = pinStore();
+
+  const { pin, idx } = usePinStoreState();
+  const { resetPin } = usePinStoreActions();
+
   const confirm = useConfirm();
   const { map, makeMap, makeLatLng, makeMarker, makeBounds } = useKakaoMap();
   const { getAddress, searchKeyword } = useKakaoMapServices();
@@ -197,10 +200,10 @@ const AddPinModal = (props: Props) => {
           <ModalButton
             value="새 장소 추가"
             fill={true}
-            type="submit"
+            type="button"
             name="add-pin-modal-submit-button"
             disabled={shouldBlockSubmit}
-            onClick={handleAddPin}
+            onClick={handleSubmit(handleAddPin)}
           />
         </div>
       </form>

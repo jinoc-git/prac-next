@@ -8,15 +8,19 @@ import Image from 'next/image';
 import { useParams } from 'next/navigation';
 
 import { getMates } from '@/api/planMate';
-import { inviteUserStore } from '@/store/inviteUserStore';
-import { modifyPlanStore } from '@/store/modifyPlanStore';
+import {
+  useInviteUserStoreActions,
+  useInviteUserStoreState,
+} from '@/store/inviteUserStore';
+import { useModifyPlanStoreState } from '@/store/modifyPlanStore';
 
 import SearchPeopleModal from './SearchPeopleModal';
 
 export default function Invite() {
-  const { oldInvitedUser, inviteUser, resetInvitedUser, syncInvitedUser } =
-    inviteUserStore();
-  const modifyState = modifyPlanStore((state) => state.modifyState);
+  const { oldInvitedUser } = useInviteUserStoreState();
+  const { inviteUser, resetInvitedUser, syncInvitedUser } =
+    useInviteUserStoreActions();
+  const { modifyState } = useModifyPlanStoreState();
 
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isAnimate, setIsAnimate] = useState(false);
@@ -76,7 +80,7 @@ export default function Invite() {
           >
             <Image
               alt="친구 아이콘"
-              src={'/images/friend.svg'}
+              src={'/images/svgs/friend.svg'}
               width={20}
               height={15}
             />
@@ -97,7 +101,7 @@ export default function Invite() {
                       <Image
                         alt={`profile-img ${idx}`}
                         key={uuid()}
-                        src={user.avatar_url ?? '/images/userDefault.svg'}
+                        src={user.avatar_url ?? '/images/svgs/userDefault.svg'}
                         width={24}
                         height={24}
                         className="object-cover rounded-full border-[#DCDCDC] border-[1px]

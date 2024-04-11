@@ -20,7 +20,7 @@ export default function OrLineWithGoogleBtn() {
       >
         <div className="flex-box">
           <Image
-            src="/images/google.svg"
+            src="/images/svgs/google.svg"
             alt="구글 아이콘"
             width={18}
             height={18}

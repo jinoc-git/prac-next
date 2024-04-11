@@ -5,11 +5,15 @@ import React from 'react';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
-import { sideBarStore } from '@/store/sideBarStore';
+import {
+  useSideBarStoreActions,
+  useSideBarStoreState,
+} from '@/store/sideBarStore';
 
 export default function SideBarIcon() {
-  const toggleMenu = sideBarStore((state) => state.toggleMenu);
-  const isSideBarOpen = sideBarStore((state) => state.isSideBarOpen);
+  const { isSideBarOpen } = useSideBarStoreState();
+  const { toggleMenu } = useSideBarStoreActions();
+
   const pathname = usePathname();
 
   return (
@@ -22,7 +26,7 @@ export default function SideBarIcon() {
       "
     >
       <Image
-        src={'/images/menu-dark.svg'}
+        src={'/images/svgs/menu-dark.svg'}
         width={24}
         height={24}
         alt="사이드 메뉴 아이콘"
@@ -31,7 +35,7 @@ export default function SideBarIcon() {
         }  md:block`}
       />
       <Image
-        src={'/images/menu-white.svg'}
+        src={'/images/svgs/menu-white.svg'}
         width={24}
         height={24}
         alt="사이드 메뉴 아이콘"

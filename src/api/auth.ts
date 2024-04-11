@@ -215,14 +215,23 @@ export const updateUserNickname = async (nickname: string, userId: string) => {
 };
 
 export const getUserInfoWithId = async (id: string) => {
-  const { data: userData, error } = await supabaseClientClient
+  const { data, error } = await supabaseClientClient
     .from('users')
     .select()
     .eq('id', id);
 
-  if (error !== null || userData === null) {
-    console.log('유저 데이터 불러오기 오류');
-  }
+  if (error) throw new Error(error.message);
 
-  return userData;
+  return data;
+};
+
+export const getUserInfoWithIdList = async (userIdList: string[]) => {
+  const { data, error } = await supabaseClientClient
+    .from('users')
+    .select()
+    .in('id', userIdList);
+
+  if (error) throw new Error(error.message);
+
+  return data;
 };

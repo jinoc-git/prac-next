@@ -25,7 +25,7 @@ const Area = (props: Props) => {
         md:text-normal md:my-[10px] "
       >
         <Image
-          src={'/images/area-pin.svg'}
+          src={'/images/svgs/area-pin.svg'}
           width={20}
           height={20}
           alt="여행 지역 아이콘"

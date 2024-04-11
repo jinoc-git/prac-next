@@ -35,9 +35,9 @@ const SIDE_COLOR = {
 };
 
 const SIDE_ICON_LIST = {
-  bookMark: '/images/bookmark.svg',
-  planning: '/images/side-planning.svg',
-  end: '/images/side-end.svg',
+  bookMark: '/images/svgs/bookmark.svg',
+  planning: '/images/svgs/side-planning.svg',
+  end: '/images/svgs/side-end.svg',
 } as const;
 
 export const SIDE_LIST_NAME = {
@@ -95,14 +95,14 @@ export default function SideBarPlanList(props: Props) {
           <div className="w-[14px] mr-5">
             {activeDropDown ? (
               <Image
-                src={'/images/arrowUp.svg'}
+                src={'/images/svgs/arrowUp.svg'}
                 width={14}
                 height={14}
                 alt="위 방향 화살표"
               />
             ) : (
               <Image
-                src={'/images/arrowDown.svg'}
+                src={'/images/svgs/arrowDown.svg'}
                 width={14}
                 height={14}
                 alt="아래 방향 화살표"
