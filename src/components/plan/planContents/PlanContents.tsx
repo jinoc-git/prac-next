@@ -12,7 +12,7 @@ import { addCommas } from '@/utils/numberFormat';
 import PostPlanForm from '../../common/form/PostPlanForm';
 import PlanTopBar from '../../common/planTopBar/PlanTopBar';
 
-import type { PlanType } from '@/types/supabase';
+import type { PinType, PlanType } from '@/types/supabase';
 
 export interface PlanContentsInputType {
   title: string;
@@ -21,9 +21,10 @@ export interface PlanContentsInputType {
 
 interface Props {
   plan?: PlanType | null;
+  originPins?: PinType[] | null;
 }
 
-export default function PlanContents({ plan }: Props) {
+export default function PlanContents({ plan, originPins }: Props) {
   const formRef = useRef<HTMLFormElement>(null);
   const { modifyState, setReadOnly, setModify } = modifyPlanStore();
   const resolver = yupResolver(addPlanSchema);
@@ -37,7 +38,8 @@ export default function PlanContents({ plan }: Props) {
     resolver,
     mode: 'onChange',
     defaultValues: {
-      totalCost: '0',
+      title: plan?.title,
+      totalCost: plan?.total_cost,
     },
   });
 
@@ -72,6 +74,8 @@ export default function PlanContents({ plan }: Props) {
         handleSaveOrModifyBtnClick={handleSaveOrModifyBtnClick}
       />
       <PostPlanForm
+        plan={plan}
+        originPins={originPins}
         formRef={formRef}
         handleSubmit={handleSubmit}
         onChangeCost={onChangeCost}

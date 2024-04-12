@@ -22,3 +22,13 @@ export const getPlanByIdFromServer = async (planId: string) => {
 
   return plan;
 };
+
+export const getAllPinsByPlanIdFromServer = async (planId: string) => {
+  const { data, error } = await supabaseServerClient
+    .from('pins')
+    .select()
+    .eq('plan_id', planId)
+    .order('date', { ascending: true });
+
+  return data;
+};

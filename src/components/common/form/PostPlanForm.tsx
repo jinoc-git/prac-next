@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import { useRouter } from 'next/navigation';
 
-import { addPlan } from '@/api/plan';
+import { addPlan, updatePlan } from '@/api/plan';
 import AreaAndPlace from '@/components/plan/areaAndPlace/AreaAndPlace';
 import DatePagination from '@/components/plan/datePagination/DatePagination';
 import Pay from '@/components/plan/pay/Pay';
@@ -25,9 +25,16 @@ import { inviteUserStore } from '@/store/inviteUserStore';
 import Invite from '../../plan/invite/Invite';
 
 import type { PlanContentsInputType } from '@/components/plan/planContents/PlanContents';
-import type { InsertPlanType, PinContentsType } from '@/types/supabase';
+import type {
+  InsertPlanType,
+  PinContentsType,
+  PinType,
+  PlanType,
+} from '@/types/supabase';
 
 interface Props {
+  plan?: PlanType | null;
+  originPins?: PinType[] | null;
   formRef: React.RefObject<HTMLFormElement>;
   handleSubmit: UseFormHandleSubmit<PlanContentsInputType, undefined>;
   onChangeCost: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -36,7 +43,15 @@ interface Props {
 }
 
 export default function PostPlanForm(props: Props) {
-  const { formRef, handleSubmit, onChangeCost, register, errors } = props;
+  const {
+    plan,
+    originPins,
+    formRef,
+    handleSubmit,
+    onChangeCost,
+    register,
+    errors,
+  } = props;
 
   const user = authStore(({ user }) => user);
   const { invitedUser, inviteUser, syncInvitedUser } = inviteUserStore();
@@ -47,7 +62,7 @@ export default function PostPlanForm(props: Props) {
   const [pins, setPins] = useState<PinContentsType[][]>([]);
   const router = useRouter();
 
-  const onSubmitAddPlan: SubmitHandler<PlanContentsInputType> = async ({
+  const onSubmitAddOrModifyPlan: SubmitHandler<PlanContentsInputType> = async ({
     title,
     totalCost,
   }) => {
@@ -57,23 +72,45 @@ export default function PostPlanForm(props: Props) {
       return;
     }
 
-    const newPlan: InsertPlanType = {
-      id: uuid(),
-      users_id: user.id,
-      dates,
-      title,
-      total_cost: totalCost,
-      isDeleted: false,
-      plan_state: 'planning',
-    };
+    const isAddPlan = plan === null || plan === undefined;
 
-    const addPlanData = {
-      newPlan,
-      pins,
-      invitedUser,
-    };
+    if (isAddPlan) {
+      const newPlan: InsertPlanType = {
+        id: uuid(),
+        users_id: user.id,
+        dates,
+        title,
+        total_cost: totalCost,
+        isDeleted: false,
+        plan_state: 'planning',
+      };
 
-    await addPlan(addPlanData);
+      const addPlanData = {
+        plan: newPlan,
+        pins,
+        invitedUser,
+      };
+
+      await addPlan(addPlanData);
+    } else {
+      const updatedPlan: InsertPlanType = {
+        id: plan.id,
+        users_id: plan.users_id,
+        dates,
+        title,
+        total_cost: totalCost,
+        isDeleted: plan.isDeleted,
+        plan_state: plan.plan_state,
+      };
+
+      const updatePlanObj = {
+        plan: updatedPlan,
+        originPins: pins,
+        invitedUser,
+      };
+
+      await updatePlan(updatePlanObj);
+    }
 
     router.push('main');
   };
@@ -106,7 +143,7 @@ export default function PostPlanForm(props: Props) {
   return (
     <form
       ref={formRef}
-      onSubmit={handleSubmit(onSubmitAddPlan)}
+      onSubmit={handleSubmit(onSubmitAddOrModifyPlan)}
       className="flex flex-col mx-auto
         sm:mt-[32px] sm:w-[310px]
         md:mt-[100px] md:w-[720px] md:px-[10px]"
@@ -127,7 +164,10 @@ export default function PostPlanForm(props: Props) {
       >
         {errors?.title?.message}
       </p>
-      <SelectDate state="addPlan" />
+      <SelectDate
+        state={plan ? 'modify' : 'addPlan'}
+        planDatesData={plan ? plan.dates : []}
+      />
       <Invite />
       <Pay onChangeCost={onChangeCost} register={register} errors={errors} />
       <DatePagination

@@ -2,7 +2,7 @@ import { supabaseClientClient } from './auth';
 import { addPins } from './pins';
 import { addNewPlanMates } from './planMate';
 
-import type { AddPlanObj } from '@/types/aboutPlan.type';
+import type { AddPlanObj, UpdatePlanObj } from '@/types/aboutPlan.type';
 import type { PlanType } from '@/types/supabase';
 
 export const getPlanList = async (planIds: string[]) => {
@@ -136,19 +136,28 @@ export const updateDatePlan = async (planId: string, dates: string[]) => {
 };
 
 export const addPlan = async (addPlanObj: AddPlanObj) => {
-  const { newPlan, pins, invitedUser } = addPlanObj;
+  const { plan, pins, invitedUser } = addPlanObj;
 
-  const { data, error } = await supabaseClientClient
-    .from('plans')
-    .insert(newPlan);
+  const { data, error } = await supabaseClientClient.from('plans').insert(plan);
 
   if (error) throw new Error(error.message);
 
-  await addPins(newPlan, pins);
+  await addPins(plan, pins);
 
-  await addNewPlanMates(newPlan.id, invitedUser);
+  await addNewPlanMates(plan.id, invitedUser);
 
   if (data !== null) {
     return { data };
   }
+};
+
+export const updatePlan = async (updatePlanObj: UpdatePlanObj) => {
+  const { plan, originPins, pins, invitedUser } = updatePlanObj;
+
+  const { data, error } = await supabaseClientClient
+    .from('plans')
+    .update(plan)
+    .eq('id', plan.id);
+
+  if (error) throw new Error(error.message);
 };

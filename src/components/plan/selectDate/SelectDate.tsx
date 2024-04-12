@@ -2,10 +2,10 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 
-import { getAllPinsDate, newDatePin } from '@/api/pins';
+import { addNewDateEmptyPins } from '@/api/pins';
 import { updateDatePlan } from '@/api/plan';
 import { dateStore } from '@/store/dateStore';
 import { modifyPlanStore } from '@/store/modifyPlanStore';
@@ -15,8 +15,8 @@ import Calendar from '../../common/calendar/Calendar';
 import type { PinInsertType } from '@/types/supabase';
 
 interface SelectDateProps {
-  state?: 'addPlan';
-  planDatesData?: string[];
+  state?: 'addPlan' | 'modify';
+  planDatesData: string[];
 }
 
 export default function SelectDate(props: SelectDateProps) {
@@ -30,20 +30,6 @@ export default function SelectDate(props: SelectDateProps) {
   const planEndDate = new Date(
     planDatesData?.[planDatesData.length - 1] as string,
   );
-
-  let pinDatesData: string[] = [];
-
-  const { data } = useQuery({
-    queryKey: ['pinDate', planId],
-    queryFn: async () => {
-      if (state !== 'addPlan' && planId) {
-        const res = await getAllPinsDate(planId);
-        return res;
-      } else return null;
-    },
-  });
-
-  if (data) pinDatesData = data;
 
   const today = new Date();
 
@@ -95,19 +81,19 @@ export default function SelectDate(props: SelectDateProps) {
   useEffect(() => {
     if (startDate && endDate) {
       const dates = allPlanDates(startDate, endDate);
-      const newDates = dates.filter((date) => !pinDatesData.includes(date));
+      const newDates = dates.filter((date) => !planDatesData.includes(date));
       if (newDates.length !== 0 && state !== 'addPlan') {
         newDates.forEach(async (date) => {
-          const newPin: PinInsertType = {
+          const newEmptyPins: PinInsertType = {
             plan_id: planId,
             contents: [],
             date,
           };
 
-          await newDatePin(newPin);
+          await addNewDateEmptyPins(newEmptyPins);
         });
       }
-      if (state !== 'addPlan') updatePlanDate([planId, dates]);
+      // if (state !== 'addPlan') updatePlanDate([planId, dates]);
     }
   }, [startDate, endDate]);
 

@@ -1,6 +1,7 @@
 import type {
   InsertPlanType,
   PinContentsType,
+  PinType,
   PlanType,
   UserType,
 } from './supabase';
@@ -11,9 +12,13 @@ export type PlanStatus = Omit<SelectedMenu, 'bookMark'> | 'recording';
 export type UsersDataList = Record<string, UserType[]>;
 
 export interface AddPlanObj {
-  newPlan: InsertPlanType;
+  plan: InsertPlanType;
   pins: PinContentsType[][];
   invitedUser: UserType[];
+}
+
+export interface UpdatePlanObj extends AddPlanObj {
+  originPins: PinType[] | null | undefined;
 }
 
 export interface QuitPlanParam {

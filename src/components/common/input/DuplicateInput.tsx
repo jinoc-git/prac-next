@@ -43,13 +43,13 @@ export default function DuplicateInput(props: DuplicateInputProps) {
         type="button"
         name={`${name}-duplication-btn`}
         onClick={checkFunc}
-        disabled={Boolean(errors[name]) || duplicate}
+        disabled={Boolean(errors?.[name]) || duplicate}
         className="absolute top-[4px] right-[4px] w-[68px] h-[34px] p-1 text-sm border text-[#6E6F76] bg-white  hover:font-semibold disabled:bg-gray_light_3 disabled:text-white rounded"
       >
         중복확인
       </button>
       <p className="h-[20px] pt-1.5 text-center text-sm text-red-400">
-        {errors[name]?.message}
+        {errors?.[name]?.message}
       </p>
     </div>
   );
