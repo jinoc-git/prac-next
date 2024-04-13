@@ -7,6 +7,7 @@ import Image from 'next/image';
 
 import PinLayout from '@/components/common/layout/PinLayout';
 import { dateStore } from '@/store/dateStore';
+import { modifyPlanStore } from '@/store/modifyPlanStore';
 
 import AddPinModal from './addPinModal/AddPinModal';
 import Pin from './pin/Pin';
@@ -21,9 +22,12 @@ interface Props {
 
 const Place = (props: Props) => {
   const { pins, setPins, currentPage } = props;
+
   const [isAnimate, setIsAnimate] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
+
   const dates = dateStore(({ dates }) => dates);
+  const modifyState = modifyPlanStore(({ modifyState }) => modifyState);
 
   const openModal = () => {
     setIsAnimate(true);
@@ -70,7 +74,7 @@ const Place = (props: Props) => {
           );
         })}
       </ol>
-      {dates.length !== 0 && (
+      {dates.length !== 0 && modifyState === 'modify' && (
         <div
           className="flex items-center justify-between pb-[60px]
             sm:w-[286px] 
@@ -85,7 +89,7 @@ const Place = (props: Props) => {
             aria-label="placeadd-btn"
             type="button"
             onClick={openModal}
-            className="border border-dashed rounded-lg font-bold  text-gray_dark_1 hover:bg-navy_light_1 duration-200
+            className="border border-dashed rounded-lg font-bold  text-gray_dark_1 hover:bg-navy_light_1 duration-200 disabled:hover:bg-white
                 sm:w-[240px] sm:h-[65px] sm:mr-[2px] sm:text-[11px]
                 md:w-[600px] md:h-[120px] md:text-[18px]"
           >

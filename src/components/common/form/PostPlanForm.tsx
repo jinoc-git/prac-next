@@ -92,6 +92,8 @@ export default function PostPlanForm(props: Props) {
       };
 
       await addPlan(addPlanData);
+
+      router.push('main');
     } else {
       const updatedPlan: InsertPlanType = {
         id: plan.id,
@@ -112,8 +114,6 @@ export default function PostPlanForm(props: Props) {
 
       await updatePlan(updatePlanObj);
     }
-
-    router.push('main');
   };
 
   useEffect(() => {

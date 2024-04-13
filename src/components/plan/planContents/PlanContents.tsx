@@ -52,6 +52,8 @@ export default function PlanContents({ plan, originPins }: Props) {
       formRef.current.dispatchEvent(
         new Event('submit', { cancelable: true, bubbles: true }),
       );
+
+      setReadOnly();
     }
   };
 

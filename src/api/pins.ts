@@ -94,7 +94,7 @@ export const updatePins = async (
         contents: pins[i],
         date: updatedPlan.dates[i],
       };
-      console.log(pin);
+
       await updatePin(pin);
     } else {
       const pin: PinInsertType = {
