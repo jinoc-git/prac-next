@@ -197,10 +197,10 @@ const AddPinModal = (props: Props) => {
           <ModalButton
             value="새 장소 추가"
             fill={true}
-            type="submit"
+            type="button"
             name="add-pin-modal-submit-button"
             disabled={shouldBlockSubmit}
-            onClick={handleAddPin}
+            onClick={handleSubmit(handleAddPin)}
           />
         </div>
       </form>

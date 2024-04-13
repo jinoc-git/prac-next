@@ -1,6 +1,9 @@
 import React from 'react';
 
-import { getPlanByIdFromServer } from '@/api/serverAction';
+import {
+  getAllPinsByPlanFromServer,
+  getPlanByIdFromServer,
+} from '@/api/serverAction';
 import PlanContents from '@/components/plan/planContents/PlanContents';
 
 interface Props {
@@ -11,10 +14,11 @@ export default async function Plan({ params }: Props) {
   const { planId } = params;
 
   const plan = await getPlanByIdFromServer(planId);
+  const originPins = await getAllPinsByPlanFromServer(plan);
 
   return (
     <section>
-      <PlanContents plan={plan} />
+      <PlanContents plan={plan} originPins={originPins} />
     </section>
   );
 }

@@ -267,6 +267,7 @@ export interface PinContentsType {
 
 export type PinType = Database['public']['Tables']['pins']['Update'];
 export type PinInsertType = Database['public']['Tables']['pins']['Insert'];
+export type PinUpdateType = Database['public']['Tables']['pins']['Update'];
 export type UserType = Database['public']['Tables']['users']['Insert'];
 export type InsertPlanType = Database['public']['Tables']['plans']['Insert'];
 export type PlanType = Database['public']['Tables']['plans']['Row'];

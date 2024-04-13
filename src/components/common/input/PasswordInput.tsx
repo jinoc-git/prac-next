@@ -58,7 +58,7 @@ const PasswordInput = (props: PasswordInputProps) => {
         )}
       </button>
       <p className="h-[20px] pt-1.5 text-center text-sm text-red-400">
-        {errors[name]?.message}
+        {errors?.[name]?.message}
       </p>
     </div>
   );
