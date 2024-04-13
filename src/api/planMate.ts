@@ -50,10 +50,7 @@ export const updateMates = async (newMates: string[], planId: string) => {
     .eq('id', planId)
     .select();
 
-  if (error != null) {
-    console.log('친구 초대 오류 발생', error);
-  }
-  console.log('planMates update api', data);
+  if (error) throw new Error(error.message);
 };
 
 export const addNewPlanMates = async (

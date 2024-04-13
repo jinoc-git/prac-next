@@ -1,6 +1,6 @@
 import { supabaseClientClient } from './auth';
 import { addPins, updatePins } from './pins';
-import { addNewPlanMates } from './planMate';
+import { addNewPlanMates, updateMates } from './planMate';
 
 import type { AddPlanObj, UpdatePlanObj } from '@/types/aboutPlan.type';
 import type { PlanType } from '@/types/supabase';
@@ -154,7 +154,7 @@ export const addPlan = async (addPlanObj: AddPlanObj) => {
 export const updatePlan = async (updatePlanObj: UpdatePlanObj) => {
   const { plan, originPins, pins, invitedUser } = updatePlanObj;
 
-  const { data, error } = await supabaseClientClient
+  const { error } = await supabaseClientClient
     .from('plans')
     .update(plan)
     .eq('id', plan.id);
@@ -162,4 +162,7 @@ export const updatePlan = async (updatePlanObj: UpdatePlanObj) => {
   if (error) throw new Error(error.message);
 
   await updatePins(originPins, plan, pins);
+
+  const userIdList = invitedUser.map(({ id }) => id);
+  await updateMates(userIdList, plan.id);
 };
