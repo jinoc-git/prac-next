@@ -1,9 +1,14 @@
+import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
+
 import { supabaseClientClient } from './auth';
 
 import type {
   InsertPlanType,
   PinContentsType,
   PinInsertType,
+  PinType,
+  PinUpdateType,
+  PlanType,
 } from '@/types/supabase';
 
 export const addNewDateEmptyPins = async (newPin: PinInsertType) => {
@@ -26,15 +31,22 @@ export const getAllPinsDate = async (planId: string) => {
   return res;
 };
 
-export const getAllPinsByPlanId = async (planId: string) => {
+export const getAllPinsByPlan = async (plan: PlanType) => {
   const { data, error } = await supabaseClientClient
     .from('pins')
     .select()
-    .eq('plan_id', planId);
+    .eq('plan_id', plan.id)
+    .in('date', plan.dates);
 
   if (error !== null) throw new Error('핀 가져오기 에러발생');
 
   return data;
+};
+
+export const addPin = async (pin: PinInsertType) => {
+  const { error } = await supabaseClientClient.from('pins').insert(pin);
+
+  if (error) throw new Error(error.message);
 };
 
 export const addPins = async (
@@ -51,28 +63,49 @@ export const addPins = async (
     };
     newPins.push(pin);
   }
-
   const { error } = await supabaseClientClient.from('pins').insert(newPins);
 
   if (error) throw new Error(error.message);
 };
 
+export const updatePin = async (pin: PinUpdateType) => {
+  const { data, error } = await supabaseClientClient
+    .from('pins')
+    .update(pin)
+    .match({ plan_id: pin.plan_id, date: pin.date });
+
+  if (error) throw new Error('핀 업데이트 오류');
+};
+
 export const updatePins = async (
+  originPins: PinType[] | null | undefined,
   updatedPlan: InsertPlanType,
   pins: PinContentsType[][],
 ) => {
-  const newPins = [];
-
   for (let i = 0; i < updatedPlan.dates.length; i++) {
-    const pin = {
-      plan_id: updatedPlan.id,
-      contents: pins[i],
-      date: updatedPlan.dates[i],
-    };
-    newPins.push(pin);
-  }
+    if (originPins && originPins[i]) {
+      const id = originPins
+        ? originPins[i]
+          ? originPins[i].id
+          : uuid()
+        : uuid();
+      const pin: PinUpdateType = {
+        plan_id: updatedPlan.id,
+        contents: pins[i],
+        date: updatedPlan.dates[i],
+      };
+      console.log(pin);
+      await updatePin(pin);
+    } else {
+      const pin: PinInsertType = {
+        plan_id: updatedPlan.id,
+        contents: pins[i],
+        date: updatedPlan.dates[i],
+      };
 
-  // const { error } = await supabaseClientClient.from('pins').update(newPins);
+      await addPin(pin);
+    }
+  }
 
   // if (error) throw new Error(error.message);
 };

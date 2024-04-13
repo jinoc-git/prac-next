@@ -105,7 +105,8 @@ export default function PostPlanForm(props: Props) {
 
       const updatePlanObj = {
         plan: updatedPlan,
-        originPins: pins,
+        originPins: originPins,
+        pins,
         invitedUser,
       };
 
@@ -132,10 +133,16 @@ export default function PostPlanForm(props: Props) {
     setCurrentPage(() => 0);
     const initPins: PinContentsType[][] = [];
 
-    dates.forEach((date) => {
-      if (!oldDates.includes(date)) initPins.push([]);
-      else initPins.push(pins[oldDates.indexOf(date)]);
-    });
+    if (originPins) {
+      originPins.forEach(({ contents }) => {
+        if (contents) initPins.push(contents);
+      });
+    } else {
+      dates.forEach((date) => {
+        if (!oldDates.includes(date)) initPins.push([]);
+        else initPins.push(pins[oldDates.indexOf(date)]);
+      });
+    }
 
     setPins(initPins);
   }, [dates]);

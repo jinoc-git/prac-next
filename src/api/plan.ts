@@ -1,5 +1,5 @@
 import { supabaseClientClient } from './auth';
-import { addPins } from './pins';
+import { addPins, updatePins } from './pins';
 import { addNewPlanMates } from './planMate';
 
 import type { AddPlanObj, UpdatePlanObj } from '@/types/aboutPlan.type';
@@ -160,4 +160,6 @@ export const updatePlan = async (updatePlanObj: UpdatePlanObj) => {
     .eq('id', plan.id);
 
   if (error) throw new Error(error.message);
+
+  await updatePins(originPins, plan, pins);
 };
