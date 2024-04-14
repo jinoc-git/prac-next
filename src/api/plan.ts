@@ -86,6 +86,17 @@ export const getPlansWithBookmarks = async (
   return bookMarkPlanData;
 };
 
+export const getPlanIdListAndMateListByUserId = async (userId: string) => {
+  const { data, error } = await supabaseClientClient
+    .from('plan_mates')
+    .select()
+    .contains('users_id', [userId]);
+
+  if (error) throw new Error(error.message);
+
+  return data;
+};
+
 export const getPlanListAndMateList = async (userId: string | undefined) => {
   if (userId === undefined) return;
 
