@@ -9,7 +9,7 @@ import type { SelectedMenu } from '@/store/tabMenuStore';
 
 export type PlanStatus = Omit<SelectedMenu, 'bookMark'> | 'recording';
 
-export type UsersDataList = Record<string, UserType[]>;
+export type PlanIdAndMatesInfoList = Record<string, UserType[]>;
 
 export interface AddPlanObj {
   plan: InsertPlanType;
@@ -35,5 +35,5 @@ export interface PlanCountList {
 
 export interface UserAndPlanList {
   planDataList: PlanType[];
-  usersDataList: UsersDataList[];
+  planIdAndMatesInfoList: PlanIdAndMatesInfoList[];
 }

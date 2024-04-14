@@ -11,17 +11,20 @@ import { cardListing } from '@/utils/planCardListing';
 
 import PlanCard from './planCard/PlanCard';
 
-import type { PlanStatus, UsersDataList } from '@/types/aboutPlan.type';
+import type {
+  PlanIdAndMatesInfoList,
+  PlanStatus,
+} from '@/types/aboutPlan.type';
 import type { BookMarkType, PlanType } from '@/types/supabase';
 
 interface Props {
   bookMarkDataList: BookMarkType[];
   planDataList: PlanType[];
-  usersDataList: UsersDataList[];
+  planIdAndMatesInfoList: PlanIdAndMatesInfoList[];
 }
 
 export default function PlanCardList(props: Props) {
-  const { bookMarkDataList, planDataList, usersDataList } = props;
+  const { bookMarkDataList, planDataList, planIdAndMatesInfoList } = props;
   const { selectedMenu } = tabMenuStore();
   const router = useRouter();
 
@@ -34,7 +37,10 @@ export default function PlanCardList(props: Props) {
     .filter(tabMenuCallbackFuncList.filtering(bookMarkPlanIdList))
     .sort(tabMenuCallbackFuncList.sorting(bookMarkDataList));
 
-  const cardDataListWithPlanId = cardListing(bookMarkDataList, usersDataList);
+  const cardDataListWithPlanId = cardListing(
+    bookMarkDataList,
+    planIdAndMatesInfoList,
+  );
 
   const onClickPlanCard = (status: PlanStatus, id: string) => {
     if (status === 'planning') router.push(`/plan/${id}`);
