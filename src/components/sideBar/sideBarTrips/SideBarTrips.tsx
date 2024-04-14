@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 
@@ -30,6 +30,14 @@ export default function SideBarTrips(props: Props) {
     enabled: user !== null,
     refetchOnWindowFocus: false,
   });
+
+  useEffect(() => {
+    if (!isOpen) {
+      setBookMarkIsOpen(false);
+      setPlanningIsOpen(false);
+      setEndIsOpen(false);
+    }
+  }, [isOpen]);
 
   return (
     <div className="flex flex-col gap-2 md:min-h-[382px] sm:min-h-[338px]">
