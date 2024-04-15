@@ -2,11 +2,13 @@
 
 ---
 
-# Traduler 프로젝트
+# Traduler-Next 프로젝트
 
 " 다 같이 여행을 떠날 때 저희 서비스와 함께해요! - 국내 여행 일정 관리 웹사이트 "<br/>
 <br/>
-프로젝트 제작 기간: 2023.12 ~ 진행 중
+프로젝트 제작 기간: 2023.12 ~ 진행 중<br/>
+<br/>
+기존 Traduler 프로젝트를 Next.js로 마이그레이션 버전
 
 ---
 
@@ -73,7 +75,9 @@
 
 ## 2. 서비스 아키텍처
 
-![아키텍처](https://github.com/jinoc-git/traduler-project/assets/108923582/b803a94a-24d1-4320-8db4-65d5a334411a)
+<!-- ![아키텍처](https://github.com/jinoc-git/traduler-project/assets/108923582/b803a94a-24d1-4320-8db4-65d5a334411a) -->
+
+완료 후 업데이트 예정
 
 ---
 
