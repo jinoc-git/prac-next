@@ -2,41 +2,21 @@
 
 import React from 'react';
 
-import { useQuery } from '@tanstack/react-query';
-
-import { getPlanListAndMateList } from '@/api/plan';
-import { authStore } from '@/store/authStore';
-import { sideBarCallback } from '@/utils/arrayCallbackFunctionList';
-
 import SideBarPlanInfo from './SideBarPlanInfo';
 import SideBarStatusChip from './SideBarStatusChip';
 
+import type { PlanType } from '@/types/supabase';
+
 interface SideBarStatusProps {
   isOpen: boolean;
+  activePlan: PlanType | undefined;
+  nextPlan: PlanType | undefined;
 }
 
 export default function SideBarStatus(props: SideBarStatusProps) {
-  const { isOpen } = props;
-  const user = authStore((state) => state.user);
+  const { isOpen, activePlan, nextPlan } = props;
 
-  const { data: matesData, isError: matesError } = useQuery({
-    queryKey: ['plan_mates', user?.id],
-    queryFn: async () => {
-      return await getPlanListAndMateList(user === null ? '' : user.id);
-    },
-    enabled: user !== null,
-    staleTime: 20 * 1000,
-  });
-
-  const sortedData = matesData?.planDataList?.sort(sideBarCallback.sorting);
-
-  const startPlans = sortedData?.filter(sideBarCallback.filtering('planning'));
-  const endPlans = sortedData?.filter(sideBarCallback.filtering('end'));
-  const activePlan = sortedData?.find(sideBarCallback.filtering('traveling'));
-
-  const nextPlan = startPlans != null ? startPlans[0] : undefined;
   const hasNextPlan = Boolean(nextPlan);
-
   const hasActivePlan = activePlan !== undefined;
 
   const status = hasActivePlan

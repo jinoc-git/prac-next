@@ -13,10 +13,13 @@ import type { PlanType } from '@/types/supabase';
 
 interface Props {
   isOpen: boolean;
+  startPlans: PlanType[] | undefined;
+  endPlans: PlanType[] | undefined;
 }
 
 export default function SideBarTrips(props: Props) {
-  const { isOpen } = props;
+  const { isOpen, startPlans, endPlans } = props;
+
   const [bookMarkIsOpen, setBookMarkIsOpen] = useState(false);
   const [planningIsOpen, setPlanningIsOpen] = useState(false);
   const [endIsOpen, setEndIsOpen] = useState(false);
@@ -60,14 +63,14 @@ export default function SideBarTrips(props: Props) {
         isSideBarOpen={isOpen}
         activeDropDown={planningIsOpen}
         filter="planning"
-        planList={[]}
+        planList={startPlans ?? []}
       />
       <SideBarPlanList
         setFunc={setEndIsOpen}
         isSideBarOpen={isOpen}
         activeDropDown={endIsOpen}
         filter="end"
-        planList={[]}
+        planList={endPlans ?? []}
       />
     </div>
   );
