@@ -10,7 +10,7 @@
 <br/>
 기존 Traduler 프로젝트를 Next.js로 마이그레이션 버전<br/>
 <br/>
-![기존 프로젝트](https://github.com/jinoc-git/traduler-project)
+[기존 프로젝트 깃허브](https://github.com/jinoc-git/traduler-project)
 
 ---
 
