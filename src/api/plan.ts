@@ -1,4 +1,4 @@
-import { supabaseClientClient } from './auth';
+import { getUserInfoWithIdList, supabaseClientClient } from './auth';
 import { addPins, updatePins } from './pins';
 import { addNewPlanMates, updateMates } from './planMate';
 
@@ -6,13 +6,15 @@ import type { AddPlanObj, UpdatePlanObj } from '@/types/aboutPlan.type';
 import type { PlanType } from '@/types/supabase';
 
 export const getPlanList = async (planIds: string[]) => {
-  const { data: planList, error } = await supabaseClientClient
+  const { data, error } = await supabaseClientClient
     .from('plans')
     .select()
     .eq('isDeleted', false)
     .in('id', planIds);
 
-  return planList;
+  if (error) throw new Error(error.message);
+
+  return data;
 };
 
 export const getPlanById = async (planId: string) => {
@@ -86,41 +88,47 @@ export const getPlansWithBookmarks = async (
   return bookMarkPlanData;
 };
 
-export const getPlanListAndMateList = async (userId: string | undefined) => {
-  if (userId === undefined) return;
-
-  const { data: matesData, error: matesError } = await supabaseClientClient
+export const getPlanIdAndMateListByUserId = async (userId: string) => {
+  const { data, error } = await supabaseClientClient
     .from('plan_mates')
     .select()
     .contains('users_id', [userId]);
 
-  if (matesError != null) {
-    throw new Error('getPlansWithMates 에러 1발생');
-  }
+  if (error) throw new Error(error.message);
 
-  const planIdList = matesData.map((data) => data.id).flat();
-  const userIdList = matesData.map((data) => data.users_id);
+  return data;
+};
+
+export const getPlanListAndMateList = async (userId: string | undefined) => {
+  if (userId === undefined) return;
+
+  const planIdAndMateList = await getPlanIdAndMateListByUserId(userId);
+
+  const planIdList = planIdAndMateList.map((data) => data.id).flat();
+  const userIdList = planIdAndMateList.map((data) => data.users_id);
 
   if (userIdList.length === 0) {
     return {
       planDataList: [],
-      usersDataList: [],
+      planIdAndMatesInfoList: [],
     };
   }
 
-  const planDataList = (await getPlanList(planIdList)) ?? [];
+  const planDataList = await getPlanList(planIdList);
 
-  const usersDataList = [];
+  const planIdAndMatesInfoList = [];
+
   for (let i = 0; i < userIdList.length; i++) {
-    const users = await getMatesByUserIdList(userIdList[i]);
+    const userInfoList = await getUserInfoWithIdList(userIdList[i]);
 
-    const userList = { [planIdList[i]]: users };
-    usersDataList.push(userList);
+    const planIdAndMatesInfo = { [planIdList[i]]: userInfoList };
+
+    planIdAndMatesInfoList.push(planIdAndMatesInfo);
   }
 
   return {
     planDataList,
-    usersDataList,
+    planIdAndMatesInfoList,
   };
 };
 

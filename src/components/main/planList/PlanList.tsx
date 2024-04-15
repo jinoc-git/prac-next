@@ -63,7 +63,7 @@ export default function PlanList() {
     return <div>데이터 없음</div>;
   }
 
-  const { planDataList, usersDataList } = matesData;
+  const { planDataList, planIdAndMatesInfoList } = matesData;
 
   return (
     <section
@@ -77,7 +77,7 @@ export default function PlanList() {
         <PlanCardList
           bookMarkDataList={bookMarkDataList}
           planDataList={planDataList}
-          usersDataList={usersDataList}
+          planIdAndMatesInfoList={planIdAndMatesInfoList}
         />
       </div>
     </section>

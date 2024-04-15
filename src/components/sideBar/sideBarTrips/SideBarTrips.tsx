@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 
@@ -13,10 +13,13 @@ import type { PlanType } from '@/types/supabase';
 
 interface Props {
   isOpen: boolean;
+  startPlans: PlanType[] | undefined;
+  endPlans: PlanType[] | undefined;
 }
 
 export default function SideBarTrips(props: Props) {
-  const { isOpen } = props;
+  const { isOpen, startPlans, endPlans } = props;
+
   const [bookMarkIsOpen, setBookMarkIsOpen] = useState(false);
   const [planningIsOpen, setPlanningIsOpen] = useState(false);
   const [endIsOpen, setEndIsOpen] = useState(false);
@@ -30,6 +33,14 @@ export default function SideBarTrips(props: Props) {
     enabled: user !== null,
     refetchOnWindowFocus: false,
   });
+
+  useEffect(() => {
+    if (!isOpen) {
+      setBookMarkIsOpen(false);
+      setPlanningIsOpen(false);
+      setEndIsOpen(false);
+    }
+  }, [isOpen]);
 
   return (
     <div className="flex flex-col gap-2 md:min-h-[382px] sm:min-h-[338px]">
@@ -52,14 +63,14 @@ export default function SideBarTrips(props: Props) {
         isSideBarOpen={isOpen}
         activeDropDown={planningIsOpen}
         filter="planning"
-        planList={[]}
+        planList={startPlans ?? []}
       />
       <SideBarPlanList
         setFunc={setEndIsOpen}
         isSideBarOpen={isOpen}
         activeDropDown={endIsOpen}
         filter="end"
-        planList={[]}
+        planList={endPlans ?? []}
       />
     </div>
   );
