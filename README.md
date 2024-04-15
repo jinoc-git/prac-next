@@ -8,7 +8,9 @@
 <br/>
 프로젝트 제작 기간: 2023.12 ~ 진행 중<br/>
 <br/>
-기존 Traduler 프로젝트를 Next.js로 마이그레이션 버전
+기존 Traduler 프로젝트를 Next.js로 마이그레이션 버전<br/>
+<br/>
+![기존 프로젝트](https://github.com/jinoc-git/traduler-project)
 
 ---
 
@@ -69,7 +71,7 @@
 
 ## 1. 팀원
 
-노진철 1명 [@jinoc-git ](https://github.com/jinoc-git) , [블로그](https://jinoc.tistory.com/)
+노진철 1명 [@jinoc-git](https://github.com/jinoc-git), [블로그](https://jinoc.tistory.com/)
 
 ---
 
