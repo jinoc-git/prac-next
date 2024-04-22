@@ -29,7 +29,7 @@ const Pay = (props: Props) => {
       <div className="flex items-center sm:h-[27px] sm:w-[286px] md:w-full md:justify-normal sm:justify-between">
         <div className="flex items-center">
           <Image
-            src={'/images/wallet-gray.svg'}
+            src={'/images/svgs/wallet-gray.svg'}
             width={20}
             height={18}
             alt="지갑 아이콘"

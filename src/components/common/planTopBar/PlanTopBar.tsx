@@ -45,7 +45,7 @@ export default function PlanTopBar(props: Props) {
         >
           <Image
             alt="edit-icon"
-            src={'/images/edit-blue.svg'}
+            src={'/images/svgs/edit-blue.svg'}
             width={16}
             height={16}
           />
