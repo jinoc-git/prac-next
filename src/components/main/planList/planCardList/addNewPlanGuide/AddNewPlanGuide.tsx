@@ -4,6 +4,7 @@ import React from 'react';
 
 import Image from 'next/image';
 
+import AddNewPlanGuideAddPlanBtn from './addNewPlanGuideAddPlanBtn/AddNewPlanGuideAddPlanBtn';
 import AddNewPlanGuideText from './addNewPlanGuideText/AddNewPlanGuideText';
 
 import type { SelectedMenu } from '@/store/tabMenuStore';
@@ -24,8 +25,11 @@ const AddNewPlanGuide = ({ select }: Props) => {
         alt="여행 가방 사진"
         width={125}
         height={100}
+        className="sm:w-[100px] sm:h-[80px] sm:my-[15px]
+        md:w-[125px] md:h-[100px]"
       />
       <AddNewPlanGuideText select={select} />
+      {select !== 'bookMark' && <AddNewPlanGuideAddPlanBtn />}
     </div>
   );
 };
