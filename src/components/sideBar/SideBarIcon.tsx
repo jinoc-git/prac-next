@@ -22,7 +22,7 @@ export default function SideBarIcon() {
       "
     >
       <Image
-        src={'/images/menu-dark.svg'}
+        src={'/images/svgs/menu-dark.svg'}
         width={24}
         height={24}
         alt="사이드 메뉴 아이콘"
@@ -31,7 +31,7 @@ export default function SideBarIcon() {
         }  md:block`}
       />
       <Image
-        src={'/images/menu-white.svg'}
+        src={'/images/svgs/menu-white.svg'}
         width={24}
         height={24}
         alt="사이드 메뉴 아이콘"

@@ -54,7 +54,7 @@ export default function Calendar(props: Props) {
         >
           <Image
             alt="캘린더 아이콘"
-            src={'/images/calendarIcon.svg'}
+            src={'/images/svgs/calendarIcon.svg'}
             width={20}
             height={20}
           />
@@ -131,7 +131,7 @@ export default function Calendar(props: Props) {
         >
           <Image
             alt="캘린더 아이콘"
-            src={'/images/calendarIcon.svg'}
+            src={'/images/svgs/calendarIcon.svg'}
             width={20}
             height={20}
           />

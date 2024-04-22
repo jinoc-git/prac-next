@@ -146,7 +146,7 @@ export default function SearchPeopleModal(props: SearchPeopleModalProps) {
               <span className="absolute ml-3 text-gray-400 focus-within:text-gray ">
                 <Image
                   alt="돋보기 아이콘"
-                  src={'/images/search.svg'}
+                  src={'/images/svgs/search.svg'}
                   width={20}
                   height={20}
                 />

@@ -22,7 +22,7 @@ export default function InvitedOrSearchUser(props: InvitedOrSearchUserProps) {
       <div className="flex items-center justify-start gap-3 my-2 ml-5">
         <Image
           className="object-cover rounded-full md:w-[45px] md:h-[45px] sm:w-[55px] sm:h-[55px]"
-          src={person.avatar_url ?? '/images/userDefault.svg'}
+          src={person.avatar_url ?? '/images/svgs/userDefault.svg'}
           width={45}
           height={45}
           alt={`${person.nickname} avatar image`}

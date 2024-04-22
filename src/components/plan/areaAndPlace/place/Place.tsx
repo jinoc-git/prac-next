@@ -53,7 +53,7 @@ const Place = (props: Props) => {
             "
       >
         <Image
-          src={'/images/pin.svg'}
+          src={'/images/svgs/pin.svg'}
           width={20}
           height={20}
           alt="여행 지역 아이콘"

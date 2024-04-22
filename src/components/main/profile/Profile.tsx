@@ -49,7 +49,7 @@ export default function Profile() {
           ) : (
             <Image
               alt="main-profile-img"
-              src={'/images/userDefault.svg'}
+              src={'/images/svgs/userDefault.svg'}
               width={85}
               height={85}
               className="sm:w-[66px] sm:h-[66px]
@@ -63,7 +63,7 @@ export default function Profile() {
           >
             <Image
               alt="edit-icon"
-              src={'/images/edit-gray.svg'}
+              src={'/images/svgs/edit-gray.svg'}
               width={14}
               height={12}
             />
