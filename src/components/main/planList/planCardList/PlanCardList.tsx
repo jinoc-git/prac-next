@@ -9,6 +9,7 @@ import { tabMenuStore } from '@/store/tabMenuStore';
 import { tabMenuCallback } from '@/utils/arrayCallbackFunctionList';
 import { cardListing } from '@/utils/planCardListing';
 
+import AddNewPlanGuide from './addNewPlanGuide/AddNewPlanGuide';
 import PlanCard from './planCard/PlanCard';
 
 import type {
@@ -50,9 +51,7 @@ export default function PlanCardList(props: Props) {
   };
 
   return selectedPlanList.length === 0 ? (
-    <div>
-      <div></div>
-    </div>
+    <AddNewPlanGuide select={selectedMenu} />
   ) : (
     selectedPlanList.map((plan) => {
       const { bookMarkData, avatarList, nicknameList } = cardDataListWithPlanId(
