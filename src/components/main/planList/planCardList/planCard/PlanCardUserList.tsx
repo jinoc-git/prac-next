@@ -36,7 +36,7 @@ export default function PlanCardUserList(props: Props) {
               key={uuid()}
             >
               <Image
-                src={'/images/userDefault.svg'}
+                src={'/images/svgs/userDefault.svg'}
                 alt="유저 기본 이미지"
                 width={20}
                 height={20}
