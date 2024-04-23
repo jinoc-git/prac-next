@@ -1,6 +1,9 @@
 import React from 'react';
 
-import { tabMenuStore } from '@/store/tabMenuStore';
+import {
+  useTabMenuStoreActions,
+  useTabMenuStoreState,
+} from '@/store/tabMenuStore';
 
 interface Props {
   name: 'bookMark' | 'traveling' | 'planning' | 'end';
@@ -9,7 +12,9 @@ interface Props {
 
 export default function PlanTabMenuItem(props: Props) {
   const { name, planCount } = props;
-  const { selectedMenu, setSelectedMenu } = tabMenuStore();
+
+  const selectedMenu = useTabMenuStoreState();
+  const { setSelectedMenu } = useTabMenuStoreActions();
 
   const menuName = {
     bookMark: '즐겨찾기',

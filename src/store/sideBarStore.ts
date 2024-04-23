@@ -6,7 +6,7 @@ interface State {
   isNotFoundPage: boolean;
 }
 
-interface Actoins {
+interface Actions {
   toggleMenu: () => void;
   setMenuIsOpen: (val: boolean) => void;
   setVisibilitySideBar: (val: boolean) => void;
@@ -15,7 +15,7 @@ interface Actoins {
 
 interface Store {
   state: State;
-  actions: Actoins;
+  actions: Actions;
 }
 
 export const sideBarStore = create<Store>((set) => ({

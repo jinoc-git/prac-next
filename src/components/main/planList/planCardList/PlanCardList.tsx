@@ -5,7 +5,7 @@ import React from 'react';
 import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import { useRouter } from 'next/navigation';
 
-import { tabMenuStore } from '@/store/tabMenuStore';
+import { useTabMenuStoreState } from '@/store/tabMenuStore';
 import { tabMenuCallback } from '@/utils/arrayCallbackFunctionList';
 import { cardListing } from '@/utils/planCardListing';
 
@@ -26,7 +26,9 @@ interface Props {
 
 export default function PlanCardList(props: Props) {
   const { bookMarkDataList, planDataList, planIdAndMatesInfoList } = props;
-  const { selectedMenu } = tabMenuStore();
+
+  const selectedMenu = useTabMenuStoreState();
+
   const router = useRouter();
 
   const bookMarkPlanIdList = bookMarkDataList.map(

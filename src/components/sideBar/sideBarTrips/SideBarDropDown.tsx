@@ -3,7 +3,7 @@ import React, { useCallback } from 'react';
 import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import { useRouter } from 'next/navigation';
 
-import { tabMenuStore } from '@/store/tabMenuStore';
+import { useTabMenuStoreActions } from '@/store/tabMenuStore';
 import { changeSideBarFormat } from '@/utils/aboutDay';
 
 import { SIDE_LIST_NAME } from './SideBarPlanList';
@@ -21,9 +21,10 @@ interface Props {
 export default function SideBarDropDown(props: Props) {
   const { activeDropDown, aboveDropDownIsOpen, filter, planList, setFunc } =
     props;
-  const router = useRouter();
 
-  const setSelectedMenu = tabMenuStore((state) => state.setSelectedMenu);
+  const { setSelectedMenu } = useTabMenuStoreActions();
+
+  const router = useRouter();
 
   const onClickListItem = useCallback((state: string, id: string) => {
     if (state === 'planning') router.push(`/plan/${id}`);
