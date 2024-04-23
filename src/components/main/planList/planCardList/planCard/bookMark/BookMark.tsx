@@ -2,13 +2,32 @@
 
 import React from 'react';
 
-interface Props {}
+import Image from 'next/image';
 
-const BookMark = () => {
+interface Props {
+  isBookMark: boolean;
+}
+
+const BookMark = ({ isBookMark }: Props) => {
   return (
-    <div>
-      <div>BookMark</div>
-    </div>
+    <button
+      aria-label="bookmark-toggle-btn"
+      className="flex justify-center 
+        sm:w-[21px] sm:h-[21px] sm:ml-[11px] 
+        md:w-[30px] md:h-[30px] md:ml-[20px]"
+    >
+      <Image
+        src={
+          isBookMark
+            ? '/images/svgs/star-fill.svg'
+            : '/images/svgs/star-gray.svg'
+        }
+        alt="북마크 아이콘"
+        width={24}
+        height={24}
+        className="sm:w-[15px] sm:h-[15px] md:w-[24px] md:h-[24px]"
+      />
+    </button>
   );
 };
 
