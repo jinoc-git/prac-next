@@ -1,14 +1,18 @@
 import { create } from 'zustand';
 
+interface State {
+  oldDates: string[];
+  dates: string[];
+}
+
+interface Actions {
+  setDates: (data: string[]) => void;
+  resetDates: () => void;
+}
+
 interface Store {
-  state: {
-    oldDates: string[];
-    dates: string[];
-  };
-  actions: {
-    setDates: (data: string[]) => void;
-    resetDates: () => void;
-  };
+  state: State;
+  actions: Actions;
 }
 
 export const dateStore = create<Store>((set) => ({

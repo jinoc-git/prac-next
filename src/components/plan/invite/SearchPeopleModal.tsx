@@ -12,7 +12,10 @@ import { useParams } from 'next/navigation';
 import { findUsers } from '@/api/planMate';
 import useConfirm from '@/hooks/useConfirm';
 import { useAuthStoreState } from '@/store/authStore';
-import { inviteUserStore } from '@/store/inviteUserStore';
+import {
+  useInviteUserStoreActions,
+  useInviteUserStoreState,
+} from '@/store/inviteUserStore';
 import { searchCallback } from '@/utils/arrayCallbackFunctionList';
 
 import InvitedOrSearchUser from './InvitedOrSearchUser';
@@ -31,8 +34,8 @@ interface SearchPeopleInputType {
 
 export default function SearchPeopleModal(props: SearchPeopleModalProps) {
   const { closeModal, isAnimate } = props;
-  const { invitedUser, inviteUser, setUser, syncInvitedUser } =
-    inviteUserStore();
+  const { invitedUser } = useInviteUserStoreState();
+  const { inviteUser, setUser, syncInvitedUser } = useInviteUserStoreActions();
   const user = useAuthStoreState();
   const confirm = useConfirm();
   const planId = useParams(); // 수정 필요
