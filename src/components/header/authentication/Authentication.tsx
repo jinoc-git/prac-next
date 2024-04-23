@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 
 import { signOutForSB } from '@/api/auth';
-import { authStore } from '@/store/authStore';
+import { useAuthStoreActions, useAuthStoreState } from '@/store/authStore';
 import { sideBarStore } from '@/store/sideBarStore';
 
 interface Props {
@@ -15,7 +15,8 @@ interface Props {
 }
 
 export default function Authentication({ isLogin }: Props) {
-  const { authObserver, user, resetUser } = authStore();
+  const user = useAuthStoreState();
+  const { authObserver, resetUser } = useAuthStoreActions();
   const setVisibilitySideBar = sideBarStore(
     (state) => state.setVisibilitySideBar,
   );

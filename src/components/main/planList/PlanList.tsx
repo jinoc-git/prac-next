@@ -6,7 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { getBookMarkDataByUserId } from '@/api/bookMark';
 import { getPlanListAndMateList } from '@/api/plan';
-import { authStore } from '@/store/authStore';
+import { useAuthStoreState } from '@/store/authStore';
 import { tabMenuCallback } from '@/utils/arrayCallbackFunctionList';
 
 import AddPlanBtn from './AddPlanBtn';
@@ -16,7 +16,7 @@ import PlanTabMenu from './planTabMenu/PlanTabMenu';
 import type { PlanCountList } from '@/types/aboutPlan.type';
 
 export default function PlanList() {
-  const user = authStore((state) => state.user);
+  const user = useAuthStoreState();
 
   const [planCountList, setPlanCountList] = useState<PlanCountList>({
     bookMark: 0,

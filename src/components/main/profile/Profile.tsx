@@ -4,12 +4,12 @@ import React, { useState } from 'react';
 
 import Image from 'next/image';
 
-import { authStore } from '@/store/authStore';
+import { useAuthStoreState } from '@/store/authStore';
 
 export default function Profile() {
   const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
   const [animate, setAnimate] = useState<boolean>(true);
-  const user = authStore((state) => state.user);
+  const user = useAuthStoreState();
 
   const onClickOpenModalHandler = () => {
     setAnimate(true);
