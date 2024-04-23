@@ -4,13 +4,22 @@ import React from 'react';
 
 import Image from 'next/image';
 
+import type { BookMarkType } from '@/types/supabase';
+
 interface Props {
-  isBookMark: boolean;
+  bookMarkData: BookMarkType | undefined;
+  planId: string;
+  handleBookMark: (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    bookMarkData: BookMarkType | undefined,
+    planId: string,
+  ) => void;
 }
 
-const BookMark = ({ isBookMark }: Props) => {
+const BookMark = ({ bookMarkData, planId, handleBookMark }: Props) => {
   return (
     <button
+      onClick={(e) => handleBookMark(e, bookMarkData, planId)}
       aria-label="bookmark-toggle-btn"
       className="flex justify-center 
         sm:w-[21px] sm:h-[21px] sm:ml-[11px] 
@@ -18,7 +27,7 @@ const BookMark = ({ isBookMark }: Props) => {
     >
       <Image
         src={
-          isBookMark
+          bookMarkData
             ? '/images/svgs/star-fill.svg'
             : '/images/svgs/star-gray.svg'
         }

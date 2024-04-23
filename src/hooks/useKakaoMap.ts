@@ -7,12 +7,6 @@ import type {
   MakePolylineArgs,
 } from '@/types/aboutKakaoMap.type';
 
-declare global {
-  interface Window {
-    kakao: any;
-  }
-}
-
 const useKakaoMap = () => {
   const [map, setMap] = useState<any>(null);
 

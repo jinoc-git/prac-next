@@ -61,9 +61,9 @@ export default function SigninForm() {
       <Image
         src="/images/img-signin-bg.webp"
         alt="로그인 배경"
-        layout="fill"
-        objectFit="cover"
-        className="absolute inset-0 max-w-[856px]"
+        width={856}
+        height={1080}
+        className="absolute inset-0 w-full max-w-[856px] h-screen object-cover"
       />
       <form
         className="relative flexcol gap-y-2.5 rounded-xl bg-[#F9F9FB]
@@ -80,7 +80,7 @@ export default function SigninForm() {
           placeholder="이메일을 입력해주세요."
           register={register('email')}
           leftIcon={{
-            src: '/images/message.svg',
+            src: '/images/svgs/message.svg',
             alt: '이메일 아이콘',
             w: 10,
             h: 12,

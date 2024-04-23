@@ -36,8 +36,9 @@ import type {
 } from '@/types/supabase';
 
 interface Props {
-  plan?: PlanType | null;
-  originPins?: PinType[] | null;
+  plan?: PlanType;
+  originPins?: PinType[];
+  readonly: boolean;
   formRef: React.RefObject<HTMLFormElement>;
   handleSubmit: UseFormHandleSubmit<PlanContentsInputType, undefined>;
   onChangeCost: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -50,6 +51,7 @@ export default function PostPlanForm(props: Props) {
     plan,
     originPins,
     formRef,
+    readonly,
     handleSubmit,
     onChangeCost,
     register,
@@ -59,7 +61,7 @@ export default function PostPlanForm(props: Props) {
   const user = useAuthStoreState();
   const { invitedUser } = useInviteUserStoreState();
   const { inviteUser, syncInvitedUser } = useInviteUserStoreActions();
-  const { dates, oldDates } = useDateStoreState();
+  const { dates } = useDateStoreState();
   const { resetDates } = useDateStoreActions();
 
   const { currentPage, next, prev, setCurrentPage } = usePagination();
@@ -77,7 +79,7 @@ export default function PostPlanForm(props: Props) {
       return;
     }
 
-    const isAddPlan = plan === null || plan === undefined;
+    const isAddPlan = plan === undefined || originPins === undefined;
 
     if (isAddPlan) {
       const newPlan: InsertPlanType = {
@@ -112,12 +114,13 @@ export default function PostPlanForm(props: Props) {
 
       const updatePlanObj = {
         plan: updatedPlan,
-        originPins: originPins,
+        originPins,
         pins,
         invitedUser,
       };
 
       await updatePlan(updatePlanObj);
+      router.refresh();
     }
   };
 
@@ -139,13 +142,13 @@ export default function PostPlanForm(props: Props) {
     const initPins: PinContentsType[][] = [];
 
     if (originPins) {
-      originPins.forEach(({ contents }) => {
-        if (contents) initPins.push(contents);
+      dates.forEach((_, i) => {
+        if (originPins[i]) initPins.push(originPins[i].contents);
+        else initPins.push([]);
       });
     } else {
-      dates.forEach((date) => {
-        if (!oldDates.includes(date)) initPins.push([]);
-        else initPins.push(pins[oldDates.indexOf(date)]);
+      dates.forEach(() => {
+        initPins.push([]);
       });
     }
 
@@ -156,16 +159,17 @@ export default function PostPlanForm(props: Props) {
     <form
       ref={formRef}
       onSubmit={handleSubmit(onSubmitAddOrModifyPlan)}
-      className="flex flex-col mx-auto
-        sm:mt-[32px] sm:w-[310px]
-        md:mt-[100px] md:w-[720px] md:px-[10px]"
+      className="flex flex-col content-layout
+        sm:pt-[140px]
+        md:pt-[100px] md:px-[10px]"
     >
       <input
         id="title"
         type="text"
         placeholder="여행 제목을 입력하세요."
+        readOnly={readonly}
         {...register('title')}
-        className="border-b-[1px] border-gray w-full outline-none font-bold placeholder:text-gray  text-black
+        className="border-b-[1px] border-gray w-full outline-none font-bold placeholder:text-gray text-black read-only:border-none
             sm:text-[20px]
             md:text-[24px] "
       />
@@ -181,7 +185,7 @@ export default function PostPlanForm(props: Props) {
         planDatesData={plan ? plan.dates : []}
       />
       <Invite />
-      <Pay onChangeCost={onChangeCost} register={register} errors={errors} />
+      <Pay onChangeCost={onChangeCost} register={register} />
       <DatePagination
         dates={dates}
         next={next}

@@ -25,7 +25,9 @@ export default function Header({ session }: Props) {
 
   return (
     <header
-      className={`flex top-0 left-0 justify-between items-center fixed w-screen pr-3 z-30 sm:h-[80px] md:h-[70px]
+      className={`fixed top-0 left-0 z-30 flex justify-between items-center w-screen pr-3 
+      sm:h-[80px] sm:justify-end
+      md:h-[70px] md:justify-between
       ${bgWhite ? 'bg-bg_white' : 'bg-transparent'}
       `}
     >

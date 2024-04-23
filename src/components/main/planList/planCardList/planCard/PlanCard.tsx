@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { calculateDday } from '@/utils/aboutDay';
+import { calcDday } from '@/utils/aboutDay';
 
 import BookMark from './bookMark/BookMark';
 import PlanCardDate from './PlanCardDate';
@@ -19,11 +19,22 @@ interface Props {
   avatarList: (string | null | undefined)[];
   nicknameList: string[];
   onClickPlanCard: (status: PlanStatus, id: string) => void;
+  handleBookMark: (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    bookMarkData: BookMarkType | undefined,
+    planId: string,
+  ) => void;
 }
 
 export default function PlanCard(props: Props) {
-  const { plan, bookMarkData, avatarList, nicknameList, onClickPlanCard } =
-    props;
+  const {
+    plan,
+    bookMarkData,
+    avatarList,
+    nicknameList,
+    onClickPlanCard,
+    handleBookMark,
+  } = props;
 
   const onClickQuitBtn = (id: string) => {};
 
@@ -40,7 +51,11 @@ export default function PlanCard(props: Props) {
         className="sm:w-[45px] sm:mt-[23px] 
               md:w-[80px] md:h-[16px] md:mt-[25px] md:ml-[28px]"
       >
-        <BookMark isBookMark={!!bookMarkData} />
+        <BookMark
+          bookMarkData={bookMarkData}
+          handleBookMark={handleBookMark}
+          planId={plan.id}
+        />
         <div className="mt-[0px] h-[12px]">
           {plan.plan_state === 'end' ? null : (
             <p
@@ -48,7 +63,7 @@ export default function PlanCard(props: Props) {
                 sm:text-[10px] 
                 md:text-[18px] md:mt-[11px]"
             >
-              {calculateDday(new Date(plan.dates[0]))}
+              {calcDday(new Date(plan.dates[0]))}
             </p>
           )}
         </div>
@@ -61,7 +76,7 @@ export default function PlanCard(props: Props) {
           <p className="text-gray_dark_1 sm:text-sm md:text-xlg font-bold mr-[16px]">
             {plan.title}
           </p>
-          <PlanCardStatusChip state={plan.plan_state} />
+          <PlanCardStatusChip status={plan.plan_state} />
         </div>
         <PlanCardDate dates={plan.dates} />
         <PlanCardUserList avatarList={avatarList} nicknameList={nicknameList} />

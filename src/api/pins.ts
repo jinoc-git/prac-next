@@ -1,5 +1,3 @@
-import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
-
 import { supabaseClientClient } from './auth';
 
 import type {
@@ -8,7 +6,6 @@ import type {
   PinInsertType,
   PinType,
   PinUpdateType,
-  PlanType,
 } from '@/types/supabase';
 
 export const addNewDateEmptyPins = async (newPin: PinInsertType) => {
@@ -31,12 +28,13 @@ export const getAllPinsDate = async (planId: string) => {
   return res;
 };
 
-export const getAllPinsByPlan = async (plan: PlanType) => {
+export const getAllPinsByIdAndDates = async (planId: string, dates: string[]) => {
   const { data, error } = await supabaseClientClient
     .from('pins')
     .select()
-    .eq('plan_id', plan.id)
-    .in('date', plan.dates);
+    .eq('plan_id', planId)
+    .in('date', dates)
+    .order('date', { ascending: true });
 
   if (error !== null) throw new Error('핀 가져오기 에러발생');
 
@@ -49,10 +47,7 @@ export const addPin = async (pin: PinInsertType) => {
   if (error) throw new Error(error.message);
 };
 
-export const addPins = async (
-  newPlan: InsertPlanType,
-  pins: PinContentsType[][],
-) => {
+export const addPins = async (newPlan: InsertPlanType, pins: PinContentsType[][]) => {
   const newPins = [];
 
   for (let i = 0; i < newPlan.dates.length; i++) {
@@ -69,27 +64,39 @@ export const addPins = async (
 };
 
 export const updatePin = async (pin: PinUpdateType) => {
-  const { data, error } = await supabaseClientClient
+  const { error } = await supabaseClientClient
     .from('pins')
     .update(pin)
-    .match({ plan_id: pin.plan_id, date: pin.date });
+    .match({ id: pin.id, plan_id: pin.plan_id, date: pin.date });
 
   if (error) throw new Error('핀 업데이트 오류');
 };
 
+export const deletePin = async (id: string) => {
+  const { error } = await supabaseClientClient.from('pins').delete().eq('id', id);
+
+  if (error) throw new Error(error.message);
+};
+
 export const updatePins = async (
-  originPins: PinType[] | null | undefined,
+  originPins: PinType[],
   updatedPlan: InsertPlanType,
   pins: PinContentsType[][],
 ) => {
-  for (let i = 0; i < updatedPlan.dates.length; i++) {
-    if (originPins && originPins[i]) {
-      const id = originPins
-        ? originPins[i]
-          ? originPins[i].id
-          : uuid()
-        : uuid();
+  const beforeDatesLen = originPins.length; // 7
+  const afterDatesLen = updatedPlan.dates.length; // 4
+  const isIncreaseDate = beforeDatesLen < afterDatesLen;
+
+  for (let i = 0; i < (isIncreaseDate ? afterDatesLen : beforeDatesLen); i++) {
+    const isDecreaseDate = afterDatesLen - 1 < i;
+    if (isDecreaseDate) {
+      await deletePin(originPins[i].id);
+      continue;
+    }
+
+    if (originPins[i]) {
       const pin: PinUpdateType = {
+        id: originPins[i].id,
         plan_id: updatedPlan.id,
         contents: pins[i],
         date: updatedPlan.dates[i],
@@ -106,6 +113,4 @@ export const updatePins = async (
       await addPin(pin);
     }
   }
-
-  // if (error) throw new Error(error.message);
 };

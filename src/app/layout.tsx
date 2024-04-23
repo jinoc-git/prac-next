@@ -25,10 +25,10 @@ async function RootLayout({ children }: { children: React.ReactNode }) {
     <html lang="ko">
       <body>
         <Providers>
-          <SideBar />
           <Header session={session} />
-          <main className="w-full min-h-screen">{children}</main>
+          <SideBar />
           <Script src={KAKAO_MAP_URL} strategy="beforeInteractive" />
+          <main className="w-full min-h-screen side-bar-transition">{children}</main>
           <ToastProvider />
         </Providers>
         <Confirm />

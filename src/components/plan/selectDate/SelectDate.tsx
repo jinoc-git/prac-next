@@ -1,72 +1,37 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 
-import { addNewDateEmptyPins } from '@/api/pins';
 import { updateDatePlan } from '@/api/plan';
-import { useDateStoreActions } from '@/store/dateStore';
-import { useModifyPlanStoreActions } from '@/store/modifyPlanStore';
+import useDatePicker from '@/hooks/useDatePicker';
 
 import Calendar from '../../common/calendar/Calendar';
 
-import type { PinInsertType } from '@/types/supabase';
-
-interface SelectDateProps {
-  state?: 'addPlan' | 'modify';
+interface Props {
+  state: 'addPlan' | 'modify';
   planDatesData: string[];
 }
 
-export default function SelectDate(props: SelectDateProps) {
+export default function SelectDate(props: Props) {
   const { state, planDatesData } = props;
 
   const { planId } = useParams<{ planId: string }>();
-  const { setRequiredDates } = useModifyPlanStoreActions();
-  const { setDates } = useDateStoreActions();
 
-  const planStartDate = new Date(planDatesData?.[0] as string);
-  const planEndDate = new Date(
+  const initStartDate = new Date(planDatesData?.[0] as string);
+  const initEdDate = new Date(
     planDatesData?.[planDatesData.length - 1] as string,
   );
 
-  const today = new Date();
+  const { startDate, endDate, handleStartDate, handleEndDate } = useDatePicker({
+    state,
+    initStartDate,
+    initEdDate,
+  });
 
-  const [startDate, setStartDate] = useState<Date | null>(
-    state === 'addPlan' ? today : planStartDate,
-  );
-  const [endDate, setEndDate] = useState<Date | null>(
-    state === 'addPlan' ? null : planEndDate,
-  );
-
-  const startDateChangeHandler = (date: Date | null) => {
-    setRequiredDates('start');
-    setStartDate(date);
-  };
-  const endDateChangeHandler = (date: Date | null) => {
-    setRequiredDates('end');
-    setEndDate(date);
-  };
-
-  const allPlanDates = (startDate: Date, endDate: Date) => {
-    const dates: string[] = [];
-    const koreaOffset = 9 * 60 * 60 * 1000;
-    const currentDate = new Date(startDate.getTime());
-    const lastDate = new Date(endDate.getTime());
-
-    while (currentDate < lastDate) {
-      dates.push(currentDate.toISOString().slice(0, 10));
-      currentDate.setDate(currentDate.getDate() + 1);
-    }
-
-    dates.push(currentDate.toISOString().slice(0, 10)); // 마지막 날짜도 포함시키기 위하여
-
-    setDates(dates);
-
-    return dates;
-  };
-
+  // mutation 부분 어떻게 할지 고민 (데이터를 서버에서 불러올지 클라이언트에서 불러올지)
   const queryClient = useQueryClient();
   const { mutate: updatePlanDate } = useMutation({
     mutationFn: async ([planId, dates]: [string, string[]]) => {
@@ -78,32 +43,12 @@ export default function SelectDate(props: SelectDateProps) {
     },
   });
 
-  useEffect(() => {
-    if (startDate && endDate) {
-      const dates = allPlanDates(startDate, endDate);
-      const newDates = dates.filter((date) => !planDatesData.includes(date));
-      if (newDates.length !== 0 && state !== 'addPlan') {
-        newDates.forEach(async (date) => {
-          const newEmptyPins: PinInsertType = {
-            plan_id: planId,
-            contents: [],
-            date,
-          };
-
-          await addNewDateEmptyPins(newEmptyPins);
-        });
-      }
-      // if (state !== 'addPlan') updatePlanDate([planId, dates]);
-    }
-  }, [startDate, endDate]);
-
   return (
     <Calendar
-      today={today}
       startDate={startDate}
       endDate={endDate}
-      startDateChangeHandler={startDateChangeHandler}
-      endDateChangeHandler={endDateChangeHandler}
+      handleStartDate={handleStartDate}
+      handleEndDate={handleEndDate}
     />
   );
 }

@@ -5,6 +5,7 @@ import React from 'react';
 import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import { useRouter } from 'next/navigation';
 
+import useBookMark from '@/hooks/useBookMark';
 import { useTabMenuStoreState } from '@/store/tabMenuStore';
 import { tabMenuCallback } from '@/utils/arrayCallbackFunctionList';
 import { cardListing } from '@/utils/planCardListing';
@@ -31,6 +32,8 @@ export default function PlanCardList(props: Props) {
 
   const router = useRouter();
 
+  const handleBookMark = useBookMark();
+
   const bookMarkPlanIdList = bookMarkDataList.map(
     (bookMark) => bookMark.plan_id,
   );
@@ -47,9 +50,9 @@ export default function PlanCardList(props: Props) {
 
   const onClickPlanCard = (status: PlanStatus, id: string) => {
     if (status === 'planning') router.push(`/plan/${id}`);
-    if (status === 'traveling') router.push(`/plan/${id}`);
-    if (status === 'recording') router.push(`/addPhoto/${id}`);
-    if (status === 'end') router.push(`/ending/${id}`);
+    else if (status === 'traveling') router.push(`/plan/${id}`);
+    else if (status === 'recording') router.push(`/addphoto/${id}`);
+    else if (status === 'end') router.push(`/ending/${id}`);
   };
 
   return selectedPlanList.length === 0 ? (
@@ -68,6 +71,7 @@ export default function PlanCardList(props: Props) {
           avatarList={avatarList}
           nicknameList={nicknameList}
           onClickPlanCard={onClickPlanCard}
+          handleBookMark={handleBookMark}
         />
       );
     })
