@@ -5,6 +5,7 @@ import React from 'react';
 import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import { useRouter } from 'next/navigation';
 
+import useBookMark from '@/hooks/useBookMark';
 import { useTabMenuStoreState } from '@/store/tabMenuStore';
 import { tabMenuCallback } from '@/utils/arrayCallbackFunctionList';
 import { cardListing } from '@/utils/planCardListing';
@@ -30,6 +31,8 @@ export default function PlanCardList(props: Props) {
   const selectedMenu = useTabMenuStoreState();
 
   const router = useRouter();
+
+  const handleBookMark = useBookMark();
 
   const bookMarkPlanIdList = bookMarkDataList.map(
     (bookMark) => bookMark.plan_id,
@@ -68,6 +71,7 @@ export default function PlanCardList(props: Props) {
           avatarList={avatarList}
           nicknameList={nicknameList}
           onClickPlanCard={onClickPlanCard}
+          handleBookMark={handleBookMark}
         />
       );
     })
