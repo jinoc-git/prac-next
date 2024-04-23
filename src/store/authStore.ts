@@ -4,16 +4,18 @@ import { supabaseClientClient } from '@/api/auth';
 
 import type { UserType } from '@/types/supabase';
 
-interface AuthStore {
-  user: UserType | null;
-  actions: {
-    authObserver: () => void;
-    setUser: (user: UserType) => void;
-    resetUser: () => void;
-  };
+interface Actions {
+  authObserver: () => void;
+  setUser: (user: UserType) => void;
+  resetUser: () => void;
 }
 
-export const authStore = create<AuthStore>((set, get) => ({
+interface Store {
+  user: UserType | null;
+  actions: Actions;
+}
+
+export const authStore = create<Store>((set, get) => ({
   user: null,
   actions: {
     authObserver: () => {
