@@ -1,57 +1,90 @@
 import { create } from 'zustand';
 
-interface ModifyPlanStoreType {
+interface State {
   modifyState: 'modify' | 'readOnly';
   requiredDates: {
     start: boolean;
     end: boolean;
   };
+}
+
+interface Actions {
   setModify: () => void;
   setReadOnly: () => void;
   setRequiredDates: (type: 'start' | 'end') => void;
   clearRequiredDates: () => void;
 }
 
-export const modifyPlanStore = create<ModifyPlanStoreType>((set, get) => ({
-  modifyState: 'readOnly',
-  requiredDates: {
-    start: false,
-    end: false,
+interface Store {
+  state: State;
+  actions: Actions;
+}
+
+export const modifyPlanStore = create<Store>((set, get) => ({
+  state: {
+    modifyState: 'readOnly',
+    requiredDates: {
+      start: false,
+      end: false,
+    },
   },
-  setModify: () => {
-    set(() => ({
-      modifyState: 'modify',
-    }));
-  },
-  setReadOnly: () => {
-    set(() => ({
-      modifyState: 'readOnly',
-    }));
-  },
-  setRequiredDates: (type: 'start' | 'end') => {
-    const current = get().requiredDates;
-    if (type === 'start') {
+  actions: {
+    setModify: () => {
+      set(({ state }) => ({
+        state: {
+          ...state,
+          modifyState: 'modify',
+        },
+      }));
+    },
+    setReadOnly: () => {
+      set(({ state }) => ({
+        state: {
+          ...state,
+          modifyState: 'readOnly',
+        },
+      }));
+    },
+    setRequiredDates: (type: 'start' | 'end') => {
+      const state = get().state;
+      if (type === 'start') {
+        set({
+          state: {
+            modifyState: state.modifyState,
+            requiredDates: {
+              ...state.requiredDates,
+              start: true,
+            },
+          },
+        });
+      } else {
+        set({
+          state: {
+            modifyState: state.modifyState,
+            requiredDates: {
+              ...state.requiredDates,
+              end: true,
+            },
+          },
+        });
+      }
+    },
+    clearRequiredDates: () => {
+      const state = get().state;
       set({
-        requiredDates: {
-          ...current,
-          start: true,
+        state: {
+          modifyState: state.modifyState,
+          requiredDates: {
+            start: false,
+            end: false,
+          },
         },
       });
-    } else {
-      set({
-        requiredDates: {
-          ...current,
-          end: true,
-        },
-      });
-    }
-  },
-  clearRequiredDates: () => {
-    set({
-      requiredDates: {
-        start: false,
-        end: false,
-      },
-    });
+    },
   },
 }));
+
+export const useModifyPlanStoreState = () =>
+  modifyPlanStore((store) => store.state);
+export const useModifyPlanStoreActions = () =>
+  modifyPlanStore((store) => store.actions);

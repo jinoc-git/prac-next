@@ -7,7 +7,7 @@ import Image from 'next/image';
 
 import PinLayout from '@/components/common/layout/PinLayout';
 import { useDateStoreState } from '@/store/dateStore';
-import { modifyPlanStore } from '@/store/modifyPlanStore';
+import { useModifyPlanStoreState } from '@/store/modifyPlanStore';
 
 import AddPinModal from './addPinModal/AddPinModal';
 import Pin from './pin/Pin';
@@ -27,7 +27,7 @@ const Place = (props: Props) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
 
   const { dates } = useDateStoreState();
-  const modifyState = modifyPlanStore(({ modifyState }) => modifyState);
+  const { modifyState } = useModifyPlanStoreState();
 
   const openModal = () => {
     setIsAnimate(true);

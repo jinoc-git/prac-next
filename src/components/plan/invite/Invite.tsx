@@ -12,7 +12,7 @@ import {
   useInviteUserStoreActions,
   useInviteUserStoreState,
 } from '@/store/inviteUserStore';
-import { modifyPlanStore } from '@/store/modifyPlanStore';
+import { useModifyPlanStoreState } from '@/store/modifyPlanStore';
 
 import SearchPeopleModal from './SearchPeopleModal';
 
@@ -20,7 +20,7 @@ export default function Invite() {
   const { oldInvitedUser } = useInviteUserStoreState();
   const { inviteUser, resetInvitedUser, syncInvitedUser } =
     useInviteUserStoreActions();
-  const modifyState = modifyPlanStore((state) => state.modifyState);
+  const { modifyState } = useModifyPlanStoreState();
 
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isAnimate, setIsAnimate] = useState(false);
