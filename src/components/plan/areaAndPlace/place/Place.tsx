@@ -6,7 +6,7 @@ import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import Image from 'next/image';
 
 import PinLayout from '@/components/common/layout/PinLayout';
-import { dateStore } from '@/store/dateStore';
+import { useDateStoreState } from '@/store/dateStore';
 import { modifyPlanStore } from '@/store/modifyPlanStore';
 
 import AddPinModal from './addPinModal/AddPinModal';
@@ -26,7 +26,7 @@ const Place = (props: Props) => {
   const [isAnimate, setIsAnimate] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
 
-  const dates = dateStore(({ dates }) => dates);
+  const { dates } = useDateStoreState();
   const modifyState = modifyPlanStore(({ modifyState }) => modifyState);
 
   const openModal = () => {

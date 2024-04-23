@@ -19,7 +19,7 @@ import Pay from '@/components/plan/pay/Pay';
 import SelectDate from '@/components/plan/selectDate/SelectDate';
 import usePagination from '@/hooks/usePagination';
 import { useAuthStoreState } from '@/store/authStore';
-import { dateStore } from '@/store/dateStore';
+import { useDateStoreActions, useDateStoreState } from '@/store/dateStore';
 import { inviteUserStore } from '@/store/inviteUserStore';
 
 import Invite from '../../plan/invite/Invite';
@@ -55,7 +55,8 @@ export default function PostPlanForm(props: Props) {
 
   const user = useAuthStoreState();
   const { invitedUser, inviteUser, syncInvitedUser } = inviteUserStore();
-  const { dates, oldDates, resetDates } = dateStore();
+  const { dates, oldDates } = useDateStoreState();
+  const { resetDates } = useDateStoreActions();
 
   const { currentPage, next, prev, setCurrentPage } = usePagination();
 
