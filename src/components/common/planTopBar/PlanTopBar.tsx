@@ -4,7 +4,7 @@ import React from 'react';
 
 import Image from 'next/image';
 
-import { sideBarStore } from '@/store/sideBarStore';
+import { useSideBarStoreState } from '@/store/sideBarStore';
 
 interface Props {
   isModify: boolean;
@@ -13,7 +13,8 @@ interface Props {
 
 export default function PlanTopBar(props: Props) {
   const { isModify, handleSaveOrModifyBtnClick } = props;
-  const isSideBarOpen = sideBarStore((state) => state.isSideBarOpen);
+
+  const { isSideBarOpen } = useSideBarStoreState();
 
   return (
     <div

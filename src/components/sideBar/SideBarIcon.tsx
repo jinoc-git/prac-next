@@ -5,11 +5,15 @@ import React from 'react';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
-import { sideBarStore } from '@/store/sideBarStore';
+import {
+  useSideBarStoreActions,
+  useSideBarStoreState,
+} from '@/store/sideBarStore';
 
 export default function SideBarIcon() {
-  const toggleMenu = sideBarStore((state) => state.toggleMenu);
-  const isSideBarOpen = sideBarStore((state) => state.isSideBarOpen);
+  const { isSideBarOpen } = useSideBarStoreState();
+  const { toggleMenu } = useSideBarStoreActions();
+
   const pathname = usePathname();
 
   return (

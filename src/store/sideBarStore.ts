@@ -1,32 +1,48 @@
 import { create } from 'zustand';
 
-interface SideBarStore {
+interface State {
   isSideBarOpen: boolean;
   isVisibleSideBar: boolean;
   isNotFoundPage: boolean;
+}
 
+interface Actoins {
   toggleMenu: () => void;
   setMenuIsOpen: (val: boolean) => void;
   setVisibilitySideBar: (val: boolean) => void;
   setIsNotFoundPage: (val: boolean) => void;
 }
 
-export const sideBarStore = create<SideBarStore>((set) => ({
-  isSideBarOpen: false,
-  isVisibleSideBar: false,
-  isErrorPage: false,
-  isNotFoundPage: false,
+interface Store {
+  state: State;
+  actions: Actoins;
+}
 
-  toggleMenu: () => {
-    set((state) => ({ isSideBarOpen: !state.isSideBarOpen }));
+export const sideBarStore = create<Store>((set) => ({
+  state: {
+    isSideBarOpen: false,
+    isVisibleSideBar: false,
+    isErrorPage: false,
+    isNotFoundPage: false,
   },
-  setMenuIsOpen: (val) => {
-    set({ isSideBarOpen: val });
-  },
-  setVisibilitySideBar: (val: boolean) => {
-    set({ isVisibleSideBar: val });
-  },
-  setIsNotFoundPage: (val: boolean) => {
-    set({ isNotFoundPage: val });
+  actions: {
+    toggleMenu: () => {
+      set(({ state }) => ({
+        state: { ...state, isSideBarOpen: !state.isSideBarOpen },
+      }));
+    },
+    setMenuIsOpen: (val) => {
+      set(({ state }) => ({ state: { ...state, isSideBarOpen: val } }));
+    },
+    setVisibilitySideBar: (val: boolean) => {
+      set(({ state }) => ({ state: { ...state, isVisibleSideBar: val } }));
+    },
+    setIsNotFoundPage: (val: boolean) => {
+      set(({ state }) => ({ state: { ...state, isNotFoundPage: val } }));
+    },
   },
 }));
+
+export const useSideBarStoreState = () => sideBarStore((store) => store.state);
+export const useSideBarStoreActions = () =>
+  sideBarStore((store) => store.actions);

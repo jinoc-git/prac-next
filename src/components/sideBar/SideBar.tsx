@@ -6,7 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { getPlanListAndMateList } from '@/api/plan';
 import { useAuthStoreState } from '@/store/authStore';
-import { sideBarStore } from '@/store/sideBarStore';
+import { useSideBarStoreState } from '@/store/sideBarStore';
 import { sideBarCallback } from '@/utils/arrayCallbackFunctionList';
 
 import SideBarIcon from './SideBarIcon';
@@ -15,7 +15,7 @@ import SideBarStatus from './sideBarStatus/SideBarStatus';
 import SideBarTrips from './sideBarTrips/SideBarTrips';
 
 export default function SideBar() {
-  const { isVisibleSideBar, isSideBarOpen } = sideBarStore();
+  const { isVisibleSideBar, isSideBarOpen } = useSideBarStoreState();
   const user = useAuthStoreState();
 
   const { data: matesData, isError: matesError } = useQuery({
