@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { getBookMarkDataByUserId } from '@/api/bookMark';
 import { getPlanListAndMateList } from '@/api/plan';
+import Loading from '@/components/common/loading/Loading';
 import { useAuthStoreState } from '@/store/authStore';
 import { tabMenuCallback } from '@/utils/arrayCallbackFunctionList';
 
@@ -59,8 +60,8 @@ export default function PlanList() {
     }
   }, [matesData, bookMarkDataList]);
 
-  if (matesData == null || bookMarkDataList == null) {
-    return <div>데이터 없음</div>;
+  if (matesLoading || bookMarkLoading || !matesData || !bookMarkDataList) {
+    return <Loading full={true} />;
   }
 
   const { planDataList, planIdAndMatesInfoList } = matesData;
