@@ -8,15 +8,19 @@ import Image from 'next/image';
 import { useParams } from 'next/navigation';
 
 import { getMates } from '@/api/planMate';
-import { inviteUserStore } from '@/store/inviteUserStore';
-import { modifyPlanStore } from '@/store/modifyPlanStore';
+import {
+  useInviteUserStoreActions,
+  useInviteUserStoreState,
+} from '@/store/inviteUserStore';
+import { useModifyPlanStoreState } from '@/store/modifyPlanStore';
 
 import SearchPeopleModal from './SearchPeopleModal';
 
 export default function Invite() {
-  const { oldInvitedUser, inviteUser, resetInvitedUser, syncInvitedUser } =
-    inviteUserStore();
-  const modifyState = modifyPlanStore((state) => state.modifyState);
+  const { oldInvitedUser } = useInviteUserStoreState();
+  const { inviteUser, resetInvitedUser, syncInvitedUser } =
+    useInviteUserStoreActions();
+  const { modifyState } = useModifyPlanStoreState();
 
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isAnimate, setIsAnimate] = useState(false);

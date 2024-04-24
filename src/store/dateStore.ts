@@ -1,25 +1,39 @@
 import { create } from 'zustand';
 
-interface dateStoreType {
+interface State {
   oldDates: string[];
   dates: string[];
+}
+
+interface Actions {
   setDates: (data: string[]) => void;
   resetDates: () => void;
 }
 
-export const dateStore = create<dateStoreType>((set) => ({
-  oldDates: [],
-  dates: [],
-  setDates: (data: string[]) => {
-    set((state) => ({
-      oldDates: state.dates,
-      dates: data,
-    }));
+interface Store {
+  state: State;
+  actions: Actions;
+}
+
+export const dateStore = create<Store>((set) => ({
+  state: {
+    oldDates: [],
+    dates: [],
   },
-  resetDates: () => {
-    set(() => ({
-      oldDates: [],
-      dates: [],
-    }));
+  actions: {
+    setDates: (data: string[]) => {
+      set(({ state }) => ({
+        state: {
+          oldDates: state.dates,
+          dates: data,
+        },
+      }));
+    },
+    resetDates: () => {
+      set({ state: { oldDates: [], dates: [] } });
+    },
   },
 }));
+
+export const useDateStoreState = () => dateStore((store) => store.state);
+export const useDateStoreActions = () => dateStore((store) => store.actions);

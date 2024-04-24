@@ -26,11 +26,11 @@ export const addBookMark = async (newBookMark: InsertBookMarkType) => {
   }
 };
 
-export const deleteBookMark = async (id: string) => {
+export const deleteBookMark = async (bookMarkId: string) => {
   const { error } = await supabaseClientClient
     .from('book_mark')
     .delete()
-    .eq('id', id);
+    .eq('id', bookMarkId);
 
   if (error !== null) {
     throw new Error('오류발생');

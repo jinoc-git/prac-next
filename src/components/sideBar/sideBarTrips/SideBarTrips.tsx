@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import { getPlansWithBookmarks } from '@/api/plan';
-import { authStore } from '@/store/authStore';
+import { useAuthStoreState } from '@/store/authStore';
 
 import SideBarPlanList from './SideBarPlanList';
 
@@ -24,7 +24,7 @@ export default function SideBarTrips(props: Props) {
   const [planningIsOpen, setPlanningIsOpen] = useState(false);
   const [endIsOpen, setEndIsOpen] = useState(false);
 
-  const user = authStore((state) => state.user);
+  const user = useAuthStoreState();
 
   const { data: bookMarkPlanData } = useQuery<PlanType[] | []>({
     queryKey: ['book_mark', 'plans', user?.id],

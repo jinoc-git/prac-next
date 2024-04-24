@@ -7,7 +7,10 @@ import { ko } from 'date-fns/locale';
 import dayjs from 'dayjs';
 import Image from 'next/image';
 
-import { modifyPlanStore } from '@/store/modifyPlanStore';
+import {
+  useModifyPlanStoreActions,
+  useModifyPlanStoreState,
+} from '@/store/modifyPlanStore';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -30,9 +33,8 @@ export default function Calendar(props: Props) {
     endDateChangeHandler,
   } = props;
 
-  const [modifyState, clearRequiredDates] = modifyPlanStore((state) => {
-    return [state.modifyState, state.clearRequiredDates];
-  });
+  const { modifyState } = useModifyPlanStoreState();
+  const { clearRequiredDates } = useModifyPlanStoreActions();
 
   useEffect(() => {
     return () => {

@@ -4,6 +4,7 @@ import React from 'react';
 
 import { calculateDday } from '@/utils/aboutDay';
 
+import BookMark from './bookMark/BookMark';
 import PlanCardDate from './PlanCardDate';
 import PlanCardQuitButton from './PlanCardQuitButton';
 import PlanCardStatusChip from './PlanCardStatusChip';
@@ -18,11 +19,22 @@ interface Props {
   avatarList: (string | null | undefined)[];
   nicknameList: string[];
   onClickPlanCard: (status: PlanStatus, id: string) => void;
+  handleBookMark: (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    bookMarkData: BookMarkType | undefined,
+    planId: string,
+  ) => void;
 }
 
 export default function PlanCard(props: Props) {
-  const { plan, bookMarkData, avatarList, nicknameList, onClickPlanCard } =
-    props;
+  const {
+    plan,
+    bookMarkData,
+    avatarList,
+    nicknameList,
+    onClickPlanCard,
+    handleBookMark,
+  } = props;
 
   const onClickQuitBtn = (id: string) => {};
 
@@ -39,7 +51,11 @@ export default function PlanCard(props: Props) {
         className="sm:w-[45px] sm:mt-[23px] 
               md:w-[80px] md:h-[16px] md:mt-[25px] md:ml-[28px]"
       >
-        {/* 북마크 추가 예정 */}
+        <BookMark
+          bookMarkData={bookMarkData}
+          handleBookMark={handleBookMark}
+          planId={plan.id}
+        />
         <div className="mt-[0px] h-[12px]">
           {plan.plan_state === 'end' ? null : (
             <p

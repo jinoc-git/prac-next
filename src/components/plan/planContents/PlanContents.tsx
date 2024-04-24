@@ -6,7 +6,10 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { addPlanSchema } from '@/schema/planSchema';
-import { modifyPlanStore } from '@/store/modifyPlanStore';
+import {
+  useModifyPlanStoreActions,
+  useModifyPlanStoreState,
+} from '@/store/modifyPlanStore';
 import { addCommas } from '@/utils/numberFormat';
 
 import PostPlanForm from '../../common/form/PostPlanForm';
@@ -26,7 +29,8 @@ interface Props {
 
 export default function PlanContents({ plan, originPins }: Props) {
   const formRef = useRef<HTMLFormElement>(null);
-  const { modifyState, setReadOnly, setModify } = modifyPlanStore();
+  const { modifyState } = useModifyPlanStoreState();
+  const { setReadOnly, setModify } = useModifyPlanStoreActions();
   const resolver = yupResolver(addPlanSchema);
 
   const {

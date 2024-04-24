@@ -1,45 +1,50 @@
 import { create } from 'zustand';
 
-interface confirmStoreType {
+interface State {
   isOpen: boolean;
   title: string;
   desc: string;
   buttonText: string;
   func: () => void;
-  openConfirm: (
-    title: string,
-    description: string,
-    buttonText: string,
-    func: () => void,
-  ) => void;
+}
+
+interface ConfirmArgs {
+  title: string;
+  desc: string;
+  buttonText: string;
+  func: () => void;
+}
+
+interface Actions {
+  openConfirm: (args: ConfirmArgs) => void;
   closeConfirm: () => void;
 }
 
-export const confirmStore = create<confirmStoreType>((set) => ({
+interface Store {
+  state: State;
+  actions: Actions;
+}
+
+const initState: State = {
   isOpen: false,
   title: '',
   desc: '',
   buttonText: '',
   func: () => {},
-  openConfirm: (
-    title: string,
-    desc: string,
-    buttonText: string,
-    func: () => void,
-  ) => {
-    set(() => ({
-      isOpen: true,
-      title,
-      desc,
-      buttonText,
-      func,
-    }));
-  },
-  closeConfirm: () => {
-    set(() => ({
-      isOpen: false,
-      title: '',
-      desc: '',
-    }));
+};
+
+export const confirmStore = create<Store>((set, get) => ({
+  state: initState,
+  actions: {
+    openConfirm: (args) => {
+      set({ state: { isOpen: true, ...args } });
+    },
+    closeConfirm: () => {
+      set({ state: initState });
+    },
   },
 }));
+
+export const useConfirmStoreState = () => confirmStore((store) => store.state);
+export const useConfirmStoreActions = () =>
+  confirmStore((store) => store.actions);

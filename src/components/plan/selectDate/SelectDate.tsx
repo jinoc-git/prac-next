@@ -7,8 +7,8 @@ import { useParams } from 'next/navigation';
 
 import { addNewDateEmptyPins } from '@/api/pins';
 import { updateDatePlan } from '@/api/plan';
-import { dateStore } from '@/store/dateStore';
-import { modifyPlanStore } from '@/store/modifyPlanStore';
+import { useDateStoreActions } from '@/store/dateStore';
+import { useModifyPlanStoreActions } from '@/store/modifyPlanStore';
 
 import Calendar from '../../common/calendar/Calendar';
 
@@ -23,8 +23,8 @@ export default function SelectDate(props: SelectDateProps) {
   const { state, planDatesData } = props;
 
   const { planId } = useParams<{ planId: string }>();
-  const setRequiredDates = modifyPlanStore((state) => state.setRequiredDates);
-  const setDates = dateStore((state) => state.setDates);
+  const { setRequiredDates } = useModifyPlanStoreActions();
+  const { setDates } = useDateStoreActions();
 
   const planStartDate = new Date(planDatesData?.[0] as string);
   const planEndDate = new Date(

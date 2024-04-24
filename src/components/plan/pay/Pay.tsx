@@ -5,7 +5,7 @@ import type { FieldErrors, UseFormRegister } from 'react-hook-form';
 
 import Image from 'next/image';
 
-import { modifyPlanStore } from '@/store/modifyPlanStore';
+import { useModifyPlanStoreState } from '@/store/modifyPlanStore';
 
 import type { PlanContentsInputType } from '../planContents/PlanContents';
 
@@ -18,7 +18,7 @@ interface Props {
 
 const Pay = (props: Props) => {
   const { onChangeCost, register, errors, total_Cost } = props;
-  const modifyState = modifyPlanStore((state) => state.modifyState);
+  const { modifyState } = useModifyPlanStoreState();
 
   return (
     <div

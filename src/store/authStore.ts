@@ -4,69 +4,72 @@ import { supabaseClientClient } from '@/api/auth';
 
 import type { UserType } from '@/types/supabase';
 
-interface AuthStore {
-  user: UserType | null;
+interface Actions {
   authObserver: () => void;
   setUser: (user: UserType) => void;
   resetUser: () => void;
 }
 
-export const authStore = create<AuthStore>((set, get) => {
-  const authObserver = () => {
-    supabaseClientClient.auth.onAuthStateChange((event, session) => {
-      const currentUser = get().user;
-      if (session !== null && currentUser === null) {
-        localStorage.setItem('isLogin', 'true');
+interface Store {
+  user: UserType | null;
+  actions: Actions;
+}
 
-        if (session.user.app_metadata.provider === 'google') {
-          const {
-            id,
-            email,
-            user_metadata: { name, nickname, profileImg },
-          } = session.user;
+export const authStore = create<Store>((set, get) => ({
+  user: null,
+  actions: {
+    authObserver: () => {
+      supabaseClientClient.auth.onAuthStateChange((event, session) => {
+        const currentUser = get().user;
+        if (session !== null && currentUser === null) {
+          localStorage.setItem('isLogin', 'true');
 
-          const user: UserType = {
-            id,
-            email: email as string,
-            nickname: nickname ?? name,
-            avatar_url: profileImg ?? null,
-          };
+          if (session.user.app_metadata.provider === 'google') {
+            const {
+              id,
+              email,
+              user_metadata: { name, nickname, profileImg },
+            } = session.user;
 
-          set({ user });
-        } else {
-          const {
-            id,
-            email,
-            user_metadata: { nickname, profileImg },
-          } = session.user;
+            const user: UserType = {
+              id,
+              email: email as string,
+              nickname: nickname ?? name,
+              avatar_url: profileImg ?? null,
+            };
 
-          const user: UserType = {
-            id,
-            email: email as string,
-            nickname,
-            avatar_url: profileImg ?? null,
-          };
+            set({ user });
+          } else {
+            const {
+              id,
+              email,
+              user_metadata: { nickname, profileImg },
+            } = session.user;
 
-          set({ user });
+            const user: UserType = {
+              id,
+              email: email as string,
+              nickname,
+              avatar_url: profileImg ?? null,
+            };
+
+            set({ user });
+          }
+        } else if (session === null) {
+          localStorage.setItem('isLogin', 'false');
         }
-      } else if (session === null) {
-        localStorage.setItem('isLogin', 'false');
-      }
-    });
-  };
+      });
+    },
 
-  const setUser = (user: UserType) => {
-    set({ user });
-  };
+    setUser: (user: UserType) => {
+      set({ user });
+    },
 
-  const resetUser = () => {
-    set({ user: null });
-  };
+    resetUser: () => {
+      set({ user: null });
+    },
+  },
+}));
 
-  return {
-    user: null,
-    authObserver,
-    setUser,
-    resetUser,
-  };
-});
+export const useAuthStoreState = () => authStore((store) => store.user);
+export const useAuthStoreActions = () => authStore((store) => store.actions);

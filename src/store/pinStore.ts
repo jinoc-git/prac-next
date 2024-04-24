@@ -2,31 +2,50 @@ import { create } from 'zustand';
 
 import type { PinContentsType } from '@/types/supabase';
 
-interface PinStoreType {
+interface State {
   pin: PinContentsType | null;
   idx: number;
+}
+
+interface Actions {
   updateClick: (data: PinContentsType, idx: number) => void;
   resetPin: () => void;
 }
 
-export const pinStore = create<PinStoreType>((set) => ({
-  pin: null,
-  idx: 0,
-  updateClick: (data: PinContentsType, idx: number) => {
-    set(() => ({
-      pin: {
-        lat: data.lat,
-        lng: data.lng,
-        placeName: data.placeName,
-        cost: data.cost,
-      },
-      idx,
-    }));
+interface Store {
+  state: State;
+  actions: Actions;
+}
+
+export const pinStore = create<Store>((set) => ({
+  state: {
+    pin: null,
+    idx: 0,
   },
-  resetPin: () => {
-    set(() => ({
-      pin: null,
-      idx: 0,
-    }));
+  actions: {
+    updateClick: (data: PinContentsType, idx: number) => {
+      set(() => ({
+        state: {
+          pin: {
+            lat: data.lat,
+            lng: data.lng,
+            placeName: data.placeName,
+            cost: data.cost,
+          },
+          idx,
+        },
+      }));
+    },
+    resetPin: () => {
+      set(() => ({
+        state: {
+          pin: null,
+          idx: 0,
+        },
+      }));
+    },
   },
 }));
+
+export const usePinStoreState = () => pinStore((store) => store.state);
+export const usePinStoreActions = () => pinStore((store) => store.actions);
