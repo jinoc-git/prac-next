@@ -15,25 +15,63 @@ const useBookMark = () => {
 
   const addMutation = useMutation({
     mutationFn: addBookMark,
-    onSuccess: () => {
+    onMutate: async (newBookMark: InsertBookMarkType) => {
+      await queryClient.cancelQueries({ queryKey: ['book_mark'] });
+
+      const prevData = queryClient.getQueryData<BookMarkType[]>([
+        'book_mark',
+        user?.id,
+      ]);
+
+      if (prevData) {
+        queryClient.setQueryData(
+          ['book_mark', user?.id],
+          [...prevData, newBookMark],
+        );
+      } else {
+        queryClient.setQueryData(['book_mark', user?.id], [newBookMark]);
+      }
+
+      return { prevData };
+    },
+    onError: (err, _, context) => {
+      toast.error('북마크 추가 오류');
+      queryClient.setQueryData(['book_mark', user?.id], context?.prevData);
+    },
+    onSettled: () => {
       queryClient.invalidateQueries({
         queryKey: ['book_mark'],
       });
-    },
-    onError: () => {
-      toast.error('북마크 추가 오류');
     },
   });
 
   const deleteMutation = useMutation({
     mutationFn: deleteBookMark,
-    onSuccess: () => {
+    onMutate: async (bookMarkId: string) => {
+      await queryClient.cancelQueries({ queryKey: ['book_mark'] });
+
+      const prevData = queryClient.getQueryData<BookMarkType[]>([
+        'book_mark',
+        user?.id,
+      ]);
+
+      if (prevData) {
+        const newBookMarkList = prevData.filter(
+          (item) => item.id !== bookMarkId,
+        );
+        queryClient.setQueryData(['book_mark', user?.id], newBookMarkList);
+      }
+
+      return { prevData };
+    },
+    onError: (err, _, context) => {
+      toast.error('북마크 삭제 오류');
+      queryClient.setQueryData(['book_mark', user?.id], context?.prevData);
+    },
+    onSettled: () => {
       queryClient.invalidateQueries({
         queryKey: ['book_mark'],
       });
-    },
-    onError: () => {
-      toast.error('북마크 삭제 오류');
     },
   });
 
