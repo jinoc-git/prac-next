@@ -66,7 +66,7 @@ export default function PostPlanForm(props: Props) {
 
   const [pins, setPins] = useState<PinContentsType[][]>([]);
   const router = useRouter();
-  console.log(pins);
+
   const onSubmitAddOrModifyPlan: SubmitHandler<PlanContentsInputType> = async ({
     title,
     totalCost,
@@ -116,7 +116,7 @@ export default function PostPlanForm(props: Props) {
         pins,
         invitedUser,
       };
-      console.log(updatePlanObj);
+
       await updatePlan(updatePlanObj);
     }
   };

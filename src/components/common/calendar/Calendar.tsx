@@ -18,20 +18,14 @@ interface Props {
   today: Date;
   startDate: Date | null;
   endDate: Date | null;
-  startDateChangeHandler: (date: Date | null) => void;
-  endDateChangeHandler: (date: Date | null) => void;
+  handleStartDate: (date: Date | null) => void;
+  handleEndDate: (date: Date | null) => void;
 }
 
 registerLocale('ko', ko);
 
 export default function Calendar(props: Props) {
-  const {
-    today,
-    startDate,
-    endDate,
-    startDateChangeHandler,
-    endDateChangeHandler,
-  } = props;
+  const { today, startDate, endDate, handleStartDate, handleEndDate } = props;
 
   const { modifyState } = useModifyPlanStoreState();
   const { clearRequiredDates } = useModifyPlanStoreActions();
@@ -102,7 +96,7 @@ export default function Calendar(props: Props) {
           shouldCloseOnSelect
           selected={startDate}
           onChange={(date) => {
-            startDateChangeHandler(date);
+            handleStartDate(date);
           }}
           minDate={today}
           maxDate={endDate}
@@ -178,7 +172,7 @@ export default function Calendar(props: Props) {
           dateFormat="yyyy년 MM월 dd일"
           shouldCloseOnSelect
           selected={endDate}
-          onChange={endDateChangeHandler}
+          onChange={handleEndDate}
           selectsEnd
           startDate={startDate}
           endDate={endDate}
