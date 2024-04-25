@@ -59,7 +59,7 @@ export default function PostPlanForm(props: Props) {
   const user = useAuthStoreState();
   const { invitedUser } = useInviteUserStoreState();
   const { inviteUser, syncInvitedUser } = useInviteUserStoreActions();
-  const { dates, oldDates } = useDateStoreState();
+  const { dates } = useDateStoreState();
   const { resetDates } = useDateStoreActions();
 
   const { currentPage, next, prev, setCurrentPage } = usePagination();
@@ -112,12 +112,13 @@ export default function PostPlanForm(props: Props) {
 
       const updatePlanObj = {
         plan: updatedPlan,
-        originPins: originPins,
+        originPins,
         pins,
         invitedUser,
       };
 
       await updatePlan(updatePlanObj);
+      router.refresh();
     }
   };
 
@@ -139,13 +140,13 @@ export default function PostPlanForm(props: Props) {
     const initPins: PinContentsType[][] = [];
 
     if (originPins) {
-      originPins.forEach(({ contents }) => {
-        if (contents) initPins.push(contents);
+      dates.forEach((_, i) => {
+        if (originPins[i]) initPins.push(originPins[i].contents);
+        else initPins.push([]);
       });
     } else {
-      dates.forEach((date) => {
-        if (!oldDates.includes(date)) initPins.push([]);
-        else initPins.push(pins[oldDates.indexOf(date)]);
+      dates.forEach(() => {
+        initPins.push([]);
       });
     }
 

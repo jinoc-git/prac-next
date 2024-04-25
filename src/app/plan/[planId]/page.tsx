@@ -18,7 +18,7 @@ export default async function Plan({ params }: Props) {
 
   const plan = await getPlanByIdFromServer(planId);
 
-  if (plan === null) redirect('/main');
+  if (plan === null) redirect('/main'); // 잘못된 경로 예정
 
   const originPins = await getAllPinsByPlanFromServer(plan);
 
