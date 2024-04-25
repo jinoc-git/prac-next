@@ -15,7 +15,6 @@ import {
 import 'react-datepicker/dist/react-datepicker.css';
 
 interface Props {
-  today: Date;
   startDate: Date | null;
   endDate: Date | null;
   handleStartDate: (date: Date | null) => void;
@@ -25,7 +24,7 @@ interface Props {
 registerLocale('ko', ko);
 
 export default function Calendar(props: Props) {
-  const { today, startDate, endDate, handleStartDate, handleEndDate } = props;
+  const { startDate, endDate, handleStartDate, handleEndDate } = props;
 
   const { modifyState } = useModifyPlanStoreState();
   const { clearRequiredDates } = useModifyPlanStoreActions();
@@ -98,7 +97,7 @@ export default function Calendar(props: Props) {
           onChange={(date) => {
             handleStartDate(date);
           }}
-          minDate={today}
+          minDate={new Date()}
           maxDate={endDate}
           selectsStart
           startDate={startDate}

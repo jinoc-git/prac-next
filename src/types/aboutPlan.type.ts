@@ -18,7 +18,7 @@ export interface AddPlanObj {
 }
 
 export interface UpdatePlanObj extends AddPlanObj {
-  originPins: PinType[] | null | undefined;
+  originPins: PinType[];
 }
 
 export interface QuitPlanParam {

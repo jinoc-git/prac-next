@@ -13,7 +13,7 @@ import {
 import { addCommas } from '@/utils/numberFormat';
 
 import PostPlanForm from '../../common/form/PostPlanForm';
-import PlanTopBar from '../../common/planTopBar/PlanTopBar';
+import PlanTopBar from '../planTopBar/PlanTopBar';
 
 import type { PinType, PlanType } from '@/types/supabase';
 
@@ -23,8 +23,8 @@ export interface PlanContentsInputType {
 }
 
 interface Props {
-  plan?: PlanType | null;
-  originPins?: PinType[] | null;
+  plan?: PlanType;
+  originPins?: PinType[];
 }
 
 export default function PlanContents({ plan, originPins }: Props) {

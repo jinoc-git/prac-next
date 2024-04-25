@@ -14,24 +14,24 @@ export const getSessionFromServer = async () => {
 };
 
 export const getPlanByIdFromServer = async (planId: string) => {
-  const { data: plan, error } = await supabaseServerClient
+  const { data, error } = await supabaseServerClient
     .from('plans')
     .select()
     .eq('id', planId)
     .single();
 
-  return plan;
+  return data;
 };
 
-export const getAllPinsByPlanFromServer = async (plan: PlanType | null) => {
-  if (plan === null) return null;
-
+export const getAllPinsByPlanFromServer = async (plan: PlanType) => {
   const { data, error } = await supabaseServerClient
     .from('pins')
     .select()
     .eq('plan_id', plan.id)
     .in('date', plan.dates)
     .order('date', { ascending: true });
+
+  if (error) throw new Error(error.message);
 
   return data;
 };

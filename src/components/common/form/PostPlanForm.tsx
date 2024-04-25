@@ -36,8 +36,8 @@ import type {
 } from '@/types/supabase';
 
 interface Props {
-  plan?: PlanType | null;
-  originPins?: PinType[] | null;
+  plan?: PlanType;
+  originPins?: PinType[];
   formRef: React.RefObject<HTMLFormElement>;
   handleSubmit: UseFormHandleSubmit<PlanContentsInputType, undefined>;
   onChangeCost: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -77,7 +77,7 @@ export default function PostPlanForm(props: Props) {
       return;
     }
 
-    const isAddPlan = plan === null || plan === undefined;
+    const isAddPlan = plan === undefined || originPins === undefined;
 
     if (isAddPlan) {
       const newPlan: InsertPlanType = {

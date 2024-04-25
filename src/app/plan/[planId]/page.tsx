@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { redirect } from 'next/navigation';
+
 import {
   getAllPinsByPlanFromServer,
   getPlanByIdFromServer,
@@ -15,6 +17,9 @@ export default async function Plan({ params }: Props) {
   const { planId } = params;
 
   const plan = await getPlanByIdFromServer(planId);
+
+  if (plan === null) redirect('/main');
+
   const originPins = await getAllPinsByPlanFromServer(plan);
 
   return (

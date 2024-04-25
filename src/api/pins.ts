@@ -78,7 +78,7 @@ export const updatePin = async (pin: PinUpdateType) => {
 };
 
 export const updatePins = async (
-  originPins: PinType[] | null | undefined,
+  originPins: PinType[],
   updatedPlan: InsertPlanType,
   pins: PinContentsType[][],
 ) => {

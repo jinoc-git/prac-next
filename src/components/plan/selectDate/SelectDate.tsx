@@ -39,8 +39,6 @@ export default function SelectDate(props: Props) {
     initEdDate,
   });
 
-  const today = new Date();
-
   const queryClient = useQueryClient();
   const { mutate: updatePlanDate } = useMutation({
     mutationFn: async ([planId, dates]: [string, string[]]) => {
@@ -75,7 +73,6 @@ export default function SelectDate(props: Props) {
 
   return (
     <Calendar
-      today={today}
       startDate={startDate}
       endDate={endDate}
       handleStartDate={handleStartDate}
