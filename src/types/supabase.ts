@@ -265,7 +265,7 @@ export interface PinContentsType {
   distance?: number | undefined;
 }
 
-export type PinType = Database['public']['Tables']['pins']['Update'];
+export type PinType = Database['public']['Tables']['pins']['Row'];
 export type PinInsertType = Database['public']['Tables']['pins']['Insert'];
 export type PinUpdateType = Database['public']['Tables']['pins']['Update'];
 export type UserType = Database['public']['Tables']['users']['Insert'];

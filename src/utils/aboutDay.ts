@@ -64,7 +64,7 @@ export const calcDateProgress = (start: string, end: string) => {
   return result;
 };
 
-export const calculateDday = (date: Date): string => {
+export const calcDday = (date: Date): string => {
   const currentDate = new Date();
   const targetDate = new Date(date);
 
@@ -81,4 +81,20 @@ export const calculateDday = (date: Date): string => {
     );
     return `D-${daysCount}`;
   }
+};
+
+export const getDatesArrFromStartEnd = (startDate: Date, endDate: Date) => {
+  const dates: string[] = [];
+  // const koreaOffset = 9 * 60 * 60 * 1000;
+  const currentDate = new Date(startDate.getTime());
+  const lastDate = new Date(endDate.getTime());
+
+  while (currentDate < lastDate) {
+    dates.push(currentDate.toISOString().slice(0, 10));
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  dates.push(currentDate.toISOString().slice(0, 10)); // 마지막 날짜도 포함시키기 위하여
+
+  return dates;
 };
