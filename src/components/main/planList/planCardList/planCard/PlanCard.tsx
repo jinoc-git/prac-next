@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { calculateDday } from '@/utils/aboutDay';
+import { calcDday } from '@/utils/aboutDay';
 
 import BookMark from './bookMark/BookMark';
 import PlanCardDate from './PlanCardDate';
@@ -63,7 +63,7 @@ export default function PlanCard(props: Props) {
                 sm:text-[10px] 
                 md:text-[18px] md:mt-[11px]"
             >
-              {calculateDday(new Date(plan.dates[0]))}
+              {calcDday(new Date(plan.dates[0]))}
             </p>
           )}
         </div>

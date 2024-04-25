@@ -9,6 +9,7 @@ import { addNewDateEmptyPins } from '@/api/pins';
 import { updateDatePlan } from '@/api/plan';
 import { useDateStoreActions } from '@/store/dateStore';
 import { useModifyPlanStoreActions } from '@/store/modifyPlanStore';
+import { getDatesArrFromStartEnd } from '@/utils/aboutDay';
 
 import Calendar from '../../common/calendar/Calendar';
 
@@ -49,24 +50,6 @@ export default function SelectDate(props: SelectDateProps) {
     setEndDate(date);
   };
 
-  const allPlanDates = (startDate: Date, endDate: Date) => {
-    const dates: string[] = [];
-    const koreaOffset = 9 * 60 * 60 * 1000;
-    const currentDate = new Date(startDate.getTime());
-    const lastDate = new Date(endDate.getTime());
-
-    while (currentDate < lastDate) {
-      dates.push(currentDate.toISOString().slice(0, 10));
-      currentDate.setDate(currentDate.getDate() + 1);
-    }
-
-    dates.push(currentDate.toISOString().slice(0, 10)); // 마지막 날짜도 포함시키기 위하여
-
-    setDates(dates);
-
-    return dates;
-  };
-
   const queryClient = useQueryClient();
   const { mutate: updatePlanDate } = useMutation({
     mutationFn: async ([planId, dates]: [string, string[]]) => {
@@ -80,7 +63,9 @@ export default function SelectDate(props: SelectDateProps) {
 
   useEffect(() => {
     if (startDate && endDate) {
-      const dates = allPlanDates(startDate, endDate);
+      const dates = getDatesArrFromStartEnd(startDate, endDate);
+      setDates(dates);
+
       const newDates = dates.filter((date) => !planDatesData.includes(date));
       if (newDates.length !== 0 && state !== 'addPlan') {
         newDates.forEach(async (date) => {

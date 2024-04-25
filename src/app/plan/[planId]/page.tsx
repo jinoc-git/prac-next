@@ -4,6 +4,7 @@ import {
   getAllPinsByPlanFromServer,
   getPlanByIdFromServer,
 } from '@/api/serverAction';
+import ChangePlanState from '@/components/plan/changePlanState/ChangePlanState';
 import PlanContents from '@/components/plan/planContents/PlanContents';
 
 interface Props {
@@ -19,6 +20,7 @@ export default async function Plan({ params }: Props) {
   return (
     <section>
       <PlanContents plan={plan} originPins={originPins} />
+      <ChangePlanState />
     </section>
   );
 }
