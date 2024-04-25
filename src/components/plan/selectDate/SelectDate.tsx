@@ -31,6 +31,7 @@ export default function SelectDate(props: Props) {
     initEdDate,
   });
 
+  // mutation 부분 어떻게 할지 고민 (데이터를 서버에서 불러올지 클라이언트에서 불러올지)
   const queryClient = useQueryClient();
   const { mutate: updatePlanDate } = useMutation({
     mutationFn: async ([planId, dates]: [string, string[]]) => {
