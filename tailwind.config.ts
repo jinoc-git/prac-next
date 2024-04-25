@@ -82,6 +82,9 @@ const config: Config = {
         bg_white: '#F9F8F8',
         white: '#FFFFFF',
       },
+      zIndex: {
+        '100': '100',
+      },
     },
     boxShadow: {
       card: ' 2px 6px 50px 2px rgba(0, 0, 0, 0.05)',
