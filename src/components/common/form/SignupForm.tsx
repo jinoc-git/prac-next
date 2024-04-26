@@ -108,11 +108,11 @@ export default function SignupForm() {
   };
 
   useEffect(() => {
-    setDuplicate({ ...duplicate, nickname: true });
+    setDuplicate((prev) => ({ ...prev, nickname: true }));
   }, [watch('nickname')]);
 
   useEffect(() => {
-    setDuplicate({ ...duplicate, email: true });
+    setDuplicate((prev) => ({ ...prev, email: true }));
   }, [watch('email')]);
 
   return (
