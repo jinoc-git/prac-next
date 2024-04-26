@@ -120,9 +120,9 @@ export default function SignupForm() {
       <Image
         src="/images/img-signup-bg.webp"
         alt="회원가입 배경"
-        layout="fill"
-        objectFit="cover"
-        className="absolute inset-0 max-w-[856px]"
+        width={856}
+        height={1080}
+        className="absolute inset-0 w-full max-w-[856px] h-screen object-cover"
       />
       <form
         className="relative flexcol rounded-xl bg-[#F9F9FB]
@@ -138,7 +138,7 @@ export default function SignupForm() {
           name="nickname"
           placeholder="닉네임을 입력해주세요."
           register={register('nickname')}
-          leftIcon={{ src: '/images/person.svg', alt: '사람 아이콘' }}
+          leftIcon={{ src: '/images/svgs/person.svg', alt: '사람 아이콘' }}
           errors={errors}
           duplicate={
             watch('nickname') === undefined || watch('nickname') === ''
@@ -149,7 +149,7 @@ export default function SignupForm() {
           name="email"
           placeholder="이메일을 입력해주세요."
           register={register('email')}
-          leftIcon={{ src: '/images/message.svg', alt: '이메일 아이콘' }}
+          leftIcon={{ src: '/images/svgs/message.svg', alt: '이메일 아이콘' }}
           errors={errors}
           duplicate={watch('email') === undefined || watch('email') === ''}
           checkFunc={checkEmailDuplication}
