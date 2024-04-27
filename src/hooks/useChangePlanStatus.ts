@@ -1,11 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import { useRouter } from 'next/router';
-
 import { useDateStoreState } from '@/store/dateStore';
 import { useModifyPlanStoreState } from '@/store/modifyPlanStore';
-
-import useConfirm from './useConfirm';
 
 import type { PlanStatus } from '@/types/aboutPlan.type';
 
@@ -18,34 +14,8 @@ const useChangePlanStatus = ({ status, planId }: Args) => {
   const { dates } = useDateStoreState();
   const { modifyState } = useModifyPlanStoreState();
 
-  const confirm = useConfirm();
-
   const [isPossibleStart, setIsPossibleStart] = useState<boolean>(false);
   const [isPossibleEnd, setIsPossibleEnd] = useState<boolean>(false);
-  const router = useRouter();
-
-  const handleChangePlanStatus = () => {
-    if (status === 'planning') {
-      const confTitle = '여행 중으로 변경';
-      const confDesc =
-        '여행 중으로 변경할 경우 다시 계획 중으로 되돌릴 수 없습니다. 변경하시겠습니까?';
-
-      const confFunc = () => {
-        // changeStateMutate([planId, 'traveling']);
-        // scrollTop();
-      };
-      confirm.default(confTitle, confDesc, confFunc);
-    } else {
-      const confTitle = '여행 완료로 변경';
-      const confDesc =
-        '여행을 완료하시면 더 이상 여행 내용을 수정하실 수 없습니다. 완료하시겠습니까?';
-      const confFunc = () => {
-        // changeStateMutate([planId, 'recording']);
-        router.push(`/addPhoto/${planId}`);
-      };
-      confirm.default(confTitle, confDesc, confFunc);
-    }
-  };
 
   const planningText = isPossibleStart
     ? modifyState === 'modify'
@@ -78,7 +48,7 @@ const useChangePlanStatus = ({ status, planId }: Args) => {
     }
   }, [dates]);
 
-  return { leftText, disabled, handleChangePlanStatus };
+  return { leftText, disabled };
 };
 
 export default useChangePlanStatus;

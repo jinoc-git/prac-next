@@ -2,7 +2,11 @@ import { getUserInfoWithIdList, supabaseClientClient } from './auth';
 import { addPins, updatePins } from './pins';
 import { addNewPlanMates, updateMates } from './planMate';
 
-import type { AddPlanObj, UpdatePlanObj } from '@/types/aboutPlan.type';
+import type {
+  AddPlanObj,
+  PlanStatus,
+  UpdatePlanObj,
+} from '@/types/aboutPlan.type';
 import type { PlanType } from '@/types/supabase';
 
 export const getPlanList = async (planIds: string[]) => {
@@ -173,4 +177,13 @@ export const updatePlan = async (updatePlanObj: UpdatePlanObj) => {
 
   const userIdList = invitedUser.map(({ id }) => id);
   await updateMates(userIdList, plan.id);
+};
+
+export const updatePlanStatus = async (planId: string, status: PlanStatus) => {
+  const { error } = await supabaseClientClient
+    .from('plans')
+    .update({ plan_state: status })
+    .eq('id', planId);
+
+  if (error) throw new Error('planState 변경 오류발생');
 };
