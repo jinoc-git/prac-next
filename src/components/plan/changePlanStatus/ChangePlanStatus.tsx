@@ -4,6 +4,7 @@ import React from 'react';
 
 import { useRouter } from 'next/navigation';
 
+import { updatePlanStatus } from '@/api/plan';
 import ChangeStatusButton from '@/components/common/button/ChangeStatusButton';
 import useChangePlanStatus from '@/hooks/useChangePlanStatus';
 import useConfirm from '@/hooks/useConfirm';
@@ -16,10 +17,7 @@ interface Props {
 }
 
 const ChangePlanStatus = ({ status, planId }: Props) => {
-  const { leftText, disabled } = useChangePlanStatus({
-    status,
-    planId,
-  });
+  const { leftText, disabled } = useChangePlanStatus(status);
 
   const router = useRouter();
   const confirm = useConfirm();
@@ -29,29 +27,30 @@ const ChangePlanStatus = ({ status, planId }: Props) => {
       const confTitle = '여행 중으로 변경';
       const confDesc =
         '여행 중으로 변경할 경우 다시 계획 중으로 되돌릴 수 없습니다. 변경하시겠습니까?';
-
       const confFunc = async () => {
-        // changeStateMutate([planId, 'traveling']);
+        await updatePlanStatus(planId, 'traveling');
         // scrollTop();
       };
+
       confirm.default(confTitle, confDesc, confFunc);
     } else {
       const confTitle = '여행 완료로 변경';
       const confDesc =
         '여행을 완료하시면 더 이상 여행 내용을 수정하실 수 없습니다. 완료하시겠습니까?';
-      const confFunc = () => {
-        // changeStateMutate([planId, 'recording']);
+      const confFunc = async () => {
+        await updatePlanStatus(planId, 'recording');
         router.push(`/addPhoto/${planId}`);
       };
+
       confirm.default(confTitle, confDesc, confFunc);
     }
   };
 
   return (
     <div
-      className="flex mb-[60px]
-      md:justify-end md:mt-[100px]  md:mr-[30px]
-      sm:justify-start sm:mt-[82px] sm:ml-[4px]
+      className="flex mb-[60px] mx-auto
+      md:justify-end md:mt-[100px] md:w-[720px] md:pr-[10px]
+      sm:justify-start sm:mt-[82px] sm:w-[310px]
     "
     >
       <ChangeStatusButton

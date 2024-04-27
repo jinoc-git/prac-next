@@ -5,12 +5,7 @@ import { useModifyPlanStoreState } from '@/store/modifyPlanStore';
 
 import type { PlanStatus } from '@/types/aboutPlan.type';
 
-interface Args {
-  status: PlanStatus;
-  planId: string;
-}
-
-const useChangePlanStatus = ({ status, planId }: Args) => {
+const useChangePlanStatus = (status: PlanStatus) => {
   const { dates } = useDateStoreState();
   const { modifyState } = useModifyPlanStoreState();
 

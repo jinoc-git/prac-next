@@ -14,7 +14,7 @@ const ChangeStatusButton = (props: Props) => {
   return (
     <div
       className="flex items-center justify-between
-      sm:w-[286px]  sm:h-[41px] 
+      sm:w-[286px] sm:h-[41px] 
       md:w-[300px] md:h-[43px]"
     >
       <p
