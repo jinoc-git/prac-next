@@ -2,14 +2,10 @@
 
 import React from 'react';
 
-interface Props {
-  value: string;
+import type { ButtonCompProps } from '@/types/buttonComp.type';
+
+interface Props extends ButtonCompProps {
   fill: boolean;
-  type: 'submit' | 'reset' | 'button';
-  ariaLable?: string;
-  name?: string;
-  disabled?: boolean;
-  onClick: (...arg: any[]) => any;
 }
 
 const ModalButton = (props: Props) => {
