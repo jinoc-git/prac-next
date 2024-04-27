@@ -76,7 +76,7 @@ export default function PlanCard(props: Props) {
           <p className="text-gray_dark_1 sm:text-sm md:text-xlg font-bold mr-[16px]">
             {plan.title}
           </p>
-          <PlanCardStatusChip state={plan.plan_state} />
+          <PlanCardStatusChip status={plan.plan_state} />
         </div>
         <PlanCardDate dates={plan.dates} />
         <PlanCardUserList avatarList={avatarList} nicknameList={nicknameList} />

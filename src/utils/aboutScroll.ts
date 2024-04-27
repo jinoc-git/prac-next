@@ -11,3 +11,7 @@ export const enableScroll = () => {
   document.body.style.overflow = 'auto';
   document.removeEventListener('touchmove', eventFunc);
 };
+
+export const scrollTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};

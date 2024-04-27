@@ -5,9 +5,8 @@ import type {
   PlanType,
   UserType,
 } from './supabase';
-import type { SelectedMenu } from '@/store/tabMenuStore';
 
-export type PlanStatus = Omit<SelectedMenu, 'bookMark'> | 'recording';
+export type PlanStatus = 'planning' | 'traveling' | 'recording' | 'end';
 
 export type PlanIdAndMatesInfoList = Record<string, UserType[]>;
 
