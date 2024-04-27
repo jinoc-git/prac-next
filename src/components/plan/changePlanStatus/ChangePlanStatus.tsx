@@ -1,39 +1,22 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import ChangeStatusButton from '@/components/common/button/ChangeStatusButton';
-import { useDateStoreState } from '@/store/dateStore';
-import { useModifyPlanStoreState } from '@/store/modifyPlanStore';
+import useChangePlanStatus from '@/hooks/useChangePlanStatus';
 
 import type { PlanStatus } from '@/types/aboutPlan.type';
 
 interface Props {
   status: PlanStatus;
+  planId: string;
 }
 
-const ChangePlanStatus = ({ status }: Props) => {
-  const { dates } = useDateStoreState();
-  const { modifyState } = useModifyPlanStoreState();
-
-  const [isPossibleStart, setIsPossibleStart] = useState<boolean>(false);
-  const [isPossibleEnd, setIsPossibleEnd] = useState<boolean>(false);
-
-  const handleChangePlanStatus = () => {};
-
-  useEffect(() => {
-    if (dates[0]) {
-      const today = new Date();
-      const startDate = new Date(dates[0]);
-      const endDate = new Date(dates[dates.length - 1]);
-
-      if (today >= startDate) setIsPossibleStart(true);
-      else setIsPossibleStart(false);
-
-      if (today >= endDate) setIsPossibleEnd(true);
-      else setIsPossibleEnd(false);
-    }
-  }, [dates]);
+const ChangePlanStatus = ({ status, planId }: Props) => {
+  const { leftText, disabled, handleChangePlanStatus } = useChangePlanStatus({
+    status,
+    planId,
+  });
 
   return (
     <div
@@ -45,7 +28,9 @@ const ChangePlanStatus = ({ status }: Props) => {
       <ChangeStatusButton
         value={status === 'planning' ? '여행시작' : '여행 완료'}
         type="button"
-        disabled={!isPossibleStart || modifyState === 'modify'}
+        name={'여행 상태 변경 버튼'}
+        disabled={disabled}
+        leftText={leftText}
         onClick={handleChangePlanStatus}
       />
     </div>

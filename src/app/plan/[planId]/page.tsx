@@ -25,7 +25,7 @@ export default async function Plan({ params }: Props) {
   return (
     <section>
       <PlanContents plan={plan} originPins={originPins} />
-      <ChangePlanStatus status={plan.plan_state} />
+      <ChangePlanStatus status={plan.plan_state} planId={plan.id} />
     </section>
   );
 }
