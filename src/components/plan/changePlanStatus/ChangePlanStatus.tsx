@@ -42,7 +42,7 @@ const ChangePlanStatus = ({ status, planId }: Props) => {
         '여행을 완료하시면 더 이상 여행 내용을 수정하실 수 없습니다. 완료하시겠습니까?';
       const confFunc = async () => {
         await updatePlanStatus(planId, 'recording');
-        router.push(`/addPhoto/${planId}`);
+        router.push(`/addphoto/${planId}`);
       };
 
       confirm.default(confTitle, confDesc, confFunc);
