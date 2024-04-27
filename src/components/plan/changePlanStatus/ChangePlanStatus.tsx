@@ -8,6 +8,7 @@ import { updatePlanStatus } from '@/api/plan';
 import ChangeStatusButton from '@/components/common/button/ChangeStatusButton';
 import useChangePlanStatus from '@/hooks/useChangePlanStatus';
 import useConfirm from '@/hooks/useConfirm';
+import { scrollTop } from '@/utils/aboutScroll';
 
 import type { PlanStatus } from '@/types/aboutPlan.type';
 
@@ -29,7 +30,9 @@ const ChangePlanStatus = ({ status, planId }: Props) => {
         '여행 중으로 변경할 경우 다시 계획 중으로 되돌릴 수 없습니다. 변경하시겠습니까?';
       const confFunc = async () => {
         await updatePlanStatus(planId, 'traveling');
-        // scrollTop();
+
+        router.refresh();
+        scrollTop();
       };
 
       confirm.default(confTitle, confDesc, confFunc);
