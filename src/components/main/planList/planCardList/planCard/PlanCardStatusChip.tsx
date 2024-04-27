@@ -1,11 +1,13 @@
 import React from 'react';
 
+import type { PlanStatus } from '@/types/aboutPlan.type';
+
 interface Props {
-  state: 'planning' | 'traveling' | 'recording' | 'end';
+  status: PlanStatus;
 }
 
 export default function PlanCardStatusChip(props: Props) {
-  const { state } = props;
+  const { status } = props;
 
   const chipText = {
     planning: '예정된 여행',
@@ -23,11 +25,11 @@ export default function PlanCardStatusChip(props: Props) {
 
   return (
     <div
-      className={`flex-box font-normal text-white ${chipColor[state]} rounded-3xl 
+      className={`flex-box font-normal text-white ${chipColor[status]} rounded-3xl 
                   sm:w-[65px] sm:h-[21px] sm:text-[10px] 
                   md:w-[72px] md:h-[26px] md:text-[12px]`}
     >
-      {chipText[state]}
+      {chipText[status]}
     </div>
   );
 }
