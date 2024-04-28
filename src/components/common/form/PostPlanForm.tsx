@@ -38,6 +38,7 @@ import type {
 interface Props {
   plan?: PlanType;
   originPins?: PinType[];
+  readonly: boolean;
   formRef: React.RefObject<HTMLFormElement>;
   handleSubmit: UseFormHandleSubmit<PlanContentsInputType, undefined>;
   onChangeCost: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -50,6 +51,7 @@ export default function PostPlanForm(props: Props) {
     plan,
     originPins,
     formRef,
+    readonly,
     handleSubmit,
     onChangeCost,
     register,
@@ -165,8 +167,9 @@ export default function PostPlanForm(props: Props) {
         id="title"
         type="text"
         placeholder="여행 제목을 입력하세요."
+        readOnly={readonly}
         {...register('title')}
-        className="border-b-[1px] border-gray w-full outline-none font-bold placeholder:text-gray  text-black
+        className="border-b-[1px] border-gray w-full outline-none font-bold placeholder:text-gray text-black read-only:border-none
             sm:text-[20px]
             md:text-[24px] "
       />

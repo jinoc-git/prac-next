@@ -82,6 +82,7 @@ export default function PlanContents({ plan, originPins }: Props) {
       <PostPlanForm
         plan={plan}
         originPins={originPins}
+        readonly={modifyState !== 'modify'}
         formRef={formRef}
         handleSubmit={handleSubmit}
         onChangeCost={onChangeCost}
