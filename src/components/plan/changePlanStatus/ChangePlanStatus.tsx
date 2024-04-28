@@ -37,9 +37,9 @@ const ChangePlanStatus = ({ status, planId }: Props) => {
 
       confirm.default(confTitle, confDesc, confFunc);
     } else if (status === 'traveling') {
-      const confTitle = '여행 완료로 변경';
+      const confTitle = '일정 종료하기';
       const confDesc =
-        '일정 종료를하시면 더 이상 여행 내용을 수정하실 수 없습니다. 사진을 추가하시겠습니까?';
+        '일정 종료를 하시면 더 이상 여행 내용을 수정하실 수 없습니다. 사진을 추가하시겠습니까?';
       const confFunc = async () => {
         await updatePlanStatus(planId, 'recording');
         router.push(`/addphoto/${planId}`);
@@ -57,7 +57,7 @@ const ChangePlanStatus = ({ status, planId }: Props) => {
     "
     >
       <ChangeStatusButton
-        value={status === 'planning' ? '여행시작' : '여행 완료'}
+        value={status === 'planning' ? '여행시작' : '일정 종료'}
         type="button"
         name={'여행 상태 변경 버튼'}
         disabled={disabled}
