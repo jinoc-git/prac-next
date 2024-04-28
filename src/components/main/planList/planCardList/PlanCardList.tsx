@@ -51,7 +51,7 @@ export default function PlanCardList(props: Props) {
   const onClickPlanCard = (status: PlanStatus, id: string) => {
     if (status === 'planning') router.push(`/plan/${id}`);
     if (status === 'traveling') router.push(`/plan/${id}`);
-    if (status === 'recording') router.push(`/addPhoto/${id}`);
+    if (status === 'recording') router.push(`/addphoto/${id}`);
     if (status === 'end') router.push(`/ending/${id}`);
   };
 

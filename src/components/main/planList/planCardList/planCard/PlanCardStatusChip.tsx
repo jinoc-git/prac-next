@@ -13,7 +13,7 @@ export default function PlanCardStatusChip(props: Props) {
     planning: '예정된 여행',
     traveling: '여행 중',
     recording: '다녀온 여행',
-    end: '다녀온 여행',
+    end: '저장된 여행',
   } as const;
 
   const chipColor = {
