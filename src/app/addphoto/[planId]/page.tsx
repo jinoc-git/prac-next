@@ -6,7 +6,7 @@ import {
   getAllPinsByPlanFromServer,
   getPlanByIdFromServer,
 } from '@/api/serverAction';
-import PlanInfo from '@/components/addPhoto/planInfo/PlanInfo';
+import PlanInfo from '@/components/endPlan/planInfo/PlanInfo';
 
 interface Props {
   params: { planId: string };
@@ -23,7 +23,7 @@ export default async function AddPhoto({ params }: Props) {
 
   return (
     <>
-      <PlanInfo />
+      <PlanInfo plan={plan} />
       <section></section>
       <section></section>
     </>

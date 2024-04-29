@@ -159,9 +159,9 @@ export default function PostPlanForm(props: Props) {
     <form
       ref={formRef}
       onSubmit={handleSubmit(onSubmitAddOrModifyPlan)}
-      className="flex flex-col mx-auto
-        sm:mt-[32px] sm:w-[310px]
-        md:mt-[100px] md:w-[720px] md:px-[10px]"
+      className="flex flex-col content-layout
+        sm:pt-[140px]
+        md:pt-[100px] md:px-[10px]"
     >
       <input
         id="title"
@@ -185,7 +185,7 @@ export default function PostPlanForm(props: Props) {
         planDatesData={plan ? plan.dates : []}
       />
       <Invite />
-      <Pay onChangeCost={onChangeCost} register={register} errors={errors} />
+      <Pay onChangeCost={onChangeCost} register={register} />
       <DatePagination
         dates={dates}
         next={next}
