@@ -17,9 +17,9 @@ const EndPlanDate = ({ dates }: Props) => {
 
   return (
     <div
-      className="flex mx-auto
-      md:mx-[6px] mb-[17px] md:justify-normal md:w-full
-      sm:justify-between sm:w-[286px]"
+      className="inner-content-layout 
+      md:justify-normal 
+      sm:justify-between sm:items-start"
     >
       <div className="flex gap-2 md:w-[136px]">
         <Image

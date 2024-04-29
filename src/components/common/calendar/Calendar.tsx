@@ -37,25 +37,19 @@ export default function Calendar(props: Props) {
 
   return (
     <div
-      className="relative z-10 flex items-center
-      sm:w-[286px] sm:block sm:pt-[15px] sm:mx-auto sm:justify-between
-      md:w-[680px] md:py-[10px] md:flex"
+      className="relative z-10 inner-content-layout
+      sm:block sm:pt-[15px] sm:justify-between 
+      md:py-[10px] md:flex"
     >
       <div className="sm:flex sm:justify-between sm:w-[286px] md:w-[280px] ">
-        <div
-          className="flex items-center font-semibold text-gray_dark_1 
-          sm:gap-[7px] sm:mb-[10px]
-          md:gap-2 md:mr-[30px]"
-        >
+        <div className="content-lable">
           <Image
             alt="캘린더 아이콘"
             src={'/images/svgs/calendarIcon.svg'}
             width={20}
             height={20}
           />
-          <p className="sm:text-sm sm:w-[63px] md:w-[80px] md:text-normal">
-            여행 시작일
-          </p>
+          <p>여행 시작일</p>
         </div>
         <ReactDatePicker
           renderCustomHeader={({
@@ -118,21 +112,15 @@ export default function Calendar(props: Props) {
           portalId="datepiker-portal"
         />
       </div>
-      <div className="sm:flex sm:justify-between sm:w-[286px] md:w-[280px]">
-        <div
-          className="flex items-center font-semibold text-gray_dark_1
-          sm:gap-[7px] sm:mb-[10px]
-          md:gap-2 md:mr-[30px]"
-        >
+      <div className="sm:flex sm:justify-between sm:w-[286px] md:w-[280px] sm:mt-[10px] md:mt-0">
+        <div className="content-lable">
           <Image
             alt="캘린더 아이콘"
             src={'/images/svgs/calendarIcon.svg'}
             width={20}
             height={20}
           />
-          <p className="sm:text-sm sm:w-[63px] md:w-[80px] md:text-normal">
-            여행 종료일
-          </p>
+          <p>여행 종료일</p>
         </div>
         <ReactDatePicker
           renderCustomHeader={({

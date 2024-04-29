@@ -21,6 +21,12 @@
   .content-layout {
     @apply mx-auto sm:w-[310px] md:w-[720px];
   }
+  .content-lable {
+    @apply flex items-center gap-2 sm:w-[90px] md:w-[138px] sm:text-sm md:text-normal font-semibold text-gray_dark_1;
+  }
+  .inner-content-layout {
+    @apply flex items-center mx-auto sm:w-[286px] md:w-[680px] sm:py-[5px] md:py-[10px];
+  }
 }
 
 @font-face {
