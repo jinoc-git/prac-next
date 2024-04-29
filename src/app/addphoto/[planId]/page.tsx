@@ -23,7 +23,7 @@ export default async function AddPhoto({ params }: Props) {
 
   return (
     <>
-      <PlanInfo />
+      <PlanInfo plan={plan} />
       <section></section>
       <section></section>
     </>

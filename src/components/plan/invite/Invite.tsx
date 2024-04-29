@@ -68,9 +68,9 @@ export default function Invite() {
   return (
     <>
       <div
-        className="flex 
+        className="flex mx-auto
           sm:w-[286px] sm:mx-auto sm:justify-normal sm:flex-col
-          md:w-[700px] md:h-[30px] md:mx-[6px] md:my-[10px]  md:flex-row md:justify-normal md:items-center "
+          md:w-[680px] md:h-[30px] md:my-[10px] md:flex-row md:justify-normal md:items-center "
       >
         <div className="flex sm:justify-between md:justify-start">
           <div
