@@ -51,9 +51,9 @@ const ChangePlanStatus = ({ status, planId }: Props) => {
 
   return (
     <div
-      className="flex mb-[60px] mx-auto
-      md:justify-end md:mt-[100px] md:w-[720px] md:pr-[10px]
-      sm:justify-start sm:mt-[82px] sm:w-[310px]
+      className="flex mb-[60px] content-layout
+      md:justify-end md:mt-[100px] md:pr-[10px]
+      sm:justify-start sm:mt-[82px] 
     "
     >
       <ChangeStatusButton

@@ -18,6 +18,9 @@
   .modal-button {
     @apply px-[20px] py-[8px] w-[100%] duration-200 rounded-lg disabled:bg-gray;
   }
+  .content-layout {
+    @apply mx-auto sm:w-[310px] md:w-[720px];
+  }
 }
 
 @font-face {

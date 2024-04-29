@@ -8,7 +8,7 @@ interface Props {
 
 const PlanInfo = ({ plan }: Props) => {
   return (
-    <section>
+    <section className="pt-[140px] content-layout">
       <div
         className="flex items-center justify-between
           sm:mb-[35px]
@@ -21,7 +21,7 @@ const PlanInfo = ({ plan }: Props) => {
         >
           {plan.title}
         </h3>
-        <div className="bg-orange rounded-3xl w-[65px] h-[20px] text-[9px] flex-center font-normal text-white">
+        <div className="w-[65px] h-[20px] text-[9px] flex-box font-normal text-white bg-orange rounded-3xl ">
           완료된 여행
         </div>
       </div>
