@@ -9,9 +9,10 @@ import type { PinContentsType } from '@/types/supabase';
 
 interface Props {
   pins: PinContentsType[];
+  drawLine: boolean;
 }
 
-const KakaoMap = ({ pins }: Props) => {
+const KakaoMap = ({ pins, drawLine }: Props) => {
   const { map, makeMap, makeLatLng, makeMarker, makePolyline, makeBounds } =
     useKakaoMap();
 
@@ -40,14 +41,16 @@ const KakaoMap = ({ pins }: Props) => {
 
       map.setBounds(bounds);
 
-      makePolyline({
-        map,
-        path,
-        strokeWeight: 5,
-        strokeColor: '#162F70',
-        strokeOpacity: 0.7,
-        strokeStyle: 'solid',
-      });
+      if (drawLine) {
+        makePolyline({
+          map,
+          path,
+          strokeWeight: 5,
+          strokeColor: '#162F70',
+          strokeOpacity: 0.7,
+          strokeStyle: 'solid',
+        });
+      }
     }
   }, [pins, map]);
 
