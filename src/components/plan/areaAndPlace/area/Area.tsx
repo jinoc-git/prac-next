@@ -31,7 +31,7 @@ const Area = (props: Props) => {
         />
         <p>여행 지역</p>
       </div>
-      <KakaoMap pins={pins[currentPage]} />
+      <KakaoMap pins={pins[currentPage]} drawLine={true} />
     </div>
   );
 };
