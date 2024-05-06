@@ -11,11 +11,10 @@ import type { PinContentsType } from '@/types/supabase';
 interface Props {
   currentPage: number;
   pins: PinContentsType[][];
-  setPins: React.Dispatch<React.SetStateAction<PinContentsType[][]>>;
 }
 
 const Area = (props: Props) => {
-  const { currentPage, pins, setPins } = props;
+  const { currentPage, pins } = props;
 
   return (
     <div>
