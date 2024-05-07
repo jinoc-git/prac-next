@@ -34,7 +34,8 @@ export const getAllPinsByPlan = async (plan: PlanType) => {
     .from('pins')
     .select()
     .eq('plan_id', plan.id)
-    .in('date', plan.dates);
+    .in('date', plan.dates)
+    .order('date', { ascending: true });
 
   if (error !== null) throw new Error('핀 가져오기 에러발생');
 

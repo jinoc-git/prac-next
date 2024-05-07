@@ -6,6 +6,7 @@ import {
   getAllPinsByPlanFromServer,
   getPlanByIdFromServer,
 } from '@/api/serverAction';
+import MemoryPhoto from '@/components/endPlan/memoryPhoto/MemoryPhoto';
 import PlanInfo from '@/components/endPlan/planInfo/PlanInfo';
 
 interface Props {
@@ -19,12 +20,12 @@ export default async function AddPhoto({ params }: Props) {
 
   if (plan === null) redirect('/main'); // 잘못된 경로 예정
 
-  const pins = await getAllPinsByPlanFromServer(plan);
+  const allPins = await getAllPinsByPlanFromServer(plan);
 
   return (
     <>
-      <PlanInfo plan={plan} />
-      <section></section>
+      <PlanInfo plan={plan} allPins={allPins} />
+      <MemoryPhoto />
       <section></section>
     </>
   );

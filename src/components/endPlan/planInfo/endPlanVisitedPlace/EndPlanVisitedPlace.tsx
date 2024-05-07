@@ -2,32 +2,23 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 
-import { getAllPinsByPlan } from '@/api/pins';
 import KakaoMap from '@/components/plan/areaAndPlace/area/kakaoMap/KakaoMap';
 
-import type { PinContentsType, PlanType } from '@/types/supabase';
+import type { PinContentsType, PinType } from '@/types/supabase';
 
 interface Props {
-  plan: PlanType;
+  allPins: PinType[];
 }
 
-const EndPlanVisitedPlace = ({ plan }: Props) => {
-  const { data, isLoading } = useQuery({
-    queryKey: ['allPins', plan.id],
-    queryFn: () => getAllPinsByPlan(plan),
-  });
-
+const EndPlanVisitedPlace = ({ allPins }: Props) => {
   const [pins, setPins] = useState<PinContentsType[]>([]);
 
   useEffect(() => {
-    if (data) {
-      const allPins = data.map(({ contents }) => contents).flat();
-      setPins(allPins);
-    }
-  }, [data]);
+    const pins = allPins.map(({ contents }) => contents).flat();
+    setPins(pins);
+  }, [allPins]);
 
   return (
     <div className="inner-content-layout flex-col space-y-[10px]">
