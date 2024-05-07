@@ -2,11 +2,8 @@ import React from 'react';
 
 import { redirect } from 'next/navigation';
 
-import {
-  getAllPinsByPlanFromServer,
-  getPlanByIdFromServer,
-} from '@/api/serverAction';
-import MemoryPhoto from '@/components/endPlan/memoryPhoto/MemoryPhoto';
+import { getAllPinsByPlanFromServer, getPlanByIdFromServer } from '@/api/serverAction';
+import MemoryPhotoAndSave from '@/components/endPlan/memoryPhoto/MemoryPhotoAndSave';
 import PlanInfo from '@/components/endPlan/planInfo/PlanInfo';
 
 interface Props {
@@ -25,7 +22,7 @@ export default async function AddPhoto({ params }: Props) {
   return (
     <>
       <PlanInfo plan={plan} allPins={allPins} />
-      <MemoryPhoto />
+      <MemoryPhotoAndSave allPins={allPins} />
       <section></section>
     </>
   );
