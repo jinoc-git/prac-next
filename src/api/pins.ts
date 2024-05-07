@@ -48,10 +48,7 @@ export const addPin = async (pin: PinInsertType) => {
   if (error) throw new Error(error.message);
 };
 
-export const addPins = async (
-  newPlan: InsertPlanType,
-  pins: PinContentsType[][],
-) => {
+export const addPins = async (newPlan: InsertPlanType, pins: PinContentsType[][]) => {
   const newPins = [];
 
   for (let i = 0; i < newPlan.dates.length; i++) {
@@ -77,10 +74,7 @@ export const updatePin = async (pin: PinUpdateType) => {
 };
 
 export const deletePin = async (id: string) => {
-  const { error } = await supabaseClientClient
-    .from('pins')
-    .delete()
-    .eq('id', id);
+  const { error } = await supabaseClientClient.from('pins').delete().eq('id', id);
 
   if (error) throw new Error(error.message);
 };
