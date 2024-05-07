@@ -1,11 +1,20 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 
 import Image from 'next/image';
 
-const UploadPhoto = () => {
-  const onFileChange = () => {};
+interface Props {
+  setUploadedImg: React.Dispatch<React.SetStateAction<File[]>>;
+}
+
+const UploadPhoto = ({ setUploadedImg }: Props) => {
+  const [preview, setPreview] = useState();
+
+  const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+  };
+
   return (
     <div className="sm:w-[286px] md:w-[635px] mx-auto mt-[10px]">
       <input

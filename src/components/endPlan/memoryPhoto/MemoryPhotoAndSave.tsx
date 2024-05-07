@@ -35,7 +35,7 @@ const MemoryPhotoAndSave = ({ allPins }: Props) => {
       <p className="sm:w-[286px] md:w-[635px] mx-auto text-gray sm:text-sm md:text-normal">
         10개 까지 추가 가능합니다.
       </p>
-      <UploadPhoto />
+      <UploadPhoto setUploadedImg={setUploadedImg} />
     </section>
   );
 };
