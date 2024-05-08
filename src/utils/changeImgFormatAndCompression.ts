@@ -1,7 +1,8 @@
 import imageCompression from 'browser-image-compression';
-import heic2any from 'heic2any';
 
 export const changeImgFormatAndCompression = async (file: File) => {
+  const { default: convertHeicToAnyFormat } = await import('heic2any');
+
   let acceptFile = file;
 
   const options = {
@@ -16,7 +17,7 @@ export const changeImgFormatAndCompression = async (file: File) => {
     file.type === 'image/heif';
 
   if (isIOSImage) {
-    const convertedBlob = await heic2any({ blob: file, toType: 'image/jpeg' });
+    const convertedBlob = await convertHeicToAnyFormat({ blob: file, toType: 'image/jpeg' });
 
     const convertedFile = new File([convertedBlob as Blob], file.name.split('.')[0] + '.jpeg', {
       type: 'image/jpeg',
