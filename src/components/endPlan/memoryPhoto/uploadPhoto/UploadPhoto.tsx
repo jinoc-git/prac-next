@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 
+import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import Image from 'next/image';
 
 import { changeImgFormatAndCompression } from '@/utils/changeImgFormatAndCompression';
@@ -24,9 +25,14 @@ const UploadPhoto = ({ setUploadedImg }: Props) => {
   };
 
   return (
-    <div className="sm:w-[286px] md:w-[635px] mx-auto mt-[10px]">
+    <div
+      className="flex flex-wrap mx-auto mt-[10px]
+        sm:w-[286px] sm:gap-[10px]
+        md:w-[640px] md:gap-[20px]
+      "
+    >
       <input
-        accept=".jpg, .jpeg, .png .heic .heif .HEIC .HEIF "
+        accept=".jpg, .jpeg, .png, .heic, .heif, .HEIC, .HEIF"
         onChange={onFileChange}
         type="file"
         id="addpicture-input"
@@ -49,6 +55,31 @@ const UploadPhoto = ({ setUploadedImg }: Props) => {
           <p className="font-bold text-normal text-gray_dark_1">사진업로드</p>
         </div>
       </label>
+      {preview.map((src, idx) => {
+        return (
+          <div
+            key={uuid()}
+            className="flex-box relative
+              sm:w-[128px] sm:h-[128px]
+              md:w-[200px] md:h-[200px] 
+            "
+          >
+            <Image
+              src={src}
+              width={200}
+              height={200}
+              alt={`업로드 사진 ${idx + 1}`}
+              className="rounded-lg object-cover w-full h-full"
+            />
+            <button
+              className="absolute top-0 right-0 flex-box  w-8 h-8 bg-[#444040b8] text-white rounded-lg opacity-50 hover:opacity-100"
+              name="delete-uploaded-photo-button"
+            >
+              X
+            </button>
+          </div>
+        );
+      })}
     </div>
   );
 };
