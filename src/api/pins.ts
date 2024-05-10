@@ -6,7 +6,6 @@ import type {
   PinInsertType,
   PinType,
   PinUpdateType,
-  PlanType,
 } from '@/types/supabase';
 
 export const addNewDateEmptyPins = async (newPin: PinInsertType) => {
@@ -29,12 +28,12 @@ export const getAllPinsDate = async (planId: string) => {
   return res;
 };
 
-export const getAllPinsByPlan = async (plan: PlanType) => {
+export const getAllPinsByIdAndDates = async (planId: string, dates: string[]) => {
   const { data, error } = await supabaseClientClient
     .from('pins')
     .select()
-    .eq('plan_id', plan.id)
-    .in('date', plan.dates)
+    .eq('plan_id', planId)
+    .in('date', dates)
     .order('date', { ascending: true });
 
   if (error !== null) throw new Error('핀 가져오기 에러발생');
@@ -65,7 +64,7 @@ export const addPins = async (newPlan: InsertPlanType, pins: PinContentsType[][]
 };
 
 export const updatePin = async (pin: PinUpdateType) => {
-  const { data, error } = await supabaseClientClient
+  const { error } = await supabaseClientClient
     .from('pins')
     .update(pin)
     .match({ id: pin.id, plan_id: pin.plan_id, date: pin.date });

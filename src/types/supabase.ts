@@ -1,10 +1,6 @@
-export type Json =
-  | string
-  | number
-  | boolean
-  | null
-  | { [key: string]: Json | undefined }
-  | Json[];
+export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
+
+export type Distance = Record<string, string>[];
 
 export interface Database {
   public: {
@@ -206,7 +202,7 @@ export interface Database {
         Row: {
           dates: string[];
           dates_cost: string[] | null;
-          distance: Json[] | null;
+          distance: Distance | null;
           id: string;
           pictures: string[];
           title: string;
@@ -215,7 +211,7 @@ export interface Database {
         Insert: {
           dates?: string[];
           dates_cost?: string[] | null;
-          distance?: Json[] | null;
+          distance?: Distance | null;
           id: string;
           pictures?: string[];
           title?: string;
@@ -224,7 +220,7 @@ export interface Database {
         Update: {
           dates?: string[];
           dates_cost?: string[] | null;
-          distance?: Json[] | null;
+          distance?: Distance | null;
           id?: string;
           pictures?: string[];
           title?: string;
@@ -272,10 +268,7 @@ export type UserType = Database['public']['Tables']['users']['Insert'];
 export type InsertPlanType = Database['public']['Tables']['plans']['Insert'];
 export type PlanType = Database['public']['Tables']['plans']['Row'];
 export type BookMarkType = Database['public']['Tables']['book_mark']['Row'];
-export type InsertBookMarkType =
-  Database['public']['Tables']['book_mark']['Insert'];
-export type PlanMatesType =
-  Database['public']['Tables']['plan_mates']['Insert'];
+export type InsertBookMarkType = Database['public']['Tables']['book_mark']['Insert'];
+export type PlanMatesType = Database['public']['Tables']['plan_mates']['Insert'];
 export type CommentsType = Database['public']['Tables']['comments']['Insert'];
-export type PlansEndingType =
-  Database['public']['Tables']['plans_ending']['Row'];
+export type PlansEndingType = Database['public']['Tables']['plans_ending']['Row'];
