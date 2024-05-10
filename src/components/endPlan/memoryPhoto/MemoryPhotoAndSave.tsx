@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 
 import Image from 'next/image';
 
+import SavePlan from './savePlan/SavePlan';
 import UploadPhoto from './uploadPhoto/UploadPhoto';
 
 import type { PinType } from '@/types/supabase';
@@ -15,6 +16,11 @@ interface Props {
 const MemoryPhotoAndSave = ({ allPins }: Props) => {
   const [distancePin, setDistancePin] = useState([]);
   const [uploadedImg, setUploadedImg] = useState<File[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const onClick = async () => {
+    // setIsSubmitting(true);
+  };
 
   useEffect(() => {}, []);
 
@@ -36,6 +42,7 @@ const MemoryPhotoAndSave = ({ allPins }: Props) => {
         10개 까지 추가 가능합니다.
       </p>
       <UploadPhoto setUploadedImg={setUploadedImg} />
+      <SavePlan onClick={onClick} />
     </section>
   );
 };
