@@ -14,7 +14,6 @@ interface Props {
 }
 
 const MemoryPhotoAndSave = ({ allPins }: Props) => {
-  const [distancePin, setDistancePin] = useState([]);
   const [uploadedImg, setUploadedImg] = useState<File[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -42,7 +41,7 @@ const MemoryPhotoAndSave = ({ allPins }: Props) => {
         10개 까지 추가 가능합니다.
       </p>
       <UploadPhoto setUploadedImg={setUploadedImg} />
-      <SavePlan onClick={onClick} />
+      <SavePlan onClick={onClick} isSubmitting={isSubmitting} />
     </section>
   );
 };

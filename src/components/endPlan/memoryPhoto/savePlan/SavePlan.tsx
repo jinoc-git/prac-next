@@ -6,9 +6,10 @@ import ChangeStatusButton from '@/components/common/button/ChangeStatusButton';
 
 interface Props {
   onClick: () => Promise<void>;
+  isSubmitting: boolean;
 }
 
-const SavePlan = ({ onClick }: Props) => {
+const SavePlan = ({ onClick, isSubmitting }: Props) => {
   return (
     <div
       className="flex mb-[60px] content-layout
@@ -20,7 +21,9 @@ const SavePlan = ({ onClick }: Props) => {
         leftText="여행 잘 다녀오셨나요?"
         value="저장하기"
         type="button"
+        ariaLable="save-plan-button"
         onClick={onClick}
+        isLoading={isSubmitting}
       />
     </div>
   );
