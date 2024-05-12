@@ -2,11 +2,7 @@ import { getUserInfoWithIdList, supabaseClientClient } from './auth';
 import { addPins, updatePins } from './pins';
 import { addNewPlanMates, updateMates } from './planMate';
 
-import type {
-  AddPlanObj,
-  PlanStatus,
-  UpdatePlanObj,
-} from '@/types/aboutPlan.type';
+import type { AddPlanObj, PlanStatus, UpdatePlanObj } from '@/types/aboutPlan.type';
 import type { PlanType } from '@/types/supabase';
 
 export const getPlanList = async (planIds: string[]) => {
@@ -22,19 +18,13 @@ export const getPlanList = async (planIds: string[]) => {
 };
 
 export const getPlanById = async (planId: string) => {
-  const { data: plan, error } = await supabaseClientClient
-    .from('plans')
-    .select()
-    .eq('id', planId);
+  const { data: plan, error } = await supabaseClientClient.from('plans').select().eq('id', planId);
 
   return plan;
 };
 
 export const getMatesByUserIdList = async (matesUserId: string[]) => {
-  const { data, error } = await supabaseClientClient
-    .from('users')
-    .select()
-    .in('id', matesUserId);
+  const { data, error } = await supabaseClientClient.from('users').select().in('id', matesUserId);
 
   if (error != null) {
     console.log('에러발생', matesUserId);
@@ -58,14 +48,11 @@ export const getPlansByUserIdList = async (userIds: string[]) => {
   return data;
 };
 
-export const getPlansWithBookmarks = async (
-  userId: string,
-): Promise<PlanType[] | []> => {
-  const { data: bookMarkData, error: bookMarkError } =
-    await supabaseClientClient
-      .from('book_mark')
-      .select('plan_id')
-      .eq('user_id', userId);
+export const getPlansWithBookmarks = async (userId: string): Promise<PlanType[] | []> => {
+  const { data: bookMarkData, error: bookMarkError } = await supabaseClientClient
+    .from('book_mark')
+    .select('plan_id')
+    .eq('user_id', userId);
 
   if (bookMarkError !== null) {
     console.error('book_mark 데이터 불러오기 오류', bookMarkError);
@@ -78,12 +65,11 @@ export const getPlansWithBookmarks = async (
 
   const planIds = bookMarkData.map((item) => item.plan_id);
 
-  const { data: bookMarkPlanData, error: plansError } =
-    await supabaseClientClient
-      .from('plans')
-      .select()
-      .eq('isDeleted', false)
-      .in('id', planIds);
+  const { data: bookMarkPlanData, error: plansError } = await supabaseClientClient
+    .from('plans')
+    .select()
+    .eq('isDeleted', false)
+    .in('id', planIds);
 
   if (plansError !== null) {
     throw new Error('plans 데이터 불러오기 오류');
@@ -137,10 +123,7 @@ export const getPlanListAndMateList = async (userId: string | undefined) => {
 };
 
 export const updateDatePlan = async (planId: string, dates: string[]) => {
-  const { error } = await supabaseClientClient
-    .from('plans')
-    .update({ dates })
-    .eq('id', planId);
+  const { error } = await supabaseClientClient.from('plans').update({ dates }).eq('id', planId);
 
   if (error !== null) {
     throw new Error('여행 날짜 업데이트 오류');
@@ -166,10 +149,7 @@ export const addPlan = async (addPlanObj: AddPlanObj) => {
 export const updatePlan = async (updatePlanObj: UpdatePlanObj) => {
   const { plan, originPins, pins, invitedUser } = updatePlanObj;
 
-  const { error } = await supabaseClientClient
-    .from('plans')
-    .update(plan)
-    .eq('id', plan.id);
+  const { error } = await supabaseClientClient.from('plans').update(plan).eq('id', plan.id);
 
   if (error) throw new Error(error.message);
 
@@ -186,4 +166,16 @@ export const updatePlanStatus = async (planId: string, status: PlanStatus) => {
     .eq('id', planId);
 
   if (error) throw new Error('planState 변경 오류발생');
+};
+
+export const getPlanDate = async (planId: string) => {
+  const { data, error } = await supabaseClientClient
+    .from('plans')
+    .select('dates')
+    .eq('id', planId)
+    .single();
+
+  if (error) throw new Error('plans_ending 불러오기 오류발생');
+
+  return data;
 };
