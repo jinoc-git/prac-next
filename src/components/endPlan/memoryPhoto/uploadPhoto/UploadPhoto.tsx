@@ -13,8 +13,8 @@ interface Props {
 
 const UploadPhoto = ({ setUploadedImg }: Props) => {
   const [preview, setPreview] = useState<string[]>([]);
-  console.log(preview);
-  const onFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const { compressedFile, url } = await changeImgFormatAndCompression(file);
@@ -22,6 +22,11 @@ const UploadPhoto = ({ setUploadedImg }: Props) => {
       setPreview((prev) => [...prev, url]);
       setUploadedImg((prev) => [...prev, compressedFile]);
     }
+  };
+
+  const handleDeleteFile = (idx: number) => {
+    setPreview((prev) => prev.toSpliced(idx, 1));
+    setUploadedImg((prev) => prev.toSpliced(idx, 1));
   };
 
   return (
@@ -33,7 +38,7 @@ const UploadPhoto = ({ setUploadedImg }: Props) => {
     >
       <input
         accept=".jpg, .jpeg, .png, .heic, .heif, .HEIC, .HEIF"
-        onChange={onFileChange}
+        onChange={handleFileChange}
         type="file"
         id="addpicture-input"
         name="addpicture-input"
@@ -74,6 +79,7 @@ const UploadPhoto = ({ setUploadedImg }: Props) => {
             <button
               className="absolute top-0 right-0 flex-box  w-8 h-8 bg-[#444040b8] text-white rounded-lg opacity-50 hover:opacity-100"
               name="delete-uploaded-photo-button"
+              onClick={() => handleDeleteFile(idx)}
             >
               X
             </button>
