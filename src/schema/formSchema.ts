@@ -1,8 +1,7 @@
 import * as yup from 'yup';
 
 const emailRegExp = /^[a-zA-Z0-9]+(.[_a-z0-9-]+)*@(?:\w+\.)+\w+$/;
-const passwordRegExp =
-  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?`~^&])[A-Za-z\d@$!%*#?`~^&]{8,20}$/;
+const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?`~^&])[A-Za-z\d@$!%*#?`~^&]{8,20}$/;
 const nicknameRegExp = /^[가-힣|a-z|A-Z|0-9|]{2,6}$/;
 
 const email = yup
@@ -15,10 +14,7 @@ const email = yup
 const password = yup
   .string()
   .required('비밀번호를 입력해주세요.')
-  .matches(
-    passwordRegExp,
-    '비밀번호는 영문/숫자/특수문자 포함 8~20자리',
-  )
+  .matches(passwordRegExp, '비밀번호는 영문/숫자/특수문자 포함 8~20자리')
   .min(8, '비밀번호는 8자리 이상이어야 합니다.')
   .max(20, '비밀번호는 20자리 이하이어야 합니다.');
 

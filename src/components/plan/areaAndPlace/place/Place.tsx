@@ -1,18 +1,39 @@
 'use client';
 
 import React, { useState } from 'react';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndProvider, MouseTransition, TouchTransition } from 'react-dnd-multi-backend';
+import { TouchBackend } from 'react-dnd-touch-backend';
 
 import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import Image from 'next/image';
 
-import PinLayout from '@/components/common/layout/PinLayout';
+import useConfirm from '@/hooks/useConfirm';
 import { useDateStoreState } from '@/store/dateStore';
 import { useModifyPlanStoreState } from '@/store/modifyPlanStore';
+import { usePinStoreActions } from '@/store/pinStore';
 
 import AddPinModal from './addPinModal/AddPinModal';
 import Pin from './pin/Pin';
 
 import type { PinContentsType } from '@/types/supabase';
+
+const HTML5ToTouch = {
+  backends: [
+    {
+      id: 'html5',
+      backend: HTML5Backend,
+      transition: MouseTransition,
+    },
+    {
+      id: 'touch',
+      backend: TouchBackend,
+      options: { enableMouseEvents: true },
+      preview: true,
+      transition: TouchTransition,
+    },
+  ],
+};
 
 interface Props {
   currentPage: number;
@@ -26,8 +47,11 @@ const Place = (props: Props) => {
   const [isAnimate, setIsAnimate] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
 
+  const { updateClick } = usePinStoreActions();
+  const confirm = useConfirm();
   const { dates } = useDateStoreState();
   const { modifyState } = useModifyPlanStoreState();
+  const isModify = modifyState === 'modify';
 
   const openModal = () => {
     setIsAnimate(true);
@@ -41,8 +65,45 @@ const Place = (props: Props) => {
     }, 400);
   };
 
-  const updatePin = (idx: number) => {};
-  const deletePin = (idx: number) => {};
+  const movePins = React.useCallback(
+    (beforeIdx: number, afterIdx: number) => {
+      if (beforeIdx === afterIdx) return;
+      setPins((prev) => {
+        const dayPins = prev[currentPage];
+        const item = dayPins[beforeIdx];
+        const removed = dayPins.toSpliced(beforeIdx, 1);
+        const afterDayPins = removed.toSpliced(afterIdx, 0, item);
+        const result = prev.toSpliced(currentPage, 1, afterDayPins);
+        return result;
+      });
+    },
+    [currentPage],
+  );
+
+  const handleUpdate = (idx: number) => {
+    updateClick(pins[currentPage][idx], idx);
+    openModal();
+  };
+
+  const handleDelete = (idx: number) => {
+    const confTitle = '장소 삭제';
+    const confDesc = '정말 삭제하시겠습니까?';
+    const confFunc = () => {
+      setPins((prev) => {
+        const result = prev.map((day, i) => {
+          if (i === currentPage) {
+            const deleted = day.filter((_, index) => index !== idx);
+            return deleted;
+          }
+          return day;
+        });
+
+        return result;
+      });
+    };
+
+    confirm.delete(confTitle, confDesc, confFunc);
+  };
 
   return (
     <div className="flex flex-col justify-center gap-5">
@@ -52,29 +113,27 @@ const Place = (props: Props) => {
             sm:text-sm sm:w-[286px] sm:mx-auto
             "
       >
-        <Image
-          src={'/images/svgs/pin.svg'}
-          width={20}
-          height={20}
-          alt="여행 지역 아이콘"
-        />
+        <Image src={'/images/svgs/pin.svg'} width={20} height={20} alt="여행 지역 아이콘" />
         <p>방문할 장소</p>
       </div>
-      <ol>
-        {pins[currentPage]?.map((pin, idx) => {
-          return (
-            <PinLayout key={uuid()}>
+      <DndProvider options={HTML5ToTouch}>
+        <ol>
+          {pins[currentPage]?.map((pin, idx) => {
+            return (
               <Pin
+                key={uuid()}
                 pin={pin}
                 idx={idx}
-                updatePin={updatePin}
-                deletePin={deletePin}
+                isModify={isModify}
+                movePins={movePins}
+                handleUpdate={handleUpdate}
+                handleDelete={handleDelete}
               />
-            </PinLayout>
-          );
-        })}
-      </ol>
-      {dates.length !== 0 && modifyState === 'modify' && (
+            );
+          })}
+        </ol>
+      </DndProvider>
+      {dates.length !== 0 && isModify && (
         <div
           className="flex items-center justify-between pb-[60px]
             sm:w-[286px] 

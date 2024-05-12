@@ -153,10 +153,7 @@ const AddPinModal = (props: Props) => {
   };
 
   const shouldBlockSubmit =
-    position.lat === 0 ||
-    position.lng === 0 ||
-    isSubmitting ||
-    watch('placeName').length === 0;
+    position.lat === 0 || position.lng === 0 || isSubmitting || watch('placeName').length === 0;
 
   return (
     <ModalLayout isAnimate={isAnimate}>

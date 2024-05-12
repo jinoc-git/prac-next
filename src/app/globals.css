@@ -27,6 +27,12 @@
   .inner-content-layout {
     @apply flex items-center mx-auto sm:w-[286px] md:w-[680px] sm:py-[5px] md:py-[10px];
   }
+  .position-center {
+    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+  }
+  .comment-text {
+    @apply text-gray_dark_1 leading-6 tracking-tighter sm:text-sm md:text-normal;
+  }
 }
 
 @font-face {

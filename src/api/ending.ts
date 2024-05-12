@@ -5,10 +5,10 @@ import { getPath } from './path';
 import { getAllPinsByIdAndDates } from './pins';
 import { getPlanDate } from './plan';
 
-import type { PinContentsType, PlansEndingType } from '@/types/supabase';
+import type { Distance, EndingPlanType, PinContentsType } from '@/types/supabase';
 
 export const calcAllPath = async (allPinsContent: PinContentsType[][]) => {
-  const distanceArr: Record<string, string>[] = [];
+  const distanceArr: Distance = [];
 
   for (const pinArr of allPinsContent) {
     const oneDay: string[][] = [];
@@ -66,7 +66,7 @@ export const calcCostAndInsertPlansEnding = async (planId: string) => {
   return datesCost;
 };
 
-export const insertPlanEnding = async (options: PlansEndingType) => {
+export const insertPlanEnding = async (options: EndingPlanType) => {
   const { error } = await supabaseClientClient.from('plans_ending').insert(options);
 
   if (error) throw new Error('엔딩 데이터 추가 오류');

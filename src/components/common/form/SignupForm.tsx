@@ -116,7 +116,7 @@ export default function SignupForm() {
   }, [watch('email')]);
 
   return (
-    <section className="flex-box w-screen h-screen">
+    <section className="flex-box w-full h-full">
       <Image
         src="/images/img-signup-bg.webp"
         alt="회원가입 배경"
@@ -125,10 +125,10 @@ export default function SignupForm() {
         className="absolute inset-0 w-full max-w-[856px] h-screen object-cover"
       />
       <form
-        className="relative flexcol rounded-xl bg-[#F9F9FB]
-    md:w-[450px] md:h-[540px] md:px-[50px] md:py-[37px] md:gap-y-2.5
-    sm:w-[320px] sm:px-[30px] sm:py-[22px] sm:gap-y-2
-    "
+        className="position-center flexcol rounded-xl bg-[#F9F9FB]
+        md:w-[450px] md:h-[540px] md:px-[50px] md:py-[37px] md:gap-y-2.5
+        sm:w-[320px] sm:px-[30px] sm:py-[22px] sm:gap-y-2
+      "
         onSubmit={handleSubmit(onSubmit)}
       >
         <h3 className="text-blue border-blue border-b-2 w-[64px] text-lg font-semibold">
@@ -140,9 +140,7 @@ export default function SignupForm() {
           register={register('nickname')}
           leftIcon={{ src: '/images/svgs/person.svg', alt: '사람 아이콘' }}
           errors={errors}
-          duplicate={
-            watch('nickname') === undefined || watch('nickname') === ''
-          }
+          duplicate={watch('nickname') === undefined || watch('nickname') === ''}
           checkFunc={checkNicknameDuplication}
         />
         <DuplicateInput
@@ -167,9 +165,7 @@ export default function SignupForm() {
           errors={errors}
         />
         <button
-          disabled={
-            isSubmitting || !isValid || duplicate.email || duplicate.nickname
-          }
+          disabled={isSubmitting || !isValid || duplicate.email || duplicate.nickname}
           name="signup-submit-btn"
           className="h-[45px] rounded-lg text-white bg-blue hover:bg-blue_dark disabled:bg-gray_light_3"
         >
@@ -183,10 +179,7 @@ export default function SignupForm() {
         "
         >
           이미 계정이 있나요?
-          <span
-            onClick={goToSignIn}
-            className="ml-2 underline text-black cursor-pointer"
-          >
+          <span onClick={goToSignIn} className="ml-2 underline text-black cursor-pointer">
             지금 로그인하세요!
           </span>
         </p>

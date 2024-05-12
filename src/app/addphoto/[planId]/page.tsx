@@ -16,6 +16,7 @@ export default async function AddPhoto({ params }: Props) {
   const plan = await getPlanByIdFromServer(planId);
 
   if (plan === null) redirect('/main'); // 잘못된 경로 예정
+  if (plan.plan_state !== 'recording') redirect('/main'); // 잘못된 경로 예정
 
   const allPins = await getAllPinsByPlanFromServer(plan);
 
@@ -23,7 +24,6 @@ export default async function AddPhoto({ params }: Props) {
     <>
       <PlanInfo plan={plan} allPins={allPins} />
       <MemoryPhotoAndSave plan={plan} allPins={allPins} />
-      <section></section>
     </>
   );
 }

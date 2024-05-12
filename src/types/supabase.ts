@@ -201,8 +201,8 @@ export interface Database {
       plans_ending: {
         Row: {
           dates: string[];
-          dates_cost: string[] | null;
-          distance: Distance | null;
+          dates_cost: string[];
+          distance: Distance;
           id: string;
           pictures: string[];
           title: string;
@@ -211,7 +211,7 @@ export interface Database {
         Insert: {
           dates?: string[];
           dates_cost?: string[] | null;
-          distance?: Distance | null;
+          distance: Distance;
           id: string;
           pictures?: string[];
           title?: string;
@@ -270,5 +270,6 @@ export type PlanType = Database['public']['Tables']['plans']['Row'];
 export type BookMarkType = Database['public']['Tables']['book_mark']['Row'];
 export type InsertBookMarkType = Database['public']['Tables']['book_mark']['Insert'];
 export type PlanMatesType = Database['public']['Tables']['plan_mates']['Insert'];
-export type CommentsType = Database['public']['Tables']['comments']['Insert'];
-export type PlansEndingType = Database['public']['Tables']['plans_ending']['Row'];
+export type CommentsType = Database['public']['Tables']['comments']['Row'];
+export type InsertCommentsType = Database['public']['Tables']['comments']['Insert'];
+export type EndingPlanType = Database['public']['Tables']['plans_ending']['Row'];

@@ -20,20 +20,12 @@ import SelectDate from '@/components/plan/selectDate/SelectDate';
 import usePagination from '@/hooks/usePagination';
 import { useAuthStoreState } from '@/store/authStore';
 import { useDateStoreActions, useDateStoreState } from '@/store/dateStore';
-import {
-  useInviteUserStoreActions,
-  useInviteUserStoreState,
-} from '@/store/inviteUserStore';
+import { useInviteUserStoreActions, useInviteUserStoreState } from '@/store/inviteUserStore';
 
 import Invite from '../../plan/invite/Invite';
 
 import type { PlanContentsInputType } from '@/components/plan/planContents/PlanContents';
-import type {
-  InsertPlanType,
-  PinContentsType,
-  PinType,
-  PlanType,
-} from '@/types/supabase';
+import type { InsertPlanType, PinContentsType, PinType, PlanType } from '@/types/supabase';
 
 interface Props {
   plan?: PlanType;
@@ -47,16 +39,8 @@ interface Props {
 }
 
 export default function PostPlanForm(props: Props) {
-  const {
-    plan,
-    originPins,
-    formRef,
-    readonly,
-    handleSubmit,
-    onChangeCost,
-    register,
-    errors,
-  } = props;
+  const { plan, originPins, formRef, readonly, handleSubmit, onChangeCost, register, errors } =
+    props;
 
   const user = useAuthStoreState();
   const { invitedUser } = useInviteUserStoreState();
@@ -180,18 +164,10 @@ export default function PostPlanForm(props: Props) {
       >
         {errors?.title?.message}
       </p>
-      <SelectDate
-        state={plan ? 'modify' : 'addPlan'}
-        planDatesData={plan ? plan.dates : []}
-      />
+      <SelectDate state={plan ? 'modify' : 'addPlan'} planDatesData={plan ? plan.dates : []} />
       <Invite />
       <Pay onChangeCost={onChangeCost} register={register} />
-      <DatePagination
-        dates={dates}
-        next={next}
-        prev={prev}
-        currentPage={currentPage}
-      />
+      <DatePagination dates={dates} next={next} prev={prev} currentPage={currentPage} />
       <AreaAndPlace pins={pins} setPins={setPins} currentPage={currentPage} />
     </form>
   );
