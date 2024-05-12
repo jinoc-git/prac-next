@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { calcAllPath, calcCostAndInsertPlansEnding, insertPlanEnding } from '@/api/ending';
 import { addPictures } from '@/api/picture';
 import { updatePlanStatus } from '@/api/plan';
+import useConfirm from '@/hooks/useConfirm';
 
 import SavePlan from './savePlan/SavePlan';
 import UploadPhoto from './uploadPhoto/UploadPhoto';
@@ -24,8 +25,9 @@ const MemoryPhotoAndSave = ({ allPins, plan }: Props) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const router = useRouter();
+  const confirm = useConfirm();
 
-  const handleSaveButton = async () => {
+  const savePlan = async () => {
     setIsSubmitting(true);
     const distanceDatas = await calcAllPath(allPins.map(({ contents }) => contents));
     const dateCostDatas = await calcCostAndInsertPlansEnding(plan.id);
@@ -48,7 +50,15 @@ const MemoryPhotoAndSave = ({ allPins, plan }: Props) => {
     router.push(`/ending/${plan.id}`);
   };
 
-  useEffect(() => {}, []);
+  const handleSaveButton = () => {
+    const confTitle = '여행 저장';
+    const confDesc = '저장한 여행은 수정할 수 없습니다. 정말로 저장하시겠습니까?';
+    const confFunc = async () => {
+      await savePlan();
+    };
+
+    confirm.default(confTitle, confDesc, confFunc);
+  };
 
   return (
     <section className="content-layout pb-5">
