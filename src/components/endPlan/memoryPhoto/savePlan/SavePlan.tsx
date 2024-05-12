@@ -5,7 +5,7 @@ import React from 'react';
 import ChangeStatusButton from '@/components/common/button/ChangeStatusButton';
 
 interface Props {
-  handleSaveButton: () => Promise<void>;
+  handleSaveButton: () => void;
   isSubmitting: boolean;
 }
 
