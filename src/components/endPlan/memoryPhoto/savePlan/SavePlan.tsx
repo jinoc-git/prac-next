@@ -5,11 +5,11 @@ import React from 'react';
 import ChangeStatusButton from '@/components/common/button/ChangeStatusButton';
 
 interface Props {
-  onClick: () => Promise<void>;
+  handleSaveButton: () => Promise<void>;
   isSubmitting: boolean;
 }
 
-const SavePlan = ({ onClick, isSubmitting }: Props) => {
+const SavePlan = ({ handleSaveButton, isSubmitting }: Props) => {
   return (
     <div
       className="flex mb-[60px] content-layout
@@ -22,7 +22,7 @@ const SavePlan = ({ onClick, isSubmitting }: Props) => {
         value="저장하기"
         type="button"
         ariaLable="save-plan-button"
-        onClick={onClick}
+        onClick={handleSaveButton}
         isLoading={isSubmitting}
       />
     </div>

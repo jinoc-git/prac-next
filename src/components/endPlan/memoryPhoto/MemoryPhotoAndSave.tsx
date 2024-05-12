@@ -3,22 +3,49 @@
 import React, { useEffect, useState } from 'react';
 
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+
+import { calcAllPath, calcCostAndInsertPlansEnding, insertPlanEnding } from '@/api/ending';
+import { addPictures } from '@/api/picture';
+import { updatePlanStatus } from '@/api/plan';
 
 import SavePlan from './savePlan/SavePlan';
 import UploadPhoto from './uploadPhoto/UploadPhoto';
 
-import type { PinType } from '@/types/supabase';
+import type { PinType, PlansEndingType, PlanType } from '@/types/supabase';
 
 interface Props {
+  plan: PlanType;
   allPins: PinType[];
 }
 
-const MemoryPhotoAndSave = ({ allPins }: Props) => {
+const MemoryPhotoAndSave = ({ allPins, plan }: Props) => {
   const [uploadedImg, setUploadedImg] = useState<File[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const onClick = async () => {
-    // setIsSubmitting(true);
+  const router = useRouter();
+
+  const handleSaveButton = async () => {
+    setIsSubmitting(true);
+    const distanceDatas = await calcAllPath(allPins.map(({ contents }) => contents));
+    const dateCostDatas = await calcCostAndInsertPlansEnding(plan.id);
+    const pictures = await addPictures(uploadedImg, plan.id);
+
+    const endingData: PlansEndingType = {
+      id: plan.id,
+      distance: distanceDatas,
+      dates_cost: dateCostDatas,
+      pictures,
+      title: plan.title,
+      total_cost: plan.total_cost,
+      dates: plan.dates,
+    };
+
+    await insertPlanEnding(endingData);
+    await updatePlanStatus(plan.id, 'end');
+    setIsSubmitting(false);
+
+    router.push(`/ending/${plan.id}`);
   };
 
   useEffect(() => {}, []);
@@ -41,7 +68,7 @@ const MemoryPhotoAndSave = ({ allPins }: Props) => {
         10개 까지 추가 가능합니다.
       </p>
       <UploadPhoto setUploadedImg={setUploadedImg} />
-      <SavePlan onClick={onClick} isSubmitting={isSubmitting} />
+      <SavePlan handleSaveButton={handleSaveButton} isSubmitting={isSubmitting} />
     </section>
   );
 };

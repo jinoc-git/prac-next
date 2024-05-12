@@ -22,7 +22,7 @@ export default async function AddPhoto({ params }: Props) {
   return (
     <>
       <PlanInfo plan={plan} allPins={allPins} />
-      <MemoryPhotoAndSave allPins={allPins} />
+      <MemoryPhotoAndSave plan={plan} allPins={allPins} />
       <section></section>
     </>
   );

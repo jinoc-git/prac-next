@@ -8,10 +8,10 @@ import { getPlanDate } from './plan';
 import type { PinContentsType, PlansEndingType } from '@/types/supabase';
 
 export const calcAllPath = async (allPinsContent: PinContentsType[][]) => {
-  const distanceArr: Record<number, string>[] = [];
+  const distanceArr: Record<string, string>[] = [];
 
   for (const pinArr of allPinsContent) {
-    const oneDay: string[] = [];
+    const oneDay: string[][] = [];
 
     for (let i = 0; i < pinArr.length - 1; i++) {
       const { lat: originLat, lng: originLng } = pinArr[i];
@@ -25,14 +25,14 @@ export const calcAllPath = async (allPinsContent: PinContentsType[][]) => {
 
         const distanceInKm = result / 1000;
 
-        oneDay.push(distanceInKm.toFixed(1));
+        oneDay.push([`${i}`, distanceInKm.toFixed(1)]);
       } catch (err) {
         throw new Error('거리 계산 오류');
       }
     }
 
-    if (oneDay.length === 0) distanceArr.push({ 0: '0' });
-    else distanceArr.push({ ...oneDay });
+    if (oneDay.length === 0) distanceArr.push({ '0': '0' });
+    else distanceArr.push(Object.fromEntries(oneDay));
   }
 
   return distanceArr;
