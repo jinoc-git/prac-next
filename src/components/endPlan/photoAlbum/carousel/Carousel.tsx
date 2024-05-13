@@ -6,6 +6,9 @@ import Slider from 'react-slick';
 import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import Image from 'next/image';
 
+import NextArrow from './nextArrow/NextArrow';
+import PrevArrow from './prevArrow/PrevArrow';
+
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
@@ -16,13 +19,15 @@ interface Props {
 const Carousel = ({ pictures }: Props) => {
   const settings = {
     dots: true,
-    infinte: true,
+    infinite: true,
     draggable: true,
     touchMove: true,
     useCSS: true,
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 3,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
     responsive: [
       {
         breakpoint: 1440,
