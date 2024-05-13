@@ -24,7 +24,6 @@ export default async function AddPhoto({ params }: Props) {
     <>
       <PlanInfo plan={plan} allPins={allPins} />
       <MemoryPhotoAndSave plan={plan} allPins={allPins} />
-      <section></section>
     </>
   );
 }

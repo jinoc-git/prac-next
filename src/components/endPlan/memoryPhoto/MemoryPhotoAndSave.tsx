@@ -13,7 +13,7 @@ import useConfirm from '@/hooks/useConfirm';
 import SavePlan from './savePlan/SavePlan';
 import UploadPhoto from './uploadPhoto/UploadPhoto';
 
-import type { PinType, PlansEndingType, PlanType } from '@/types/supabase';
+import type { EndingPlanType, PinType, PlanType } from '@/types/supabase';
 
 interface Props {
   plan: PlanType;
@@ -33,7 +33,7 @@ const MemoryPhotoAndSave = ({ allPins, plan }: Props) => {
     const dateCostDatas = await calcCostAndInsertPlansEnding(plan.id);
     const pictures = await addPictures(uploadedImg, plan.id);
 
-    const endingData: PlansEndingType = {
+    const endingData: EndingPlanType = {
       id: plan.id,
       distance: distanceDatas,
       dates_cost: dateCostDatas,

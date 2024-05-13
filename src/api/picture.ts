@@ -11,7 +11,7 @@ export const addPictures = async (fileList: File[], planId: string) => {
       .upload(`${planId}/${uuid()}`, file);
 
     if (data) {
-      const URL = `${process.env.REACT_APP_SB_STORAGE_URL}/add-photo/${data.path}`;
+      const URL = `${process.env.NEXT_PUBLIC_SB_STORAGE_URL}/add-photo/${data.path}`;
       pathList.push(URL);
     }
   }
