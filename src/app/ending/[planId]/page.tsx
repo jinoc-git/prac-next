@@ -24,7 +24,7 @@ export default async function Ending({ params }: Props) {
   return (
     <>
       <PlanInfo plan={plan} allPins={allPins} />
-      <PhotoAlbum />
+      <PhotoAlbum pictures={plan.pictures} />
     </>
   );
 }
