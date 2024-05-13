@@ -7,10 +7,10 @@ import EndPlanDate from './endPlanDate/EndPlanDate';
 import EndPlanTitle from './endPlanTitle/EndPlanTitle';
 import EndPlanVisitedPlace from './endPlanVisitedPlace/EndPlanVisitedPlace';
 
-import type { PinType, PlanType } from '@/types/supabase';
+import type { EndingPlanType, PinType, PlanType } from '@/types/supabase';
 
 interface Props {
-  plan: PlanType;
+  plan: PlanType | EndingPlanType;
   allPins: PinType[];
 }
 

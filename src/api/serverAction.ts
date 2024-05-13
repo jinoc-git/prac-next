@@ -1,4 +1,4 @@
-'use server';
+import { cache } from 'react';
 
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
@@ -42,7 +42,7 @@ export const getAllPinsByPlanFromServer = async (plan: PlanType | EndingPlanType
   return data;
 };
 
-export const getEndingPlanFromServer = async (planId: string) => {
+export const getEndingPlanFromServer = cache(async (planId: string) => {
   const supabaseServerClient = createServerComponentClient<Database>({ cookies });
 
   const { data, error } = await supabaseServerClient
@@ -54,4 +54,4 @@ export const getEndingPlanFromServer = async (planId: string) => {
   if (error) throw new Error(error.message);
 
   return data;
-};
+});
