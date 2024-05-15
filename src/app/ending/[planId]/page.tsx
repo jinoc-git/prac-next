@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation';
 import { getAllPinsByPlanFromServer, getEndingPlanFromServer } from '@/api/serverAction';
 import PhotoAlbum from '@/components/endPlan/photoAlbum/PhotoAlbum';
 import PlanInfo from '@/components/endPlan/planInfo/PlanInfo';
+import VisitedPlace from '@/components/endPlan/visitedPlace/VisitedPlace';
 
 export const revalidate = 3600;
 
@@ -25,6 +26,7 @@ export default async function Ending({ params }: Props) {
     <>
       <PlanInfo plan={plan} allPins={allPins} />
       <PhotoAlbum pictures={plan.pictures} />
+      <VisitedPlace allPins={allPins} plan={plan} />
     </>
   );
 }

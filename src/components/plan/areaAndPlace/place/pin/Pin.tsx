@@ -2,6 +2,8 @@
 
 import React from 'react';
 
+import { usePathname } from 'next/navigation';
+
 import PinContents from './pinContents/PinContents';
 import PinDistance from './pinDistance/PinDistance';
 import PinOrder from './pinOrder/PinOrder';
@@ -20,11 +22,14 @@ interface Props {
 const Pin = (props: Props) => {
   const { pin, idx, updatePin, deletePin, distance } = props;
 
+  const pathname = usePathname();
+  const isEnding = pathname.split('/')[1] === 'ending';
+
   return (
     <>
       <PinOrder idx={idx} />
       <PinDistance distance={distance} />
-      <PinContents pin={pin} isEnding={Boolean(distance)} />
+      <PinContents pin={pin} isEnding={isEnding} />
     </>
   );
 };

@@ -5,7 +5,7 @@ import Invite from '@/components/plan/invite/Invite';
 import EndPlanCost from './endPlanCost/EndPlanCost';
 import EndPlanDate from './endPlanDate/EndPlanDate';
 import EndPlanTitle from './endPlanTitle/EndPlanTitle';
-import EndPlanVisitedPlace from './endPlanVisitedPlace/EndPlanVisitedPlace';
+import EndPlanTravelArea from './endPlanTravelArea/EndPlanTravelArea';
 
 import type { EndingPlanType, PinType, PlanType } from '@/types/supabase';
 
@@ -21,7 +21,7 @@ const PlanInfo = ({ plan, allPins }: Props) => {
       <EndPlanDate dates={plan.dates} />
       <Invite />
       <EndPlanCost cost={plan.total_cost} />
-      <EndPlanVisitedPlace allPins={allPins} />
+      <EndPlanTravelArea allPins={allPins} />
     </section>
   );
 };

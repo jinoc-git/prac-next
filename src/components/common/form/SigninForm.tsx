@@ -19,10 +19,7 @@ import PasswordInput from '../input/PasswordInput';
 
 import type { SignupFormInputList } from './SignupForm';
 
-export type SigninFormInputList = Omit<
-  SignupFormInputList,
-  'nickname' | 'confirmPassword'
->;
+export type SigninFormInputList = Omit<SignupFormInputList, 'nickname' | 'confirmPassword'>;
 
 export default function SigninForm() {
   const resolver = yupResolver(signinSchema);
@@ -57,7 +54,7 @@ export default function SigninForm() {
   };
 
   return (
-    <section className="flex-box w-screen h-screen">
+    <section className="flex-box w-full h-full">
       <Image
         src="/images/img-signin-bg.webp"
         alt="로그인 배경"
@@ -66,15 +63,13 @@ export default function SigninForm() {
         className="absolute inset-0 w-full max-w-[856px] h-screen object-cover"
       />
       <form
-        className="relative flexcol gap-y-2.5 rounded-xl bg-[#F9F9FB]
+        className="position-center flexcol gap-y-2.5 rounded-xl bg-[#F9F9FB]
         md:w-[450px] md:h-[410px] md:px-[50px] md:py-[37px]
         sm:w-[320px] sm:px-[30px] sm:py-[22px]
         "
         onSubmit={handleSubmit(onSubmit)}
       >
-        <h3 className="border-b-2 w-[48px] text-lg font-semibold	text-blue border-blue">
-          로그인
-        </h3>
+        <h3 className="border-b-2 w-[48px] text-lg font-semibold	text-blue border-blue">로그인</h3>
         <IconInput
           name="email"
           placeholder="이메일을 입력해주세요."
@@ -107,10 +102,7 @@ export default function SigninForm() {
         "
         >
           처음이신가요?
-          <span
-            onClick={goToSignUp}
-            className="ml-2 underline text-black cursor-pointer"
-          >
+          <span onClick={goToSignUp} className="ml-2 underline text-black cursor-pointer">
             지금 등록하세요!
           </span>
         </p>
