@@ -201,7 +201,7 @@ export interface Database {
       plans_ending: {
         Row: {
           dates: string[];
-          dates_cost: string[] | null;
+          dates_cost: string[];
           distance: Distance;
           id: string;
           pictures: string[];

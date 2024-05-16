@@ -3,6 +3,7 @@ import React from 'react';
 import { redirect } from 'next/navigation';
 
 import { getAllPinsByPlanFromServer, getEndingPlanFromServer } from '@/api/serverAction';
+import FinalCost from '@/components/endPlan/finalCost/FinalCost';
 import PhotoAlbum from '@/components/endPlan/photoAlbum/PhotoAlbum';
 import PlanInfo from '@/components/endPlan/planInfo/PlanInfo';
 import VisitedPlace from '@/components/endPlan/visitedPlace/VisitedPlace';
@@ -27,6 +28,7 @@ export default async function Ending({ params }: Props) {
       <PlanInfo plan={plan} allPins={allPins} />
       <PhotoAlbum pictures={plan.pictures} />
       <VisitedPlace allPins={allPins} plan={plan} />
+      <FinalCost dates={plan.dates} datesCost={plan.dates_cost} totalCost={plan.total_cost} />
     </>
   );
 }

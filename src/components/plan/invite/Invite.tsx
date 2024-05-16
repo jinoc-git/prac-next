@@ -7,19 +7,15 @@ import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 
-import { getMates } from '@/api/planMate';
-import {
-  useInviteUserStoreActions,
-  useInviteUserStoreState,
-} from '@/store/inviteUserStore';
+import { getMatesInfo } from '@/api/planMate';
+import { useInviteUserStoreActions, useInviteUserStoreState } from '@/store/inviteUserStore';
 import { useModifyPlanStoreState } from '@/store/modifyPlanStore';
 
 import SearchPeopleModal from './SearchPeopleModal';
 
 export default function Invite() {
   const { oldInvitedUser } = useInviteUserStoreState();
-  const { inviteUser, resetInvitedUser, syncInvitedUser } =
-    useInviteUserStoreActions();
+  const { inviteUser, resetInvitedUser, syncInvitedUser } = useInviteUserStoreActions();
   const { modifyState } = useModifyPlanStoreState();
 
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -30,7 +26,7 @@ export default function Invite() {
   const { data } = useQuery({
     queryKey: ['planMates', planId],
     queryFn: async () => {
-      if (planId) return await getMates(planId);
+      if (planId) return await getMatesInfo(planId);
       else return null;
     },
   });
@@ -47,8 +43,7 @@ export default function Invite() {
     }, 400);
   };
 
-  const isOldInvitedUser =
-    oldInvitedUser.length !== 0 && oldInvitedUser !== null;
+  const isOldInvitedUser = oldInvitedUser.length !== 0 && oldInvitedUser !== null;
   const maxDisplayCount = 3;
 
   useEffect(() => {
@@ -69,12 +64,7 @@ export default function Invite() {
     <>
       <div className="inner-content-layout md:justify-normal sm:justify-between">
         <div className="content-lable">
-          <Image
-            alt="친구 아이콘"
-            src={'/images/svgs/friend.svg'}
-            width={20}
-            height={15}
-          />
+          <Image alt="친구 아이콘" src={'/images/svgs/friend.svg'} width={20} height={15} />
           <p>동행</p>
         </div>
         <div className="flex items-center">
@@ -143,9 +133,7 @@ export default function Invite() {
         )}
       </div>
 
-      {isOpenModal && (
-        <SearchPeopleModal closeModal={closeModal} isAnimate={isAnimate} />
-      )}
+      {isOpenModal && <SearchPeopleModal closeModal={closeModal} isAnimate={isAnimate} />}
     </>
   );
 }
