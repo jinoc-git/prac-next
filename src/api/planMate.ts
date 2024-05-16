@@ -19,15 +19,13 @@ export const findUsers = async (input: string) => {
   return { nickname, email };
 };
 
-export const getMates = async (planId: string) => {
+export const getMatesInfo = async (planId: string) => {
   const { data: matesId, error } = await supabaseClientClient
     .from('plan_mates')
     .select('users_id')
     .eq('id', planId);
 
-  if (error != null) {
-    console.log(error);
-  }
+  if (error) throw new Error(error.message);
 
   const matesInfo: UserType[] = [];
 
@@ -53,18 +51,24 @@ export const updateMates = async (newMates: string[], planId: string) => {
   if (error) throw new Error(error.message);
 };
 
-export const addNewPlanMates = async (
-  newPlanId: string,
-  newMates: UserType[],
-) => {
+export const addNewPlanMates = async (newPlanId: string, newMates: UserType[]) => {
   const newplanMates: PlanMatesType = {
     id: newPlanId,
     users_id: newMates.map((user) => user.id),
   };
 
-  const { error } = await supabaseClientClient
-    .from('plan_mates')
-    .insert(newplanMates);
+  const { error } = await supabaseClientClient.from('plan_mates').insert(newplanMates);
 
   if (error) throw new Error(error.message);
+};
+
+export const getPlanMatesUserId = async (planId: string) => {
+  const { data, error } = await supabaseClientClient
+    .from('plan_mates')
+    .select('users_id')
+    .eq('id', planId);
+
+  if (error) throw new Error(error.message);
+
+  return data;
 };
