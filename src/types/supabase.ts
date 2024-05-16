@@ -202,7 +202,7 @@ export interface Database {
         Row: {
           dates: string[];
           dates_cost: string[] | null;
-          distance: Distance | null;
+          distance: Distance;
           id: string;
           pictures: string[];
           title: string;
@@ -211,7 +211,7 @@ export interface Database {
         Insert: {
           dates?: string[];
           dates_cost?: string[] | null;
-          distance?: Distance | null;
+          distance: Distance;
           id: string;
           pictures?: string[];
           title?: string;

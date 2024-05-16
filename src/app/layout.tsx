@@ -2,8 +2,9 @@ import Script from 'next/script';
 
 import { getSessionFromServer } from '@/api/serverAction';
 import Confirm from '@/components/common/confirm/Confirm';
-import Providers from '@/components/common/providers/Providers';
-import ToastProvider from '@/components/common/toastProvider/ToastProvider';
+import AnimateProvider from '@/components/common/providers/animateProvider/AnimateProvider';
+import TanstackQueryProvider from '@/components/common/providers/tanstackQueryProvider/TanstackQueryProvider';
+import ToastProvider from '@/components/common/providers/toastProvider/ToastProvider';
 import Header from '@/components/header/Header';
 import SideBar from '@/components/sideBar/SideBar';
 
@@ -24,13 +25,13 @@ async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
       <body>
-        <Providers>
+        <TanstackQueryProvider>
           <Header session={session} />
           <SideBar />
           <Script src={KAKAO_MAP_URL} strategy="beforeInteractive" />
-          <main className="w-full min-h-screen side-bar-transition">{children}</main>
+          <AnimateProvider>{children}</AnimateProvider>
           <ToastProvider />
-        </Providers>
+        </TanstackQueryProvider>
         <Confirm />
         <div id="modal-portal" />
         <div id="datepiker-portal" />

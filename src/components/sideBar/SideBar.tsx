@@ -28,12 +28,8 @@ export default function SideBar() {
   });
 
   const sortedPlanData = matesData?.planDataList?.sort(sideBarCallback.sorting);
-  const activePlan = sortedPlanData?.find(
-    sideBarCallback.filtering('traveling'),
-  );
-  const startPlans = sortedPlanData?.filter(
-    sideBarCallback.filtering('planning'),
-  );
+  const activePlan = sortedPlanData?.find(sideBarCallback.filtering('traveling'));
+  const startPlans = sortedPlanData?.filter(sideBarCallback.filtering('planning'));
   const endPlans = sortedPlanData?.filter(sideBarCallback.filtering('end'));
 
   const nextPlan = startPlans ? startPlans[0] : undefined;
@@ -50,16 +46,8 @@ export default function SideBar() {
       >
         <SideBarLogo />
         <div className="flex flex-col md:gap-[20px] sm:gap-[10px]">
-          <SideBarStatus
-            isOpen={isSideBarOpen}
-            activePlan={activePlan}
-            nextPlan={nextPlan}
-          />
-          <SideBarTrips
-            isOpen={isSideBarOpen}
-            startPlans={startPlans}
-            endPlans={endPlans}
-          />
+          <SideBarStatus isOpen={isSideBarOpen} activePlan={activePlan} nextPlan={nextPlan} />
+          <SideBarTrips isOpen={isSideBarOpen} startPlans={startPlans} endPlans={endPlans} />
         </div>
         <div></div>
       </aside>

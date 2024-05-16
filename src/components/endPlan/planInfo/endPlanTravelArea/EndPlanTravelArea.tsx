@@ -12,7 +12,7 @@ interface Props {
   allPins: PinType[];
 }
 
-const EndPlanVisitedPlace = ({ allPins }: Props) => {
+const EndPlanTravelArea = ({ allPins }: Props) => {
   const [pins, setPins] = useState<PinContentsType[]>([]);
 
   useEffect(() => {
@@ -31,4 +31,4 @@ const EndPlanVisitedPlace = ({ allPins }: Props) => {
   );
 };
 
-export default EndPlanVisitedPlace;
+export default EndPlanTravelArea;
