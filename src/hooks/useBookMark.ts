@@ -18,19 +18,10 @@ const useBookMark = () => {
     onMutate: async (newBookMark: InsertBookMarkType) => {
       await queryClient.cancelQueries({ queryKey: ['book_mark'] });
 
-      const prevData = queryClient.getQueryData<BookMarkType[]>([
-        'book_mark',
-        user?.id,
-      ]);
+      const prevData = queryClient.getQueryData<BookMarkType[]>(['book_mark', user?.id]);
 
-      if (prevData) {
-        queryClient.setQueryData(
-          ['book_mark', user?.id],
-          [...prevData, newBookMark],
-        );
-      } else {
-        queryClient.setQueryData(['book_mark', user?.id], [newBookMark]);
-      }
+      if (prevData) queryClient.setQueryData(['book_mark', user?.id], [...prevData, newBookMark]);
+      else queryClient.setQueryData(['book_mark', user?.id], [newBookMark]);
 
       return { prevData };
     },
@@ -39,9 +30,7 @@ const useBookMark = () => {
       queryClient.setQueryData(['book_mark', user?.id], context?.prevData);
     },
     onSettled: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['book_mark'],
-      });
+      queryClient.invalidateQueries({ queryKey: ['book_mark'] });
     },
   });
 
@@ -50,15 +39,10 @@ const useBookMark = () => {
     onMutate: async (bookMarkId: string) => {
       await queryClient.cancelQueries({ queryKey: ['book_mark'] });
 
-      const prevData = queryClient.getQueryData<BookMarkType[]>([
-        'book_mark',
-        user?.id,
-      ]);
+      const prevData = queryClient.getQueryData<BookMarkType[]>(['book_mark', user?.id]);
 
       if (prevData) {
-        const newBookMarkList = prevData.filter(
-          (item) => item.id !== bookMarkId,
-        );
+        const newBookMarkList = prevData.filter((item) => item.id !== bookMarkId);
         queryClient.setQueryData(['book_mark', user?.id], newBookMarkList);
       }
 

@@ -17,9 +17,7 @@ const useDatePicker = ({ state, initStartDate, initEdDate }: Args) => {
   const [startDate, setStartDate] = useState<Date | null>(
     state === 'addPlan' ? new Date() : initStartDate,
   );
-  const [endDate, setEndDate] = useState<Date | null>(
-    state === 'addPlan' ? null : initEdDate,
-  );
+  const [endDate, setEndDate] = useState<Date | null>(state === 'addPlan' ? null : initEdDate);
 
   const handleStartDate = (date: Date | null) => {
     setRequiredDates('start');

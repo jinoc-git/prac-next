@@ -44,5 +44,4 @@ export const sideBarStore = create<Store>((set) => ({
 }));
 
 export const useSideBarStoreState = () => sideBarStore((store) => store.state);
-export const useSideBarStoreActions = () =>
-  sideBarStore((store) => store.actions);
+export const useSideBarStoreActions = () => sideBarStore((store) => store.actions);

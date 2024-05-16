@@ -9,6 +9,7 @@ import { useAuthStoreState } from '@/store/authStore';
 export default function Profile() {
   const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
   const [animate, setAnimate] = useState<boolean>(true);
+
   const user = useAuthStoreState();
 
   const onClickOpenModalHandler = () => {
@@ -61,12 +62,7 @@ export default function Profile() {
           sm:w-[20px] sm:h-[20px] sm:top-[46px] sm:left-[46px] sm:border-[1.5px]
           md:w-[24px] md:h-[24px] md:top-[60px] md:left-[60px] md:border-[2px]"
           >
-            <Image
-              alt="edit-icon"
-              src={'/images/svgs/edit-gray.svg'}
-              width={14}
-              height={12}
-            />
+            <Image alt="edit-icon" src={'/images/svgs/edit-gray.svg'} width={14} height={12} />
           </div>
         </div>
         <p className="text-white text-base font-Regular sm:text-[16px] md:text-xlg">

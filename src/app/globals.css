@@ -30,6 +30,9 @@
   .position-center {
     @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
   }
+  .comment-text {
+    @apply text-gray_dark_1 leading-6 tracking-tighter sm:text-sm md:text-normal;
+  }
 }
 
 @font-face {

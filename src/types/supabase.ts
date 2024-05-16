@@ -270,5 +270,6 @@ export type PlanType = Database['public']['Tables']['plans']['Row'];
 export type BookMarkType = Database['public']['Tables']['book_mark']['Row'];
 export type InsertBookMarkType = Database['public']['Tables']['book_mark']['Insert'];
 export type PlanMatesType = Database['public']['Tables']['plan_mates']['Insert'];
-export type CommentsType = Database['public']['Tables']['comments']['Insert'];
+export type CommentsType = Database['public']['Tables']['comments']['Row'];
+export type InsertCommentsType = Database['public']['Tables']['comments']['Insert'];
 export type EndingPlanType = Database['public']['Tables']['plans_ending']['Row'];

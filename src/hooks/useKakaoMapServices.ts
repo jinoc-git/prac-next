@@ -24,9 +24,7 @@ const useKakaoMapServices = () => {
     });
   };
 
-  const searchKeyword = async (
-    keyWord: string,
-  ): Promise<{ lat: number; lng: number }> => {
+  const searchKeyword = async (keyWord: string): Promise<{ lat: number; lng: number }> => {
     return new Promise((resolve, reject) => {
       let lat = 0;
       let lng = 0;
