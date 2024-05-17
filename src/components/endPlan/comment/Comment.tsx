@@ -2,7 +2,14 @@ import React from 'react';
 
 import Image from 'next/image';
 
-const Comment = () => {
+import CommentForm from './commentForm/CommentForm';
+import CommentList from './commentList/CommentList';
+
+interface Props {
+  planId: string;
+}
+
+const Comment = ({ planId }: Props) => {
   return (
     <section className="content-layout">
       <div className="content-lable w-full">
@@ -15,6 +22,8 @@ const Comment = () => {
         />
         <p>한 줄 코멘트</p>
       </div>
+      <CommentList planId={planId} />
+      <CommentForm />
     </section>
   );
 };

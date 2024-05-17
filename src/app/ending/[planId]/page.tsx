@@ -30,7 +30,7 @@ export default async function Ending({ params }: Props) {
       <PhotoAlbum pictures={plan.pictures} />
       <VisitedPlace allPins={allPins} plan={plan} />
       <FinalCost dates={plan.dates} datesCost={plan.dates_cost} totalCost={plan.total_cost} />
-      <Comment />
+      <Comment planId={planId} />
     </>
   );
 }
