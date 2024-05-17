@@ -64,10 +64,8 @@ export const inviteUserStore = create<Store>((set, get) => ({
   },
 }));
 
-export const useInviteUserStoreState = () =>
-  inviteUserStore((store) => store.state);
-export const useInviteUserStoreActions = () =>
-  inviteUserStore((store) => store.actions);
+export const useInviteUserStoreState = () => inviteUserStore((store) => store.state);
+export const useInviteUserStoreActions = () => inviteUserStore((store) => store.actions);
 
 export const subInvite = inviteUserStore.subscribe((store) => {
   return store.state.invitedUser;

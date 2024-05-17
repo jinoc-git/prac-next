@@ -20,7 +20,5 @@ export const tabMenuStore = create<Store>((set) => ({
   },
 }));
 
-export const useTabMenuStoreState = () =>
-  tabMenuStore((store) => store.selectedMenu);
-export const useTabMenuStoreActions = () =>
-  tabMenuStore((store) => store.actions);
+export const useTabMenuStoreState = () => tabMenuStore((store) => store.selectedMenu);
+export const useTabMenuStoreActions = () => tabMenuStore((store) => store.actions);

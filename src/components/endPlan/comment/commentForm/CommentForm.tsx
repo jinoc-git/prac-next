@@ -22,14 +22,11 @@ interface Props {
 
 const CommentForm = ({ planId }: Props) => {
   const user = useAuthStoreState();
-  const { addCommentMutate, delCommentMutate } = useComment(planId);
+  const { addCommentMutate } = useComment(planId);
 
-  const {
-    register,
-    handleSubmit,
-    setFocus,
-    formState: { errors, isSubmitting },
-  } = useForm<CommentInputType>({ mode: 'onChange' });
+  const { register, handleSubmit, reset, setFocus } = useForm<CommentInputType>({
+    mode: 'onChange',
+  });
 
   const onSubmit: SubmitHandler<CommentInputType> = (data) => {
     if (data.comment === '' || data.comment.length > 20) {
@@ -46,6 +43,7 @@ const CommentForm = ({ planId }: Props) => {
       };
 
       addCommentMutate(newComment);
+      reset();
     }
   };
 
@@ -53,7 +51,7 @@ const CommentForm = ({ planId }: Props) => {
     <form
       name="comment-form"
       onSubmit={handleSubmit(onSubmit)}
-      className="flex items-center justify-between md:pr-5"
+      className="flex items-center justify-between md:pr-5 sm:pb-[60px] md:pb-[100px]"
     >
       <div className="flex items-center gap-2">
         <label htmlFor="comment">

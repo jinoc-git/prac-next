@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 
 import { getComments } from '@/api/comment';
+import useComment from '@/hooks/useComment';
 import { useInviteUserStoreState } from '@/store/inviteUserStore';
 
 interface Props {
@@ -15,6 +16,7 @@ interface Props {
 
 const CommentList = ({ planId }: Props) => {
   const { invitedUser } = useInviteUserStoreState();
+  const { delCommentMutate } = useComment(planId);
 
   const { data, isLoading } = useQuery({
     queryKey: ['commentList', planId],
@@ -26,7 +28,7 @@ const CommentList = ({ planId }: Props) => {
       {!data || data.length === 0 ? (
         <p className="comment-text">첫 코멘트를 입력해주세요!</p>
       ) : (
-        data.map(({ content, user_id }) => {
+        data.map(({ content, user_id, id }) => {
           const author = invitedUser.find(({ id }) => user_id === id);
 
           return (
@@ -55,6 +57,7 @@ const CommentList = ({ planId }: Props) => {
                   sm:w-[50px] sm:h-[25px]
                   md:w-[45px] md:h-[30px]
                   "
+                  onClick={() => delCommentMutate(id)}
                 >
                   삭제
                 </button>

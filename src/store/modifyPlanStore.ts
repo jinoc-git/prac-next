@@ -84,7 +84,5 @@ export const modifyPlanStore = create<Store>((set, get) => ({
   },
 }));
 
-export const useModifyPlanStoreState = () =>
-  modifyPlanStore((store) => store.state);
-export const useModifyPlanStoreActions = () =>
-  modifyPlanStore((store) => store.actions);
+export const useModifyPlanStoreState = () => modifyPlanStore((store) => store.state);
+export const useModifyPlanStoreActions = () => modifyPlanStore((store) => store.actions);

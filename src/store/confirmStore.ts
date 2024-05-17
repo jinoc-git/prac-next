@@ -46,5 +46,4 @@ export const confirmStore = create<Store>((set, get) => ({
 }));
 
 export const useConfirmStoreState = () => confirmStore((store) => store.state);
-export const useConfirmStoreActions = () =>
-  confirmStore((store) => store.actions);
+export const useConfirmStoreActions = () => confirmStore((store) => store.actions);
