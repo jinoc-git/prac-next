@@ -23,7 +23,7 @@ const Comment = ({ planId }: Props) => {
         <p>한 줄 코멘트</p>
       </div>
       <CommentList planId={planId} />
-      <CommentForm />
+      <CommentForm planId={planId} />
     </section>
   );
 };
