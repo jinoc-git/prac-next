@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 
 import Image from 'next/image';
 
+import useComment from '@/hooks/useComment';
 import { useAuthStoreState } from '@/store/authStore';
 
 import type { InsertCommentsType } from '@/types/supabase';
@@ -21,6 +22,7 @@ interface Props {
 
 const CommentForm = ({ planId }: Props) => {
   const user = useAuthStoreState();
+  const { addCommentMutate, delCommentMutate } = useComment(planId);
 
   const {
     register,
@@ -42,8 +44,8 @@ const CommentForm = ({ planId }: Props) => {
         user_id: user.id,
         plan_id: planId,
       };
-      console.log(newComment);
-      // addMutate(newComment);
+
+      addCommentMutate(newComment);
     }
   };
 

@@ -1,8 +1,8 @@
 import { supabaseClientClient } from './auth';
 
-import type { CommentsType } from '@/types/supabase';
+import type { InsertCommentsType } from '@/types/supabase';
 
-export const addComment = async (newComment: CommentsType) => {
+export const addComment = async (newComment: InsertCommentsType) => {
   const { error } = await supabaseClientClient.from('comments').insert(newComment);
 
   if (error) throw new Error('댓글 작성 오류 발생');
