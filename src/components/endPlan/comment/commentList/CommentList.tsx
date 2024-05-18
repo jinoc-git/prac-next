@@ -53,7 +53,7 @@ const CommentList = ({ planId }: Props) => {
               {user_id === author?.id && (
                 <button
                   name="comment-delete-btn"
-                  className="flex-box border border-gray rounded-lg text-xs
+                  className="flex-box border border-gray rounded-lg text-xs hover:bg-[#FFE8D2]
                   sm:w-[50px] sm:h-[25px]
                   md:w-[45px] md:h-[30px]
                   "

@@ -73,7 +73,7 @@ const CommentForm = ({ planId }: Props) => {
           md:w-[460px] md:h-[34px] ms:text-normal"
         />
       </div>
-      <button className="flex-box gap-1 py-1 sm:px-1 md:px-2 border border-[#d1d1d1] rounded">
+      <button className="flex-box gap-1 py-1 sm:px-1 md:px-2 border border-[#d1d1d1] rounded hover:bg-[#F2F7FF]">
         <Image
           src={'/images/svgs/check.svg'}
           alt="연필 아이콘"
@@ -81,7 +81,7 @@ const CommentForm = ({ planId }: Props) => {
           height={20}
           className=" w-5 h-5"
         />
-        <span className="sm:hidden md:block">작성</span>
+        <span className="text-sm sm:hidden md:block">작성</span>
       </button>
     </form>
   );
