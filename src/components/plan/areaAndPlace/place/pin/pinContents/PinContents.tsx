@@ -2,45 +2,49 @@
 
 import React from 'react';
 
+import Image from 'next/image';
+
+import { useModifyPlanStoreState } from '@/store/modifyPlanStore';
+
 import type { PinContentsType } from '@/types/supabase';
 
 interface Props {
   pin: PinContentsType;
   isEnding: boolean;
-  dragArea?: React.ReactNode;
 }
 
 const PinContents = (props: Props) => {
-  const { pin, isEnding, dragArea } = props;
+  const { pin, isEnding } = props;
+
+  const { modifyState } = useModifyPlanStoreState();
 
   return (
     <div
-      className="relative flex items-center justify-between border rounded-lg border-gray_dark_1 
-        sm:w-[239px] sm:h-[80px] sm:mb-0 sm:mr-[2px] sm:px-0 sm:py-[17px] 
-        md:w-[600px] md:h-[120px] md:mb-[10px] md:px-[15px] md:py-[8px]"
+      className="relative flex items-center justify-between py-[17px] border rounded-lg border-gray_dark_1 
+        sm:w-[239px] sm:h-[80px] sm:px-2
+        md:w-[600px] md:h-[120px] md:mb-[10px] md:px-[15px]"
     >
-      <div className="w-[20px] md:hidden"></div>
-      {!isEnding && dragArea}
+      {!isEnding && modifyState === 'modify' && (
+        <button className="sm:w-[30px] md:w-[50px] sm:p-1 md:p-3">
+          <Image
+            src={'/images/svgs/drag-area.svg'}
+            alt="드래그 영역 아이콘"
+            width={25}
+            height={29}
+            className="sm:w-[15px] sm:h-[18px] md:w-[25px] md:h-[29px] "
+          />
+        </button>
+      )}
       <div
-        className={`flex flex-col text-left  text-gray_dark_1 w-[400px] gap-y-[2px]
-          sm:text-[11px]
-          md:text-normal
+        className={`flex flex-col text-left  text-gray_dark_1  gap-y-[2px]
+          sm:text-[11px] sm:w-[200px]
+          md:text-normal md:w-[400px]
         ${isEnding ? 'ml-[15px]' : ''}
         `}
       >
-        {pin !== null && typeof pin === 'object' && 'placeName' in pin && (
-          <span className="font-bold">{pin.placeName}</span>
-        )}
-        {pin !== null && typeof pin === 'object' && 'address' in pin && (
-          <span>{pin.address}</span>
-        )}
-        {pin !== null && typeof pin === 'object' && 'cost' in pin && (
-          <span>
-            {pin.cost !== null && pin.cost !== undefined
-              ? pin.cost + ' 원'
-              : ''}
-          </span>
-        )}
+        {pin.placeName && <span className="font-bold">{pin.placeName}</span>}
+        {pin.address && <span>{pin.address}</span>}
+        {pin.cost && <span>{pin.cost + ' 원'}</span>}
       </div>
       {/* {!isEnding && updatePin && deletePin && (
           <DropDown>
