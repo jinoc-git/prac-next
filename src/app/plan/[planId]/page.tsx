@@ -2,10 +2,7 @@ import React from 'react';
 
 import { redirect } from 'next/navigation';
 
-import {
-  getAllPinsByPlanFromServer,
-  getPlanByIdFromServer,
-} from '@/api/serverAction';
+import { getAllPinsByPlanFromServer, getPlanByIdFromServer } from '@/api/serverAction';
 import ChangePlanStatus from '@/components/plan/changePlanStatus/ChangePlanStatus';
 import PlanContents from '@/components/plan/planContents/PlanContents';
 

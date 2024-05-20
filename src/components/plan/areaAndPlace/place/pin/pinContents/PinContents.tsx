@@ -1,22 +1,25 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 
 import Image from 'next/image';
-
-import { useModifyPlanStoreState } from '@/store/modifyPlanStore';
 
 import type { PinContentsType } from '@/types/supabase';
 
 interface Props {
   pin: PinContentsType;
   isEnding: boolean;
+  isModify?: boolean;
 }
 
 const PinContents = (props: Props) => {
-  const { pin, isEnding } = props;
+  const { pin, isEnding, isModify } = props;
 
-  const { modifyState } = useModifyPlanStoreState();
+  const [dropDownIsOpen, setDropDownIsOpen] = useState(false);
+
+  const handleDropDown = () => {
+    setDropDownIsOpen(true);
+  };
 
   return (
     <div
@@ -24,7 +27,7 @@ const PinContents = (props: Props) => {
         sm:w-[239px] sm:h-[80px] sm:px-2
         md:w-[600px] md:h-[120px] md:mb-[10px] md:px-[15px]"
     >
-      {!isEnding && modifyState === 'modify' && (
+      {!isEnding && isModify && (
         <button className="sm:w-[30px] md:w-[50px] sm:p-1 md:p-3">
           <Image
             src={'/images/svgs/drag-area.svg'}
@@ -46,8 +49,27 @@ const PinContents = (props: Props) => {
         {pin.address && <span>{pin.address}</span>}
         {pin.cost && <span>{pin.cost + ' 원'}</span>}
       </div>
-      {/* {!isEnding && updatePin && deletePin && (
-          <DropDown>
+      {/* drop down 영역 */}
+      {!isEnding && isModify && (
+        <div className={`relative `}>
+          <button
+            aria-label="dropdown-btn"
+            onClick={handleDropDown}
+            onBlur={() => {
+              setDropDownIsOpen(false);
+            }}
+            // onMouseOut={handleMouseOut}
+            className="md:p-3 sm:p-1"
+          >
+            <Image
+              src={'/images/svgs/microMenu.svg'}
+              alt="작은 메뉴 아이콘"
+              width={24}
+              height={24}
+              className="sm:w-[14px] sm:h-[14px] md:w-[24px] md:h-[24px] "
+            />
+          </button>
+          {dropDownIsOpen && (
             <ul
               className="absolute border border-gray_dark_1  bg-white z-10 overflow-hidden
               md:left-[40px] md:bottom-[-50px] md:text-[16px] md:w-[100px] md:rounded-md
@@ -59,15 +81,21 @@ const PinContents = (props: Props) => {
                   e.preventDefault();
                 }}
                 onClick={() => {
-                  updatePin(idx);
+                  // updatePin(idx);
                 }}
-                className="flex-center border-b border-gray_dark_1 cursor-pointer hover:bg-gray_light_3
+                className="flex-box border-b border-gray_dark_1 cursor-pointer hover:bg-gray_light_3
                 md:w-[100px] md:h-[40px]
                 sm:w-[45px] sm:h-[40px]
                 "
               >
                 <div className="flex items-center">
-                  <IconEditSolid w="w-[10px]" h="h-[10px]" fill="#6E6F76" />
+                  {/* <Image
+                  src={'/images/svgs/microMenu.svg'}
+                  alt="작은 메뉴 아이콘"
+                  width={24}
+                  height={24}
+                  className="sm:w-[14px] sm:h-[14px] md:w-[24px] md:h-[24px] "
+                /> */}
                   <span className="ml-[3px] md:ml-[20px]">수정</span>
                 </div>
               </li>
@@ -76,21 +104,22 @@ const PinContents = (props: Props) => {
                   e.preventDefault();
                 }}
                 onClick={() => {
-                  handleDelete(idx);
+                  // handleDelete(idx);
                 }}
-                className="flex-center border-b border-gray_dark_1 cursor-pointer hover:bg-gray_light_3
+                className="flex-box border-b border-gray_dark_1 cursor-pointer hover:bg-gray_light_3
                 md:w-[100px] md:h-[40px]
                 sm:w-[45px] sm:h-[40px]
                 "
               >
                 <div className="flex items-center">
-                  <IconDeleteSolid w="w-[10px]" h="h-[10px]" fill="#6E6F76" />
+                  {/* <IconDeleteSolid w="w-[10px]" h="h-[10px]" fill="#6E6F76" /> */}
                   <span className="ml-[3px] md:ml-[20px]">삭제</span>
                 </div>
               </li>
             </ul>
-          </DropDown>
-        )} */}
+          )}
+        </div>
+      )}
     </div>
   );
 };

@@ -17,10 +17,11 @@ interface Props {
   deletePin?: (idx: number) => void;
   distance?: string;
   dragArea?: React.ReactNode;
+  isModify?: boolean;
 }
 
 const Pin = (props: Props) => {
-  const { pin, idx, updatePin, deletePin, distance } = props;
+  const { pin, idx, updatePin, deletePin, distance, isModify } = props;
 
   const pathname = usePathname();
   const isEnding = pathname.split('/')[1] === 'ending';
@@ -29,7 +30,7 @@ const Pin = (props: Props) => {
     <>
       <PinOrder idx={idx} />
       <PinDistance distance={distance} />
-      <PinContents pin={pin} isEnding={isEnding} />
+      <PinContents pin={pin} isEnding={isEnding} isModify={isModify} />
     </>
   );
 };
