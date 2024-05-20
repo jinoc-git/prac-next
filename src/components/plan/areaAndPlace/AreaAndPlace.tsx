@@ -24,4 +24,4 @@ const AreaAndPlace = (props: Props) => {
   );
 };
 
-export default AreaAndPlace;
+export default React.memo(AreaAndPlace);

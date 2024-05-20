@@ -85,6 +85,10 @@ const config: Config = {
       zIndex: {
         '100': '100',
       },
+      width: {
+        'plan-top-bar-open': 'calc(100% - 270px)',
+        'plan-top-bar-close': 'calc(100% - 88px)',
+      },
     },
     boxShadow: {
       card: ' 2px 6px 50px 2px rgba(0, 0, 0, 0.05)',

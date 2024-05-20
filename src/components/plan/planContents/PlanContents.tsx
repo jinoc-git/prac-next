@@ -6,10 +6,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { addPlanSchema } from '@/schema/planSchema';
-import {
-  useModifyPlanStoreActions,
-  useModifyPlanStoreState,
-} from '@/store/modifyPlanStore';
+import { useModifyPlanStoreActions, useModifyPlanStoreState } from '@/store/modifyPlanStore';
 import { addCommas } from '@/utils/numberFormat';
 
 import PostPlanForm from '../../common/form/PostPlanForm';
@@ -31,6 +28,7 @@ export default function PlanContents({ plan, originPins }: Props) {
   const formRef = useRef<HTMLFormElement>(null);
   const { modifyState } = useModifyPlanStoreState();
   const { setReadOnly, setModify } = useModifyPlanStoreActions();
+
   const resolver = yupResolver(addPlanSchema);
 
   const {
@@ -53,9 +51,7 @@ export default function PlanContents({ plan, originPins }: Props) {
       return;
     }
     if (formRef.current) {
-      formRef.current.dispatchEvent(
-        new Event('submit', { cancelable: true, bubbles: true }),
-      );
+      formRef.current.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
 
       setReadOnly();
     }

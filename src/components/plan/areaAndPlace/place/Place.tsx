@@ -8,7 +8,6 @@ import { TouchBackend } from 'react-dnd-touch-backend';
 import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import Image from 'next/image';
 
-import PinLayout from '@/components/common/layout/PinLayout';
 import { useDateStoreState } from '@/store/dateStore';
 import { useModifyPlanStoreState } from '@/store/modifyPlanStore';
 
@@ -48,6 +47,7 @@ const Place = (props: Props) => {
 
   const { dates } = useDateStoreState();
   const { modifyState } = useModifyPlanStoreState();
+  const isModify = modifyState === 'modify';
 
   const openModal = () => {
     setIsAnimate(true);
@@ -79,14 +79,19 @@ const Place = (props: Props) => {
         <ol>
           {pins[currentPage]?.map((pin, idx) => {
             return (
-              <PinLayout key={uuid()}>
-                <Pin pin={pin} idx={idx} updatePin={updatePin} deletePin={deletePin} />
-              </PinLayout>
+              <Pin
+                key={uuid()}
+                pin={pin}
+                idx={idx}
+                isModify={isModify}
+                updatePin={updatePin}
+                deletePin={deletePin}
+              />
             );
           })}
         </ol>
       </DndProvider>
-      {dates.length !== 0 && modifyState === 'modify' && (
+      {dates.length !== 0 && isModify && (
         <div
           className="flex items-center justify-between pb-[60px]
             sm:w-[286px] 
