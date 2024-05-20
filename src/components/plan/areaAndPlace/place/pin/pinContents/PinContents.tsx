@@ -51,7 +51,7 @@ const PinContents = (props: Props) => {
       </div>
       {/* drop down 영역 */}
       {!isEnding && isModify && (
-        <div className={`relative `}>
+        <div className="relative ">
           <button
             aria-label="dropdown-btn"
             onClick={handleDropDown}
@@ -73,7 +73,7 @@ const PinContents = (props: Props) => {
             <ul
               className="absolute border border-gray_dark_1  bg-white z-10 overflow-hidden
               md:left-[40px] md:bottom-[-50px] md:text-[16px] md:w-[100px] md:rounded-md
-              sm:left-[-22px] sm:bottom-[-28px] sm:text-[10px] sm:h-[80px] sm:w-[45px] sm:rounded-l-none sm:rounded-r-md
+              sm:left-[-17px] sm:bottom-[-27px] sm:text-[10px] sm:h-[80px] sm:w-[45px] sm:rounded-l-none sm:rounded-r-md
             "
             >
               <li
@@ -89,13 +89,13 @@ const PinContents = (props: Props) => {
                 "
               >
                 <div className="flex items-center">
-                  {/* <Image
-                  src={'/images/svgs/microMenu.svg'}
-                  alt="작은 메뉴 아이콘"
-                  width={24}
-                  height={24}
-                  className="sm:w-[14px] sm:h-[14px] md:w-[24px] md:h-[24px] "
-                /> */}
+                  <Image
+                    src={'/images/svgs/edit-gray.svg'}
+                    alt="수정 아이콘"
+                    width={12}
+                    height={12}
+                    className="sm:w-[10px] sm:h-[10px] md:w-[12px] md:h-[12px] "
+                  />
                   <span className="ml-[3px] md:ml-[20px]">수정</span>
                 </div>
               </li>
@@ -112,7 +112,13 @@ const PinContents = (props: Props) => {
                 "
               >
                 <div className="flex items-center">
-                  {/* <IconDeleteSolid w="w-[10px]" h="h-[10px]" fill="#6E6F76" /> */}
+                  <Image
+                    src={'/images/svgs/delete.svg'}
+                    alt="삭제 아이콘"
+                    width={12}
+                    height={12}
+                    className="sm:w-[10px] sm:h-[10px] md:w-[12px] md:h-[12px] "
+                  />
                   <span className="ml-[3px] md:ml-[20px]">삭제</span>
                 </div>
               </li>

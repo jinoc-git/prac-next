@@ -18,11 +18,9 @@ export default function PlanTopBar(props: Props) {
 
   return (
     <div
-      className={`flex justify-between items-center w-full border-b-[1px] border-navy py-[11.5px] bg-white z-30
-      sm:fixed sm:top-[80px] side-bar-transition
-      md:static md:pt-[86px] ${
-        isSideBarOpen ? 'md:pl-[270px]' : 'md:pl-[88px]'
-      }`}
+      className={`flex justify-between items-center fixed sm:w-full border-b-[1px] border-navy py-[11.5px] bg-white z-30
+      sm:top-[80px] side-bar-transition
+      md:top-[70px] ${isSideBarOpen ? ' md:w-plan-top-bar-open' : 'md:w-plan-top-bar-close'}`}
     >
       <div
         className="text-navy_dark font-semibold
@@ -44,12 +42,7 @@ export default function PlanTopBar(props: Props) {
           type="button"
           onClick={handleSaveOrModifyBtnClick}
         >
-          <Image
-            alt="edit-icon"
-            src={'/images/svgs/edit-blue.svg'}
-            width={16}
-            height={16}
-          />
+          <Image alt="edit-icon" src={'/images/svgs/edit-blue.svg'} width={16} height={16} />
           {isModify ? `저장하기` : `수정하기`}
         </button>
       </div>

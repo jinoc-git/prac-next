@@ -20,7 +20,7 @@ export default async function Plan({ params }: Props) {
   const originPins = await getAllPinsByPlanFromServer(plan);
 
   return (
-    <section>
+    <section className=" relative md:pt-[70px]">
       <PlanContents plan={plan} originPins={originPins} />
       <ChangePlanStatus status={plan.plan_state} planId={plan.id} />
     </section>
