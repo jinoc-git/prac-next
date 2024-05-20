@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import type { ConnectDragSource } from 'react-dnd';
 
 import Image from 'next/image';
 
@@ -10,10 +11,11 @@ interface Props {
   pin: PinContentsType;
   isEnding: boolean;
   isModify?: boolean;
+  dragRef: ConnectDragSource;
 }
 
 const PinContents = (props: Props) => {
-  const { pin, isEnding, isModify } = props;
+  const { pin, isEnding, isModify, dragRef } = props;
 
   const [dropDownIsOpen, setDropDownIsOpen] = useState(false);
 
@@ -28,7 +30,7 @@ const PinContents = (props: Props) => {
         md:w-[600px] md:h-[120px] md:mb-[10px] md:px-[15px]"
     >
       {!isEnding && isModify && (
-        <button className="sm:w-[30px] md:w-[50px] sm:p-1 md:p-3">
+        <button ref={dragRef} className="sm:w-[30px] md:w-[50px] sm:p-1 md:p-3">
           <Image
             src={'/images/svgs/drag-area.svg'}
             alt="드래그 영역 아이콘"

@@ -61,8 +61,20 @@ const Place = (props: Props) => {
     }, 400);
   };
 
-  const updatePin = (idx: number) => {};
-  const deletePin = (idx: number) => {};
+  const movePins = React.useCallback(
+    (beforeIdx: number, afterIdx: number) => {
+      if (beforeIdx === afterIdx) return;
+      setPins((prev) => {
+        const dayPins = prev[currentPage];
+        const item = dayPins[beforeIdx];
+        const removed = dayPins.toSpliced(beforeIdx, 1);
+        const afterDayPins = removed.toSpliced(afterIdx, 0, item);
+        const result = prev.toSpliced(currentPage, 1, afterDayPins);
+        return result;
+      });
+    },
+    [currentPage],
+  );
 
   return (
     <div className="flex flex-col justify-center gap-5">
@@ -78,16 +90,7 @@ const Place = (props: Props) => {
       <DndProvider options={HTML5ToTouch}>
         <ol>
           {pins[currentPage]?.map((pin, idx) => {
-            return (
-              <Pin
-                key={uuid()}
-                pin={pin}
-                idx={idx}
-                isModify={isModify}
-                updatePin={updatePin}
-                deletePin={deletePin}
-              />
-            );
+            return <Pin key={uuid()} pin={pin} idx={idx} isModify={isModify} movePins={movePins} />;
           })}
         </ol>
       </DndProvider>
