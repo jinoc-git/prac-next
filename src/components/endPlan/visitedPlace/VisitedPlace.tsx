@@ -5,7 +5,6 @@ import React from 'react';
 import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import Image from 'next/image';
 
-import PinLayout from '@/components/common/layout/PinLayout';
 import Pin from '@/components/plan/areaAndPlace/place/pin/Pin';
 
 import type { EndingPlanType, PinType } from '@/types/supabase';
@@ -46,9 +45,12 @@ const VisitedPlace = ({ plan, allPins }: Props) => {
               {contents.map((pin, idx) => {
                 const contentDistance = dayDistance[idx - 1];
                 return (
-                  <PinLayout key={uuid()}>
-                    <Pin pin={pin} idx={idx} distance={idx > 0 ? contentDistance : undefined} />
-                  </PinLayout>
+                  <Pin
+                    key={uuid()}
+                    pin={pin}
+                    idx={idx}
+                    distance={idx > 0 ? contentDistance : undefined}
+                  />
                 );
               })}
               {contents.length === 0 && (

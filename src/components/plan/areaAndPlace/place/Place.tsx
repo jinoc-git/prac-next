@@ -8,7 +8,6 @@ import { TouchBackend } from 'react-dnd-touch-backend';
 import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import Image from 'next/image';
 
-import PinLayout from '@/components/common/layout/PinLayout';
 import { useDateStoreState } from '@/store/dateStore';
 import { useModifyPlanStoreState } from '@/store/modifyPlanStore';
 
@@ -80,15 +79,14 @@ const Place = (props: Props) => {
         <ol>
           {pins[currentPage]?.map((pin, idx) => {
             return (
-              <PinLayout key={uuid()}>
-                <Pin
-                  pin={pin}
-                  idx={idx}
-                  isModify={isModify}
-                  updatePin={updatePin}
-                  deletePin={deletePin}
-                />
-              </PinLayout>
+              <Pin
+                key={uuid()}
+                pin={pin}
+                idx={idx}
+                isModify={isModify}
+                updatePin={updatePin}
+                deletePin={deletePin}
+              />
             );
           })}
         </ol>
