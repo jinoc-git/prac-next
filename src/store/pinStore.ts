@@ -27,10 +27,12 @@ export const pinStore = create<Store>((set) => ({
       set(() => ({
         state: {
           pin: {
+            id: data.id,
             lat: data.lat,
             lng: data.lng,
             placeName: data.placeName,
             cost: data.cost,
+            address: data.address,
           },
           idx,
         },

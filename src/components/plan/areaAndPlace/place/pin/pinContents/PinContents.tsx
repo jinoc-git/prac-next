@@ -9,13 +9,16 @@ import type { PinContentsType } from '@/types/supabase';
 
 interface Props {
   pin: PinContentsType;
+  idx: number;
   isEnding: boolean;
   isModify?: boolean;
   dragRef: ConnectDragSource;
+  handleUpdate: (idx: number) => void;
+  handleDelete: (idx: number) => void;
 }
 
 const PinContents = (props: Props) => {
-  const { pin, isEnding, isModify, dragRef } = props;
+  const { pin, idx, isEnding, isModify, dragRef, handleUpdate, handleDelete } = props;
 
   const [dropDownIsOpen, setDropDownIsOpen] = useState(false);
 
@@ -83,7 +86,7 @@ const PinContents = (props: Props) => {
                   e.preventDefault();
                 }}
                 onClick={() => {
-                  // updatePin(idx);
+                  handleUpdate(idx);
                 }}
                 className="flex-box border-b border-gray_dark_1 cursor-pointer hover:bg-gray_light_3
                 md:w-[100px] md:h-[40px]
@@ -106,7 +109,7 @@ const PinContents = (props: Props) => {
                   e.preventDefault();
                 }}
                 onClick={() => {
-                  // handleDelete(idx);
+                  handleDelete(idx);
                 }}
                 className="flex-box border-b border-gray_dark_1 cursor-pointer hover:bg-gray_light_3
                 md:w-[100px] md:h-[40px]

@@ -8,8 +8,10 @@ import { TouchBackend } from 'react-dnd-touch-backend';
 import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import Image from 'next/image';
 
+import useConfirm from '@/hooks/useConfirm';
 import { useDateStoreState } from '@/store/dateStore';
 import { useModifyPlanStoreState } from '@/store/modifyPlanStore';
+import { usePinStoreActions } from '@/store/pinStore';
 
 import AddPinModal from './addPinModal/AddPinModal';
 import Pin from './pin/Pin';
@@ -45,6 +47,8 @@ const Place = (props: Props) => {
   const [isAnimate, setIsAnimate] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
 
+  const { updateClick } = usePinStoreActions();
+  const confirm = useConfirm();
   const { dates } = useDateStoreState();
   const { modifyState } = useModifyPlanStoreState();
   const isModify = modifyState === 'modify';
@@ -76,6 +80,31 @@ const Place = (props: Props) => {
     [currentPage],
   );
 
+  const handleUpdate = (idx: number) => {
+    updateClick(pins[currentPage][idx], idx);
+    openModal();
+  };
+
+  const handleDelete = (idx: number) => {
+    const confTitle = '장소 삭제';
+    const confDesc = '정말 삭제하시겠습니까?';
+    const confFunc = () => {
+      setPins((prev) => {
+        const result = prev.map((day, i) => {
+          if (i === currentPage) {
+            const deleted = day.filter((_, index) => index !== idx);
+            return deleted;
+          }
+          return day;
+        });
+
+        return result;
+      });
+    };
+
+    confirm.delete(confTitle, confDesc, confFunc);
+  };
+
   return (
     <div className="flex flex-col justify-center gap-5">
       <div
@@ -90,7 +119,17 @@ const Place = (props: Props) => {
       <DndProvider options={HTML5ToTouch}>
         <ol>
           {pins[currentPage]?.map((pin, idx) => {
-            return <Pin key={uuid()} pin={pin} idx={idx} isModify={isModify} movePins={movePins} />;
+            return (
+              <Pin
+                key={uuid()}
+                pin={pin}
+                idx={idx}
+                isModify={isModify}
+                movePins={movePins}
+                handleUpdate={handleUpdate}
+                handleDelete={handleDelete}
+              />
+            );
           })}
         </ol>
       </DndProvider>
