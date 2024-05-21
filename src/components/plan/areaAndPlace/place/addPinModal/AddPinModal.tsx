@@ -49,7 +49,7 @@ const AddPinModal = (props: Props) => {
     lat: pin !== null ? (pin.lat as number) : 0,
     lng: pin !== null ? (pin.lng as number) : 0,
   });
-  const [address, setAddress] = useState('');
+  const [roadAddress, setRoadAddress] = useState('');
 
   const resolver = yupResolver(addPinSchema);
 
@@ -64,6 +64,7 @@ const AddPinModal = (props: Props) => {
     resolver,
     defaultValues: {
       placeName: pin !== null ? pin.placeName : '',
+      address: pin !== null ? pin.address : '',
       cost: pin?.cost ? pin.cost : '0',
     },
   });
@@ -83,7 +84,7 @@ const AddPinModal = (props: Props) => {
     }
 
     const address = await getAddress(coord);
-    setAddress(address);
+    setRoadAddress(address);
   };
 
   const debouncedSearchAddress = _.debounce(searchAddress, 500);
@@ -100,7 +101,7 @@ const AddPinModal = (props: Props) => {
   };
 
   const handleAddPin: SubmitHandler<AddPinInputType> = (data) => {
-    const { placeName, address, cost } = data;
+    const { placeName, cost } = data;
     const removeCommaCost = cost ? removeCommas(cost) : '0';
 
     const newPin: PinContentsType = {
@@ -108,7 +109,7 @@ const AddPinModal = (props: Props) => {
       lat: position.lat,
       lng: position.lng,
       placeName,
-      address,
+      address: roadAddress,
       cost: removeCommaCost,
     };
 
@@ -154,6 +155,12 @@ const AddPinModal = (props: Props) => {
 
   const shouldBlockSubmit =
     position.lat === 0 || position.lng === 0 || isSubmitting || watch('placeName').length === 0;
+
+  React.useEffect(() => {
+    return () => {
+      resetPin();
+    };
+  }, []);
 
   return (
     <ModalLayout isAnimate={isAnimate}>
