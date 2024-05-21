@@ -24,26 +24,38 @@ const useKakaoMap = () => {
     map.addControl(mapTypeControl, window.kakao.maps.ControlPosition[mapType]);
   };
 
-  const makeMap = (args: MakeMapArgs) => {
-    const { containerId, center, level, zoom, mapType } = args;
+  const makeMap = async (args: MakeMapArgs) => {
+    return new Promise((resolve, reject) => {
+      const { containerId, center, level, zoom, mapType } = args;
 
-    window.kakao.maps.load(() => {
-      const mapContainer = document.getElementById(containerId);
-      const mapOption = {
-        center: makeLatLng(center),
-        level,
-      };
+      window.kakao.maps.load(() => {
+        const mapContainer = document.getElementById(containerId);
+        const mapOption = {
+          center: makeLatLng(center),
+          level,
+        };
 
-      const map = new window.kakao.maps.Map(mapContainer, mapOption);
+        const map = new window.kakao.maps.Map(mapContainer, mapOption);
 
-      if (zoom) makeZoom(map, zoom);
-      if (mapType) makeMapType(map, mapType);
+        if (zoom) makeZoom(map, zoom);
+        if (mapType) makeMapType(map, mapType);
 
-      setMap(map);
+        setMap(map);
+
+        resolve(map);
+      });
     });
   };
 
-  const makeMarker = ({ lat, lng }: LatLng) => {
+  const makeMarker = ({ lat, lng }: LatLng, originMap?: any) => {
+    if (originMap) {
+      const position = makeLatLng({ lat, lng });
+      const marker = new window.kakao.maps.Marker({ position });
+      marker.setMap(originMap);
+
+      return;
+    }
+
     if (map === null) throw new Error('kakao map is null');
 
     const position = makeLatLng({ lat, lng });
