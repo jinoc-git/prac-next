@@ -9,8 +9,8 @@ import { useAuthStoreState } from '@/store/authStore';
 import { useSideBarStoreState } from '@/store/sideBarStore';
 import { sideBarCallback } from '@/utils/arrayCallbackFunctionList';
 
-import SideBarIcon from './SideBarIcon';
-import SideBarLogo from './SideBarLogo';
+import SideBarIcon from './sideBarIcon/SideBarIcon';
+import SideBarLogo from './sideBarLogo/SideBarLogo';
 import SideBarStatus from './sideBarStatus/SideBarStatus';
 import SideBarTrips from './sideBarTrips/SideBarTrips';
 

@@ -17,9 +17,7 @@ export default function SideBarStatusChip(props: SideBarStatusChipProps) {
   return (
     <div
       className={`flex-box rounded-[30px] text-xs text-white ${
-        isOpen
-          ? 'sm:w-[72.5px] sm:h-[22px] md:w-[72.5px] h-[22px]'
-          : 'md:w-[38px] md:h-[10px]'
+        isOpen ? 'sm:w-[72.5px] sm:h-[22px] md:w-[72.5px] h-[22px]' : 'md:w-[38px] md:h-[10px]'
       } ${SIED_CHIP_COLOR[status]}`}
     >
       {isOpen && status}

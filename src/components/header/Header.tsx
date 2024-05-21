@@ -18,10 +18,7 @@ export default function Header({ session }: Props) {
   const isLogin = session !== null;
 
   const bgWhite =
-    pathname !== '/' &&
-    pathname !== '/signin' &&
-    pathname !== '/signup' &&
-    pathname !== '/main';
+    pathname !== '/' && pathname !== '/signin' && pathname !== '/signup' && pathname !== '/main';
 
   return (
     <header

@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useTabMenuStoreActions } from '@/store/tabMenuStore';
 import { changeSideBarFormat } from '@/utils/aboutDay';
 
-import { SIDE_LIST_NAME } from './SideBarPlanList';
+import { SIDE_LIST_NAME } from '../SideBarPlanList';
 
 import type { PlanType } from '@/types/supabase';
 
@@ -19,8 +19,7 @@ interface Props {
 }
 
 export default function SideBarDropDown(props: Props) {
-  const { activeDropDown, aboveDropDownIsOpen, filter, planList, setFunc } =
-    props;
+  const { activeDropDown, aboveDropDownIsOpen, filter, planList, setFunc } = props;
 
   const { setSelectedMenu } = useTabMenuStoreActions();
 
@@ -66,16 +65,12 @@ export default function SideBarDropDown(props: Props) {
             key={uuid()}
           >
             <p
-              className={`text-[13px]   ${
-                aboveDropDownIsOpen ? '' : 'md:max-w-[100px] truncate'
-              }`}
+              className={`text-[13px]   ${aboveDropDownIsOpen ? '' : 'md:max-w-[100px] truncate'}`}
             >
               {plan.title}
             </p>
             {!aboveDropDownIsOpen && (
-              <span className="text-[13px] ml-[4px]">
-                ({changeSideBarFormat(plan.dates[0])})
-              </span>
+              <span className="text-[13px] ml-[4px]">({changeSideBarFormat(plan.dates[0])})</span>
             )}
           </li>
         ))}
