@@ -1,6 +1,6 @@
 import React from 'react';
 
-import AddPlanBtn from '../main/planList/AddPlanBtn';
+import AddPlanBtn from '../main/planList/addPlanBtn/AddPlanBtn';
 
 export default function ErrorMainPlanList() {
   return (

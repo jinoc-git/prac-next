@@ -17,10 +17,8 @@ export default function SideBarProgress(props: SideBarProgressProps) {
 
   const progressLength = (((isOpen ? 160 : 72) / 100) * +progress).toFixed();
 
-  const isOpenContainerClassName =
-    'relative w-[160px] h-[8px] rounded bg-[#EEF1F4]';
-  const isCloseContainerClassName =
-    'relative w-[8px] h-[72px] rounded bg-[#EEF1F4]';
+  const isOpenContainerClassName = 'relative w-[160px] h-[8px] rounded bg-[#EEF1F4]';
+  const isCloseContainerClassName = 'relative w-[8px] h-[72px] rounded bg-[#EEF1F4]';
 
   const isOpenProgressBarClassName = {
     width: progressLength + 'px',
@@ -28,6 +26,7 @@ export default function SideBarProgress(props: SideBarProgressProps) {
     top: '0',
     left: '0',
   };
+
   const isCloseProgressBarClassName = {
     width: '8px',
     height: progressLength + 'px',
@@ -53,15 +52,9 @@ export default function SideBarProgress(props: SideBarProgressProps) {
       >
         {progress + '%'}
       </p>
-      <div
-        className={
-          isOpen ? isOpenContainerClassName : isCloseContainerClassName
-        }
-      >
+      <div className={isOpen ? isOpenContainerClassName : isCloseContainerClassName}>
         <div
-          style={
-            isOpen ? isOpenProgressBarClassName : isCloseProgressBarClassName
-          }
+          style={isOpen ? isOpenProgressBarClassName : isCloseProgressBarClassName}
           className={` absolute bg-gradient-to-r from-[#116DB3] to-[#2DA4FF] rounded transition-all duration-300 ease-in-out`}
         ></div>
       </div>

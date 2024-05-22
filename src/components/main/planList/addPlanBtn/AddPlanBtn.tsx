@@ -28,9 +28,7 @@ function AddPlanBtn() {
         <path
           d="M14 0H10V10H0V14H10V24H14V14H24V10H14V0Z"
           fill={'#969696'}
-          className={
-            'sm:fill-[#1A68DB] md:fill-[#FFF] sm:group-hover:fill-[#1A68DB]'
-          }
+          className={'sm:fill-[#1A68DB] md:fill-[#FFF] sm:group-hover:fill-[#1A68DB]'}
         />
       </svg>
       여행 생성하기

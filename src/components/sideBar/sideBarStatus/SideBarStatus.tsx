@@ -2,8 +2,8 @@
 
 import React from 'react';
 
-import SideBarPlanInfo from './SideBarPlanInfo';
-import SideBarStatusChip from './SideBarStatusChip';
+import SideBarPlanInfo from './sideBarPlanInfo/SideBarPlanInfo';
+import SideBarStatusChip from './sideBarStatusChip/SideBarStatusChip';
 
 import type { PlanType } from '@/types/supabase';
 
@@ -19,11 +19,7 @@ export default function SideBarStatus(props: SideBarStatusProps) {
   const hasNextPlan = Boolean(nextPlan);
   const hasActivePlan = activePlan !== undefined;
 
-  const status = hasActivePlan
-    ? '여행 중'
-    : hasNextPlan
-      ? '여행 예정'
-      : '여행 없음';
+  const status = hasActivePlan ? '여행 중' : hasNextPlan ? '여행 예정' : '여행 없음';
 
   return (
     <div

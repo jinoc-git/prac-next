@@ -5,10 +5,7 @@ import React from 'react';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
-import {
-  useSideBarStoreActions,
-  useSideBarStoreState,
-} from '@/store/sideBarStore';
+import { useSideBarStoreActions, useSideBarStoreState } from '@/store/sideBarStore';
 
 export default function SideBarIcon() {
   const { isSideBarOpen } = useSideBarStoreState();
