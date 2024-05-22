@@ -4,7 +4,7 @@ import React, { useCallback } from 'react';
 
 import Image from 'next/image';
 
-import SideBarDropDown from './SideBarDropDown';
+import SideBarDropDown from './sideBarDropDown/SideBarDropDown';
 
 import type { PlanType } from '@/types/supabase';
 
@@ -72,9 +72,7 @@ export default function SideBarPlanList(props: Props) {
             setFunc(false);
           }}
           className={`flex-box w-[40px] h-[40px] rounded-lg side-bar-transition 
-          ${activeDropDown ? SIDE_COLOR.focus[filter] : ''} ${
-            SIDE_COLOR.hover[filter]
-          } `}
+          ${activeDropDown ? SIDE_COLOR.focus[filter] : ''} ${SIDE_COLOR.hover[filter]} `}
         >
           <Image
             src={SIDE_ICON_LIST[filter]}
@@ -94,12 +92,7 @@ export default function SideBarPlanList(props: Props) {
           </span>
           <div className="w-[14px] mr-5">
             {activeDropDown ? (
-              <Image
-                src={'/images/svgs/arrowUp.svg'}
-                width={14}
-                height={14}
-                alt="위 방향 화살표"
-              />
+              <Image src={'/images/svgs/arrowUp.svg'} width={14} height={14} alt="위 방향 화살표" />
             ) : (
               <Image
                 src={'/images/svgs/arrowDown.svg'}

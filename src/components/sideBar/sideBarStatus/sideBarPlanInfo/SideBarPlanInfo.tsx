@@ -4,13 +4,9 @@ import React from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import {
-  changeDotFormatOfDate,
-  formatMonthDay,
-  removeYearOfDate,
-} from '@/utils/aboutDay';
+import { changeDotFormatOfDate, formatMonthDay, removeYearOfDate } from '@/utils/aboutDay';
 
-import SideBarProgress from './SideBarProgress';
+import SideBarProgress from './sideBarProgress/SideBarProgress';
 
 import type { PlanType } from '@/types/supabase';
 
@@ -65,13 +61,9 @@ export default function SideBarPlanInfo(props: SideBarPlanInfoProps) {
           <SideBarProgress activePlan={activePlan} isOpen={isOpen} />
           {isOpen && (
             <div className="flex justify-between w-[160px]">
+              <span className=" text-sm">{removeYearOfDate(activePlan?.dates[0])}</span>
               <span className=" text-sm">
-                {removeYearOfDate(activePlan?.dates[0])}
-              </span>
-              <span className=" text-sm">
-                {removeYearOfDate(
-                  activePlan?.dates[activePlan.dates.length - 1],
-                )}
+                {removeYearOfDate(activePlan?.dates[activePlan.dates.length - 1])}
               </span>
             </div>
           )}

@@ -7,7 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getPlansWithBookmarks } from '@/api/plan';
 import { useAuthStoreState } from '@/store/authStore';
 
-import SideBarPlanList from './SideBarPlanList';
+import SideBarPlanList from './sideBarPlanList/SideBarPlanList';
 
 import type { PlanType } from '@/types/supabase';
 
@@ -28,8 +28,7 @@ export default function SideBarTrips(props: Props) {
 
   const { data: bookMarkPlanData } = useQuery<PlanType[] | []>({
     queryKey: ['book_mark', 'plans', user?.id],
-    queryFn: async () =>
-      await getPlansWithBookmarks(user === null ? '' : user.id),
+    queryFn: async () => await getPlansWithBookmarks(user === null ? '' : user.id),
     enabled: user !== null,
     refetchOnWindowFocus: false,
   });

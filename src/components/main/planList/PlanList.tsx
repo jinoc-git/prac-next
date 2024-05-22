@@ -10,7 +10,7 @@ import Loading from '@/components/common/loading/Loading';
 import { useAuthStoreState } from '@/store/authStore';
 import { tabMenuCallback } from '@/utils/arrayCallbackFunctionList';
 
-import AddPlanBtn from './AddPlanBtn';
+import AddPlanBtn from './addPlanBtn/AddPlanBtn';
 import PlanCardList from './planCardList/PlanCardList';
 import PlanTabMenu from './planTabMenu/PlanTabMenu';
 
@@ -51,10 +51,8 @@ export default function PlanList() {
     if (bookMarkDataList && matesData) {
       setPlanCountList({
         bookMark: bookMarkDataList.length,
-        planning: planDataList.filter(tabMenuCallback('planning').counting)
-          .length,
-        traveling: planDataList.filter(tabMenuCallback('traveling').counting)
-          .length,
+        planning: planDataList.filter(tabMenuCallback('planning').counting).length,
+        traveling: planDataList.filter(tabMenuCallback('traveling').counting).length,
         end: planDataList.filter(tabMenuCallback('end').counting).length,
       });
     }

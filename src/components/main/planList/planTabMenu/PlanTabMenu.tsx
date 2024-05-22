@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import PlanTabMenuItem from './PlanTabMenuItem';
+import PlanTabMenuItem from './planTabMenuItem/PlanTabMenuItem';
 
 import type { PlanCountList } from '@/types/aboutPlan.type';
 
