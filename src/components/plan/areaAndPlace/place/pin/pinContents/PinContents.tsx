@@ -13,8 +13,8 @@ interface Props {
   isEnding: boolean;
   isModify?: boolean;
   dragRef: ConnectDragSource;
-  handleUpdate: (idx: number) => void;
-  handleDelete: (idx: number) => void;
+  handleUpdate?: (idx: number) => void;
+  handleDelete?: (idx: number) => void;
 }
 
 const PinContents = (props: Props) => {
@@ -86,7 +86,7 @@ const PinContents = (props: Props) => {
                   e.preventDefault();
                 }}
                 onClick={() => {
-                  handleUpdate(idx);
+                  handleUpdate && handleUpdate(idx);
                 }}
                 className="flex-box border-b border-gray_dark_1 cursor-pointer hover:bg-gray_light_3
                 md:w-[100px] md:h-[40px]
@@ -109,7 +109,7 @@ const PinContents = (props: Props) => {
                   e.preventDefault();
                 }}
                 onClick={() => {
-                  handleDelete(idx);
+                  handleDelete && handleDelete(idx);
                 }}
                 className="flex-box border-b border-gray_dark_1 cursor-pointer hover:bg-gray_light_3
                 md:w-[100px] md:h-[40px]

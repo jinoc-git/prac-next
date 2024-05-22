@@ -25,8 +25,8 @@ interface Props {
   dragArea?: React.ReactNode;
   isModify?: boolean;
   movePins?: (beforeIdx: number, afterIdx: number) => void;
-  handleUpdate: (idx: number) => void;
-  handleDelete: (idx: number) => void;
+  handleUpdate?: (idx: number) => void;
+  handleDelete?: (idx: number) => void;
 }
 
 const Pin = (props: Props) => {

@@ -1,13 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import { DndProvider, MouseTransition, TouchTransition } from 'react-dnd-multi-backend';
-import { TouchBackend } from 'react-dnd-touch-backend';
 
 import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import Image from 'next/image';
 
+import DragNDropProvider from '@/components/common/providers/dragNDropProvider/DragNDropProvider';
 import useConfirm from '@/hooks/useConfirm';
 import { useDateStoreState } from '@/store/dateStore';
 import { useModifyPlanStoreState } from '@/store/modifyPlanStore';
@@ -17,23 +15,6 @@ import AddPinModal from './addPinModal/AddPinModal';
 import Pin from './pin/Pin';
 
 import type { PinContentsType } from '@/types/supabase';
-
-const HTML5ToTouch = {
-  backends: [
-    {
-      id: 'html5',
-      backend: HTML5Backend,
-      transition: MouseTransition,
-    },
-    {
-      id: 'touch',
-      backend: TouchBackend,
-      options: { enableMouseEvents: true },
-      preview: true,
-      transition: TouchTransition,
-    },
-  ],
-};
 
 interface Props {
   currentPage: number;
@@ -116,7 +97,7 @@ const Place = (props: Props) => {
         <Image src={'/images/svgs/pin.svg'} width={20} height={20} alt="여행 지역 아이콘" />
         <p>방문할 장소</p>
       </div>
-      <DndProvider options={HTML5ToTouch}>
+      <DragNDropProvider>
         <ol>
           {pins[currentPage]?.map((pin, idx) => {
             return (
@@ -132,7 +113,7 @@ const Place = (props: Props) => {
             );
           })}
         </ol>
-      </DndProvider>
+      </DragNDropProvider>
       {dates.length !== 0 && isModify && (
         <div
           className="flex items-center justify-between pb-[60px]

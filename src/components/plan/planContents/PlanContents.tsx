@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -64,9 +64,13 @@ export default function PlanContents({ plan, originPins }: Props) {
     setValue('totalCost', addCommas(+val));
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (plan) setReadOnly();
     else setModify();
+
+    return () => {
+      setReadOnly();
+    };
   }, []);
 
   return (
