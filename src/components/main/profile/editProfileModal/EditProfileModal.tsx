@@ -1,10 +1,13 @@
 'use client';
 
 import React from 'react';
+import { useForm } from 'react-hook-form';
 
+import { yupResolver } from '@hookform/resolvers/yup';
 import Image from 'next/image';
 
 import ModalLayout from '@/components/common/layout/ModalLayout';
+import { editProfileSchema } from '@/schema/editProfileSchema';
 
 interface Props {
   handleCloseModal: () => void;
@@ -12,6 +15,16 @@ interface Props {
 }
 
 const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
+  const resolver = yupResolver(editProfileSchema);
+
+  const {
+    handleSubmit,
+    register,
+    watch,
+    resetField,
+    formState: { errors, isSubmitting, isValid },
+  } = useForm({ mode: 'onChange', resolver });
+
   return (
     <ModalLayout isAnimate={isAnimate}>
       <form

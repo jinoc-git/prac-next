@@ -38,7 +38,7 @@ export default function SignupForm() {
     watch,
     reset,
     formState: { errors, isSubmitting, isValid },
-  } = useForm<SignupFormInputList>({ mode: 'onChange', resolver });
+  } = useForm({ mode: 'onChange', resolver });
 
   const onSubmit: SubmitHandler<SignupFormInputList> = async (data) => {
     const { email, password, nickname } = data;
