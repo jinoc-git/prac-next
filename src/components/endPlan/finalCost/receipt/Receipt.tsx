@@ -8,7 +8,7 @@ import { useParams } from 'next/navigation';
 
 import { getPlanMatesUserId } from '@/api/planMate';
 import { removeYearOfDate } from '@/utils/aboutDay';
-import { removeCommas } from '@/utils/numberFormat';
+import { addCommas, removeCommas } from '@/utils/numberFormat';
 
 interface Props {
   dates: string[];
@@ -61,17 +61,17 @@ const Receipt = ({ dates, datesCost, totalCost }: Props) => {
         >
           <p>
             총 사용 경비는&nbsp;
-            <span className="font-semibold text-blue ">{totalExpendedCost}원</span>
+            <span className="font-semibold text-blue ">{addCommas(totalExpendedCost)}원</span>
             &nbsp; 입니다.
           </p>
           <p className="mt-2">
-            <span className=" text-orange">{remainingCost}원</span>
+            <span className=" text-orange">{addCommas(remainingCost)}원</span>
             {remainingCostText}
           </p>
           <p className=" mt-[40px]">
             인당&nbsp;
             <span className="text-navy">
-              {Math.abs(remainingCost / planMateCount).toFixed(0)}원
+              {addCommas(Math.abs(remainingCost / planMateCount).toFixed(0))}원
             </span>
             {isMinusRemainingCost ? ' 부족해요!' : ' 남아요!'}
           </p>

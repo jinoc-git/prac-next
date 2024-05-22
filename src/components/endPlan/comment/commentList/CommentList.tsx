@@ -24,7 +24,7 @@ const CommentList = ({ planId }: Props) => {
   });
 
   return (
-    <div className="w-full sm:py-[10px] sm:px-[10px] md:py-[30px] md:px-[20px]">
+    <div className="w-full space-y-2 sm:py-[10px] sm:px-[10px] md:py-[30px] md:px-[20px]">
       {!data || data.length === 0 ? (
         <p className="comment-text">첫 코멘트를 입력해주세요!</p>
       ) : (
