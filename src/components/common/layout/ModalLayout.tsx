@@ -19,7 +19,7 @@ export default function ModalLayout(props: Props) {
   }, []);
 
   return createPortal(
-    <div
+    <dialog
       className={`fixed inset-0 z-50 flex-box w-screen h-screen bg-black/30 
       ${isAnimate ? 'sm:animate-fadeIn' : 'sm:animate-fadeOut'}`}
     >
@@ -36,7 +36,7 @@ export default function ModalLayout(props: Props) {
       >
         {children}
       </div>
-    </div>,
+    </dialog>,
     document.getElementById('modal-portal')!,
   );
 }

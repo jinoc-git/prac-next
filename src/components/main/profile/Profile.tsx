@@ -6,18 +6,20 @@ import Image from 'next/image';
 
 import { useAuthStoreState } from '@/store/authStore';
 
+import EditProfileModal from './editProfileModal/EditProfileModal';
+
 export default function Profile() {
   const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
   const [animate, setAnimate] = useState<boolean>(true);
 
   const user = useAuthStoreState();
 
-  const onClickOpenModalHandler = () => {
+  const handleOpenModal = () => {
     setAnimate(true);
     setIsEditModalOpen(true);
   };
 
-  const onClickCloseModalHandler = () => {
+  const handleCloseModal = () => {
     setAnimate(false);
     setTimeout(() => {
       setIsEditModalOpen(false);
@@ -32,7 +34,7 @@ export default function Profile() {
       md:gap-[40px] md:w-[800px]"
       >
         <div
-          onClick={onClickOpenModalHandler}
+          onClick={handleOpenModal}
           className="relative rounded-full object-cover cursor-pointer hover:opacity-75
           sm:w-[66px] sm:h-[66px] 
           md:w-[85px] md:h-[85px]"
@@ -66,18 +68,15 @@ export default function Profile() {
           </div>
         </div>
         <p className="text-white text-base font-Regular sm:text-[16px] md:text-xlg">
-          <span className="cursor-pointer" onClick={onClickOpenModalHandler}>
+          <span className="cursor-pointer" onClick={handleOpenModal}>
             {user?.nickname}
           </span>
           님의 여행 계획
         </p>
       </div>
-      {/* {isEditModalOpen && (
-        <EditProfileModal
-          animate={animate}
-          onClickCloseModalHandler={onClickCloseModalHandler}
-        />
-      )} */}
+      {isEditModalOpen && (
+        <EditProfileModal isAnimate={animate} handleCloseModal={handleCloseModal} />
+      )}
     </section>
   );
 }
