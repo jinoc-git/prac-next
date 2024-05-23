@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -20,7 +21,7 @@ interface Props {
 
 const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
   const user = useAuthStoreState();
-  console.log(user);
+
   const resolver = yupResolver(editProfileSchema);
 
   const {
@@ -31,11 +32,16 @@ const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
     formState: { errors, isSubmitting, isValid },
   } = useForm({ mode: 'onChange', resolver });
 
+  const onSubmit: SubmitHandler<EditProfile> = (data) => {
+    console.log(data);
+  };
+
   const checkFunc = () => {};
 
   return (
     <ModalLayout isAnimate={isAnimate}>
       <form
+        onSubmit={handleSubmit(onSubmit)}
         className="relative flexcol items-center align-middle rounded-xl
         md:h-[575px] md:w-[396px] md:justify-between md:gap-0
         sm:h-[404px] sm:w-[310px] sm:gap-[15px]"
@@ -78,6 +84,7 @@ const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
           <input
             id="avatar"
             type="file"
+            {...register('avatar')}
             accept=".jpg, .jpeg, .png, .heic, .heif, .HEIC, .HEIF"
             className="hidden"
           />
@@ -92,6 +99,7 @@ const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
           placeholder={user ? user.nickname : ''}
           register={register('nickname')}
           duplicate={true}
+          errors={errors}
           checkFunc={checkFunc}
         />
         <div className="flex justify-between md:w-[408px] sm:w-[310px]">

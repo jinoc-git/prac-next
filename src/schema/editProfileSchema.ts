@@ -13,14 +13,19 @@ const IMAGE_TYPE = [
 ];
 
 const avatar = yup.mixed<FileList>().test('type', 'Invalid file type', (val?: FileList) => {
+  console.log('in', val);
   return val && val[0] && IMAGE_TYPE.includes(val[0].type);
 });
 
-const nickname = yup
-  .string()
-  .matches(nicknameRegExp, '닉네임은 2~6자, 특수문자 불가입니다.')
-  .min(2, '닉네임은 2자리 이상이어야 합니다.')
-  .max(6, '닉네임은 6자리 이하이어야 합니다.');
+const nickname = yup.string().when(([val], schema) => {
+  return val && val !== ''
+    ? yup
+        .string()
+        .min(2, '닉네임은 2자리 이상이어야 합니다.')
+        .max(6, '닉네임은 6자리 이하이어야 합니다.')
+        .matches(nicknameRegExp, '닉네임은 2~6자, 특수문자 불가입니다.')
+    : schema;
+});
 
 export interface EditProfile {
   avatar?: FileList;
