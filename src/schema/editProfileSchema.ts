@@ -13,9 +13,7 @@ const IMAGE_TYPE = [
 ];
 
 const avatar = yup.mixed<FileList>().test('type', 'Invalid file type', (val?: FileList) => {
-  if (val instanceof FileList) return val && val[0] && IMAGE_TYPE.includes(val[0].type);
-
-  return false;
+  return val && val[0] && IMAGE_TYPE.includes(val[0].type);
 });
 
 const nickname = yup

@@ -6,8 +6,12 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Image from 'next/image';
 
+import DuplicateInput from '@/components/common/input/DuplicateInput';
 import ModalLayout from '@/components/common/layout/ModalLayout';
 import { editProfileSchema } from '@/schema/editProfileSchema';
+import { useAuthStoreState } from '@/store/authStore';
+
+import type { EditProfile } from '@/schema/editProfileSchema';
 
 interface Props {
   handleCloseModal: () => void;
@@ -15,6 +19,8 @@ interface Props {
 }
 
 const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
+  const user = useAuthStoreState();
+  console.log(user);
   const resolver = yupResolver(editProfileSchema);
 
   const {
@@ -24,6 +30,8 @@ const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
     resetField,
     formState: { errors, isSubmitting, isValid },
   } = useForm({ mode: 'onChange', resolver });
+
+  const checkFunc = () => {};
 
   return (
     <ModalLayout isAnimate={isAnimate}>
@@ -78,7 +86,14 @@ const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
           프로필 사진은 정사각형 비율로 된 사진을 업로드해 주세요. <br />
           (100 X 100픽셀 권장)
         </p>
-        {/* <DuplicateInput /> */}
+        <DuplicateInput<EditProfile>
+          leftIcon={{ src: '/images/svgs/person.svg', alt: '사람 아이콘' }}
+          name="nickname"
+          placeholder={user ? user.nickname : ''}
+          register={register('nickname')}
+          duplicate={true}
+          checkFunc={checkFunc}
+        />
         <div className="flex justify-between md:w-[408px] sm:w-[310px]">
           <button
             name="profile-remove-avatar-btn"
