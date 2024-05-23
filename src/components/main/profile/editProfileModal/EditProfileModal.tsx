@@ -3,10 +3,12 @@
 import React from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import Image from 'next/image';
 
+import { checkUserNickname } from '@/api/auth';
 import DuplicateInput from '@/components/common/input/DuplicateInput';
 import ModalLayout from '@/components/common/layout/ModalLayout';
 import { editProfileSchema } from '@/schema/editProfileSchema';
@@ -22,6 +24,8 @@ interface Props {
 const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
   const user = useAuthStoreState();
 
+  const [isDuplicateNickname, setIsDuplicateNickname] = React.useState(true);
+
   const resolver = yupResolver(editProfileSchema);
 
   const {
@@ -36,7 +40,33 @@ const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
     console.log(data);
   };
 
-  const checkFunc = () => {};
+  const avatar = watch('avatar');
+  const isChangeAvatar = avatar !== undefined && avatar.length > 0;
+
+  const nickname = watch('nickname');
+  const isChangeNickname = nickname !== undefined && nickname !== '';
+
+  const blockSubmit = (!isChangeAvatar && !isChangeNickname) || isDuplicateNickname;
+
+  // 사진만 변경, 닉네임만 변경
+
+  const checkNickname = async () => {
+    if (nickname) {
+      const isOk = await checkUserNickname(nickname);
+
+      if (isOk) {
+        setIsDuplicateNickname(false);
+        toast.success('사용 가능한 닉네임입니다.');
+      } else {
+        setIsDuplicateNickname(true);
+        toast.error('중복된 닉네임입니다.');
+      }
+    }
+  };
+
+  React.useEffect(() => {
+    setIsDuplicateNickname(true);
+  }, [nickname]);
 
   return (
     <ModalLayout isAnimate={isAnimate}>
@@ -46,6 +76,15 @@ const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
         md:h-[575px] md:w-[396px] md:justify-between md:gap-0
         sm:h-[404px] sm:w-[310px] sm:gap-[15px]"
       >
+        <button className=" absolute sm:top-0 sm:right-0 md:top-1 md:right-1">
+          <Image
+            src="/images/svgs/close.svg"
+            alt="프로필 아이콘"
+            width={30}
+            height={30}
+            className="sm:w-[24px] sm:h-[24px] md:w-[30px] md:h-[30px]"
+          />
+        </button>
         <div className="md:flex items-center gap-3 w-full">
           <Image
             src="/images/svgs/userDefault.svg"
@@ -98,9 +137,9 @@ const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
           name="nickname"
           placeholder={user ? user.nickname : ''}
           register={register('nickname')}
-          duplicate={true}
+          duplicate={!isChangeNickname}
           errors={errors}
-          checkFunc={checkFunc}
+          checkFunc={checkNickname}
         />
         <div className="flex justify-between md:w-[408px] sm:w-[310px]">
           <button
@@ -117,7 +156,7 @@ const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
           </button>
           <button
             name="profile-change-btn"
-            // disabled={shouldBlockSubmitBtn.result}
+            disabled={blockSubmit}
             type="submit"
             className="border rounded-lg bg-navy text-white hover:bg-navy_light_3 disabled:bg-gray_light_3
               md:w-[200px] md:h-[45px]

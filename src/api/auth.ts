@@ -7,11 +7,7 @@ const supabaseClientClient = createClientComponentClient<Database>();
 
 export { supabaseClientClient };
 
-export const signUpWithSB = async (
-  email: string,
-  password: string,
-  nickname: string,
-) => {
+export const signUpWithSB = async (email: string, password: string, nickname: string) => {
   const { data, error: authError } = await supabaseClientClient.auth.signUp({
     email,
     password,
@@ -57,11 +53,10 @@ export const insertUser = async (user: UserType) => {
 };
 
 export const signInWithSB = async (email: string, password: string) => {
-  const { error: authError } =
-    await supabaseClientClient.auth.signInWithPassword({
-      email,
-      password,
-    });
+  const { error: authError } = await supabaseClientClient.auth.signInWithPassword({
+    email,
+    password,
+  });
 
   const isAuthError = Boolean(authError);
   if (isAuthError) {
@@ -104,9 +99,7 @@ export const uploadProfileImg = async (avatarFile: File, email: string) => {
 };
 
 export const updateUserProfileImage = async (path: string, userId: string) => {
-  const URL = `${
-    process.env.NEXT_PUBLIC_SB_STORAGE_URL as string
-  }/profile_img/${path}`;
+  const URL = `${process.env.NEXT_PUBLIC_SB_STORAGE_URL as string}/profile_img/${path}`;
   const { data } = await supabaseClientClient.auth.updateUser({
     data: { profileImg: URL },
   });
@@ -152,24 +145,19 @@ export const deleteUserProfileImage = async (userId: string) => {
 };
 
 export const checkUserNickname = async (nickname: string) => {
-  const { data } = await supabaseClientClient
+  const { data, error } = await supabaseClientClient
     .from('users')
     .select('nickname')
     .eq('nickname', nickname);
 
-  if (data !== null && data.length === 0) {
-    return true;
-  }
-  if (data !== null && data.length > 0) {
-    return false;
-  }
+  if (error) throw new Error('닉네임 중복 확인 오류');
+
+  if (data.length === 0) return true;
+  else return false;
 };
 
 export const checkUserEmail = async (email: string) => {
-  const { data } = await supabaseClientClient
-    .from('users')
-    .select('email')
-    .eq('email', email);
+  const { data } = await supabaseClientClient.from('users').select('email').eq('email', email);
   if (data !== null && data.length === 0) {
     return true;
   }
@@ -215,10 +203,7 @@ export const updateUserNickname = async (nickname: string, userId: string) => {
 };
 
 export const getUserInfoWithId = async (id: string) => {
-  const { data, error } = await supabaseClientClient
-    .from('users')
-    .select()
-    .eq('id', id);
+  const { data, error } = await supabaseClientClient.from('users').select().eq('id', id);
 
   if (error) throw new Error(error.message);
 
@@ -226,10 +211,7 @@ export const getUserInfoWithId = async (id: string) => {
 };
 
 export const getUserInfoWithIdList = async (userIdList: string[]) => {
-  const { data, error } = await supabaseClientClient
-    .from('users')
-    .select()
-    .in('id', userIdList);
+  const { data, error } = await supabaseClientClient.from('users').select().in('id', userIdList);
 
   if (error) throw new Error(error.message);
 
