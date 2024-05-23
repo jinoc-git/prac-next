@@ -82,44 +82,41 @@ export const signOutForSB = async () => {
 };
 
 export const uploadProfileImg = async (avatarFile: File, email: string) => {
-  const { data, error: storageError } = await supabaseClientClient.storage
+  const { data, error } = await supabaseClientClient.storage
     .from('profile_img')
     .upload(`${email}/${uuid()}`, avatarFile, {
       cacheControl: '3600',
       upsert: false,
     });
 
-  const isStorageError = Boolean(storageError);
-  if (isStorageError) {
-    return storageError;
-  }
-  if (data !== null) {
-    return data.path;
-  }
+  if (error) throw new Error('프로필 사진 업로드 오류');
+
+  return data.path;
 };
 
 export const updateUserProfileImage = async (path: string, userId: string) => {
   const URL = `${process.env.NEXT_PUBLIC_SB_STORAGE_URL as string}/profile_img/${path}`;
-  const { data } = await supabaseClientClient.auth.updateUser({
+
+  const { data, error } = await supabaseClientClient.auth.updateUser({
     data: { profileImg: URL },
   });
 
-  const { error } = await supabaseClientClient
+  const { error: tableError } = await supabaseClientClient
     .from('users')
     .update({ avatar_url: URL })
     .eq('id', userId)
     .select();
 
-  const isUserTableError = Boolean(error);
-  if (isUserTableError) {
-    console.log(error);
-    return null;
-  }
+  if (error || tableError) throw new Error('프로필 업데이트 오류');
 
-  const isSuccess = Boolean(data);
-  if (isSuccess) {
-    return data.user;
-  }
+  const { id, email, user_metadata } = data.user;
+
+  return {
+    id,
+    email: email as string,
+    nickname: user_metadata.nickname as string,
+    profileImg: user_metadata.profileImg ? (user_metadata.profileImg as string) : '',
+  };
 };
 
 export const deleteUserProfileImage = async (userId: string) => {
@@ -167,39 +164,26 @@ export const checkUserEmail = async (email: string) => {
 };
 
 export const updateUserNickname = async (nickname: string, userId: string) => {
-  const { data } = await supabaseClientClient.auth.updateUser({
+  const { data, error } = await supabaseClientClient.auth.updateUser({
     data: { nickname },
   });
 
-  const { error } = await supabaseClientClient
+  const { error: tableError } = await supabaseClientClient
     .from('users')
     .update({ nickname })
     .eq('id', userId)
     .select();
 
-  const isUserTableError = Boolean(error);
-  if (isUserTableError) {
-    console.log(error);
-    return null;
-  }
+  if (error || tableError) throw new Error('닉네임 업데이트 오류');
 
-  const isSuccess = Boolean(data);
-  if (isSuccess) {
-    if (data.user !== null && data.user !== undefined) {
-      const {
-        id,
-        email,
-        user_metadata: { nickname, profileImg },
-      } = data.user;
+  const { id, email, user_metadata } = data.user;
 
-      return {
-        id,
-        email: email as string,
-        nickname,
-        profileImg,
-      };
-    }
-  }
+  return {
+    id,
+    email: email as string,
+    nickname: user_metadata.nickname as string,
+    profileImg: user_metadata.profileImg ? (user_metadata.profileImg as string) : '',
+  };
 };
 
 export const getUserInfoWithId = async (id: string) => {

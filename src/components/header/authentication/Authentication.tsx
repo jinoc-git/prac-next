@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { toast } from 'react-toastify';
 
 import Link from 'next/link';
@@ -32,7 +32,7 @@ export default function Authentication({ isLogin }: Props) {
     router.refresh();
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     authObserver();
 
     if (isLogin) setVisibilitySideBar(true);

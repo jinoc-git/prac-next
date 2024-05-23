@@ -7,12 +7,18 @@ import { toast } from 'react-toastify';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
-import { checkUserNickname } from '@/api/auth';
+import {
+  checkUserNickname,
+  updateUserNickname,
+  updateUserProfileImage,
+  uploadProfileImg,
+} from '@/api/auth';
 import DuplicateInput from '@/components/common/input/DuplicateInput';
 import ModalLayout from '@/components/common/layout/ModalLayout';
 import { editProfileSchema } from '@/schema/editProfileSchema';
-import { useAuthStoreState } from '@/store/authStore';
+import { useAuthStoreActions, useAuthStoreState } from '@/store/authStore';
 
 import type { EditProfile } from '@/schema/editProfileSchema';
 
@@ -22,7 +28,10 @@ interface Props {
 }
 
 const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
+  const router = useRouter();
+
   const user = useAuthStoreState();
+  const { setUser } = useAuthStoreActions();
 
   const [isDuplicateNickname, setIsDuplicateNickname] = React.useState(true);
 
@@ -36,8 +45,28 @@ const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
     formState: { errors, isSubmitting, isValid },
   } = useForm({ mode: 'onChange', resolver });
 
-  const onSubmit: SubmitHandler<EditProfile> = (data) => {
+  const onSubmit: SubmitHandler<EditProfile> = async (data) => {
     console.log(data);
+    if (!user) return;
+
+    const { nickname, avatar } = data;
+
+    try {
+      if (nickname) {
+        const result = await updateUserNickname(nickname, user.id);
+        console.log('닉네임 업데이트', result);
+        setUser(result);
+      }
+      if (avatar && avatar.length > 0) {
+        const path = await uploadProfileImg(avatar[0], user.email);
+        const result = await updateUserProfileImage(path, user.id);
+        console.log('사진 업데이트', result);
+        setUser(result);
+      }
+      toast.success('프로필 변경 완료');
+      handleCloseModal();
+      router.refresh();
+    } catch (error) {}
   };
 
   const avatar = watch('avatar');
@@ -50,7 +79,7 @@ const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
 
   // 사진만 변경, 닉네임만 변경
 
-  const checkNickname = async () => {
+  const checkNickname = React.useCallback(async () => {
     if (nickname) {
       const isOk = await checkUserNickname(nickname);
 
@@ -62,11 +91,20 @@ const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
         toast.error('중복된 닉네임입니다.');
       }
     }
-  };
+  }, [nickname]);
 
   React.useEffect(() => {
     setIsDuplicateNickname(true);
   }, [nickname]);
+
+  React.useEffect(() => {
+    console.log('render');
+    return () => {
+      resetField('avatar');
+      resetField('nickname');
+      setIsDuplicateNickname(true);
+    };
+  }, []);
 
   return (
     <ModalLayout isAnimate={isAnimate}>
@@ -76,7 +114,12 @@ const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
         md:h-[575px] md:w-[396px] md:justify-between md:gap-0
         sm:h-[404px] sm:w-[310px] sm:gap-[15px]"
       >
-        <button className=" absolute sm:top-0 sm:right-0 md:top-1 md:right-1">
+        <button
+          onClick={handleCloseModal}
+          type="button"
+          name="profile-modal-close-btn"
+          className=" absolute sm:top-0 sm:right-0 md:top-1 md:right-1"
+        >
           <Image
             src="/images/svgs/close.svg"
             alt="프로필 아이콘"
