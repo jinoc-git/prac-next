@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 
 import {
   checkUserNickname,
+  supabaseClientClient,
   updateUserNickname,
   updateUserProfileImage,
   uploadProfileImg,
@@ -46,27 +47,39 @@ const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
   } = useForm({ mode: 'onChange', resolver });
 
   const onSubmit: SubmitHandler<EditProfile> = async (data) => {
-    console.log(data);
     if (!user) return;
 
     const { nickname, avatar } = data;
 
     try {
-      if (nickname) {
-        const result = await updateUserNickname(nickname, user.id);
-        console.log('닉네임 업데이트', result);
-        setUser(result);
-      }
+      if (nickname) await updateUserNickname(nickname, user.id);
       if (avatar && avatar.length > 0) {
         const path = await uploadProfileImg(avatar[0], user.email);
-        const result = await updateUserProfileImage(path, user.id);
-        console.log('사진 업데이트', result);
-        setUser(result);
+        await updateUserProfileImage(path, user.id);
       }
+
+      const { data, error } = await supabaseClientClient.auth.refreshSession();
+      if (error || data.user === null) throw new Error('세션 초기화 오류');
+
+      const {
+        user: { id, email, user_metadata },
+      } = data;
+
+      const result = {
+        id,
+        email: email as string,
+        nickname: user_metadata.nickname as string,
+        profileImg: user_metadata.profileImg ? (user_metadata.profileImg as string) : '',
+      };
+
+      setUser(result);
+
       toast.success('프로필 변경 완료');
       handleCloseModal();
       router.refresh();
-    } catch (error) {}
+    } catch (error) {
+      if (error instanceof Error) toast.error(error.message);
+    }
   };
 
   const avatar = watch('avatar');
@@ -74,8 +87,9 @@ const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
 
   const nickname = watch('nickname');
   const isChangeNickname = nickname !== undefined && nickname !== '';
+  const needCheckNickname = isChangeNickname && isDuplicateNickname;
 
-  const blockSubmit = (!isChangeAvatar && !isChangeNickname) || isDuplicateNickname;
+  const blockSubmit = (!isChangeAvatar && !isChangeNickname) || needCheckNickname;
 
   // 사진만 변경, 닉네임만 변경
 

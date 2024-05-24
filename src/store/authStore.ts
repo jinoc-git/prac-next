@@ -14,7 +14,7 @@ interface Store {
   user: UserType | null;
   actions: Actions;
 }
-// 닉네임 변경 후 새로고침 시 initial_session이 다시 들어오면서 초기화되는 현상 있음
+
 export const authStore = create<Store>((set, get) => ({
   user: null,
   actions: {

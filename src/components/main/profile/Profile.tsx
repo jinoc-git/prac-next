@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 
 import Image from 'next/image';
 
@@ -9,11 +9,11 @@ import { useAuthStoreState } from '@/store/authStore';
 import EditProfileModal from './editProfileModal/EditProfileModal';
 
 export default function Profile() {
-  const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
-  const [animate, setAnimate] = useState<boolean>(true);
+  const [isEditModalOpen, setIsEditModalOpen] = React.useState<boolean>(false);
+  const [animate, setAnimate] = React.useState<boolean>(true);
 
   const user = useAuthStoreState();
-
+  console.log('프로필', user);
   const handleOpenModal = () => {
     setAnimate(true);
     setIsEditModalOpen(true);
