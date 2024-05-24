@@ -38,7 +38,7 @@ export default function SignupForm() {
     watch,
     reset,
     formState: { errors, isSubmitting, isValid },
-  } = useForm<SignupFormInputList>({ mode: 'onChange', resolver });
+  } = useForm({ mode: 'onChange', resolver });
 
   const onSubmit: SubmitHandler<SignupFormInputList> = async (data) => {
     const { email, password, nickname } = data;
@@ -134,7 +134,7 @@ export default function SignupForm() {
         <h3 className="text-blue border-blue border-b-2 w-[64px] text-lg font-semibold">
           회원가입
         </h3>
-        <DuplicateInput
+        <DuplicateInput<SignupFormInputList>
           name="nickname"
           placeholder="닉네임을 입력해주세요."
           register={register('nickname')}
@@ -143,7 +143,7 @@ export default function SignupForm() {
           duplicate={watch('nickname') === undefined || watch('nickname') === ''}
           checkFunc={checkNicknameDuplication}
         />
-        <DuplicateInput
+        <DuplicateInput<SignupFormInputList>
           name="email"
           placeholder="이메일을 입력해주세요."
           register={register('email')}

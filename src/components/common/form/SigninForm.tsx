@@ -30,7 +30,7 @@ export default function SigninForm() {
     handleSubmit,
     reset,
     formState: { errors, isSubmitting, isValid },
-  } = useForm<SigninFormInputList>({ mode: 'onChange', resolver });
+  } = useForm({ mode: 'onChange', resolver });
 
   const onSubmit: SubmitHandler<SigninFormInputList> = async (data) => {
     const { email, password } = data;

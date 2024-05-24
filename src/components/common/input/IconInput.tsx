@@ -14,7 +14,7 @@ interface IconInputProps {
   register: UseFormRegisterReturn<string>;
 }
 
-export default function IconInput(props: IconInputProps) {
+const IconInput = (props: IconInputProps) => {
   const { leftIcon, name, placeholder, register } = props;
 
   return (
@@ -23,12 +23,7 @@ export default function IconInput(props: IconInputProps) {
         htmlFor={name}
         className="absolute top-1/2 -translate-y-1/2 left-[5px] w-[24px] h-[24px] flex-box cursor-pointer"
       >
-        <Image
-          src={leftIcon.src}
-          alt={leftIcon.alt}
-          width={leftIcon.w}
-          height={leftIcon.h}
-        />
+        <Image src={leftIcon.src} alt={leftIcon.alt} width={leftIcon.w} height={leftIcon.h} />
       </label>
       <input
         type="text"
@@ -39,4 +34,6 @@ export default function IconInput(props: IconInputProps) {
       />
     </div>
   );
-}
+};
+
+export default IconInput;
