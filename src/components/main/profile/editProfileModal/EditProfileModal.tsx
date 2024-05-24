@@ -18,6 +18,7 @@ import {
 } from '@/api/auth';
 import DuplicateInput from '@/components/common/input/DuplicateInput';
 import ModalLayout from '@/components/common/layout/ModalLayout';
+import useUserInfoMutation from '@/hooks/useUserInfoMutation';
 import { editProfileSchema } from '@/schema/editProfileSchema';
 import { useAuthStoreActions, useAuthStoreState } from '@/store/authStore';
 
@@ -33,8 +34,18 @@ const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
 
   const user = useAuthStoreState();
   const { setUser } = useAuthStoreActions();
+  const { userInfoMutate } = useUserInfoMutation(user?.id);
 
+  const [preview, setPreview] = React.useState(user?.avatar_url ? user.avatar_url : '');
   const [isDuplicateNickname, setIsDuplicateNickname] = React.useState(true);
+
+  const handleFileChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setPreview(url);
+    }
+  }, []);
 
   const resolver = yupResolver(editProfileSchema);
 
@@ -46,40 +57,45 @@ const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
     formState: { errors, isSubmitting, isValid },
   } = useForm({ mode: 'onChange', resolver });
 
-  const onSubmit: SubmitHandler<EditProfile> = async (data) => {
-    if (!user) return;
+  const onSubmit: SubmitHandler<EditProfile> = React.useCallback(
+    async (data) => {
+      if (!user) return;
 
-    const { nickname, avatar } = data;
+      const { nickname, avatar } = data;
 
-    try {
-      if (nickname) await updateUserNickname(nickname, user.id);
-      if (avatar && avatar.length > 0) {
-        const path = await uploadProfileImg(avatar[0], user.email);
-        await updateUserProfileImage(path, user.id);
+      try {
+        if (nickname) await updateUserNickname(nickname, user.id);
+        if (avatar && avatar.length > 0) {
+          const path = await uploadProfileImg(avatar[0], user.email);
+          await updateUserProfileImage(path, user.id);
+        }
+
+        const { data, error } = await supabaseClientClient.auth.refreshSession();
+        if (error || data.user === null) throw new Error('세션 초기화 오류');
+
+        const {
+          user: { id, email, user_metadata },
+        } = data;
+
+        const result = {
+          id,
+          email: email as string,
+          nickname: user_metadata.nickname as string,
+          avatar_url: user_metadata.profileImg ? (user_metadata.profileImg as string) : '',
+        };
+
+        userInfoMutate(user.id);
+
+        toast.success('프로필 변경 완료');
+        handleCloseModal();
+        setUser(result);
+        // router.refresh();
+      } catch (error) {
+        if (error instanceof Error) toast.error(error.message);
       }
-
-      const { data, error } = await supabaseClientClient.auth.refreshSession();
-      if (error || data.user === null) throw new Error('세션 초기화 오류');
-
-      const {
-        user: { id, email, user_metadata },
-      } = data;
-
-      const result = {
-        id,
-        email: email as string,
-        nickname: user_metadata.nickname as string,
-        avatar_url: user_metadata.profileImg ? (user_metadata.profileImg as string) : '',
-      };
-
-      toast.success('프로필 변경 완료');
-      handleCloseModal();
-      setUser(result);
-      // router.refresh();
-    } catch (error) {
-      if (error instanceof Error) toast.error(error.message);
-    }
-  };
+    },
+    [user, userInfoMutate],
+  );
 
   const avatar = watch('avatar');
   const isChangeAvatar = avatar !== undefined && avatar.length > 0;
@@ -152,8 +168,8 @@ const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
         <div className="relative hover:brightness-75 sm:w-[150px] sm:h-[150px] md:w-[200px] md:h-[200px]">
           <label htmlFor="avatar">
             <Image
-              src="/images/svgs/userDefault.svg"
-              alt="프로필 아이콘"
+              src={preview ? preview : '/images/svgs/userDefault.svg'}
+              alt="유저 프로필 사진"
               width={200}
               height={200}
               className="w-full h-full rounded-full border-[2.5px] border-gray object-cover cursor-pointer"
@@ -176,7 +192,7 @@ const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
           <input
             id="avatar"
             type="file"
-            {...register('avatar')}
+            {...register('avatar', { onChange: handleFileChange })}
             accept=".jpg, .jpeg, .png, .heic, .heif, .HEIC, .HEIF"
             className="hidden"
           />
