@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 
 import Image from 'next/image';
 
@@ -11,7 +11,8 @@ interface PasswordInputProps extends InputCompProps<SignupFormInputList> {}
 
 const PasswordInput = (props: PasswordInputProps) => {
   const { name, placeholder, register, errors } = props;
-  const [showPassword, setShowPassword] = useState(false);
+
+  const [showPassword, setShowPassword] = React.useState(false);
 
   const toggleShowPassword = () => setShowPassword((prev) => !prev);
 
@@ -21,12 +22,7 @@ const PasswordInput = (props: PasswordInputProps) => {
         htmlFor={name}
         className="absolute top-[21px] -translate-y-1/2 left-[5px] w-[24px] h-[24px] flex-box cursor-pointer"
       >
-        <Image
-          src="/images/svgs/locked.svg"
-          alt="자물쇠 아이콘"
-          width={10}
-          height={12}
-        />
+        <Image src="/images/svgs/locked.svg" alt="자물쇠 아이콘" width={10} height={12} />
       </label>
       <input
         type={showPassword ? 'text' : 'password'}
@@ -49,17 +45,10 @@ const PasswordInput = (props: PasswordInputProps) => {
             height={14}
           />
         ) : (
-          <Image
-            src="/images/svgs/eyeHidden.svg"
-            alt="눈 가려진 아이콘"
-            width={14}
-            height={14}
-          />
+          <Image src="/images/svgs/eyeHidden.svg" alt="눈 가려진 아이콘" width={14} height={14} />
         )}
       </button>
-      <p className="h-[20px] pt-1.5 text-center text-sm text-red-400">
-        {errors?.[name]?.message}
-      </p>
+      <p className="h-[20px] pt-1.5 text-center text-sm text-red-400">{errors?.[name]?.message}</p>
     </div>
   );
 };

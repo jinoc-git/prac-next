@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { calcDateProgress } from '@/utils/aboutDay';
 
@@ -13,7 +13,7 @@ interface SideBarProgressProps {
 
 export default function SideBarProgress(props: SideBarProgressProps) {
   const { activePlan, isOpen } = props;
-  const [progress, setProgress] = useState('');
+  const [progress, setProgress] = React.useState('');
 
   const progressLength = (((isOpen ? 160 : 72) / 100) * +progress).toFixed();
 
@@ -34,7 +34,7 @@ export default function SideBarProgress(props: SideBarProgressProps) {
     left: '0',
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (activePlan) {
       const startDay = activePlan.dates[0];
       const endDay = activePlan.dates[activePlan.dates.length - 1];

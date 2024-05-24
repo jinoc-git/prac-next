@@ -119,26 +119,27 @@ export const updateUserProfileImage = async (path: string, userId: string) => {
   };
 };
 
-export const deleteUserProfileImage = async (userId: string) => {
-  const { data } = await supabaseClientClient.auth.updateUser({
+export const deleteUserProfileImg = async (userId: string) => {
+  const { data, error } = await supabaseClientClient.auth.updateUser({
     data: { profileImg: null },
   });
 
-  const { error } = await supabaseClientClient
+  const { error: tableError } = await supabaseClientClient
     .from('users')
     .update({ avatar_url: null })
     .eq('id', userId)
     .select();
 
-  const isUserTableError = Boolean(error);
-  if (isUserTableError) {
-    console.log(error);
-    return null;
-  }
+  if (error || tableError) throw new Error('아바타 삭제 오류');
 
-  if (data !== null) {
-    return data.user;
-  }
+  const { id, email, user_metadata } = data.user;
+
+  return {
+    id,
+    email: email as string,
+    nickname: user_metadata.nickname as string,
+    profileImg: user_metadata.profileImg ? (user_metadata.profileImg as string) : '',
+  };
 };
 
 export const checkUserNickname = async (nickname: string) => {
@@ -154,13 +155,17 @@ export const checkUserNickname = async (nickname: string) => {
 };
 
 export const checkUserEmail = async (email: string) => {
-  const { data } = await supabaseClientClient.from('users').select('email').eq('email', email);
-  if (data !== null && data.length === 0) {
-    return true;
-  }
-  if (data !== null && data.length > 0) {
-    return false;
-  }
+  const { data, error } = await supabaseClientClient
+    .from('users')
+    .select('email')
+    .eq('email', email);
+
+  if (error) throw new Error('이메일 중복 확인 오류');
+
+  const isOk = data.length === 0;
+  if (isOk) return true;
+
+  return false;
 };
 
 export const updateUserNickname = async (nickname: string, userId: string) => {

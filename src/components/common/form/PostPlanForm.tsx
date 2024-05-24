@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import type {
   FieldErrors,
   SubmitHandler,
@@ -50,7 +50,7 @@ export default function PostPlanForm(props: Props) {
 
   const { currentPage, next, prev, setCurrentPage } = usePagination();
 
-  const [pins, setPins] = useState<PinContentsType[][]>([]);
+  const [pins, setPins] = React.useState<PinContentsType[][]>([]);
   const router = useRouter();
 
   const onSubmitAddOrModifyPlan: SubmitHandler<PlanContentsInputType> = async ({
@@ -108,20 +108,20 @@ export default function PostPlanForm(props: Props) {
     }
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     return () => {
       resetDates();
     };
   }, []);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (user) {
       inviteUser(user);
       syncInvitedUser();
     }
   }, [user]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     setCurrentPage(() => 0);
     const initPins: PinContentsType[][] = [];
 

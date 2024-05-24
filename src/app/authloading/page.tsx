@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { useRouter } from 'next/navigation';
 
@@ -10,7 +10,7 @@ export default function AuthLoading() {
   // async 가능할지 확인
   const router = useRouter();
 
-  useEffect(() => {
+  React.useEffect(() => {
     const checkUser = async () => {
       const { data } = await supabaseClientClient.auth.getSession();
       if (data !== null) {

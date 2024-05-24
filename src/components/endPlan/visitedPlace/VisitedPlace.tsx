@@ -30,20 +30,21 @@ const VisitedPlace = ({ plan, allPins }: Props) => {
         />
         <p>방문할 장소</p>
       </div>
-      <div>
-        <DragNDropProvider>
-          {allPins.map(({ contents, date }, i) => {
-            const dayDistance = distanceList[i];
-            return (
-              <ol key={uuid()} className="text-center">
-                <p
-                  className="font-semibold text-gray_dark_1
-                md:mt-[15px] md:mb-[35px] md:text-normal
-                sm:mt-[15px] sm:mb-[14px] sm:text-sm
-              "
-                >
-                  {date}
-                </p>
+
+      <DragNDropProvider>
+        {allPins.map(({ contents, date }, i) => {
+          const dayDistance = distanceList[i];
+          return (
+            <div key={uuid()}>
+              <p
+                className="text-center font-semibold text-gray_dark_1
+                  md:mt-[15px] md:mb-[35px] md:text-normal
+                  sm:mt-[15px] sm:mb-[14px] sm:text-sm
+                  "
+              >
+                {date}
+              </p>
+              <ol key={uuid()}>
                 {contents.map((pin, idx) => {
                   const contentDistance = dayDistance[idx - 1];
                   return (
@@ -56,15 +57,15 @@ const VisitedPlace = ({ plan, allPins }: Props) => {
                   );
                 })}
                 {contents.length === 0 && (
-                  <div>
+                  <li>
                     <p>여행 일정 없음</p>
-                  </div>
+                  </li>
                 )}
               </ol>
-            );
-          })}
-        </DragNDropProvider>
-      </div>
+            </div>
+          );
+        })}
+      </DragNDropProvider>
     </section>
   );
 };

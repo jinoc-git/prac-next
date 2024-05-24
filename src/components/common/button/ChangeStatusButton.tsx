@@ -32,7 +32,7 @@ const ChangeStatusButton = (props: Props) => {
         name={name}
         disabled={disabled || isLoading}
         onClick={onClick}
-        className="flex-box p-3 border rounded-lg font-semibold border-blue text-blue hover:bg-blue_light_1 duration-200 disabled:border-gray_dark_1 disabled:cursor-default disabled:bg-gray_light_3 disabled:text-gray_dark_1
+        className="blue-button disabled:border-gray_dark_1 disabled:cursor-default disabled:bg-gray_light_3 disabled:text-gray_dark_1
           sm:w-[114px] sm:h-[41px] sm:text-sm
           md:w-[130px] md:h-[43px] md:text-normal"
       >

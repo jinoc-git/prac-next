@@ -1,16 +1,13 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import ReactDatePicker, { registerLocale } from 'react-datepicker';
 
 import { ko } from 'date-fns/locale';
 import dayjs from 'dayjs';
 import Image from 'next/image';
 
-import {
-  useModifyPlanStoreActions,
-  useModifyPlanStoreState,
-} from '@/store/modifyPlanStore';
+import { useModifyPlanStoreActions, useModifyPlanStoreState } from '@/store/modifyPlanStore';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -29,7 +26,7 @@ export default function Calendar(props: Props) {
   const { modifyState } = useModifyPlanStoreState();
   const { clearRequiredDates } = useModifyPlanStoreActions();
 
-  useEffect(() => {
+  React.useEffect(() => {
     return () => {
       clearRequiredDates();
     };
@@ -43,12 +40,7 @@ export default function Calendar(props: Props) {
     >
       <div className="sm:flex sm:justify-between sm:w-[286px] md:w-[280px] ">
         <div className="content-lable">
-          <Image
-            alt="캘린더 아이콘"
-            src={'/images/svgs/calendarIcon.svg'}
-            width={20}
-            height={20}
-          />
+          <Image alt="캘린더 아이콘" src={'/images/svgs/calendarIcon.svg'} width={20} height={20} />
           <p>여행 시작일</p>
         </div>
         <ReactDatePicker
@@ -98,9 +90,7 @@ export default function Calendar(props: Props) {
           endDate={endDate}
           locale="ko"
           dayClassName={(d) =>
-            d.getDate() === startDate?.getDate() ?? false
-              ? `react-datepicker__startDay`
-              : ``
+            d.getDate() === startDate?.getDate() ?? false ? `react-datepicker__startDay` : ``
           }
           className="text-center react-datepicker read-only:cursor-default 
             sm:w-[132px] sm:h-[28px]
@@ -114,12 +104,7 @@ export default function Calendar(props: Props) {
       </div>
       <div className="sm:flex sm:justify-between sm:w-[286px] md:w-[280px] sm:mt-[10px] md:mt-0">
         <div className="content-lable">
-          <Image
-            alt="캘린더 아이콘"
-            src={'/images/svgs/calendarIcon.svg'}
-            width={20}
-            height={20}
-          />
+          <Image alt="캘린더 아이콘" src={'/images/svgs/calendarIcon.svg'} width={20} height={20} />
           <p>여행 종료일</p>
         </div>
         <ReactDatePicker
@@ -166,9 +151,7 @@ export default function Calendar(props: Props) {
           minDate={startDate}
           locale="ko"
           dayClassName={(d) =>
-            d.getDate() === startDate?.getDate() ?? false
-              ? `react-datepicker__startDay`
-              : ``
+            d.getDate() === startDate?.getDate() ?? false ? `react-datepicker__startDay` : ``
           }
           className="text-center react-datepicker read-only:cursor-default
             sm:w-[132px] sm:h-[28px]

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -21,8 +21,8 @@ interface Props {
 }
 
 const MemoryPhotoAndSave = ({ allPins, plan }: Props) => {
-  const [uploadedImg, setUploadedImg] = useState<File[]>([]);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [uploadedImg, setUploadedImg] = React.useState<File[]>([]);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   const router = useRouter();
   const confirm = useConfirm();

@@ -7,10 +7,10 @@ import { toast } from 'react-toastify';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 
 import {
   checkUserNickname,
+  deleteUserProfileImg,
   supabaseClientClient,
   updateUserNickname,
   updateUserProfileImage,
@@ -30,13 +30,12 @@ interface Props {
 }
 
 const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
-  const router = useRouter();
-
   const user = useAuthStoreState();
   const { setUser } = useAuthStoreActions();
   const { userInfoMutate } = useUserInfoMutation(user?.id);
 
   const [preview, setPreview] = React.useState(user?.avatar_url ? user.avatar_url : '');
+  const [isRemoveAvartar, setIsRemoveAvartar] = React.useState(false);
   const [isDuplicateNickname, setIsDuplicateNickname] = React.useState(true);
 
   const handleFileChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,7 +53,7 @@ const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
     register,
     watch,
     resetField,
-    formState: { errors, isSubmitting, isValid },
+    formState: { errors, isSubmitting },
   } = useForm({ mode: 'onChange', resolver });
 
   const onSubmit: SubmitHandler<EditProfile> = React.useCallback(
@@ -69,6 +68,7 @@ const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
           const path = await uploadProfileImg(avatar[0], user.email);
           await updateUserProfileImage(path, user.id);
         }
+        if (isRemoveAvartar) await deleteUserProfileImg(user.id);
 
         const { data, error } = await supabaseClientClient.auth.refreshSession();
         if (error || data.user === null) throw new Error('세션 초기화 오류');
@@ -89,22 +89,28 @@ const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
         toast.success('프로필 변경 완료');
         handleCloseModal();
         setUser(result);
-        // router.refresh();
       } catch (error) {
         if (error instanceof Error) toast.error(error.message);
       }
     },
-    [user, userInfoMutate],
+    [user, userInfoMutate, isRemoveAvartar],
   );
 
   const avatar = watch('avatar');
-  const isChangeAvatar = avatar !== undefined && avatar.length > 0;
+  const isChangeAvatar = (avatar !== undefined && avatar.length > 0) || isRemoveAvartar;
 
   const nickname = watch('nickname');
   const isChangeNickname = nickname !== undefined && nickname !== '';
   const needCheckNickname = isChangeNickname && isDuplicateNickname;
 
   const blockSubmit = (!isChangeAvatar && !isChangeNickname) || needCheckNickname;
+
+  const handleRemoveAvartar = React.useCallback(() => {
+    resetField('avatar');
+    setPreview('');
+
+    if (preview !== '') setIsRemoveAvartar(true);
+  }, []);
 
   const checkNickname = React.useCallback(async () => {
     if (nickname) {
@@ -214,7 +220,7 @@ const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
           <button
             name="profile-remove-avatar-btn"
             type="button"
-            // onClick={removeAvatarBtnHandler}
+            onClick={handleRemoveAvartar}
             className="border border-navy rounded-lg text-navy hover:bg-navy_light_1 disabled:bg-gray_light_3 
               md:w-[200px] md:h-[45px]
               sm:w-[150px] sm:h-[41px]
