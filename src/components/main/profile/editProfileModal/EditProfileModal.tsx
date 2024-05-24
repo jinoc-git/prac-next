@@ -69,14 +69,13 @@ const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
         id,
         email: email as string,
         nickname: user_metadata.nickname as string,
-        profileImg: user_metadata.profileImg ? (user_metadata.profileImg as string) : '',
+        avatar_url: user_metadata.profileImg ? (user_metadata.profileImg as string) : '',
       };
-
-      setUser(result);
 
       toast.success('프로필 변경 완료');
       handleCloseModal();
-      router.refresh();
+      setUser(result);
+      // router.refresh();
     } catch (error) {
       if (error instanceof Error) toast.error(error.message);
     }
@@ -90,8 +89,6 @@ const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
   const needCheckNickname = isChangeNickname && isDuplicateNickname;
 
   const blockSubmit = (!isChangeAvatar && !isChangeNickname) || needCheckNickname;
-
-  // 사진만 변경, 닉네임만 변경
 
   const checkNickname = React.useCallback(async () => {
     if (nickname) {
@@ -112,7 +109,6 @@ const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
   }, [nickname]);
 
   React.useEffect(() => {
-    console.log('render');
     return () => {
       resetField('avatar');
       resetField('nickname');
@@ -215,13 +211,20 @@ const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
             name="profile-change-btn"
             disabled={blockSubmit}
             type="submit"
-            className="border rounded-lg bg-navy text-white hover:bg-navy_light_3 disabled:bg-gray_light_3
+            className="flex-box gap-2 border rounded-lg bg-navy text-white hover:bg-navy_light_3 disabled:bg-gray_light_3
               md:w-[200px] md:h-[45px]
               sm:w-[150px] sm:h-[41px]
               "
           >
             프로필 변경
-            {/* {isSubmitting && '제출중'} */}
+            {isSubmitting && (
+              <Image
+                src="/images/gif/loader-all-color.gif"
+                alt="로딩 스피너"
+                width={32}
+                height={32}
+              />
+            )}
           </button>
         </div>
       </form>

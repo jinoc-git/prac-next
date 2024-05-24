@@ -5,10 +5,10 @@ import React from 'react';
 import { calcDday } from '@/utils/aboutDay';
 
 import BookMark from './bookMark/BookMark';
-import PlanCardDate from './PlanCardDate';
-import PlanCardQuitButton from './PlanCardQuitButton';
-import PlanCardStatusChip from './PlanCardStatusChip';
-import PlanCardUserList from './PlanCardUserList';
+import PlanCardDate from './planCardDate/PlanCardDate';
+import PlanCardQuitButton from './planCardQuitButton/PlanCardQuitButton';
+import PlanCardStatusChip from './planCardStatusChip/PlanCardStatusChip';
+import PlanCardUserList from './planCardUserList/PlanCardUserList';
 
 import type { PlanStatus } from '@/types/aboutPlan.type';
 import type { BookMarkType, PlanType } from '@/types/supabase';
@@ -27,14 +27,7 @@ interface Props {
 }
 
 export default function PlanCard(props: Props) {
-  const {
-    plan,
-    bookMarkData,
-    avatarList,
-    nicknameList,
-    onClickPlanCard,
-    handleBookMark,
-  } = props;
+  const { plan, bookMarkData, avatarList, nicknameList, onClickPlanCard, handleBookMark } = props;
 
   const onClickQuitBtn = (id: string) => {};
 
@@ -51,11 +44,7 @@ export default function PlanCard(props: Props) {
         className="sm:w-[45px] sm:mt-[23px] 
               md:w-[80px] md:h-[16px] md:mt-[25px] md:ml-[28px]"
       >
-        <BookMark
-          bookMarkData={bookMarkData}
-          handleBookMark={handleBookMark}
-          planId={plan.id}
-        />
+        <BookMark bookMarkData={bookMarkData} handleBookMark={handleBookMark} planId={plan.id} />
         <div className="mt-[0px] h-[12px]">
           {plan.plan_state === 'end' ? null : (
             <p
