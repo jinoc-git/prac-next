@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import type { LatLng, MakeMapArgs } from '@/types/aboutKakaoMap.type';
 import type { PinContentsType } from '@/types/supabase';
@@ -14,7 +14,7 @@ interface Props {
 const AddPinKakaoMap = (props: Props) => {
   const { pin, makeMap, makeMarker } = props;
 
-  useEffect(() => {
+  React.useEffect(() => {
     const init = async () => {
       const center = {
         lat: pin !== null ? pin.lat : 37.566826,

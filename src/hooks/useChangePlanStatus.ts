@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React from 'react';
 
 import { useDateStoreState } from '@/store/dateStore';
 import { useModifyPlanStoreState } from '@/store/modifyPlanStore';
@@ -9,8 +9,8 @@ const useChangePlanStatus = (status: PlanStatus) => {
   const { dates } = useDateStoreState();
   const { modifyState } = useModifyPlanStoreState();
 
-  const [isPossibleStart, setIsPossibleStart] = useState<boolean>(false);
-  const [isPossibleEnd, setIsPossibleEnd] = useState<boolean>(false);
+  const [isPossibleStart, setIsPossibleStart] = React.useState<boolean>(false);
+  const [isPossibleEnd, setIsPossibleEnd] = React.useState<boolean>(false);
 
   const planningText = isPossibleStart
     ? modifyState === 'modify'
@@ -29,7 +29,7 @@ const useChangePlanStatus = (status: PlanStatus) => {
   const leftText = status === 'planning' ? planningText : etcText;
   const disabled = status === 'planning' ? planningDisabled : etcDisabled;
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (dates[0]) {
       const today = new Date();
       const startDate = new Date(dates[0]);

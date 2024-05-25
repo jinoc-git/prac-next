@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
@@ -45,11 +45,11 @@ const AddPinModal = (props: Props) => {
   const { map, makeMap, makeLatLng, makeMarker, makeBounds } = useKakaoMap();
   const { getAddress, searchKeyword } = useKakaoMapServices();
 
-  const [position, setPosition] = useState({
+  const [position, setPosition] = React.useState({
     lat: pin !== null ? (pin.lat as number) : 0,
     lng: pin !== null ? (pin.lng as number) : 0,
   });
-  const [roadAddress, setRoadAddress] = useState('');
+  const [roadAddress, setRoadAddress] = React.useState('');
 
   const resolver = yupResolver(addPinSchema);
 

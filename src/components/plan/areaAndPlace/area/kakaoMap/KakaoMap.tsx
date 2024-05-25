@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import useKakaoMap from '@/hooks/useKakaoMap';
 
@@ -13,10 +13,9 @@ interface Props {
 }
 
 const KakaoMap = ({ pins, drawLine }: Props) => {
-  const { map, makeMap, makeLatLng, makeMarker, makePolyline, makeBounds } =
-    useKakaoMap();
+  const { map, makeMap, makeLatLng, makeMarker, makePolyline, makeBounds } = useKakaoMap();
 
-  useEffect(() => {
+  React.useEffect(() => {
     makeMap({
       containerId: 'add-plan-kakao-map',
       center: { lat: 37.566826, lng: 126.9786567 },
@@ -26,7 +25,7 @@ const KakaoMap = ({ pins, drawLine }: Props) => {
     });
   }, []);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (map && pins?.length > 0) {
       const bounds = makeBounds();
       const path: LatLng[] = [];
@@ -56,10 +55,7 @@ const KakaoMap = ({ pins, drawLine }: Props) => {
 
   return (
     <div className="flex justify-center sm:w-[286px] sm:ml-0 md:w-[650px] md:ml-[25px]">
-      <div
-        id="add-plan-kakao-map"
-        className=" w-full md:h-[400px] sm:h-[227px]"
-      ></div>
+      <div id="add-plan-kakao-map" className=" w-full md:h-[400px] sm:h-[227px]"></div>
     </div>
   );
 };

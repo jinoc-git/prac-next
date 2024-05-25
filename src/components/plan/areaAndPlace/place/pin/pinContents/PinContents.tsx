@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import type { ConnectDragSource } from 'react-dnd';
 
 import Image from 'next/image';
@@ -20,7 +20,7 @@ interface Props {
 const PinContents = (props: Props) => {
   const { pin, idx, isEnding, isModify, dragRef, handleUpdate, handleDelete } = props;
 
-  const [dropDownIsOpen, setDropDownIsOpen] = useState(false);
+  const [dropDownIsOpen, setDropDownIsOpen] = React.useState(false);
 
   const handleDropDown = () => {
     setDropDownIsOpen(true);

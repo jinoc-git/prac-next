@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
@@ -12,14 +12,11 @@ import { useParams } from 'next/navigation';
 import { findUsers } from '@/api/planMate';
 import useConfirm from '@/hooks/useConfirm';
 import { useAuthStoreState } from '@/store/authStore';
-import {
-  useInviteUserStoreActions,
-  useInviteUserStoreState,
-} from '@/store/inviteUserStore';
+import { useInviteUserStoreActions, useInviteUserStoreState } from '@/store/inviteUserStore';
 import { searchCallback } from '@/utils/arrayCallbackFunctionList';
 
-import InvitedOrSearchUser from './InvitedOrSearchUser';
-import ModalLayout from '../../common/layout/ModalLayout';
+import InvitedOrSearchUser from './invitedOrSearchUser/InvitedOrSearchUser';
+import ModalLayout from '../../../common/layout/ModalLayout';
 
 import type { UserType } from '@/types/supabase';
 
@@ -34,12 +31,15 @@ interface SearchPeopleInputType {
 
 export default function SearchPeopleModal(props: SearchPeopleModalProps) {
   const { closeModal, isAnimate } = props;
+
   const { invitedUser } = useInviteUserStoreState();
   const { inviteUser, setUser, syncInvitedUser } = useInviteUserStoreActions();
   const user = useAuthStoreState();
   const confirm = useConfirm();
+
   const planId = useParams(); // 수정 필요
-  const [people, setPeople] = useState<UserType[]>([]);
+
+  const [people, setPeople] = React.useState<UserType[]>([]);
 
   const {
     register,
@@ -58,9 +58,7 @@ export default function SearchPeopleModal(props: SearchPeopleModalProps) {
     if (res.nickname != null && res.email != null) {
       const searchedPeople: UserType[] = [];
       searchedPeople.push(...res.nickname);
-      searchedPeople.push(
-        ...res.email.filter(searchCallback.isNotInvite(searchedPeople)),
-      );
+      searchedPeople.push(...res.email.filter(searchCallback.isNotInvite(searchedPeople)));
       setPeople(searchedPeople);
     }
   };
@@ -88,8 +86,8 @@ export default function SearchPeopleModal(props: SearchPeopleModalProps) {
   };
 
   const saveInviteData = () => {
-    const Ids = invitedUser.map((item) => item.id);
-    if (Ids !== undefined && planId !== undefined) {
+    const ids = invitedUser.map((item) => item.id);
+    if (ids !== undefined && planId !== undefined) {
       // inviteMutation.mutate([usersId, planId]);
     }
     setUser(invitedUser);
@@ -98,17 +96,13 @@ export default function SearchPeopleModal(props: SearchPeopleModalProps) {
     syncInvitedUser();
   };
 
-  const searchResult = people.filter(
-    searchCallback.excludeInvitedUsers(invitedUser),
-  );
+  const searchResult = people.filter(searchCallback.excludeInvitedUsers(invitedUser));
 
   return (
     <ModalLayout isAnimate={isAnimate}>
       <div className="flex flex-col items-start justify-end gap-2">
         <p className="text-lg font-bold text-navy">동행 초대하기</p>
-        <p className="text-[gray] text-normal  ">
-          이 여행에 함께할 친구를 초대해 보세요!
-        </p>
+        <p className="text-[gray] text-normal  ">이 여행에 함께할 친구를 초대해 보세요!</p>
       </div>
       <div className="flex flex-col md:gap-[10px] sm:gap-[28px]">
         {/* 초대한 사람 */}
@@ -141,18 +135,10 @@ export default function SearchPeopleModal(props: SearchPeopleModalProps) {
           <label className="text-gray-dark-1 font-inter font-bold md:text-xs sm:sm leading-[24px]">
             동행 찾기
           </label>
-          <form
-            name="search-people-form"
-            onSubmit={handleSubmit(debouncedSearchUser)}
-          >
+          <form name="search-people-form" onSubmit={handleSubmit(debouncedSearchUser)}>
             <div className="relative flex items-center ">
               <span className="absolute ml-3 text-gray-400 focus-within:text-gray ">
-                <Image
-                  alt="돋보기 아이콘"
-                  src={'/images/svgs/search.svg'}
-                  width={20}
-                  height={20}
-                />
+                <Image alt="돋보기 아이콘" src={'/images/svgs/search.svg'} width={20} height={20} />
               </span>
               <input
                 placeholder="닉네임 또는 이메일 주소로 초대할 사람을 검색하세요."

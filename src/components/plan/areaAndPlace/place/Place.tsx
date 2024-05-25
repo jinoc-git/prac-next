@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 
 import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import Image from 'next/image';
@@ -25,13 +25,14 @@ interface Props {
 const Place = (props: Props) => {
   const { pins, setPins, currentPage } = props;
 
-  const [isAnimate, setIsAnimate] = useState(false);
-  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isAnimate, setIsAnimate] = React.useState(false);
+  const [isOpenModal, setIsOpenModal] = React.useState(false);
 
   const { updateClick } = usePinStoreActions();
   const confirm = useConfirm();
   const { dates } = useDateStoreState();
   const { modifyState } = useModifyPlanStoreState();
+
   const isModify = modifyState === 'modify';
 
   const openModal = () => {

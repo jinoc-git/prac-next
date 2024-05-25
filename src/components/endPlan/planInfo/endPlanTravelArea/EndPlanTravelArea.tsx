@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import Image from 'next/image';
 
@@ -13,9 +13,9 @@ interface Props {
 }
 
 const EndPlanTravelArea = ({ allPins }: Props) => {
-  const [pins, setPins] = useState<PinContentsType[]>([]);
+  const [pins, setPins] = React.useState<PinContentsType[]>([]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const pins = allPins.map(({ contents }) => contents).flat();
     setPins(pins);
   }, [allPins]);

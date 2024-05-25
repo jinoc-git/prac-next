@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React from 'react';
 
 import { useDateStoreActions } from '@/store/dateStore';
 import { useModifyPlanStoreActions } from '@/store/modifyPlanStore';
@@ -14,10 +14,12 @@ const useDatePicker = ({ state, initStartDate, initEdDate }: Args) => {
   const { setRequiredDates } = useModifyPlanStoreActions();
   const { setDates } = useDateStoreActions();
 
-  const [startDate, setStartDate] = useState<Date | null>(
+  const [startDate, setStartDate] = React.useState<Date | null>(
     state === 'addPlan' ? new Date() : initStartDate,
   );
-  const [endDate, setEndDate] = useState<Date | null>(state === 'addPlan' ? null : initEdDate);
+  const [endDate, setEndDate] = React.useState<Date | null>(
+    state === 'addPlan' ? null : initEdDate,
+  );
 
   const handleStartDate = (date: Date | null) => {
     setRequiredDates('start');
@@ -29,7 +31,7 @@ const useDatePicker = ({ state, initStartDate, initEdDate }: Args) => {
     setEndDate(date);
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (startDate && endDate) {
       const dates = getDatesArrFromStartEnd(startDate, endDate);
       setDates(dates);
