@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 
@@ -19,7 +19,7 @@ import type { PlanCountList } from '@/types/aboutPlan.type';
 export default function PlanList() {
   const user = useAuthStoreState();
 
-  const [planCountList, setPlanCountList] = useState<PlanCountList>({
+  const [planCountList, setPlanCountList] = React.useState<PlanCountList>({
     bookMark: 0,
     planning: 0,
     traveling: 0,
@@ -47,7 +47,7 @@ export default function PlanList() {
     refetchOnWindowFocus: false,
   });
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (bookMarkDataList && matesData) {
       setPlanCountList({
         bookMark: bookMarkDataList.length,

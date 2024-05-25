@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -25,12 +25,11 @@ export interface SignupFormInputList {
 }
 
 export default function SignupForm() {
-  const resolver = yupResolver(signupSchema);
   const router = useRouter();
-  const [duplicate, setDuplicate] = useState({
-    nickname: true,
-    email: true,
-  });
+
+  const [duplicate, setDuplicate] = React.useState({ nickname: true, email: true });
+
+  const resolver = yupResolver(signupSchema);
 
   const {
     register,
@@ -107,11 +106,11 @@ export default function SignupForm() {
     router.push('/signin');
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     setDuplicate((prev) => ({ ...prev, nickname: true }));
   }, [watch('nickname')]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     setDuplicate((prev) => ({ ...prev, email: true }));
   }, [watch('email')]);
 

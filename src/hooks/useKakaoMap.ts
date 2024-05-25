@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React from 'react';
 
 import type {
   ControlPosition,
@@ -8,7 +8,7 @@ import type {
 } from '@/types/aboutKakaoMap.type';
 
 const useKakaoMap = () => {
-  const [map, setMap] = useState<any>(null);
+  const [map, setMap] = React.useState<any>(null);
 
   const makeLatLng = ({ lat, lng }: LatLng) => {
     return new window.kakao.maps.LatLng(lat, lng);

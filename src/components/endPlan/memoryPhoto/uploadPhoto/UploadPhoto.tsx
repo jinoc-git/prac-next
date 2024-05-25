@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 
 import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import Image from 'next/image';
@@ -12,7 +12,7 @@ interface Props {
 }
 
 const UploadPhoto = ({ setUploadedImg }: Props) => {
-  const [preview, setPreview] = useState<string[]>([]);
+  const [preview, setPreview] = React.useState<string[]>([]);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

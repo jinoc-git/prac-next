@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 
@@ -20,9 +20,9 @@ interface Props {
 export default function SideBarTrips(props: Props) {
   const { isOpen, startPlans, endPlans } = props;
 
-  const [bookMarkIsOpen, setBookMarkIsOpen] = useState(false);
-  const [planningIsOpen, setPlanningIsOpen] = useState(false);
-  const [endIsOpen, setEndIsOpen] = useState(false);
+  const [bookMarkIsOpen, setBookMarkIsOpen] = React.useState(false);
+  const [planningIsOpen, setPlanningIsOpen] = React.useState(false);
+  const [endIsOpen, setEndIsOpen] = React.useState(false);
 
   const user = useAuthStoreState();
 
@@ -33,7 +33,7 @@ export default function SideBarTrips(props: Props) {
     refetchOnWindowFocus: false,
   });
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!isOpen) {
       setBookMarkIsOpen(false);
       setPlanningIsOpen(false);

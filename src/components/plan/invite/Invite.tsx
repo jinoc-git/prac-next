@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import { useQuery } from '@tanstack/react-query';
@@ -11,15 +11,15 @@ import { getMatesInfo } from '@/api/planMate';
 import { useInviteUserStoreActions, useInviteUserStoreState } from '@/store/inviteUserStore';
 import { useModifyPlanStoreState } from '@/store/modifyPlanStore';
 
-import SearchPeopleModal from './SearchPeopleModal';
+import SearchPeopleModal from './searchPeopleModal/SearchPeopleModal';
 
 export default function Invite() {
   const { oldInvitedUser } = useInviteUserStoreState();
   const { inviteUser, resetInvitedUser, syncInvitedUser } = useInviteUserStoreActions();
   const { modifyState } = useModifyPlanStoreState();
 
-  const [isOpenModal, setIsOpenModal] = useState(false);
-  const [isAnimate, setIsAnimate] = useState(false);
+  const [isOpenModal, setIsOpenModal] = React.useState(false);
+  const [isAnimate, setIsAnimate] = React.useState(false);
 
   const { planId } = useParams<{ planId: string }>();
 
@@ -46,11 +46,11 @@ export default function Invite() {
   const isOldInvitedUser = oldInvitedUser.length !== 0 && oldInvitedUser !== null;
   const maxDisplayCount = 3;
 
-  useEffect(() => {
+  React.useEffect(() => {
     return () => resetInvitedUser();
   }, []);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (data) {
       resetInvitedUser();
       data.forEach((user) => {
