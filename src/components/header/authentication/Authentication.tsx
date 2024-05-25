@@ -37,7 +37,7 @@ export default function Authentication({ isLogin }: Props) {
   React.useEffect(() => {
     authObserver();
 
-    if (isLogin) setVisibilitySideBar(true);
+    if (isLogin && pathname !== '/') setVisibilitySideBar(true);
     else setVisibilitySideBar(false);
   }, [pathname]);
 
