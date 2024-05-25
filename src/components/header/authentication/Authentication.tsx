@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 
 import { signOutForSB } from '@/api/auth';
-import { useAuthStoreActions, useAuthStoreState } from '@/store/authStore';
+import { useAuthStoreActions } from '@/store/authStore';
 import { useSideBarStoreActions } from '@/store/sideBarStore';
 
 interface Props {
@@ -15,7 +15,6 @@ interface Props {
 }
 
 export default function Authentication({ isLogin }: Props) {
-  const user = useAuthStoreState();
   const { authObserver, resetUser } = useAuthStoreActions();
   const { setVisibilitySideBar } = useSideBarStoreActions();
 
@@ -24,33 +23,39 @@ export default function Authentication({ isLogin }: Props) {
 
   const onClickSignoutHandler = async () => {
     await signOutForSB();
+
     toast.success('로그아웃에 성공하였습니다.');
-    // setMenuIsOpen(false);
     setVisibilitySideBar(false);
     resetUser();
+
     router.push('/signin');
     router.refresh();
   };
+
+  const isSigninPage = pathname === '/signin';
 
   React.useEffect(() => {
     authObserver();
 
     if (isLogin) setVisibilitySideBar(true);
     else setVisibilitySideBar(false);
-  }, [pathname, user]);
+  }, [pathname]);
 
   return (
     <div className="header-auth-box flex-box md:w-[134px] sm:w-[84px]">
-      {user === null ? (
-        pathname === '/signup' ? (
-          <Link href="/signin">로그인</Link>
-        ) : pathname === '/signin' ? (
+      {!isLogin ? (
+        isSigninPage ? (
           <Link href="/signup">회원가입</Link>
         ) : (
           <Link href="/signin">로그인</Link>
         )
       ) : (
-        <button onClick={onClickSignoutHandler}>로그아웃</button>
+        <button
+          onClick={onClickSignoutHandler}
+          className={`${pathname === '/main' ? 'text-white' : 'text-black'}`}
+        >
+          로그아웃
+        </button>
       )}
     </div>
   );
