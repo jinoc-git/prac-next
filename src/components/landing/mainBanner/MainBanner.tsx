@@ -12,7 +12,7 @@ const MainBanner = () => {
         height={1080}
         className="w-[100vw] h-[520px] object-cover md:h-screen"
       />
-      <div className="position-center sm:w-[280px] sm:h-[250px] md:w-[750px] md:h-[400px]">
+      <div className="position-center sm:w-[280px] sm:h-[210px] md:w-[750px] md:h-[400px]">
         <div className="sm:hidden md:flex items-center gap-2">
           <Image
             src="/images/svgs/map-yellow.svg"
