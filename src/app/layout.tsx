@@ -6,6 +6,7 @@ import AnimateProvider from '@/components/common/providers/animateProvider/Anima
 import TanstackQueryProvider from '@/components/common/providers/tanstackQueryProvider/TanstackQueryProvider';
 import ToastProvider from '@/components/common/providers/toastProvider/ToastProvider';
 import Header from '@/components/header/Header';
+import Footer from '@/components/landing/footer/Footer';
 import SideBar from '@/components/sideBar/SideBar';
 
 import type { Metadata } from 'next';
@@ -30,6 +31,7 @@ async function RootLayout({ children }: { children: React.ReactNode }) {
           <SideBar />
           <Script src={KAKAO_MAP_URL} strategy="beforeInteractive" />
           <AnimateProvider>{children}</AnimateProvider>
+          <Footer />
           <ToastProvider />
         </TanstackQueryProvider>
         <Confirm />
