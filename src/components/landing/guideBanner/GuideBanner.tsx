@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 const GuideBanner = () => {
   return (
-    <section className="mt-[80px]">
+    <section className="landing-section">
       <Image
         src="/images/img-landing-guide.webp"
         alt="사이트 이용 예시 이미지"
