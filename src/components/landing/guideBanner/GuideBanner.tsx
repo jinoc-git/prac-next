@@ -26,21 +26,21 @@ const GuideBanner = () => {
           alt="그룹 이미지 1"
           width={359}
           height={246}
-          className="w-1/4 rounded-lg shrink-1"
+          className="w-1/4 rounded-lg "
         />
         <Image
           src="/images/landing-group-02.webp"
           alt="그룹 이미지 2"
           width={359}
           height={246}
-          className="w-1/4 rounded-lg shrink-1"
+          className="w-1/4 rounded-lg "
         />
         <Image
           src="/images/landing-group-03.webp"
           alt="그룹 이미지 3"
           width={359}
           height={246}
-          className="w-1/4 rounded-lg shrink-1"
+          className="w-1/4 rounded-lg "
         />
       </div>
     </section>
