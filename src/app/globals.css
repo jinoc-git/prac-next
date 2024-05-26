@@ -33,6 +33,12 @@
   .comment-text {
     @apply text-gray_dark_1 leading-6 tracking-tighter sm:text-sm md:text-normal;
   }
+  .blue-button {
+    @apply flex-box p-3 border rounded-lg font-semibold border-blue text-blue hover:bg-blue_light_1 duration-200;
+  }
+  .landing-section {
+    @apply sm:mt-[40px] md:mt-[80px];
+  }
 }
 
 @font-face {
