@@ -4,7 +4,10 @@ import React, { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useQuery } from '@tanstack/react-query';
 
+import { getAllPinsByIdAndDates } from '@/api/pins';
+import Loading from '@/components/common/loading/Loading';
 import { addPlanSchema } from '@/schema/planSchema';
 import { useModifyPlanStoreActions, useModifyPlanStoreState } from '@/store/modifyPlanStore';
 import { addCommas } from '@/utils/numberFormat';
@@ -12,7 +15,7 @@ import { addCommas } from '@/utils/numberFormat';
 import PostPlanForm from '../../common/form/PostPlanForm';
 import PlanTopBar from '../planTopBar/PlanTopBar';
 
-import type { PinType, PlanType } from '@/types/supabase';
+import type { PlanType } from '@/types/supabase';
 
 export interface PlanContentsInputType {
   title: string;
@@ -21,13 +24,22 @@ export interface PlanContentsInputType {
 
 interface Props {
   plan?: PlanType;
-  originPins?: PinType[];
 }
 
-export default function PlanContents({ plan, originPins }: Props) {
+const AddOrEditPlan = ({ plan }: Props) => {
   const formRef = useRef<HTMLFormElement>(null);
+
   const { modifyState } = useModifyPlanStoreState();
   const { setReadOnly, setModify } = useModifyPlanStoreActions();
+
+  const { data, isLoading } = useQuery({
+    queryKey: ['pins', plan?.id],
+    queryFn: async () => {
+      if (plan) return await getAllPinsByIdAndDates([plan.id, plan.dates]);
+      else return undefined;
+    },
+    enabled: plan !== undefined,
+  });
 
   const resolver = yupResolver(addPlanSchema);
 
@@ -81,7 +93,7 @@ export default function PlanContents({ plan, originPins }: Props) {
       />
       <PostPlanForm
         plan={plan}
-        originPins={originPins}
+        originPins={data}
         readonly={modifyState !== 'modify'}
         formRef={formRef}
         handleSubmit={handleSubmit}
@@ -89,6 +101,9 @@ export default function PlanContents({ plan, originPins }: Props) {
         register={register}
         errors={errors}
       />
+      {isLoading && <Loading full={true} />}
     </>
   );
-}
+};
+
+export default AddOrEditPlan;

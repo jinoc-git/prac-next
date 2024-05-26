@@ -41,7 +41,7 @@ export const calcAllPath = async (allPinsContent: PinContentsType[][]) => {
 export const getCosts = async (planId: string) => {
   const { dates } = await getPlanDate(planId);
 
-  const data = await getAllPinsByIdAndDates(planId, dates);
+  const data = await getAllPinsByIdAndDates([planId, dates]);
 
   const result = data.map(({ contents }) => contents.map(({ cost }) => cost));
 

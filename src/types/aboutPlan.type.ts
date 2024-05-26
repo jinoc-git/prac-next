@@ -1,10 +1,4 @@
-import type {
-  InsertPlanType,
-  PinContentsType,
-  PinType,
-  PlanType,
-  UserType,
-} from './supabase';
+import type { InsertPlanType, PinContentsType, PinType, PlanType, UserType } from './supabase';
 
 export type PlanStatus = 'planning' | 'traveling' | 'recording' | 'end';
 
@@ -20,7 +14,7 @@ export interface UpdatePlanObj extends AddPlanObj {
   originPins: PinType[];
 }
 
-export interface QuitPlanParam {
+export interface QuitPlanArgs {
   userId: string;
   planId: string;
 }

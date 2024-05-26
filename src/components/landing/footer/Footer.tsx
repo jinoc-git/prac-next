@@ -22,9 +22,9 @@ const Footer = () => {
         <hr className="border-[#A9AAA7] md:w-[100%] sm:w-[134px] " />
         <div className="flex justify-between md:flex-row gap-[20px] md:text-[16px] sm:text-[14px] sm:flex-col">
           <div className="md:w-1/3 ">
-            <p className="font-bold  text-white md:mt-8 sm:mt-[24px]">서비스소개</p>
+            <p className="font-bold  text-white md:mt-8 sm:mt-[24px]">서비스 소개</p>
             <div className="text-[#A9AAA7] mt-2">
-              <p>트래줄러는 여행의 전 과정을 담당하여 하나뿐인 여행을</p>
+              <p>Traduler는 여행의 전 과정을 담당하여 하나뿐인 여행을</p>
               <p>더욱 특별하게 만들어 줍니다.</p>
             </div>
             <div className="text-[#A9AAA7] md:mt-8 sm:mt-[24px]">
@@ -43,7 +43,7 @@ const Footer = () => {
               <p>류해민</p>
             </div>
           </div>
-          <div className="md:w-1/3">
+          <div className="md:w-1/4">
             <p className="font-bold text-white mb-2 md:mt-8  sm:mt-[24px]">GitHub</p>
             <Link
               href={'https://github.com/jinoc-git/traduler-next'}
@@ -58,7 +58,7 @@ const Footer = () => {
         </div>
 
         <p className="md:mt-20  md:text-normal sm:text-sm sm:mt-[24px] text-[#A9AAA7] ">
-          &copy; 2024 — TRADULER.{' '}
+          &copy; 2024 — TRADULER.
         </p>
       </div>
     </footer>

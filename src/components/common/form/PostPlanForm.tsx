@@ -18,13 +18,14 @@ import DatePagination from '@/components/plan/datePagination/DatePagination';
 import Pay from '@/components/plan/pay/Pay';
 import SelectDate from '@/components/plan/selectDate/SelectDate';
 import usePagination from '@/hooks/usePagination';
+import usePinMutation from '@/hooks/usePinMutation';
 import { useAuthStoreState } from '@/store/authStore';
 import { useDateStoreActions, useDateStoreState } from '@/store/dateStore';
 import { useInviteUserStoreActions, useInviteUserStoreState } from '@/store/inviteUserStore';
 
 import Invite from '../../plan/invite/Invite';
 
-import type { PlanContentsInputType } from '@/components/plan/planContents/PlanContents';
+import type { PlanContentsInputType } from '@/components/plan/addOrEditPlan/AddOrEditPlan';
 import type { InsertPlanType, PinContentsType, PinType, PlanType } from '@/types/supabase';
 
 interface Props {
@@ -47,6 +48,7 @@ export default function PostPlanForm(props: Props) {
   const { inviteUser, syncInvitedUser } = useInviteUserStoreActions();
   const { dates } = useDateStoreState();
   const { resetDates } = useDateStoreActions();
+  const { pinMutate } = usePinMutation();
 
   const { currentPage, next, prev, setCurrentPage } = usePagination();
 
@@ -104,7 +106,8 @@ export default function PostPlanForm(props: Props) {
       };
 
       await updatePlan(updatePlanObj);
-      router.refresh();
+
+      pinMutate([plan.id, plan.dates]);
     }
   };
 
@@ -137,7 +140,7 @@ export default function PostPlanForm(props: Props) {
     }
 
     setPins(initPins);
-  }, [dates]);
+  }, [dates, originPins]);
 
   return (
     <form
