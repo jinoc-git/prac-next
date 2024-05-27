@@ -1,29 +1,16 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 
-import { redirect } from 'next/navigation';
-
-import { getAllPinsByPlanFromServer, getPlanByIdFromServer } from '@/api/serverAction';
-import MemoryPhotoAndSave from '@/components/endPlan/memoryPhoto/MemoryPhotoAndSave';
-import PlanInfo from '@/components/endPlan/planInfo/PlanInfo';
+import Loading from '@/components/common/loading/Loading';
+import AddPhotoContent from '@/components/endPlan/addPhotoContent/AddPhotoContent';
 
 interface Props {
   params: { planId: string };
 }
 
-export default async function AddPhoto({ params }: Props) {
-  const { planId } = params;
-
-  const plan = await getPlanByIdFromServer(planId);
-
-  if (plan === null) redirect('/main'); // 잘못된 경로 예정
-  if (plan.plan_state !== 'recording') redirect('/main'); // 잘못된 경로 예정
-
-  const allPins = await getAllPinsByPlanFromServer(plan);
-
+export default function AddPhoto({ params }: Props) {
   return (
-    <>
-      <PlanInfo plan={plan} allPins={allPins} />
-      <MemoryPhotoAndSave plan={plan} allPins={allPins} />
-    </>
+    <Suspense fallback={<Loading full={true} />}>
+      <AddPhotoContent params={params} />
+    </Suspense>
   );
 }
