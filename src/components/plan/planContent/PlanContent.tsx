@@ -2,7 +2,7 @@ import React from 'react';
 
 import { redirect } from 'next/navigation';
 
-import { getAllPinsByPlanFromServer, getPlanByIdFromServer } from '@/api/serverAction';
+import { getPlanByIdFromServer } from '@/api/serverAction';
 
 import AddOrEditPlan from '../addOrEditPlan/AddOrEditPlan';
 import ChangePlanStatus from '../changePlanStatus/ChangePlanStatus';
@@ -18,11 +18,9 @@ const PlanContent = async ({ params }: Props) => {
 
   if (plan === null) redirect('/main'); // 잘못된 경로 예정
 
-  const originPins = await getAllPinsByPlanFromServer(plan);
-
   return (
     <section className=" relative md:pt-[70px]">
-      <AddOrEditPlan plan={plan} originPins={originPins} />
+      <AddOrEditPlan plan={plan} />
       <ChangePlanStatus status={plan.plan_state} planId={plan.id} />
     </section>
   );
