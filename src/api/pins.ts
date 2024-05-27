@@ -28,7 +28,7 @@ export const getAllPinsDate = async (planId: string) => {
   return res;
 };
 
-export const getAllPinsByIdAndDates = async (planId: string, dates: string[]) => {
+export const getAllPinsByIdAndDates = async ([planId, dates]: [string, string[]]) => {
   const { data, error } = await supabaseClientClient
     .from('pins')
     .select()

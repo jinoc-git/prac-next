@@ -24,10 +24,20 @@ interface Props {
   originPins?: PinType[];
 }
 
-export default function PlanContents({ plan, originPins }: Props) {
+const AddOrEditPlan = ({ plan, originPins }: Props) => {
   const formRef = useRef<HTMLFormElement>(null);
+
   const { modifyState } = useModifyPlanStoreState();
   const { setReadOnly, setModify } = useModifyPlanStoreActions();
+
+  // const { data, isLoading } = useQuery({
+  //   queryKey: ['pins', plan?.id],
+  //   queryFn: async () => {
+  //     if (plan) return await getAllPinsByIdAndDates([plan.id, plan.dates]);
+  //     else return undefined;
+  //   },
+  //   enabled: plan !== undefined,
+  // });
 
   const resolver = yupResolver(addPlanSchema);
 
@@ -89,6 +99,9 @@ export default function PlanContents({ plan, originPins }: Props) {
         register={register}
         errors={errors}
       />
+      {/* {isLoading && <Loading full={true} />} */}
     </>
   );
-}
+};
+
+export default AddOrEditPlan;

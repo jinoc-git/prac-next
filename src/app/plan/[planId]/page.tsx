@@ -1,28 +1,16 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 
-import { redirect } from 'next/navigation';
-
-import { getAllPinsByPlanFromServer, getPlanByIdFromServer } from '@/api/serverAction';
-import ChangePlanStatus from '@/components/plan/changePlanStatus/ChangePlanStatus';
-import PlanContents from '@/components/plan/planContents/PlanContents';
+import Loading from '@/components/common/loading/Loading';
+import PlanContent from '@/components/plan/planContent/PlanContent';
 
 interface Props {
   params: { planId: string };
 }
 
 export default async function Plan({ params }: Props) {
-  const { planId } = params;
-
-  const plan = await getPlanByIdFromServer(planId);
-
-  if (plan === null) redirect('/main'); // 잘못된 경로 예정
-
-  const originPins = await getAllPinsByPlanFromServer(plan);
-
   return (
-    <section className=" relative md:pt-[70px]">
-      <PlanContents plan={plan} originPins={originPins} />
-      <ChangePlanStatus status={plan.plan_state} planId={plan.id} />
-    </section>
+    <Suspense fallback={<Loading full={true} />}>
+      <PlanContent params={params} />
+    </Suspense>
   );
 }
