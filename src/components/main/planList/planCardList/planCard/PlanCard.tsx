@@ -19,6 +19,7 @@ interface Props {
   avatarList: (string | null | undefined)[];
   nicknameList: string[];
   onClickPlanCard: (status: PlanStatus, id: string) => void;
+  onClickQuitBtn: (id: string) => void;
   handleBookMark: (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     bookMarkData: BookMarkType | undefined,
@@ -27,9 +28,15 @@ interface Props {
 }
 
 export default function PlanCard(props: Props) {
-  const { plan, bookMarkData, avatarList, nicknameList, onClickPlanCard, handleBookMark } = props;
-
-  const onClickQuitBtn = (id: string) => {};
+  const {
+    plan,
+    bookMarkData,
+    avatarList,
+    nicknameList,
+    onClickPlanCard,
+    onClickQuitBtn,
+    handleBookMark,
+  } = props;
 
   return (
     <div

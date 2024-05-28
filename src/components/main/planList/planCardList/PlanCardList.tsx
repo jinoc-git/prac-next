@@ -13,10 +13,7 @@ import { cardListing } from '@/utils/planCardListing';
 import AddNewPlanGuide from './addNewPlanGuide/AddNewPlanGuide';
 import PlanCard from './planCard/PlanCard';
 
-import type {
-  PlanIdAndMatesInfoList,
-  PlanStatus,
-} from '@/types/aboutPlan.type';
+import type { PlanIdAndMatesInfoList, PlanStatus } from '@/types/aboutPlan.type';
 import type { BookMarkType, PlanType } from '@/types/supabase';
 
 interface Props {
@@ -29,24 +26,18 @@ export default function PlanCardList(props: Props) {
   const { bookMarkDataList, planDataList, planIdAndMatesInfoList } = props;
 
   const selectedMenu = useTabMenuStoreState();
+  const handleBookMark = useBookMark();
 
   const router = useRouter();
 
-  const handleBookMark = useBookMark();
-
-  const bookMarkPlanIdList = bookMarkDataList.map(
-    (bookMark) => bookMark.plan_id,
-  );
+  const bookMarkPlanIdList = bookMarkDataList.map((bookMark) => bookMark.plan_id);
 
   const tabMenuCallbackFuncList = tabMenuCallback(selectedMenu);
   const selectedPlanList = planDataList
     .filter(tabMenuCallbackFuncList.filtering(bookMarkPlanIdList))
     .sort(tabMenuCallbackFuncList.sorting(bookMarkDataList));
 
-  const cardDataListWithPlanId = cardListing(
-    bookMarkDataList,
-    planIdAndMatesInfoList,
-  );
+  const cardDataListWithPlanId = cardListing(bookMarkDataList, planIdAndMatesInfoList);
 
   const onClickPlanCard = (status: PlanStatus, id: string) => {
     if (status === 'planning') router.push(`/plan/${id}`);
@@ -55,13 +46,13 @@ export default function PlanCardList(props: Props) {
     else if (status === 'end') router.push(`/ending/${id}`);
   };
 
+  const onClickQuitBtn = (id: string) => {};
+
   return selectedPlanList.length === 0 ? (
     <AddNewPlanGuide select={selectedMenu} />
   ) : (
     selectedPlanList.map((plan) => {
-      const { bookMarkData, avatarList, nicknameList } = cardDataListWithPlanId(
-        plan.id,
-      );
+      const { bookMarkData, avatarList, nicknameList } = cardDataListWithPlanId(plan.id);
 
       return (
         <PlanCard
@@ -71,6 +62,7 @@ export default function PlanCardList(props: Props) {
           avatarList={avatarList}
           nicknameList={nicknameList}
           onClickPlanCard={onClickPlanCard}
+          onClickQuitBtn={onClickQuitBtn}
           handleBookMark={handleBookMark}
         />
       );
