@@ -22,8 +22,8 @@ export default function Logo({ isLogin, isMain }: Props) {
     <h1
       onClick={onClickLogo}
       className="cursor-pointer w-[134px] h-[33px]
-      sm:absolute sm:left-1/2 sm:-translate-x-1/2
-      md:ml-[98px] md:static md:translate-x-0"
+      sm:position-center
+      md:ml-[98px] md:static md:translate-x-0 md:translate-y-0"
     >
       <Image
         src={isMain ? '/images/logo-main.webp' : '/images/logo-color.webp'}
