@@ -1,4 +1,5 @@
 import { getUserInfoWithIdList, supabaseClientClient } from './auth';
+import { deleteBookMarkByUserAndPlanId } from './bookMark';
 import { addPins, updatePins } from './pins';
 import { addNewPlanMates, updateMates } from './planMate';
 
@@ -196,10 +197,11 @@ export const quitPlan = async ({ userId, planId }: QuitPlanArgs) => {
   if (error) throw new Error('여행 나가기 오류');
 
   const updatedMates = data.users_id.filter((id) => id !== userId);
-  const needDelete = updatedMates.length === 0;
 
+  const needDelete = updatedMates.length === 0;
   if (needDelete) await deletePlan(planId);
   else {
-    // 업데이트
+    await updateMates(updatedMates, planId);
+    await deleteBookMarkByUserAndPlanId(userId, planId);
   }
 };
