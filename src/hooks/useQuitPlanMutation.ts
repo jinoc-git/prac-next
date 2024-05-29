@@ -35,6 +35,7 @@ const useQuitPlanMutation = () => {
     },
     onSettled: (_, err, { userId }) => {
       queryClient.invalidateQueries({ queryKey: ['plan_mates', userId] });
+      queryClient.invalidateQueries({ queryKey: ['book_mark', userId] });
     },
     onSuccess: () => {
       toast.success('여행 나가기 성공');
