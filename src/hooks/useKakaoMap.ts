@@ -37,6 +37,8 @@ const useKakaoMap = () => {
 
         const map = new window.kakao.maps.Map(mapContainer, mapOption);
 
+        map.setDraggable(true);
+
         if (zoom) makeZoom(map, zoom);
         if (mapType) makeMapType(map, mapType);
 
