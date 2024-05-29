@@ -30,6 +30,7 @@ export default function SideBarDropDown(props: Props) {
     if (state === 'traveling') router.push(`/plan/${id}`);
     if (state === 'recording') router.push(`/addPhoto/${id}`);
     if (state === 'end') router.push(`/ending/${id}`);
+    setFunc(false);
   }, []);
 
   const onClickMoreBtn = useCallback(() => {
