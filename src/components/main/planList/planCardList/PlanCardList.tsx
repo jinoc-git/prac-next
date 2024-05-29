@@ -1,11 +1,14 @@
 'use client';
 
 import React from 'react';
+import { toast } from 'react-toastify';
 
 import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import { useRouter } from 'next/navigation';
 
 import useBookMark from '@/hooks/useBookMark';
+import useConfirm from '@/hooks/useConfirm';
+import useQuitPlanMutation from '@/hooks/useQuitPlanMutation';
 import { useTabMenuStoreState } from '@/store/tabMenuStore';
 import { tabMenuCallback } from '@/utils/arrayCallbackFunctionList';
 import { cardListing } from '@/utils/planCardListing';
@@ -17,16 +20,19 @@ import type { PlanIdAndMatesInfoList, PlanStatus } from '@/types/aboutPlan.type'
 import type { BookMarkType, PlanType } from '@/types/supabase';
 
 interface Props {
+  userId: string | undefined;
   bookMarkDataList: BookMarkType[];
   planDataList: PlanType[];
   planIdAndMatesInfoList: PlanIdAndMatesInfoList[];
 }
 
 export default function PlanCardList(props: Props) {
-  const { bookMarkDataList, planDataList, planIdAndMatesInfoList } = props;
+  const { userId, bookMarkDataList, planDataList, planIdAndMatesInfoList } = props;
 
   const selectedMenu = useTabMenuStoreState();
   const handleBookMark = useBookMark();
+  const quitPlanMutation = useQuitPlanMutation();
+  const confirm = useConfirm();
 
   const router = useRouter();
 
@@ -46,7 +52,21 @@ export default function PlanCardList(props: Props) {
     else if (status === 'end') router.push(`/ending/${id}`);
   };
 
-  const onClickQuitBtn = (id: string) => {};
+  const onClickQuitBtn = (planId: string) => {
+    if (!userId) {
+      toast.error('로그인이 필요합니다.');
+      router.push('/signin');
+      return;
+    }
+
+    const confTitle = '여행 나가기';
+    const confDesc = '동행자가 없으면 여행은 삭제됩니다. 정말로 나가시겠습니까?';
+    const confFunc = () => {
+      quitPlanMutation({ userId, planId });
+    };
+
+    confirm.quit(confTitle, confDesc, confFunc);
+  };
 
   return selectedPlanList.length === 0 ? (
     <AddNewPlanGuide select={selectedMenu} />

@@ -1,14 +1,10 @@
 'use client';
 
 import React from 'react';
-import type {
-  FieldErrors,
-  SubmitHandler,
-  UseFormHandleSubmit,
-  UseFormRegister,
-} from 'react-hook-form';
+import { type SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
+import { yupResolver } from '@hookform/resolvers/yup';
 import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import { useRouter } from 'next/navigation';
 
@@ -19,9 +15,11 @@ import Pay from '@/components/plan/pay/Pay';
 import SelectDate from '@/components/plan/selectDate/SelectDate';
 import usePagination from '@/hooks/usePagination';
 import usePinMutation from '@/hooks/usePinMutation';
+import { addPlanSchema } from '@/schema/planSchema';
 import { useAuthStoreState } from '@/store/authStore';
 import { useDateStoreActions, useDateStoreState } from '@/store/dateStore';
 import { useInviteUserStoreActions, useInviteUserStoreState } from '@/store/inviteUserStore';
+import { addCommas } from '@/utils/numberFormat';
 
 import Invite from '../../plan/invite/Invite';
 
@@ -32,16 +30,12 @@ interface Props {
   plan?: PlanType;
   originPins?: PinType[];
   readonly: boolean;
+  setReadOnly: () => void;
   formRef: React.RefObject<HTMLFormElement>;
-  handleSubmit: UseFormHandleSubmit<PlanContentsInputType, undefined>;
-  onChangeCost: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  register: UseFormRegister<PlanContentsInputType>;
-  errors: FieldErrors<PlanContentsInputType>;
 }
 
 export default function PostPlanForm(props: Props) {
-  const { plan, originPins, formRef, readonly, handleSubmit, onChangeCost, register, errors } =
-    props;
+  const { plan, originPins, formRef, readonly, setReadOnly } = props;
 
   const user = useAuthStoreState();
   const { invitedUser } = useInviteUserStoreState();
@@ -54,6 +48,21 @@ export default function PostPlanForm(props: Props) {
 
   const [pins, setPins] = React.useState<PinContentsType[][]>([]);
   const router = useRouter();
+
+  const resolver = yupResolver(addPlanSchema);
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<PlanContentsInputType>({
+    resolver,
+    mode: 'onChange',
+    defaultValues: {
+      title: plan?.title,
+      totalCost: plan?.total_cost,
+    },
+  });
 
   const onSubmitAddOrModifyPlan: SubmitHandler<PlanContentsInputType> = async ({
     title,
@@ -108,7 +117,16 @@ export default function PostPlanForm(props: Props) {
       await updatePlan(updatePlanObj);
 
       pinMutate([plan.id, plan.dates]);
+      setReadOnly();
+      toast.success('여행이 생성됐습니다.');
     }
+  };
+
+  const onChangeCost = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let val = e.target.value.replace(/\D/g, '');
+    if (val.length > 8) val = val.substring(0, 8);
+
+    setValue('totalCost', addCommas(+val));
   };
 
   React.useEffect(() => {
