@@ -52,7 +52,9 @@ export default function Authentication({ isLogin }: Props) {
       ) : (
         <button
           onClick={onClickSignoutHandler}
-          className={`${pathname === '/main' ? 'text-white' : 'text-black'}`}
+          className={`${
+            pathname === '/main' ? 'text-white' : 'text-black'
+          } sm:text-xs md:text-normal`}
         >
           로그아웃
         </button>
