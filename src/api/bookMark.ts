@@ -9,9 +9,9 @@ export const getBookMarkDataByUserId = async (userId: string | undefined) => {
     .from('book_mark')
     .select('*')
     .eq('user_id', userId);
-  if (error !== null) {
-    throw new Error('getBookMark오류발생');
-  }
+
+  if (error) throw new Error('getBookMark오류발생');
+
   return data;
 };
 
@@ -21,18 +21,21 @@ export const addBookMark = async (newBookMark: InsertBookMarkType) => {
     plan_id: planId,
     user_id: userId,
   });
-  if (error !== null) {
-    throw new Error('addBookMark오류발생');
-  }
+
+  if (error) throw new Error('addBookMark오류발생');
 };
 
 export const deleteBookMark = async (bookMarkId: string) => {
+  const { error } = await supabaseClientClient.from('book_mark').delete().eq('id', bookMarkId);
+
+  if (error) throw new Error('오류발생');
+};
+
+export const deleteBookMarkByUserAndPlanId = async (userId: string, planId: string) => {
   const { error } = await supabaseClientClient
     .from('book_mark')
     .delete()
-    .eq('id', bookMarkId);
+    .match({ plan_id: planId, user_id: userId });
 
-  if (error !== null) {
-    throw new Error('오류발생');
-  }
+  if (error) throw new Error('나간 여행 북마크 삭제 오류');
 };

@@ -26,8 +26,8 @@ export default function PlanCardStatusChip(props: Props) {
   return (
     <div
       className={`flex-box font-normal text-white ${chipColor[status]} rounded-3xl 
-                  sm:w-[65px] sm:h-[21px] sm:text-[10px] 
-                  md:w-[72px] md:h-[26px] md:text-[12px]`}
+                  sm:px-[5px] sm:py-[1px] sm:text-[10px] 
+                  md:px-[6px] md:py-[2px] md:text-[12px]`}
     >
       {chipText[status]}
     </div>

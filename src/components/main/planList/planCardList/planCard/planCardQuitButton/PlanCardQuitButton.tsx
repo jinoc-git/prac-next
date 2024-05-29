@@ -14,7 +14,8 @@ export default function PlanCardQuitButton(props: Props) {
     <button
       className="sm:mt-[2px] md:mt-[4px]"
       aria-label="card-quit-plan-btn"
-      onClick={() => {
+      onClick={(e) => {
+        e.stopPropagation();
         onClickQuitBtn(planId);
       }}
     >

@@ -1,8 +1,9 @@
 import { getUserInfoWithIdList, supabaseClientClient } from './auth';
+import { deleteBookMarkByUserAndPlanId } from './bookMark';
 import { addPins, updatePins } from './pins';
 import { addNewPlanMates, updateMates } from './planMate';
 
-import type { AddPlanObj, PlanStatus, UpdatePlanObj } from '@/types/aboutPlan.type';
+import type { AddPlanObj, PlanStatus, QuitPlanArgs, UpdatePlanObj } from '@/types/aboutPlan.type';
 import type { PlanType } from '@/types/supabase';
 
 export const getPlanList = async (planIds: string[]) => {
@@ -178,4 +179,29 @@ export const getPlanDate = async (planId: string) => {
   if (error) throw new Error('plans_ending 불러오기 오류발생');
 
   return data;
+};
+
+export const deletePlan = async (planId: string) => {
+  const { error } = await supabaseClientClient.from('plans').delete().eq('id', planId);
+
+  if (error) throw new Error('여행 삭제 오류');
+};
+
+export const quitPlan = async ({ userId, planId }: QuitPlanArgs) => {
+  const { data, error } = await supabaseClientClient
+    .from('plan_mates')
+    .select('users_id')
+    .eq('id', planId)
+    .single();
+
+  if (error) throw new Error('여행 나가기 오류');
+
+  const updatedMates = data.users_id.filter((id) => id !== userId);
+
+  const needDelete = updatedMates.length === 0;
+  if (needDelete) await deletePlan(planId);
+  else {
+    await updateMates(updatedMates, planId);
+    await deleteBookMarkByUserAndPlanId(userId, planId);
+  }
 };
