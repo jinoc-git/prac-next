@@ -74,6 +74,7 @@ export default function PlanList() {
       <div className="flex flex-col gap-[16px]">
         <PlanTabMenu planCountList={planCountList} />
         <PlanCardList
+          userId={user?.id}
           bookMarkDataList={bookMarkDataList}
           planDataList={planDataList}
           planIdAndMatesInfoList={planIdAndMatesInfoList}

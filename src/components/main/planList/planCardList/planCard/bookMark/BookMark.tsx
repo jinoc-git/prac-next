@@ -26,11 +26,7 @@ const BookMark = ({ bookMarkData, planId, handleBookMark }: Props) => {
         md:w-[30px] md:h-[30px] md:ml-[20px]"
     >
       <Image
-        src={
-          bookMarkData
-            ? '/images/svgs/star-fill.svg'
-            : '/images/svgs/star-gray.svg'
-        }
+        src={bookMarkData ? '/images/svgs/star-fill.svg' : '/images/svgs/star-gray.svg'}
         alt="북마크 아이콘"
         width={24}
         height={24}

@@ -18,16 +18,17 @@ const useBookMark = () => {
     onMutate: async (newBookMark: InsertBookMarkType) => {
       await queryClient.cancelQueries({ queryKey: ['book_mark'] });
 
-      const prevData = queryClient.getQueryData<BookMarkType[]>(['book_mark', user?.id]);
+      const prevData = queryClient.getQueryData<BookMarkType[]>(['book_mark', newBookMark.user_id]);
 
-      if (prevData) queryClient.setQueryData(['book_mark', user?.id], [...prevData, newBookMark]);
-      else queryClient.setQueryData(['book_mark', user?.id], [newBookMark]);
+      if (prevData)
+        queryClient.setQueryData(['book_mark', newBookMark.user_id], [...prevData, newBookMark]);
+      else queryClient.setQueryData(['book_mark', newBookMark.user_id], [newBookMark]);
 
       return { prevData };
     },
-    onError: (err, _, context) => {
+    onError: (err, { user_id }, context) => {
       toast.error('북마크 추가 오류');
-      queryClient.setQueryData(['book_mark', user?.id], context?.prevData);
+      queryClient.setQueryData(['book_mark', user_id], context?.prevData);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['book_mark'] });
