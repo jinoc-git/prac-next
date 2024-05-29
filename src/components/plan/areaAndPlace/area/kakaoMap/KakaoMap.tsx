@@ -54,7 +54,7 @@ const KakaoMap = ({ pins, drawLine }: Props) => {
   }, [pins, map]);
 
   return (
-    <div className="flex justify-center sm:w-[286px] sm:ml-0 md:w-[650px] md:ml-[25px]">
+    <div className="flex justify-center mx-auto sm:w-[286px] md:w-[650px]">
       <div id="add-plan-kakao-map" className=" w-full md:h-[400px] sm:h-[227px]"></div>
     </div>
   );
