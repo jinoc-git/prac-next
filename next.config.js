@@ -8,9 +8,7 @@ const nextConfig = {
     serverActions: true,
   },
   webpack(config) {
-    const fileLoaderRule = config.module.rules.find((rule) =>
-      rule.test?.test?.('.svg'),
-    );
+    const fileLoaderRule = config.module.rules.find((rule) => rule.test?.test?.('.svg'));
 
     config.module.rules.push(
       {
@@ -32,4 +30,8 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+const withPWA = require('@ducanh2912/next-pwa').default({
+  dest: 'public',
+});
+
+module.exports = withPWA(nextConfig);
