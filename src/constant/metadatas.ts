@@ -1,3 +1,7 @@
+export const META_TITLE = 'Traduler';
+export const META_NAME = 'Traduler';
+export const META_DESC = '다 같이 여행을 떠날 때 저희 서비스와 함께해요!';
+export const META_SITE_URL = 'https://traduler-next.vercel.app';
 export const META_ICONS = [
   {
     rel: 'apple-touch-icon',

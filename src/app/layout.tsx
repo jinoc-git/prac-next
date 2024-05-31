@@ -8,7 +8,7 @@ import ToastProvider from '@/components/common/providers/toastProvider/ToastProv
 import Header from '@/components/header/Header';
 import Footer from '@/components/landing/footer/Footer';
 import SideBar from '@/components/sideBar/SideBar';
-import { META_ICONS } from '@/constant/metadataIcons';
+import { META_DESC, META_ICONS, META_NAME, META_SITE_URL, META_TITLE } from '@/constant/metadatas';
 
 import type { Metadata, Viewport } from 'next';
 
@@ -24,17 +24,18 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'Traduler',
-  description: '다 같이 여행을 떠날 때 저희 서비스와 함께해요!',
+  title: META_TITLE,
+  description: META_DESC,
   appleWebApp: {
     capable: true,
-    title: 'Traduler',
+    title: META_TITLE,
     statusBarStyle: 'black-translucent',
   },
   openGraph: {
-    url: 'https://traduler.com',
-    title: 'Traduler',
-    description: '다 같이 여행을 떠날 때 저희 서비스와 함께해요!',
+    url: META_SITE_URL,
+    siteName: META_NAME,
+    title: META_TITLE,
+    description: META_DESC,
     images: {
       url: '/images/traduler_intro.png',
       alt: 'Traduler 미리보기 사진',
