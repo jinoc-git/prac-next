@@ -59,7 +59,7 @@ export default function SideBarDropDown(props: Props) {
               onClickListItem(plan.plan_state, plan.id);
             }}
             style={{ overflow: aboveDropDownIsOpen ? 'visible' : '' }}
-            className="flex  p-2 rounded-lg hover:bg-[#F6F6F6] text-gray hover:text-gray_dark_2 cursor-pointer 
+            className="flex  p-2 rounded-lg hover:bg-[#F6F6F6] text-gray hover:text-gray_dark_2 cursor-pointer normal-transition
               md:w-[175px] md:my-[5px]
               sm:w-[234px] sm:mt-[5px]
               "
