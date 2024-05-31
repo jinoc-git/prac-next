@@ -8,6 +8,7 @@ import ToastProvider from '@/components/common/providers/toastProvider/ToastProv
 import Header from '@/components/header/Header';
 import Footer from '@/components/landing/footer/Footer';
 import SideBar from '@/components/sideBar/SideBar';
+import { META_ICONS } from '@/constant/metadataIcons';
 
 import type { Metadata, Viewport } from 'next';
 
@@ -17,8 +18,8 @@ export const viewport: Viewport = {
   themeColor: '#ffffff',
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
+  maximumScale: 5,
+  // userScalable: false,
   viewportFit: 'cover',
 };
 
@@ -42,14 +43,8 @@ export const metadata: Metadata = {
     },
   },
   manifest: '/manifest.json',
+  icons: META_ICONS,
 };
-// icons: [
-//   {
-//     rel: 'apple-touch-icon',
-//     sizes: '16x16',
-//     url: '/images/Assets.xcassets/AppIcon.appiconset/16.png',
-//   },
-// ],
 
 const KAKAO_MAP_URL = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY}&autoload=false&libraries=services,clusterer`;
 
