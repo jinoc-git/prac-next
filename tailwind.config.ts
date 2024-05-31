@@ -92,6 +92,7 @@ const config: Config = {
     },
     boxShadow: {
       card: ' 2px 6px 50px 2px rgba(0, 0, 0, 0.05)',
+      pwa: '0px 5px 15px rgba(0, 0, 0, 0.35)',
     },
   },
   plugins: [],

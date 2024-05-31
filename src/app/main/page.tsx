@@ -1,5 +1,6 @@
 import React from 'react';
 
+import InstallApp from '@/components/main/installApp/InstallApp';
 import PlanList from '@/components/main/planList/PlanList';
 import Profile from '@/components/main/profile/Profile';
 
@@ -13,6 +14,7 @@ export default function Main() {
       ></div>
       <Profile />
       <PlanList />
+      <InstallApp />
     </>
   );
 }

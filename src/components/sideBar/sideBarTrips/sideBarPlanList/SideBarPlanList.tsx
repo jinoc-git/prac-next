@@ -58,7 +58,7 @@ export default function SideBarPlanList(props: Props) {
   return (
     <div className="relative">
       <div
-        className={`flex justify-between items-center cursor-pointer rounded-lg 
+        className={`flex justify-between items-center cursor-pointer rounded-lg side-bar-transition
         sm:w-[308px] 
         md:w-[222px]
         ${isSideBarOpen ? SIDE_COLOR.hover[filter] : ''} ${

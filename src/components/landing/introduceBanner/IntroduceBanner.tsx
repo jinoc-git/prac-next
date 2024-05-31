@@ -32,10 +32,7 @@ const IntroduceBanner = () => {
           <p>보고 또 봐도 다시 보고 싶은 최애 영화처럼,</p>
           <p>그리울 때 마다 꺼내 보는</p>
           <p className="mb-4">나만의 추억 여행 타임 캡슐</p>
-          <button
-            onClick={handleButton}
-            className="blue-button p-2 sm:w-[100px] md:w-[130px] sm:mx-auto md:mx-0"
-          >
+          <button onClick={handleButton} className="blue-button p-2 sm:w-[100px] md:w-[130px]">
             더 알아보기
           </button>
         </div>

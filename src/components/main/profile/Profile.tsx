@@ -37,12 +37,12 @@ export default function Profile() {
       >
         <div
           onClick={handleOpenModal}
-          className="relative rounded-full object-cover cursor-pointer hover:opacity-75
+          className="relative rounded-full object-cover cursor-pointer hover:opacity-75 normal-transition
             sm:w-[66px] sm:h-[66px] 
             md:w-[85px] md:h-[85px]"
         >
           <Image
-            alt="main-profile-img"
+            alt="user-profile-img"
             src={avatarURL}
             width={85}
             height={85}

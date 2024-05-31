@@ -73,7 +73,7 @@ const CommentForm = ({ planId }: Props) => {
           md:w-[460px] md:h-[34px] ms:text-normal"
         />
       </div>
-      <button className="flex-box gap-1 py-1 sm:px-1 md:px-2 border border-[#d1d1d1] rounded hover:bg-[#F2F7FF]">
+      <button className="flex-box gap-1 py-1 sm:px-1 md:px-2 border border-[#d1d1d1] rounded hover:bg-[#F2F7FF] normal-transition">
         <Image
           src={'/images/svgs/check.svg'}
           alt="연필 아이콘"
