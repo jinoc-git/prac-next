@@ -13,24 +13,43 @@ import type { Metadata, Viewport } from 'next';
 
 import './globals.css';
 
-export const viweport: Viewport = {
+export const viewport: Viewport = {
   themeColor: '#ffffff',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  viewportFit: 'cover',
 };
 
 export const metadata: Metadata = {
   title: 'Traduler',
   description: '다 같이 여행을 떠날 때 저희 서비스와 함께해요!',
-  manifest: '/manifest.json',
-  viewport:
-    'minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover',
-  icons: [
-    {
-      rel: 'apple-touch-icon',
-      sizes: '16x16',
-      url: '/images/Assets.xcassets/AppIcon.appiconset/16.png',
+  appleWebApp: {
+    capable: true,
+    title: 'Traduler',
+    statusBarStyle: 'black-translucent',
+  },
+  openGraph: {
+    url: 'https://traduler.com',
+    title: 'Traduler',
+    description: '다 같이 여행을 떠날 때 저희 서비스와 함께해요!',
+    images: {
+      url: '/images/traduler_intro.png',
+      alt: 'Traduler 미리보기 사진',
+      width: 1920,
+      height: 1080,
     },
-  ],
+  },
+  manifest: '/manifest.json',
 };
+// icons: [
+//   {
+//     rel: 'apple-touch-icon',
+//     sizes: '16x16',
+//     url: '/images/Assets.xcassets/AppIcon.appiconset/16.png',
+//   },
+// ],
 
 const KAKAO_MAP_URL = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY}&autoload=false&libraries=services,clusterer`;
 
