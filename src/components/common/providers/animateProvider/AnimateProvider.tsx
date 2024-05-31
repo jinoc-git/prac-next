@@ -14,7 +14,7 @@ const AnimateProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <main
-      className={`min-h-screen side-bar-transition sm:ml-0
+      className={` relative min-h-screen side-bar-transition sm:ml-0
       ${isLanding ? '' : isSideBarOpen ? 'md:ml-[270px]' : 'md:ml-[88px]'}
     `}
     >
