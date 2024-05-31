@@ -154,7 +154,7 @@ const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
         >
           <Image
             src="/images/svgs/close.svg"
-            alt="프로필 아이콘"
+            alt="닫기 아이콘"
             width={30}
             height={30}
             className="sm:w-[24px] sm:h-[24px] md:w-[30px] md:h-[30px]"
@@ -162,7 +162,7 @@ const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
         </button>
         <div className="md:flex items-center gap-3 w-full">
           <Image
-            src="/images/svgs/userDefault.svg"
+            src={user?.avatar_url ? user.avatar_url : '/images/svgs/close.svg'}
             alt="프로필 아이콘"
             width={30}
             height={30}
@@ -171,7 +171,7 @@ const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
           <p className="font-semibold md:text-xlg sm:text-lg text-gray_dark_2">프로필 편집</p>
           <p className="md:hidden text-[16px]">프로필 사진과 닉네임을 변경하세요 </p>
         </div>
-        <div className="relative hover:brightness-75 sm:w-[150px] sm:h-[150px] md:w-[200px] md:h-[200px]">
+        <div className="relative hover:brightness-75 sm:w-[150px] sm:h-[150px] md:w-[200px] md:h-[200px] normal-transition">
           <label htmlFor="avatar">
             <Image
               src={preview ? preview : '/images/svgs/userDefault.svg'}
@@ -221,11 +221,11 @@ const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
             name="profile-remove-avatar-btn"
             type="button"
             onClick={handleRemoveAvartar}
-            className="border border-navy rounded-lg text-navy hover:bg-navy_light_1 disabled:bg-gray_light_3 
+            className="border border-navy rounded-lg text-navy hover:bg-navy_light_1 disabled:bg-gray_light_3 normal-transition
               md:w-[200px] md:h-[45px]
               sm:w-[150px] sm:h-[41px]
               "
-            // disabled={previewImg === ''}
+            disabled={preview === ''}
           >
             사진 제거
           </button>
@@ -233,7 +233,7 @@ const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
             name="profile-change-btn"
             disabled={blockSubmit}
             type="submit"
-            className="flex-box gap-2 border rounded-lg bg-navy text-white hover:bg-navy_light_3 disabled:bg-gray_light_3
+            className="flex-box gap-2 border rounded-lg bg-navy text-white hover:bg-navy_light_3 disabled:bg-gray_light_3 normal-transition
               md:w-[200px] md:h-[45px]
               sm:w-[150px] sm:h-[41px]
               "

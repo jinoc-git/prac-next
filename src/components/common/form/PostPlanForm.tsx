@@ -95,6 +95,7 @@ export default function PostPlanForm(props: Props) {
 
       await addPlan(addPlanData);
 
+      toast.success('여행이 생성됐습니다.');
       router.push('main');
     } else {
       const updatedPlan: InsertPlanType = {
@@ -118,7 +119,7 @@ export default function PostPlanForm(props: Props) {
 
       pinMutate([plan.id, plan.dates]);
       setReadOnly();
-      toast.success('여행이 생성됐습니다.');
+      toast.success('여행이 수정됐습니다.');
     }
   };
 

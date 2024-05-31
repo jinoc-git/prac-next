@@ -59,6 +59,7 @@ const PinContents = (props: Props) => {
         <div className="relative ">
           <button
             aria-label="dropdown-btn"
+            type="button"
             onClick={handleDropDown}
             onBlur={() => {
               setDropDownIsOpen(false);

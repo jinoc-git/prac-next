@@ -35,7 +35,7 @@ const SIDE_COLOR = {
 };
 
 const SIDE_ICON_LIST = {
-  bookMark: '/images/svgs/bookmark.svg',
+  bookMark: '/images/svgs/side-bookmark.svg',
   planning: '/images/svgs/side-planning.svg',
   end: '/images/svgs/side-end.svg',
 } as const;
@@ -58,7 +58,7 @@ export default function SideBarPlanList(props: Props) {
   return (
     <div className="relative">
       <div
-        className={`flex justify-between items-center cursor-pointer rounded-lg 
+        className={`flex justify-between items-center cursor-pointer rounded-lg side-bar-transition
         sm:w-[308px] 
         md:w-[222px]
         ${isSideBarOpen ? SIDE_COLOR.hover[filter] : ''} ${
@@ -76,9 +76,10 @@ export default function SideBarPlanList(props: Props) {
         >
           <Image
             src={SIDE_ICON_LIST[filter]}
-            width={20}
-            height={20}
+            width={filter !== 'end' ? 20 : 24}
+            height={filter !== 'end' ? 20 : 25}
             alt={SIDE_ICON_LIST[filter] + '아이콘'}
+            className="w-5 h-auto"
           />
         </button>
         <div className="flex items-center">
@@ -92,12 +93,12 @@ export default function SideBarPlanList(props: Props) {
           </span>
           <div className="w-[14px] mr-5">
             {activeDropDown ? (
-              <Image src={'/images/svgs/arrowUp.svg'} width={14} height={14} alt="위 방향 화살표" />
+              <Image src={'/images/svgs/arrowUp.svg'} width={14} height={22} alt="위 방향 화살표" />
             ) : (
               <Image
                 src={'/images/svgs/arrowDown.svg'}
                 width={14}
-                height={14}
+                height={22}
                 alt="아래 방향 화살표"
               />
             )}

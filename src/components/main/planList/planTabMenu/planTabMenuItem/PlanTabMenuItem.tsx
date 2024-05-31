@@ -1,9 +1,6 @@
 import React from 'react';
 
-import {
-  useTabMenuStoreActions,
-  useTabMenuStoreState,
-} from '@/store/tabMenuStore';
+import { useTabMenuStoreActions, useTabMenuStoreState } from '@/store/tabMenuStore';
 
 interface Props {
   name: 'bookMark' | 'traveling' | 'planning' | 'end';
@@ -26,14 +23,10 @@ export default function PlanTabMenuItem(props: Props) {
   return (
     <li>
       <p
-        className={`cursor-pointer text-white hover:text-yellow_light_2 
+        className={`cursor-pointer text-white hover:text-yellow_light_2 normal-transition
         sm:text-[11px]
         md:text-[16px]
-      ${
-        name === selectedMenu
-          ? 'text-yellow_light_2 font-SemiBold'
-          : 'text-white'
-      }`}
+      ${name === selectedMenu ? 'text-yellow_light_2 font-SemiBold' : 'text-white'}`}
         onClick={() => {
           setSelectedMenu(name);
         }}

@@ -37,18 +37,19 @@ export default function Profile() {
       >
         <div
           onClick={handleOpenModal}
-          className="relative rounded-full object-cover cursor-pointer hover:opacity-75
+          className="relative rounded-full object-cover cursor-pointer hover:opacity-75 normal-transition
             sm:w-[66px] sm:h-[66px] 
             md:w-[85px] md:h-[85px]"
         >
           <Image
-            alt="main-profile-img"
+            alt="user-profile-img"
             src={avatarURL}
             width={85}
             height={85}
             className="rounded-full border-[2.5px] border-blue_light_1 object-cover cursor-pointer
               sm:w-[66px] sm:h-[66px]
               md:w-[85px] md:h-[85px]"
+            priority
           />
 
           <div
@@ -56,7 +57,7 @@ export default function Profile() {
               sm:w-[20px] sm:h-[20px] sm:top-[46px] sm:left-[46px] sm:border-[1.5px]
               md:w-[24px] md:h-[24px] md:top-[60px] md:left-[60px] md:border-[2px]"
           >
-            <Image alt="edit-icon" src={'/images/svgs/edit-gray.svg'} width={14} height={12} />
+            <Image alt="edit-icon" src={'/images/svgs/edit-gray.svg'} width={16} height={16} />
           </div>
         </div>
         <p className="text-white text-base font-Regular sm:text-[16px] md:text-xlg">

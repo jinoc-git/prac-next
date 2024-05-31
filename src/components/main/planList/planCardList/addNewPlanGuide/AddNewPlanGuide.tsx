@@ -27,6 +27,7 @@ const AddNewPlanGuide = ({ select }: Props) => {
         height={100}
         className="sm:w-[100px] sm:h-[80px] sm:my-[15px]
         md:w-[125px] md:h-[100px]"
+        priority
       />
       <AddNewPlanGuideText select={select} />
       {select !== 'bookMark' && <AddNewPlanGuideAddPlanBtn />}
