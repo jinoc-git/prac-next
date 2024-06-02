@@ -95,7 +95,7 @@ const Place = (props: Props) => {
             sm:text-sm sm:w-[286px] sm:mx-auto
             "
       >
-        <Image src={'/images/svgs/pin.svg'} width={20} height={20} alt="여행 지역 아이콘" />
+        <Image src={'/images/svgs/pin.svg'} width={18} height={22} alt="여행 지역 아이콘" />
         <p>방문할 장소</p>
       </div>
       <DragNDropProvider>

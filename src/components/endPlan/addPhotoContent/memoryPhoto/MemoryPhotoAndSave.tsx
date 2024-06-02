@@ -67,9 +67,9 @@ const MemoryPhotoAndSave = ({ allPins, plan }: Props) => {
           <Image
             src={'/images/svgs/camera.svg'}
             width={18}
-            height={20}
+            height={22}
             alt="카메라 아이콘"
-            className="h-[20px] pt-[1px]"
+            className=" pt-[1px]"
           />
           <p>추억할 사진 올리기</p>
         </div>

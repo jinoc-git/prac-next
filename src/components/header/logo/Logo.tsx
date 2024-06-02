@@ -28,9 +28,9 @@ export default function Logo({ isLogin, isMain }: Props) {
       <Image
         src={isMain ? '/images/logo-main.webp' : '/images/logo-color.webp'}
         alt="logo"
-        width={134}
-        height={33}
-        className="w-full h-full"
+        width={580}
+        height={144}
+        className="w-[134px] h-auto"
         priority
       />
     </h1>

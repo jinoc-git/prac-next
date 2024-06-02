@@ -21,7 +21,13 @@ const Pay = (props: Props) => {
   return (
     <div className="inner-content-layout text-gray_dark_1 md:justify-normal sm:justify-between">
       <div className="content-lable">
-        <Image src={'/images/svgs/wallet-gray.svg'} width={20} height={18} alt="지갑 아이콘" />
+        <Image
+          src={'/images/svgs/wallet-gray.svg'}
+          width={27}
+          height={12}
+          alt="지갑 아이콘"
+          className="w-5 h-auto"
+        />
         <p>전체 예산</p>
       </div>
       <div className="relative flex flex-col sm:text-sm md:text-normal">

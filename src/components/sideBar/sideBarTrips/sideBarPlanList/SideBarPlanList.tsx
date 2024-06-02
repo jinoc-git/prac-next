@@ -35,7 +35,7 @@ const SIDE_COLOR = {
 };
 
 const SIDE_ICON_LIST = {
-  bookMark: '/images/svgs/bookmark.svg',
+  bookMark: '/images/svgs/side-bookmark.svg',
   planning: '/images/svgs/side-planning.svg',
   end: '/images/svgs/side-end.svg',
 } as const;
@@ -76,9 +76,10 @@ export default function SideBarPlanList(props: Props) {
         >
           <Image
             src={SIDE_ICON_LIST[filter]}
-            width={20}
-            height={20}
+            width={filter !== 'end' ? 20 : 24}
+            height={filter !== 'end' ? 20 : 25}
             alt={SIDE_ICON_LIST[filter] + '아이콘'}
+            className="w-5 h-auto"
           />
         </button>
         <div className="flex items-center">

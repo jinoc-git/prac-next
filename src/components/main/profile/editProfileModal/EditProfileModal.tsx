@@ -154,7 +154,7 @@ const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
         >
           <Image
             src="/images/svgs/close.svg"
-            alt="프로필 아이콘"
+            alt="닫기 아이콘"
             width={30}
             height={30}
             className="sm:w-[24px] sm:h-[24px] md:w-[30px] md:h-[30px]"
@@ -162,7 +162,7 @@ const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
         </button>
         <div className="md:flex items-center gap-3 w-full">
           <Image
-            src="/images/svgs/userDefault.svg"
+            src={user?.avatar_url ? user.avatar_url : '/images/svgs/close.svg'}
             alt="프로필 아이콘"
             width={30}
             height={30}
