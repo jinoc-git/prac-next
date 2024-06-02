@@ -1,10 +1,13 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-export default function ErrorMainPlanList() {
+import { useSideBarStoreActions } from '@/store/sideBarStore';
+
+const NotFound = () => {
+  const { setVisibilitySideBar, setIsNotFoundPage } = useSideBarStoreActions();
   const router = useRouter();
 
   const goToBack = () => {
@@ -12,11 +15,20 @@ export default function ErrorMainPlanList() {
   };
 
   const goToMain = () => {
-    router.push('/main');
+    router.replace('/main');
   };
 
+  useEffect(() => {
+    setVisibilitySideBar(false);
+    setIsNotFoundPage(true);
+    return () => {
+      setVisibilitySideBar(true);
+      setIsNotFoundPage(false);
+    };
+  }, []);
+
   return (
-    <section className="bg-[url(https://github.com/jinoc-git/traduler-project/assets/104746237/18bee0d6-3507-42d5-b42e-54c17173d077)] bg-no-repeat bg-center min-h-screen bg-70% flex flex-col items-center justify-center">
+    <section className="bg-[url(https://github.com/jinoc-git/traduler-project/assets/108923582/6d291f12-a1df-4505-b3e1-4cb7b14baa51)] bg-no-repeat bg-center min-h-screen bg-80% flex flex-col items-center justify-center">
       <div className="mt-[400px]">
         <h2 className="text-center mb-4 text-gray_dark_2 text-xlg font-semibold">
           저런.. 길을 잃으셨군요!
@@ -42,4 +54,6 @@ export default function ErrorMainPlanList() {
       </div>
     </section>
   );
-}
+};
+
+export default NotFound;
