@@ -92,12 +92,12 @@ export default function SideBarPlanList(props: Props) {
           </span>
           <div className="w-[14px] mr-5">
             {activeDropDown ? (
-              <Image src={'/images/svgs/arrowUp.svg'} width={14} height={14} alt="위 방향 화살표" />
+              <Image src={'/images/svgs/arrowUp.svg'} width={14} height={22} alt="위 방향 화살표" />
             ) : (
               <Image
                 src={'/images/svgs/arrowDown.svg'}
                 width={14}
-                height={14}
+                height={22}
                 alt="아래 방향 화살표"
               />
             )}

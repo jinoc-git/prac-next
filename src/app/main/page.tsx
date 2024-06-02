@@ -1,10 +1,17 @@
 import React from 'react';
 
+import { redirect } from 'next/navigation';
+
+import { getSessionFromServer } from '@/api/serverAction';
 import InstallApp from '@/components/main/installApp/InstallApp';
 import PlanList from '@/components/main/planList/PlanList';
 import Profile from '@/components/main/profile/Profile';
 
-export default function Main() {
+export default async function Main() {
+  const session = await getSessionFromServer();
+
+  if (session === null) redirect('/signin');
+
   return (
     <>
       <div

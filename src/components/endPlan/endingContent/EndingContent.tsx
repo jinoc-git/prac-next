@@ -1,4 +1,4 @@
-import { redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 
 import { getAllPinsByPlanFromServer, getEndingPlanFromServer } from '@/api/serverAction';
 
@@ -18,7 +18,7 @@ const EndingContent = async ({ params }: Props) => {
 
   const plan = await getEndingPlanFromServer(planId);
 
-  if (plan === null) redirect('/main'); // 잘못된 경로 예정
+  if (plan === null) notFound();
 
   const allPins = await getAllPinsByPlanFromServer(plan);
 
