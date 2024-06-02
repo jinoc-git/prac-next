@@ -21,10 +21,10 @@ export default function SideBarLogo() {
       <Image
         src="/images/logo-color.webp"
         alt="logo"
-        width={134}
-        height={33}
+        width={580}
+        height={144}
         onClick={onClickLogo}
-        className=" ml-[74px]"
+        className="w-[134px] h-auto ml-[74px] cursor-pointer"
       />
     </div>
   );

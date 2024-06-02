@@ -17,9 +17,9 @@ const FinalCost = ({ dates, datesCost, totalCost }: Props) => {
         <Image
           src={'/images/svgs/receipt.svg'}
           width={20}
-          height={18}
+          height={21}
           alt="영수증 아이콘"
-          className="w-[20px] h-[25px]"
+          className="w-5 h-auto"
         />
         <p>최종 정산 내역</p>
       </div>
