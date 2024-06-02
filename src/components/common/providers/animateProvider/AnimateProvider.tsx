@@ -10,7 +10,8 @@ const AnimateProvider = ({ children }: { children: React.ReactNode }) => {
   const { isSideBarOpen, isNotFoundPage } = useSideBarStoreState();
   const pathname = usePathname();
 
-  const shouldNoMargin = pathname === '/' || isNotFoundPage;
+  const shouldNoMargin =
+    pathname === '/' || pathname === '/signin' || pathname === '/signup' || isNotFoundPage;
 
   return (
     <main

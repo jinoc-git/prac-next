@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 
 import { getPlanByIdFromServer } from '@/api/serverAction';
 
@@ -16,7 +16,7 @@ const PlanContent = async ({ params }: Props) => {
 
   const plan = await getPlanByIdFromServer(planId);
 
-  if (plan === null) redirect('/main'); // 잘못된 경로 예정
+  if (plan === null) notFound();
 
   return (
     <section className=" relative md:pt-[70px]">

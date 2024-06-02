@@ -1,4 +1,4 @@
-import { redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 
 import { getAllPinsByPlanFromServer, getPlanByIdFromServer } from '@/api/serverAction';
 
@@ -14,8 +14,7 @@ const AddPhotoContent = async ({ params }: Props) => {
 
   const plan = await getPlanByIdFromServer(planId);
 
-  if (plan === null) redirect('/main');
-  if (plan.plan_state !== 'recording') redirect('/main');
+  if (plan === null || plan.plan_state !== 'recording') notFound();
 
   const allPins = await getAllPinsByPlanFromServer(plan);
 
