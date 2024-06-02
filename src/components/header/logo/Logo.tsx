@@ -31,6 +31,7 @@ export default function Logo({ isLogin, isMain }: Props) {
         width={134}
         height={33}
         className="w-full h-full"
+        priority
       />
     </h1>
   );
