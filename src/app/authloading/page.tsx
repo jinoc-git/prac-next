@@ -1,44 +1,38 @@
-'use client';
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 
-import React from 'react';
+import type { Database } from '@/types/supabase';
+// authloading페이지에서 session이 null 이라 아무것도 되지 않음
+export default async function AuthLoading() {
+  const supabaseServerClient = createServerComponentClient<Database>({ cookies });
 
-import { useRouter } from 'next/navigation';
+  const {
+    data: { session },
+  } = await supabaseServerClient.auth.getSession();
 
-import { insertUser, supabaseClientClient } from '@/api/auth';
+  if (session) {
+    const {
+      id,
+      email,
+      user_metadata: { name: nickname },
+    } = session.user;
 
-export default function AuthLoading() {
-  // async 가능할지 확인
-  const router = useRouter();
+    const { data: check } = await supabaseServerClient.from('users').select('id').eq('id', id);
+    if (check && check.length === 0) {
+      const user = {
+        id,
+        email: email as string,
+        nickname,
+      };
 
-  React.useEffect(() => {
-    const checkUser = async () => {
-      const { data } = await supabaseClientClient.auth.getSession();
-      if (data !== null) {
-        if (data.session !== null) {
-          const {
-            id,
-            email,
-            user_metadata: { name: nickname },
-          } = data.session.user;
+      await supabaseServerClient.from('users').insert(user);
+    }
 
-          const { data: check } = await supabaseClientClient
-            .from('users')
-            .select('id')
-            .eq('id', id);
-          if (check !== null && check.length === 0) {
-            const user = {
-              id,
-              email: email as string,
-              nickname,
-            };
-            await insertUser(user);
-          }
-        }
-      }
-      router.push('/main');
-    };
+    redirect('/main');
+  }
 
-    checkUser();
-  }, []);
-  return <div>AuthLoading</div>;
+  // setVisibilitySideBar(true);
+
+  return null;
 }
