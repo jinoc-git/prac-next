@@ -16,7 +16,7 @@ interface Props {
 export default function Header({ session }: Props) {
   const pathname = usePathname();
   const isLogin = session !== null;
-  console.log(session);
+
   const bgWhite =
     pathname !== '/' && pathname !== '/signin' && pathname !== '/signup' && pathname !== '/main';
 

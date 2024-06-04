@@ -40,16 +40,14 @@ export const signUpWithSB = async (email: string, password: string, nickname: st
 
 export const insertUser = async (user: UserType) => {
   const { id, email, nickname } = user;
+
   const { error } = await supabaseClientClient.from('users').insert({
     id,
     email,
     nickname,
   });
 
-  const isUsersTableError = Boolean(error);
-  if (isUsersTableError) {
-    return error;
-  }
+  if (error) throw error;
 };
 
 export const signInWithSB = async (email: string, password: string) => {
@@ -75,6 +73,32 @@ export const signInWithGoogle = async () => {
       },
     },
   });
+};
+
+export const checkGoogleUser = async () => {
+  const {
+    data: { session },
+  } = await supabaseClientClient.auth.getSession();
+
+  if (session) {
+    const {
+      id,
+      email,
+      user_metadata: { name: nickname },
+    } = session.user;
+
+    const { data: check } = await supabaseClientClient.from('users').select('id').eq('id', id);
+
+    if (check && check.length === 0) {
+      const user = {
+        id,
+        email: email as string,
+        nickname,
+      };
+
+      await insertUser(user);
+    }
+  }
 };
 
 export const signOutForSB = async () => {
