@@ -6,7 +6,6 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { AuthError } from '@supabase/supabase-js';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
@@ -42,19 +41,17 @@ export default function SignupForm() {
   const onSubmit: SubmitHandler<SignupFormInputList> = async (data) => {
     const { email, password, nickname } = data;
     try {
-      const res = await signUpWithSB(email, password, nickname);
+      await signUpWithSB(email, password, nickname);
 
-      if (res instanceof AuthError || res instanceof Error) {
-        toast.error('회원가입에 실패하였습니다.');
-        return false;
-      }
       reset();
 
       toast.success('회원가입에 성공하였습니다');
       router.push('/main');
       router.refresh();
     } catch (error) {
-      toast.error('잠시후 다시 시도해주세요.');
+      if (error instanceof Error) {
+        toast.error(error.message);
+      }
     }
   };
 
