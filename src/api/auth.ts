@@ -8,7 +8,7 @@ const supabaseClientClient = createClientComponentClient<Database>();
 export { supabaseClientClient };
 
 export const signUpWithSB = async (email: string, password: string, nickname: string) => {
-  const { data, error: authError } = await supabaseClientClient.auth.signUp({
+  const { data, error } = await supabaseClientClient.auth.signUp({
     email,
     password,
     options: {
@@ -18,10 +18,7 @@ export const signUpWithSB = async (email: string, password: string, nickname: st
     },
   });
 
-  const isAuthError = Boolean(authError);
-  if (isAuthError) {
-    return authError;
-  }
+  if (error) throw new Error('회원가입 오류 발생');
 
   const id = data.user?.id;
   const user = {
@@ -30,26 +27,19 @@ export const signUpWithSB = async (email: string, password: string, nickname: st
     nickname,
   };
 
-  const res = await insertUser(user);
-
-  const isUsersTableError = Boolean(res);
-  if (isUsersTableError) {
-    return res;
-  }
+  await insertUser(user);
 };
 
 export const insertUser = async (user: UserType) => {
   const { id, email, nickname } = user;
+
   const { error } = await supabaseClientClient.from('users').insert({
     id,
     email,
     nickname,
   });
 
-  const isUsersTableError = Boolean(error);
-  if (isUsersTableError) {
-    return error;
-  }
+  if (error) throw new Error('유저 데이터 추가 오류');
 };
 
 export const signInWithSB = async (email: string, password: string) => {
@@ -75,6 +65,32 @@ export const signInWithGoogle = async () => {
       },
     },
   });
+};
+
+export const checkGoogleUser = async () => {
+  const {
+    data: { session },
+  } = await supabaseClientClient.auth.getSession();
+
+  if (session) {
+    const {
+      id,
+      email,
+      user_metadata: { name: nickname },
+    } = session.user;
+
+    const { data: check } = await supabaseClientClient.from('users').select('id').eq('id', id);
+
+    if (check && check.length === 0) {
+      const user = {
+        id,
+        email: email as string,
+        nickname,
+      };
+
+      await insertUser(user);
+    }
+  }
 };
 
 export const signOutForSB = async () => {
