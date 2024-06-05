@@ -53,13 +53,17 @@ export default function SearchPeopleModal(props: SearchPeopleModalProps) {
       return;
     }
 
-    const res = await findUsers(data.userInfo);
+    try {
+      const res = await findUsers(data.userInfo);
 
-    if (res.nickname != null && res.email != null) {
-      const searchedPeople: UserType[] = [];
-      searchedPeople.push(...res.nickname);
-      searchedPeople.push(...res.email.filter(searchCallback.isNotInvite(searchedPeople)));
-      setPeople(searchedPeople);
+      if (res.nickname != null && res.email != null) {
+        const searchedPeople: UserType[] = [];
+        searchedPeople.push(...res.nickname);
+        searchedPeople.push(...res.email.filter(searchCallback.isNotInvite(searchedPeople)));
+        setPeople(searchedPeople);
+      }
+    } catch (error) {
+      if (error instanceof Error) toast.error(error.message);
     }
   };
 

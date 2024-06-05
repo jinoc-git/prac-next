@@ -208,7 +208,7 @@ export const updateUserNickname = async (nickname: string, userId: string) => {
 };
 
 export const getUserInfoWithId = async (id: string) => {
-  const { data, error } = await supabaseClientClient.from('users').select().eq('id', id);
+  const { data, error } = await supabaseClientClient.from('users').select().eq('id', id).single();
 
   if (error) throw new Error(error.message);
 
