@@ -22,7 +22,6 @@ export const sideBarStore = create<Store>((set) => ({
   state: {
     isSideBarOpen: false,
     isVisibleSideBar: false,
-    isErrorPage: false,
     isNotFoundPage: false,
   },
   actions: {
