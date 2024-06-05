@@ -85,12 +85,6 @@ export const getPlanListAndMateList = async (userId: string | undefined) => {
   };
 };
 
-export const updateDatePlan = async (planId: string, dates: string[]) => {
-  const { error } = await supabaseClientClient.from('plans').update({ dates }).eq('id', planId);
-
-  if (error) throw new Error('여행 날짜 업데이트 오류');
-};
-
 export const addPlan = async (addPlanObj: AddPlanObj) => {
   const { plan, pins, invitedUser } = addPlanObj;
 
