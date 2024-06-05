@@ -25,10 +25,7 @@ export default function Invite() {
 
   const { data } = useQuery({
     queryKey: ['planMates', planId],
-    queryFn: async () => {
-      if (planId) return await getMatesInfo(planId);
-      else return null;
-    },
+    queryFn: async () => await getMatesInfo(planId),
   });
 
   const openModal = () => {
