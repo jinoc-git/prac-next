@@ -7,7 +7,6 @@ import { toast } from 'react-toastify';
 import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import _ from 'lodash';
 import Image from 'next/image';
-import { useParams } from 'next/navigation';
 
 import { findUsers } from '@/api/planMate';
 import useConfirm from '@/hooks/useConfirm';
@@ -37,8 +36,6 @@ export default function SearchPeopleModal(props: SearchPeopleModalProps) {
   const user = useAuthStoreState();
   const confirm = useConfirm();
 
-  const planId = useParams(); // 수정 필요
-
   const [people, setPeople] = React.useState<UserType[]>([]);
 
   const {
@@ -53,18 +50,21 @@ export default function SearchPeopleModal(props: SearchPeopleModalProps) {
       return;
     }
 
-    const res = await findUsers(data.userInfo);
+    try {
+      const res = await findUsers(data.userInfo);
 
-    if (res.nickname != null && res.email != null) {
-      const searchedPeople: UserType[] = [];
-      searchedPeople.push(...res.nickname);
-      searchedPeople.push(...res.email.filter(searchCallback.isNotInvite(searchedPeople)));
-      setPeople(searchedPeople);
+      if (res.nickname != null && res.email != null) {
+        const searchedPeople: UserType[] = [];
+        searchedPeople.push(...res.nickname);
+        searchedPeople.push(...res.email.filter(searchCallback.isNotInvite(searchedPeople)));
+        setPeople(searchedPeople);
+      }
+    } catch (error) {
+      if (error instanceof Error) toast.error(error.message);
     }
   };
 
   const debouncedSearchUser = _.debounce(searchUser, 300);
-  const userIdList = invitedUser.map((user) => user.id);
 
   const handleInvite = async (user: UserType) => {
     const confTitle = '동행 초대';
@@ -86,12 +86,8 @@ export default function SearchPeopleModal(props: SearchPeopleModalProps) {
   };
 
   const saveInviteData = () => {
-    const ids = invitedUser.map((item) => item.id);
-    if (ids !== undefined && planId !== undefined) {
-      // inviteMutation.mutate([usersId, planId]);
-    }
     setUser(invitedUser);
-    toast.success('저장되었습니다.');
+    toast.success('동행자가 추가됐습니다.');
     closeModal();
     syncInvitedUser();
   };

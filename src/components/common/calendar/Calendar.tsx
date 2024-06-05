@@ -92,13 +92,15 @@ export default function Calendar(props: Props) {
           dayClassName={(d) =>
             d.getDate() === startDate?.getDate() ?? false ? `react-datepicker__startDay` : ``
           }
-          className="text-center react-datepicker read-only:cursor-default 
+          className={`text-center react-datepicker read-only:cursor-default ${
+            modifyState === 'readOnly' ? '!border-none' : ''
+          }
             sm:w-[132px] sm:h-[28px]
-            md:w-[120px] md:mr-[20px]"
+            md:w-[120px] md:mr-[20px]`}
           readOnly={modifyState === 'readOnly'}
           placeholderText="YYYY / MM / DD"
           required
-          // withPortal={true}
+          withPortal={true}
           portalId="datepiker-portal"
         />
       </div>
@@ -153,13 +155,15 @@ export default function Calendar(props: Props) {
           dayClassName={(d) =>
             d.getDate() === startDate?.getDate() ?? false ? `react-datepicker__startDay` : ``
           }
-          className="text-center react-datepicker read-only:cursor-default
+          className={`text-center react-datepicker read-only:cursor-default ${
+            modifyState === 'readOnly' ? '!border-none' : ''
+          }
             sm:w-[132px] sm:h-[28px]
-            md:w-[120px] md:mr-[20px]"
+            md:w-[120px] md:mr-[20px]`}
           readOnly={modifyState === 'readOnly'}
           placeholderText="YYYY / MM / DD"
           required
-          // withPortal={screenSize === 'sm'}
+          withPortal={true}
           portalId="datepiker-portal"
         />
       </div>
