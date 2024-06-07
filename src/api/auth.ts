@@ -58,7 +58,7 @@ export const signInWithGoogle = async () => {
   await supabaseClientClient.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      redirectTo: 'http://localhost:3000/authloading',
+      redirectTo: `${window.location.origin}/authloading`,
       queryParams: {
         access_type: 'offline',
         prompt: 'consent',
