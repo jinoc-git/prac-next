@@ -95,6 +95,7 @@ export const checkGoogleUser = async () => {
 
 export const signOutForSB = async () => {
   await supabaseClientClient.auth.signOut();
+  await supabaseClientClient.auth.refreshSession();
 };
 
 export const uploadProfileImg = async (avatarFile: File, email: string) => {

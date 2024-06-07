@@ -24,11 +24,11 @@ const Receipt = ({ dates, datesCost, totalCost }: Props) => {
     queryFn: async () => await getPlanMatesUserId(planId),
     staleTime: Infinity,
   });
-
-  const totalExpendedCost = datesCost.reduce((acc, cur) => (acc += +cur), 0);
+  console.log(datesCost, totalCost);
+  const totalExpendedCost = datesCost.reduce((acc, cur) => (acc += +removeCommas(cur)), 0);
   const remainingCost = Number(removeCommas(totalCost)) - totalExpendedCost;
   const planMateCount = mateUserIds ? mateUserIds.length : 1;
-
+  console.log('after', totalExpendedCost, remainingCost, planMateCount);
   const isMinusRemainingCost = remainingCost < 0;
   const remainingCostText = isMinusRemainingCost ? ' 부족해요!' : ' 남았어요!';
 
