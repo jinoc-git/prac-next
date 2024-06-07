@@ -17,9 +17,10 @@ import OrLineWithGoogleBtn from '../button/OrLineWithGoogleBtn';
 import IconInput from '../input/IconInput';
 import PasswordInput from '../input/PasswordInput';
 
-import type { SignupFormInputList } from './SignupForm';
-
-export type SigninFormInputList = Omit<SignupFormInputList, 'nickname' | 'confirmPassword'>;
+export interface SigninFormInputList {
+  email: string;
+  signinPassword: string;
+}
 
 export default function SigninForm() {
   const resolver = yupResolver(signinSchema);
@@ -33,7 +34,7 @@ export default function SigninForm() {
   } = useForm({ mode: 'onChange', resolver });
 
   const onSubmit: SubmitHandler<SigninFormInputList> = async (data) => {
-    const { email, password } = data;
+    const { email, signinPassword: password } = data;
 
     const res = await signInWithSB(email, password);
 
@@ -84,7 +85,7 @@ export default function SigninForm() {
         <PasswordInput
           name="password"
           placeholder="특수문자 포함 8~20자 이내"
-          register={register('password')}
+          register={register('signinPassword')}
           errors={errors}
         />
         <button

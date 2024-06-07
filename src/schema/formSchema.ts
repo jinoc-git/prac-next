@@ -11,6 +11,12 @@ const email = yup
   .min(6, '이메일은 6자리 이상이어야 합니다.')
   .max(20, '이메일은 20자리 이하이어야 합니다.');
 
+const signinPassword = yup
+  .string()
+  .required('비밀번호를 입력해주세요.')
+  .min(6, '올바른 비밀번호를 입력해주세요.')
+  .max(20, '올바른 비밀번호를 입력해주세요.');
+
 const password = yup
   .string()
   .required('비밀번호를 입력해주세요.')
@@ -30,7 +36,7 @@ const nickname = yup
   .min(2, '닉네임은 2자리 이상이어야 합니다.')
   .max(6, '닉네임은 6자리 이하이어야 합니다.');
 
-const signinUser = { email, password };
+const signinUser = { email, signinPassword };
 
 const signupUser = {
   nickname,
