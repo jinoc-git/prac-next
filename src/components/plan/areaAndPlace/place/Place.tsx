@@ -7,6 +7,7 @@ import Image from 'next/image';
 
 import DragNDropProvider from '@/components/common/providers/dragNDropProvider/DragNDropProvider';
 import useConfirm from '@/hooks/useConfirm';
+import useModal from '@/hooks/useModal';
 import { useDateStoreState } from '@/store/dateStore';
 import { useModifyPlanStoreState } from '@/store/modifyPlanStore';
 import { usePinStoreActions } from '@/store/pinStore';
@@ -25,8 +26,8 @@ interface Props {
 const Place = (props: Props) => {
   const { pins, setPins, currentPage } = props;
 
-  const [isAnimate, setIsAnimate] = React.useState(false);
-  const [isOpenModal, setIsOpenModal] = React.useState(false);
+  const { modalBGRef, isOpenModal, isAnimate, handleOpenModal, handleCloseModal, onClickModalBG } =
+    useModal();
 
   const { updateClick } = usePinStoreActions();
   const confirm = useConfirm();
@@ -34,18 +35,6 @@ const Place = (props: Props) => {
   const { modifyState } = useModifyPlanStoreState();
 
   const isModify = modifyState === 'modify';
-
-  const openModal = () => {
-    setIsAnimate(true);
-    setIsOpenModal(true);
-  };
-
-  const closeModal = () => {
-    setIsAnimate(false);
-    setTimeout(() => {
-      setIsOpenModal(false);
-    }, 400);
-  };
 
   const movePins = React.useCallback(
     (beforeIdx: number, afterIdx: number) => {
@@ -64,7 +53,7 @@ const Place = (props: Props) => {
 
   const handleUpdate = (idx: number) => {
     updateClick(pins[currentPage][idx], idx);
-    openModal();
+    handleOpenModal();
   };
 
   const handleDelete = (idx: number) => {
@@ -129,7 +118,7 @@ const Place = (props: Props) => {
           <button
             aria-label="placeadd-btn"
             type="button"
-            onClick={openModal}
+            onClick={handleOpenModal}
             className="border border-dashed rounded-lg font-bold  text-gray_dark_1 hover:bg-navy_light_1 duration-200 disabled:hover:bg-white
                 sm:w-[240px] sm:h-[65px] sm:mr-[2px] sm:text-[11px]
                 md:w-[600px] md:h-[120px] md:text-[18px]"
@@ -143,7 +132,9 @@ const Place = (props: Props) => {
           isAnimate={isAnimate}
           currentPage={currentPage}
           setPins={setPins}
-          closeModal={closeModal}
+          handleCloseModal={handleCloseModal}
+          modalBGRef={modalBGRef}
+          onClickModalBG={onClickModalBG}
         />
       )}
     </div>

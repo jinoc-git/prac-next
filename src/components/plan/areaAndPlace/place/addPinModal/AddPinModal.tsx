@@ -20,6 +20,7 @@ import { addCommas, removeCommas } from '@/utils/numberFormat';
 
 import AddPinKakaoMap from './addPinKakaoMap/AddPinKakaoMap';
 
+import type { ModalProps } from '@/components/common/layout/ModalLayout';
 import type { PinContentsType } from '@/types/supabase';
 
 export interface AddPinInputType {
@@ -28,15 +29,14 @@ export interface AddPinInputType {
   cost: string;
 }
 
-interface Props {
-  isAnimate: boolean;
+interface Props extends ModalProps {
   currentPage: number;
   setPins: React.Dispatch<React.SetStateAction<PinContentsType[][]>>;
-  closeModal: () => void;
+  handleCloseModal: () => void;
 }
 
 const AddPinModal = (props: Props) => {
-  const { isAnimate, currentPage, setPins, closeModal } = props;
+  const { modalBGRef, isAnimate, currentPage, setPins, handleCloseModal, onClickModalBG } = props;
 
   const { pin, idx } = usePinStoreState();
   const { resetPin } = usePinStoreActions();
@@ -128,7 +128,7 @@ const AddPinModal = (props: Props) => {
           });
         });
 
-        closeModal();
+        handleCloseModal();
         resetPin();
       };
 
@@ -145,7 +145,7 @@ const AddPinModal = (props: Props) => {
           });
         });
 
-        closeModal();
+        handleCloseModal();
         resetPin();
       };
 
@@ -163,7 +163,7 @@ const AddPinModal = (props: Props) => {
   }, []);
 
   return (
-    <ModalLayout isAnimate={isAnimate}>
+    <ModalLayout isAnimate={isAnimate} onClickModalBG={onClickModalBG} modalBGRef={modalBGRef}>
       <form onSubmit={handleSubmit(handleAddPin)} className="space-y-3">
         <div>
           <h4 className="mb-[8px] text-navy text-lg font-bold">방문할 장소</h4>
@@ -199,7 +199,7 @@ const AddPinModal = (props: Props) => {
             fill={false}
             type="button"
             name="add-pin-modal-cancle-button"
-            onClick={closeModal}
+            onClick={handleCloseModal}
           />
           <ModalButton
             value="새 장소 추가"
