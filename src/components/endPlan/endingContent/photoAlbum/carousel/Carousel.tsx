@@ -64,6 +64,7 @@ const Carousel = ({ pictures }: Props) => {
                 height={230}
                 alt={`여행 이미지 ${idx + 1}`}
                 className="object-cover w-full h-full"
+                priority
               />
             </div>
           );

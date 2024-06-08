@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { toast } from 'react-toastify';
 
 import { useQuery } from '@tanstack/react-query';
 
@@ -28,7 +29,7 @@ export default function PlanList() {
 
   const {
     data: matesData,
-    isLoading: matesLoading,
+    isPending: matesLoading,
     isError: matesError,
   } = useQuery({
     queryKey: ['plan_mates', user?.id],
@@ -38,7 +39,7 @@ export default function PlanList() {
 
   const {
     data: bookMarkDataList,
-    isLoading: bookMarkLoading,
+    isPending: bookMarkLoading,
     isError: bookMarkError,
   } = useQuery({
     queryKey: ['book_mark', user?.id],
@@ -49,6 +50,7 @@ export default function PlanList() {
 
   React.useEffect(() => {
     if (bookMarkDataList && matesData) {
+      const { planDataList } = matesData;
       setPlanCountList({
         bookMark: bookMarkDataList.length,
         planning: planDataList.filter(tabMenuCallback('planning').counting).length,
@@ -58,11 +60,13 @@ export default function PlanList() {
     }
   }, [matesData, bookMarkDataList]);
 
-  if (matesLoading || bookMarkLoading || !matesData || !bookMarkDataList) {
+  if (matesLoading || bookMarkLoading) {
     return <Loading full={true} />;
   }
 
-  const { planDataList, planIdAndMatesInfoList } = matesData;
+  if (matesError || bookMarkError) {
+    toast.error('데이터를 불러오기에 실패했습니다. 다시 시도해주세요.');
+  }
 
   return (
     <section
@@ -73,12 +77,18 @@ export default function PlanList() {
       <AddPlanBtn />
       <div className="flex flex-col gap-[16px]">
         <PlanTabMenu planCountList={planCountList} />
-        <PlanCardList
-          userId={user?.id}
-          bookMarkDataList={bookMarkDataList}
-          planDataList={planDataList}
-          planIdAndMatesInfoList={planIdAndMatesInfoList}
-        />
+        {matesData && bookMarkDataList ? (
+          <PlanCardList
+            userId={user?.id}
+            bookMarkDataList={bookMarkDataList}
+            planDataList={matesData.planDataList}
+            planIdAndMatesInfoList={matesData.planIdAndMatesInfoList}
+          />
+        ) : (
+          <div className="flex-box sm:mt-[100px] md:mt-[125px]">
+            <p>오류가 발생했습니다. 잠시후 다시 시도해주세요.</p>
+          </div>
+        )}
       </div>
     </section>
   );
