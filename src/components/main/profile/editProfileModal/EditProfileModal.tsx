@@ -22,14 +22,14 @@ import useUserInfoMutation from '@/hooks/useUserInfoMutation';
 import { editProfileSchema } from '@/schema/editProfileSchema';
 import { useAuthStoreActions, useAuthStoreState } from '@/store/authStore';
 
+import type { ModalProps } from '@/components/common/layout/ModalLayout';
 import type { EditProfile } from '@/schema/editProfileSchema';
 
-interface Props {
+interface Props extends ModalProps {
   handleCloseModal: () => void;
-  isAnimate: boolean;
 }
 
-const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
+const EditProfileModal = ({ isAnimate, handleCloseModal, modalBGRef, onClickModalBG }: Props) => {
   const user = useAuthStoreState();
   const { setUser } = useAuthStoreActions();
   const { userInfoMutate } = useUserInfoMutation(user?.id);
@@ -139,7 +139,7 @@ const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
   }, []);
 
   return (
-    <ModalLayout isAnimate={isAnimate}>
+    <ModalLayout isAnimate={isAnimate} modalBGRef={modalBGRef} onClickModalBG={onClickModalBG}>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="relative flexcol items-center align-middle rounded-xl
@@ -162,7 +162,7 @@ const EditProfileModal = ({ isAnimate, handleCloseModal }: Props) => {
         </button>
         <div className="md:flex items-center gap-3 w-full">
           <Image
-            src={user?.avatar_url ? user.avatar_url : '/images/svgs/close.svg'}
+            src={user?.avatar_url ? user.avatar_url : '/images/svgs/userDefault.svg'}
             alt="프로필 아이콘"
             width={30}
             height={30}

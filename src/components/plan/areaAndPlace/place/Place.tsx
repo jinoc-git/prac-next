@@ -26,7 +26,8 @@ interface Props {
 const Place = (props: Props) => {
   const { pins, setPins, currentPage } = props;
 
-  const { isOpenModal, isAnimate, handleOpenModal, handleCloseModal } = useModal();
+  const { modalBGRef, isOpenModal, isAnimate, handleOpenModal, handleCloseModal, onClickModalBG } =
+    useModal();
 
   const { updateClick } = usePinStoreActions();
   const confirm = useConfirm();
@@ -131,7 +132,9 @@ const Place = (props: Props) => {
           isAnimate={isAnimate}
           currentPage={currentPage}
           setPins={setPins}
-          closeModal={handleCloseModal}
+          handleCloseModal={handleCloseModal}
+          modalBGRef={modalBGRef}
+          onClickModalBG={onClickModalBG}
         />
       )}
     </div>

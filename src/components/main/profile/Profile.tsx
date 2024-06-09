@@ -10,7 +10,8 @@ import { useAuthStoreState } from '@/store/authStore';
 import EditProfileModal from './editProfileModal/EditProfileModal';
 
 export default function Profile() {
-  const { isOpenModal, isAnimate, handleOpenModal, handleCloseModal } = useModal();
+  const { modalBGRef, isOpenModal, isAnimate, handleOpenModal, handleCloseModal, onClickModalBG } =
+    useModal();
 
   const user = useAuthStoreState();
 
@@ -56,7 +57,12 @@ export default function Profile() {
         </p>
       </div>
       {isOpenModal && (
-        <EditProfileModal isAnimate={isAnimate} handleCloseModal={handleCloseModal} />
+        <EditProfileModal
+          isAnimate={isAnimate}
+          handleCloseModal={handleCloseModal}
+          modalBGRef={modalBGRef}
+          onClickModalBG={onClickModalBG}
+        />
       )}
     </section>
   );
