@@ -4,27 +4,15 @@ import React from 'react';
 
 import Image from 'next/image';
 
+import useModal from '@/hooks/useModal';
 import { useAuthStoreState } from '@/store/authStore';
 
 import EditProfileModal from './editProfileModal/EditProfileModal';
 
 export default function Profile() {
-  const [isEditModalOpen, setIsEditModalOpen] = React.useState<boolean>(false);
-  const [animate, setAnimate] = React.useState<boolean>(true);
+  const { isOpenModal, isAnimate, handleOpenModal, handleCloseModal } = useModal();
 
   const user = useAuthStoreState();
-
-  const handleOpenModal = () => {
-    setAnimate(true);
-    setIsEditModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setAnimate(false);
-    setTimeout(() => {
-      setIsEditModalOpen(false);
-    }, 400);
-  };
 
   const avatarURL = user?.avatar_url ? user.avatar_url : '/images/svgs/userDefault.svg';
 
@@ -67,8 +55,8 @@ export default function Profile() {
           님의 여행 계획
         </p>
       </div>
-      {isEditModalOpen && (
-        <EditProfileModal isAnimate={animate} handleCloseModal={handleCloseModal} />
+      {isOpenModal && (
+        <EditProfileModal isAnimate={isAnimate} handleCloseModal={handleCloseModal} />
       )}
     </section>
   );
