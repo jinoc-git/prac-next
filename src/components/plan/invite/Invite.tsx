@@ -19,7 +19,8 @@ export default function Invite() {
   const { inviteUser, resetInvitedUser, syncInvitedUser } = useInviteUserStoreActions();
   const { modifyState } = useModifyPlanStoreState();
 
-  const { isOpenModal, isAnimate, handleOpenModal, handleCloseModal } = useModal();
+  const { modalBGRef, isOpenModal, isAnimate, handleOpenModal, handleCloseModal, onClickModalBG } =
+    useModal();
 
   const { planId } = useParams<{ planId: string }>();
 
@@ -118,7 +119,14 @@ export default function Invite() {
         )}
       </div>
 
-      {isOpenModal && <SearchPeopleModal closeModal={handleCloseModal} isAnimate={isAnimate} />}
+      {isOpenModal && (
+        <SearchPeopleModal
+          handleCloseModal={handleCloseModal}
+          isAnimate={isAnimate}
+          modalBGRef={modalBGRef}
+          onClickModalBG={onClickModalBG}
+        />
+      )}
     </>
   );
 }
