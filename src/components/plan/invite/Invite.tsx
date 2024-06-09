@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { useParams } from 'next/navigation';
 
 import { getMatesInfo } from '@/api/planMate';
+import useModal from '@/hooks/useModal';
 import { useInviteUserStoreActions, useInviteUserStoreState } from '@/store/inviteUserStore';
 import { useModifyPlanStoreState } from '@/store/modifyPlanStore';
 
@@ -18,8 +19,8 @@ export default function Invite() {
   const { inviteUser, resetInvitedUser, syncInvitedUser } = useInviteUserStoreActions();
   const { modifyState } = useModifyPlanStoreState();
 
-  const [isOpenModal, setIsOpenModal] = React.useState(false);
-  const [isAnimate, setIsAnimate] = React.useState(false);
+  const { modalBGRef, isOpenModal, isAnimate, handleOpenModal, handleCloseModal, onClickModalBG } =
+    useModal();
 
   const { planId } = useParams<{ planId: string }>();
 
@@ -27,18 +28,6 @@ export default function Invite() {
     queryKey: ['planMates', planId],
     queryFn: async () => await getMatesInfo(planId),
   });
-
-  const openModal = () => {
-    setIsOpenModal(true);
-    setIsAnimate(true);
-  };
-
-  const closeModal = () => {
-    setIsAnimate(false);
-    setTimeout(() => {
-      setIsOpenModal(false);
-    }, 400);
-  };
 
   const isOldInvitedUser = oldInvitedUser.length !== 0 && oldInvitedUser !== null;
   const maxDisplayCount = 3;
@@ -122,7 +111,7 @@ export default function Invite() {
               className="border border-gray rounded-md text-xs p-1 ml-[8px] font-bold text-gray_dark_1 w-[45px] h-[30px] hover:bg-navy_dark hover:text-white duration-200
               sm:w-[40px] sm:h-[28px]
               md:w-[45px] md:h-[30px]"
-              onClick={openModal}
+              onClick={handleOpenModal}
             >
               추가
             </button>
@@ -130,7 +119,14 @@ export default function Invite() {
         )}
       </div>
 
-      {isOpenModal && <SearchPeopleModal closeModal={closeModal} isAnimate={isAnimate} />}
+      {isOpenModal && (
+        <SearchPeopleModal
+          handleCloseModal={handleCloseModal}
+          isAnimate={isAnimate}
+          modalBGRef={modalBGRef}
+          onClickModalBG={onClickModalBG}
+        />
+      )}
     </>
   );
 }

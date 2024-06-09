@@ -19,7 +19,7 @@ const VisitedPlace = ({ plan, allPins }: Props) => {
   const distanceList = plan.distance;
 
   return (
-    <section className="inner-content-layout flex-col space-y-[10px]">
+    <section className="inner-content-layout flex-col space-y-[10px] mt-5">
       <div className="content-lable w-full">
         <Image
           src={'/images/svgs/pin.svg'}
@@ -28,7 +28,7 @@ const VisitedPlace = ({ plan, allPins }: Props) => {
           alt="여행 지역 아이콘"
           className="w-[20px] h-[20px]"
         />
-        <p>방문할 장소</p>
+        <p>방문한 장소</p>
       </div>
 
       <DragNDropProvider>

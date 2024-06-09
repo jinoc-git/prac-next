@@ -17,10 +17,11 @@ import { searchCallback } from '@/utils/arrayCallbackFunctionList';
 import InvitedOrSearchUser from './invitedOrSearchUser/InvitedOrSearchUser';
 import ModalLayout from '../../../common/layout/ModalLayout';
 
+import type { ModalProps } from '../../../common/layout/ModalLayout';
 import type { UserType } from '@/types/supabase';
 
-interface SearchPeopleModalProps {
-  closeModal: () => void;
+interface Props extends ModalProps {
+  handleCloseModal: () => void;
   isAnimate: boolean;
 }
 
@@ -28,8 +29,8 @@ interface SearchPeopleInputType {
   userInfo: string;
 }
 
-export default function SearchPeopleModal(props: SearchPeopleModalProps) {
-  const { closeModal, isAnimate } = props;
+export default function SearchPeopleModal(props: Props) {
+  const { modalBGRef, handleCloseModal, isAnimate, onClickModalBG } = props;
 
   const { invitedUser } = useInviteUserStoreState();
   const { inviteUser, setUser, syncInvitedUser } = useInviteUserStoreActions();
@@ -88,14 +89,14 @@ export default function SearchPeopleModal(props: SearchPeopleModalProps) {
   const saveInviteData = () => {
     setUser(invitedUser);
     toast.success('동행자가 추가됐습니다.');
-    closeModal();
+    handleCloseModal();
     syncInvitedUser();
   };
 
   const searchResult = people.filter(searchCallback.excludeInvitedUsers(invitedUser));
 
   return (
-    <ModalLayout isAnimate={isAnimate}>
+    <ModalLayout isAnimate={isAnimate} modalBGRef={modalBGRef} onClickModalBG={onClickModalBG}>
       <div className="flex flex-col items-start justify-end gap-2">
         <p className="text-lg font-bold text-navy">동행 초대하기</p>
         <p className="text-[gray] text-normal  ">이 여행에 함께할 친구를 초대해 보세요!</p>
@@ -182,7 +183,7 @@ export default function SearchPeopleModal(props: SearchPeopleModalProps) {
         <div className="flex items-center justify-center mt-auto space-x-4">
           <button
             name="invite-cancel-btn"
-            onClick={closeModal}
+            onClick={handleCloseModal}
             className="md:w-[12.5rem] md:h-[2.75rem] sm:w-[150px] sm:h-[40px] rounded-lg border border-navy bg-white text-navy  hover:bg-navy_light_1 hover:text-navy_dark hover:border-navy_light_3"
           >
             취소

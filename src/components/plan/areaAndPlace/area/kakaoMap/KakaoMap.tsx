@@ -16,13 +16,17 @@ const KakaoMap = ({ pins, drawLine }: Props) => {
   const { map, makeMap, makeLatLng, makeMarker, makePolyline, makeBounds } = useKakaoMap();
 
   React.useEffect(() => {
-    makeMap({
-      containerId: 'add-plan-kakao-map',
-      center: { lat: 37.566826, lng: 126.9786567 },
-      level: 4,
-      zoom: 'TOPRIGHT',
-      mapType: 'RIGHT',
-    });
+    const init = async () => {
+      await makeMap({
+        containerId: 'add-plan-kakao-map',
+        center: { lat: 37.566826, lng: 126.9786567 },
+        level: 4,
+        zoom: 'TOPRIGHT',
+        mapType: 'RIGHT',
+      });
+    };
+
+    init();
   }, []);
 
   React.useEffect(() => {
