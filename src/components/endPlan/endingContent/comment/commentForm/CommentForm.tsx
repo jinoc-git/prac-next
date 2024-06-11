@@ -51,7 +51,7 @@ const CommentForm = ({ planId }: Props) => {
     <form
       name="comment-form"
       onSubmit={handleSubmit(onSubmit)}
-      className="flex items-center justify-between md:pr-5 sm:pb-[60px] md:pb-[100px]"
+      className="flex items-center justify-between sm:pb-[60px] md:pb-[100px]"
     >
       <div className="flex items-center gap-2">
         <label htmlFor="comment">
@@ -67,7 +67,7 @@ const CommentForm = ({ planId }: Props) => {
           id="comment"
           type="text"
           {...register('comment')}
-          placeholder="한 줄 코멘트를 남겨주세요!"
+          placeholder="20자 이내 한 줄 코멘트를 남겨주세요!"
           className=" px-3 py-2 border border-[#d1d1d1] rounded-lg 
           sm:w-[250px] sm:h-[28px] sm:text-sm
           md:w-[460px] md:h-[34px] ms:text-normal"
