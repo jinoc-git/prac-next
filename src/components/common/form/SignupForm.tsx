@@ -119,6 +119,7 @@ export default function SignupForm() {
         width={856}
         height={1080}
         className="absolute inset-0 w-full max-w-[856px] h-screen object-cover"
+        priority
       />
       <form
         className="position-center flexcol rounded-xl bg-[#F9F9FB]

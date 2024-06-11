@@ -11,7 +11,7 @@ interface Props {
 
 const Comment = ({ planId }: Props) => {
   return (
-    <section className="content-layout mt-5">
+    <section className="content-layout mt-[60px]">
       <div className="content-lable w-full">
         <Image
           src={'/images/svgs/comment.svg'}
