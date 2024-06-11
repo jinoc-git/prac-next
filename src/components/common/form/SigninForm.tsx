@@ -62,6 +62,7 @@ export default function SigninForm() {
         width={856}
         height={1080}
         className="absolute inset-0 w-full max-w-[856px] h-screen object-cover"
+        priority
       />
       <form
         className="position-center flexcol gap-y-2.5 rounded-xl bg-[#F9F9FB]
