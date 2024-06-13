@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 import { addPlan, updatePlan } from '@/api/plan';
 import AreaAndPlace from '@/components/plan/areaAndPlace/AreaAndPlace';
 import DatePagination from '@/components/plan/datePagination/DatePagination';
+import Invite from '@/components/plan/invite/Invite';
 import Pay from '@/components/plan/pay/Pay';
 import SelectDate from '@/components/plan/selectDate/SelectDate';
 import usePagination from '@/hooks/usePagination';
@@ -20,8 +21,6 @@ import { useAuthStoreState } from '@/store/authStore';
 import { useDateStoreActions, useDateStoreState } from '@/store/dateStore';
 import { useInviteUserStoreActions, useInviteUserStoreState } from '@/store/inviteUserStore';
 import { addCommas } from '@/utils/numberFormat';
-
-import Invite from '../../plan/invite/Invite';
 
 import type { PlanContentsInputType } from '@/components/plan/addOrEditPlan/AddOrEditPlan';
 import type { InsertPlanType, PinContentsType, PinType, PlanType } from '@/types/supabase';

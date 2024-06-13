@@ -11,9 +11,9 @@ import { useRouter } from 'next/navigation';
 import { checkUserEmail, checkUserNickname, signUpWithSB } from '@/api/auth';
 import { signupSchema } from '@/schema/formSchema';
 
-import OrLineWithGoogleBtn from '../button/OrLineWithGoogleBtn';
-import DuplicateInput from '../input/DuplicateInput';
-import PasswordInput from '../input/PasswordInput';
+import GoogleLoginButton from '../../button/googleLoginButton/GoogleLoginButton';
+import DuplicateInput from '../../input/DuplicateInput';
+import PasswordInput from '../../input/PasswordInput';
 
 export interface SignupFormInputList {
   nickname: string;
@@ -156,7 +156,12 @@ export default function SignupForm() {
       >
         회원가입
       </button>
-      <OrLineWithGoogleBtn />
+      <div className="flex justify-between items-center my-2">
+        <span className="block w-5/12 h-px bg-slate-400" />
+        <span className="text-slate-400">또는</span>
+        <span className="block w-5/12 h-px bg-slate-400" />
+      </div>
+      <GoogleLoginButton />
       <p
         className="absolute left-1/2 -translate-x-1/2 w-[235px] text-sm p-2 rounded-lg font-semibold text-gray_dark_1 
           md:bottom-[-50px] md:bg-white/20

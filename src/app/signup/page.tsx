@@ -2,7 +2,7 @@ import React from 'react';
 
 import Image from 'next/image';
 
-import SignupForm from '@/components/common/form/SignupForm';
+import SignupForm from '@/components/common/form/signupForm/SignupForm';
 
 export default function Signup() {
   return (

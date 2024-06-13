@@ -2,7 +2,7 @@ import React from 'react';
 
 import Image from 'next/image';
 
-import SigninForm from '@/components/common/form/SigninForm';
+import SigninForm from '@/components/common/form/signinForm/SigninForm';
 
 export default function Signin() {
   return (

@@ -4,7 +4,7 @@ import React from 'react';
 
 import Image from 'next/image';
 
-import type { SignupFormInputList } from '../form/SignupForm';
+import type { SignupFormInputList } from '../form/signupForm/SignupForm';
 import type { InputCompProps } from '@/types/inputComp.type';
 
 interface PasswordInputProps extends InputCompProps<SignupFormInputList> {}
