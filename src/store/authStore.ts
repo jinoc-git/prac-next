@@ -39,6 +39,21 @@ export const authStore = create<Store>((set, get) => ({
             };
 
             set({ user });
+          } else if (session.user.app_metadata.provider === 'kakao') {
+            const {
+              id,
+              email,
+              user_metadata: { name, user_name, avatar_url },
+            } = session.user;
+
+            const user: UserType = {
+              id,
+              email: email as string,
+              nickname: name ?? user_name,
+              avatar_url: avatar_url ?? null,
+            };
+
+            set({ user });
           } else {
             const {
               id,
