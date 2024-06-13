@@ -4,7 +4,7 @@ import React from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import ChangeStatusButton from '@/components/common/button/ChangeStatusButton';
+import ChangeStatusButton from '@/components/common/button/changeStatusButton/ChangeStatusButton';
 
 const GoToList = () => {
   const router = useRouter();

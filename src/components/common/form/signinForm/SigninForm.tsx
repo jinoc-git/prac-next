@@ -12,9 +12,10 @@ import { useRouter } from 'next/navigation';
 import { signInWithSB } from '@/api/auth';
 import { signinSchema } from '@/schema/formSchema';
 
-import OrLineWithGoogleBtn from '../button/OrLineWithGoogleBtn';
-import IconInput from '../input/IconInput';
-import PasswordInput from '../input/PasswordInput';
+import GoogleLoginButton from '../../button/googleLoginButton/GoogleLoginButton';
+import KakaoLoginButton from '../../button/kakaoLoginButton/KakaoLoginButton';
+import IconInput from '../../input/IconInput';
+import PasswordInput from '../../input/PasswordInput';
 
 export interface SigninFormInputList {
   email: string;
@@ -42,7 +43,6 @@ export default function SigninForm() {
       return false;
     }
 
-    // setVisibilityIcon(true);
     reset();
     toast.success('로그인에 성공하였습니다.');
     router.push('/main');
@@ -50,13 +50,13 @@ export default function SigninForm() {
   };
 
   const goToSignUp = () => {
-    router.push('/signin');
+    router.push('/signup');
   };
 
   return (
     <form
       className="position-center flexcol gap-y-2.5 rounded-xl bg-[#F9F9FB]
-        md:w-[450px] md:h-[410px] md:px-[50px] md:py-[37px]
+        md:w-[450px] md:px-[50px] md:py-[37px]
         sm:w-[320px] sm:px-[30px] sm:py-[22px]
         "
       onSubmit={handleSubmit(onSubmit)}
@@ -86,7 +86,13 @@ export default function SigninForm() {
       >
         로그인
       </button>
-      <OrLineWithGoogleBtn />
+      <div className="flex justify-between items-center my-2">
+        <span className="block w-5/12 h-px bg-slate-400" />
+        <span className="text-slate-400">또는</span>
+        <span className="block w-5/12 h-px bg-slate-400" />
+      </div>
+      <GoogleLoginButton />
+      <KakaoLoginButton />
       <p
         className="absolute left-1/2 -translate-x-1/2 w-[190px] text-sm p-2 rounded-lg font-semibold text-gray_dark_1
           md:bottom-[-50px] md:bg-white/20

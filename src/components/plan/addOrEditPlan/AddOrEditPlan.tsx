@@ -5,10 +5,10 @@ import React, { useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import { getAllPinsByIdAndDates } from '@/api/pins';
+import PostPlanForm from '@/components/common/form/postPlanForm/PostPlanForm';
 import Loading from '@/components/common/loading/Loading';
 import { useModifyPlanStoreActions, useModifyPlanStoreState } from '@/store/modifyPlanStore';
 
-import PostPlanForm from '../../common/form/PostPlanForm';
 import PlanTopBar from '../planTopBar/PlanTopBar';
 
 import type { PlanType } from '@/types/supabase';

@@ -5,7 +5,7 @@ import type { UseFormRegisterReturn } from 'react-hook-form';
 
 import Image from 'next/image';
 
-import type { SigninFormInputList } from '../form/SigninForm';
+import type { SigninFormInputList } from '../form/signinForm/SigninForm';
 
 interface IconInputProps {
   name: keyof SigninFormInputList;

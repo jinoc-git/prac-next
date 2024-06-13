@@ -11,9 +11,10 @@ import { useRouter } from 'next/navigation';
 import { checkUserEmail, checkUserNickname, signUpWithSB } from '@/api/auth';
 import { signupSchema } from '@/schema/formSchema';
 
-import OrLineWithGoogleBtn from '../button/OrLineWithGoogleBtn';
-import DuplicateInput from '../input/DuplicateInput';
-import PasswordInput from '../input/PasswordInput';
+import GoogleLoginButton from '../../button/googleLoginButton/GoogleLoginButton';
+import KakaoLoginButton from '../../button/kakaoLoginButton/KakaoLoginButton';
+import DuplicateInput from '../../input/DuplicateInput';
+import PasswordInput from '../../input/PasswordInput';
 
 export interface SignupFormInputList {
   nickname: string;
@@ -113,7 +114,7 @@ export default function SignupForm() {
   return (
     <form
       className="position-center flexcol rounded-xl bg-[#F9F9FB]
-        md:w-[450px] md:h-[540px] md:px-[50px] md:py-[37px] md:gap-y-2.5
+        md:w-[450px] md:px-[50px] md:py-[37px] md:gap-y-2.5
         sm:w-[320px] sm:px-[30px] sm:py-[22px] sm:gap-y-2
       "
       onSubmit={handleSubmit(onSubmit)}
@@ -156,7 +157,13 @@ export default function SignupForm() {
       >
         회원가입
       </button>
-      <OrLineWithGoogleBtn />
+      <div className="flex justify-between items-center my-2">
+        <span className="block w-5/12 h-px bg-slate-400" />
+        <span className="text-slate-400">또는</span>
+        <span className="block w-5/12 h-px bg-slate-400" />
+      </div>
+      <GoogleLoginButton />
+      <KakaoLoginButton />
       <p
         className="absolute left-1/2 -translate-x-1/2 w-[235px] text-sm p-2 rounded-lg font-semibold text-gray_dark_1 
           md:bottom-[-50px] md:bg-white/20

@@ -8,7 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import _ from 'lodash';
 
-import ModalButton from '@/components/common/button/ModalButton';
+import ModalButton from '@/components/common/button/modalButton/ModalButton';
 import TitleInput from '@/components/common/input/TitleInput';
 import ModalLayout from '@/components/common/layout/ModalLayout';
 import useConfirm from '@/hooks/useConfirm';
