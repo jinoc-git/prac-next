@@ -1,10 +1,16 @@
 import React from 'react';
 
 import Image from 'next/image';
+import { redirect } from 'next/navigation';
 
+import { getSessionFromServer } from '@/api/serverAction';
 import SignupForm from '@/components/common/form/signupForm/SignupForm';
 
-export default function Signup() {
+export default async function Signup() {
+  const session = await getSessionFromServer();
+
+  if (session) redirect('/main');
+
   return (
     <section className="flex-box w-full h-full">
       <Image

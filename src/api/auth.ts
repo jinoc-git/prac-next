@@ -72,7 +72,7 @@ export const checkOAuthUser = async () => {
   const {
     data: { session },
   } = await supabaseClientClient.auth.getSession();
-  console.log(session);
+
   if (session) {
     const {
       id,
