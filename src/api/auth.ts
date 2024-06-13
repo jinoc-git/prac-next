@@ -31,12 +31,13 @@ export const signUpWithSB = async (email: string, password: string, nickname: st
 };
 
 export const insertUser = async (user: UserType) => {
-  const { id, email, nickname } = user;
+  const { id, email, nickname, avatar_url } = user;
 
   const { error } = await supabaseClientClient.from('users').insert({
     id,
     email,
     nickname,
+    avatar_url: avatar_url ?? null,
   });
 
   if (error) throw new Error('유저 데이터 추가 오류');
@@ -67,7 +68,7 @@ export const signInWithGoogle = async () => {
   });
 };
 
-export const checkGoogleUser = async () => {
+export const checkOAuthUser = async () => {
   const {
     data: { session },
   } = await supabaseClientClient.auth.getSession();
@@ -76,21 +77,35 @@ export const checkGoogleUser = async () => {
     const {
       id,
       email,
-      user_metadata: { name: nickname },
+      user_metadata: { name: nickname, avatar_url },
     } = session.user;
 
     const { data: check } = await supabaseClientClient.from('users').select('id').eq('id', id);
 
     if (check && check.length === 0) {
-      const user = {
+      const user: UserType = {
         id,
         email: email as string,
         nickname,
+        avatar_url: avatar_url ?? null,
       };
 
       await insertUser(user);
     }
   }
+};
+
+export const signinWithKakao = async () => {
+  await supabaseClientClient.auth.signInWithOAuth({
+    provider: 'kakao',
+    options: {
+      redirectTo: `${window.location.origin}/authloading`,
+      queryParams: {
+        access_type: 'offline',
+        prompt: 'consent',
+      },
+    },
+  });
 };
 
 export const signOutForSB = async () => {

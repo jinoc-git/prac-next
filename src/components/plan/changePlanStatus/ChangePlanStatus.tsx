@@ -5,7 +5,7 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 
 import { updatePlanStatus } from '@/api/plan';
-import ChangeStatusButton from '@/components/common/button/ChangeStatusButton';
+import ChangeStatusButton from '@/components/common/button/changeStatusButton/ChangeStatusButton';
 import useChangePlanStatus from '@/hooks/useChangePlanStatus';
 import useConfirm from '@/hooks/useConfirm';
 import { scrollTop } from '@/utils/aboutScroll';

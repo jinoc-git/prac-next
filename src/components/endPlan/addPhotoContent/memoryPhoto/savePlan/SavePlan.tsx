@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import ChangeStatusButton from '@/components/common/button/ChangeStatusButton';
+import ChangeStatusButton from '@/components/common/button/changeStatusButton/ChangeStatusButton';
 
 interface Props {
   handleSaveButton: () => void;

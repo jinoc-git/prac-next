@@ -14,7 +14,7 @@ const withPWA = require('@ducanh2912/next-pwa').default({
 const nextConfig = {
   reactStrictMode: false,
   images: {
-    domains: ['rkdykaeilrlrtrowawoe.supabase.co'],
+    domains: ['rkdykaeilrlrtrowawoe.supabase.co', 'k.kakaocdn.net'],
   },
   experimental: {
     serverActions: true,
