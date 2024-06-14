@@ -41,7 +41,6 @@ export default function SearchPeopleModal(props: Props) {
 
   const {
     register,
-    handleSubmit,
     formState: { errors },
   } = useForm<SearchPeopleInputType>({ mode: 'onChange' });
 
@@ -102,13 +101,12 @@ export default function SearchPeopleModal(props: Props) {
         <p className="text-[gray] text-normal  ">이 여행에 함께할 친구를 초대해 보세요!</p>
       </div>
       <div className="flex flex-col md:gap-[10px] sm:gap-[28px]">
-        {/* 초대한 사람 */}
         <div>
           <label className="text-gray-dark-1 font-inter font-bold md:text-xs sm:sm leading-[24px]">
             초대한 사람 보기
           </label>
           <div
-            className={`flex flex-col items-center md:w-[396px] sm:w-full h-[126px] bg-white rounded-lg ${
+            className={`flex flex-col items-center md:w-[396px] sm:w-full h-[126px] bg-white rounded-lg scrollbar-custom ${
               invitedUser.length > 2 ? 'overflow-y-scroll' : ''
             }`}
           >
@@ -127,37 +125,33 @@ export default function SearchPeopleModal(props: Props) {
               })}
           </div>
         </div>
-        {/* 동행찾기 */}
         <div className="flex flex-col">
           <label className="text-gray-dark-1 font-inter font-bold md:text-xs sm:sm leading-[24px]">
             동행 찾기
           </label>
-          <form name="search-people-form" onSubmit={handleSubmit(debouncedSearchUser)}>
-            <div className="relative flex items-center ">
-              <span className="absolute ml-3 text-gray-400 focus-within:text-gray ">
-                <Image alt="돋보기 아이콘" src={'/images/svgs/search.svg'} width={20} height={20} />
-              </span>
-              <input
-                placeholder="닉네임 또는 이메일 주소로 초대할 사람을 검색하세요."
-                {...register('userInfo', {
-                  pattern: {
-                    value: /^[가-힣|a-z|A-Z|0-9|\s-]*$/,
-                    message: '모음, 자음 안됨',
-                  },
-                })}
-                onChange={(e) => {
-                  const inputValue = e.target.value.trim();
-                  debouncedSearchUser({ userInfo: inputValue });
-                }}
-                className="h-10 pl-10 pr-3 border border-none rounded-lg w-[396px] md:text-sm sm:text-xs "
-              />
-            </div>
-            <p>{errors?.userInfo?.message}</p>
-          </form>
+          <div className="relative flex items-center ">
+            <span className="absolute ml-3 text-gray-400 focus-within:text-gray ">
+              <Image alt="돋보기 아이콘" src={'/images/svgs/search.svg'} width={20} height={20} />
+            </span>
+            <input
+              placeholder="닉네임 또는 이메일 주소로 초대할 사람을 검색하세요."
+              {...register('userInfo', {
+                pattern: {
+                  value: /^[가-힣|a-z|A-Z|0-9|\s-]*$/,
+                  message: '모음, 자음 안됨',
+                },
+              })}
+              onChange={(e) => {
+                const inputValue = e.target.value.trim();
+                debouncedSearchUser({ userInfo: inputValue });
+              }}
+              className="h-10 pl-10 pr-3 border border-none rounded-lg w-[396px] md:text-sm sm:text-xs "
+            />
+          </div>
+          <p>{errors?.userInfo?.message}</p>
         </div>
-        {/* 검색결과 */}
         <div
-          className={`flex flex-col items-center w-full md:h-[240px] sm:h-[240px] bg-white rounded-lg md:mt-3 sm:mt-0 ${
+          className={`flex flex-col items-center w-full md:h-[240px] sm:h-[240px] bg-white rounded-lg md:mt-3 sm:mt-0 scrollbar-custom ${
             people.length === 0 ? '' : 'overflow-y-scroll'
           }`}
         >
@@ -179,7 +173,6 @@ export default function SearchPeopleModal(props: Props) {
             );
           })}
         </div>
-        {/* 버튼 */}
         <div className="flex items-center justify-center mt-auto space-x-4">
           <button
             name="invite-cancel-btn"

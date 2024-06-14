@@ -38,7 +38,7 @@ const DuplicateInput = <T extends Object>(props: DuplicateInputProps<T>) => {
         name={`${name as string}-duplication-btn`}
         onClick={checkFunc}
         disabled={Boolean(error) || duplicate}
-        className="absolute top-[4px] right-[4px] w-[68px] h-[34px] p-1 text-sm border text-[#6E6F76] bg-white  hover:font-semibold disabled:bg-gray_light_3 disabled:text-white rounded"
+        className="absolute top-[4px] right-[4px] w-[68px] h-[34px] p-1 text-sm border text-[#6E6F76] bg-white hover:font-semibold disabled:hover:font-normal disabled:bg-gray_light_3 disabled:text-white rounded normal-transition"
       >
         중복확인
       </button>
