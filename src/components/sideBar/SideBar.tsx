@@ -9,6 +9,7 @@ import { useAuthStoreState } from '@/store/authStore';
 import { useSideBarStoreState } from '@/store/sideBarStore';
 import { sideBarCallback } from '@/utils/arrayCallbackFunctionList';
 
+import Logout from './logout/Logout';
 import SideBarIcon from './sideBarIcon/SideBarIcon';
 import SideBarLogo from './sideBarLogo/SideBarLogo';
 import SideBarStatus from './sideBarStatus/SideBarStatus';
@@ -49,7 +50,7 @@ export default function SideBar() {
           <SideBarStatus isOpen={isSideBarOpen} activePlan={activePlan} nextPlan={nextPlan} />
           <SideBarTrips isOpen={isSideBarOpen} startPlans={startPlans} endPlans={endPlans} />
         </div>
-        <div></div>
+        <Logout isOpen={isSideBarOpen} />
       </aside>
     </>
   ) : null;
