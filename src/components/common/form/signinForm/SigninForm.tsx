@@ -82,7 +82,7 @@ export default function SigninForm() {
       <button
         disabled={isSubmitting || !isValid}
         name="signup-submit-btn"
-        className="h-[45px] rounded-lg text-white bg-blue hover:bg-blue_dark disabled:bg-gray_light_3"
+        className="h-[45px] rounded-lg text-white bg-blue hover:bg-blue_dark disabled:bg-gray_light_3 normal-transition"
       >
         로그인
       </button>

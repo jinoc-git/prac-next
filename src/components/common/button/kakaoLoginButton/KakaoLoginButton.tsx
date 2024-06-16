@@ -10,7 +10,7 @@ const KakaoLoginButton = () => {
       type="button"
       name="sign-with-kakao-btn"
       onClick={signinWithKakao}
-      className="flex-box gap-2 h-[45px] border rounded-lg border-gray_light_3 bg-[#FFCD00] hover:text-white"
+      className="flex-box gap-2 h-[45px] border rounded-lg border-gray_light_3 bg-[#FFCD00] hover:text-white normal-transition"
     >
       <Image
         src="/images/svgs/kakao.svg"
