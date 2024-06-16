@@ -9,6 +9,7 @@ import { useAuthStoreState } from '@/store/authStore';
 import { useSideBarStoreState } from '@/store/sideBarStore';
 import { sideBarCallback } from '@/utils/arrayCallbackFunctionList';
 
+import Logout from './logout/Logout';
 import SideBarIcon from './sideBarIcon/SideBarIcon';
 import SideBarLogo from './sideBarLogo/SideBarLogo';
 import SideBarStatus from './sideBarStatus/SideBarStatus';
@@ -38,7 +39,7 @@ export default function SideBar() {
     <>
       <SideBarIcon />
       <aside
-        className={` touch-none fixed top-0 left-0 h-[100vh] border-r border-slate-300 rounded-r-[12px] z-[31] overflow-hidden bg-white side-bar-transition  ${
+        className={` touch-none fixed top-0 left-0 h-[100vh] border-r border-slate-300 rounded-r-[12px] z-[41] overflow-hidden bg-white side-bar-transition  ${
           isSideBarOpen
             ? 'sm:w-[357px] sm:px-[24px] md:w-[270px] md:px-[24px] '
             : 'sm:w-[0px] sm:px-[0px] md:w-[88px] md:px-[24px]'
@@ -49,7 +50,7 @@ export default function SideBar() {
           <SideBarStatus isOpen={isSideBarOpen} activePlan={activePlan} nextPlan={nextPlan} />
           <SideBarTrips isOpen={isSideBarOpen} startPlans={startPlans} endPlans={endPlans} />
         </div>
-        <div></div>
+        <Logout isOpen={isSideBarOpen} />
       </aside>
     </>
   ) : null;

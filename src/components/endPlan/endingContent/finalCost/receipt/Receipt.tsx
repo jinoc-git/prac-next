@@ -2,7 +2,6 @@
 
 import React from 'react';
 
-import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 
@@ -47,7 +46,10 @@ const Receipt = ({ dates, datesCost, totalCost }: Props) => {
         </p>
         {dates.map((date, idx) => {
           return (
-            <div key={uuid()} className="flex justify-between w-4/5 sm:text-xs md:text-sm">
+            <div
+              key={`${idx},${date},${datesCost}`}
+              className="flex justify-between w-4/5 sm:text-xs md:text-sm"
+            >
               <p className="font-semibold text-gray_dark_1">{removeYearOfDate(date)}</p>
               <p className="font-normal text-right text-gray">{datesCost[idx]}원</p>
             </div>

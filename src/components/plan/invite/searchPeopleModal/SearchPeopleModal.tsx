@@ -4,7 +4,6 @@ import React from 'react';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
-import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import _ from 'lodash';
 import Image from 'next/image';
 
@@ -33,7 +32,7 @@ export default function SearchPeopleModal(props: Props) {
   const { modalBGRef, handleCloseModal, isAnimate, onClickModalBG } = props;
 
   const { invitedUser } = useInviteUserStoreState();
-  const { inviteUser, setUser, syncInvitedUser } = useInviteUserStoreActions();
+  const { inviteUser, removeUser } = useInviteUserStoreActions();
   const user = useAuthStoreState();
   const confirm = useConfirm();
 
@@ -79,17 +78,14 @@ export default function SearchPeopleModal(props: Props) {
     const confTitle = '동행 초대 삭제';
     const confDesc = '해당 여행에서 삭제하시겠습니까?';
     const confFunc = () => {
-      const deletedUser = invitedUser.filter(searchCallback.cancelInvite(idx));
-      setUser(deletedUser);
+      removeUser(idx);
     };
     confirm.delete(confTitle, confDesc, confFunc);
   };
 
   const saveInviteData = () => {
-    setUser(invitedUser);
-    toast.success('동행자가 추가됐습니다.');
+    toast.success('동행자가 변경됐습니다.');
     handleCloseModal();
-    syncInvitedUser();
   };
 
   const searchResult = people.filter(searchCallback.excludeInvitedUsers(invitedUser));
@@ -113,7 +109,7 @@ export default function SearchPeopleModal(props: Props) {
             {invitedUser.length !== 0 &&
               invitedUser.map((person, idx) => {
                 return (
-                  <div key={uuid()} className="w-full ">
+                  <div key={`invited,${idx},${person.id}`} className="w-full ">
                     <InvitedOrSearchUser
                       user={user}
                       person={person}
@@ -160,9 +156,9 @@ export default function SearchPeopleModal(props: Props) {
               검색 결과가 없습니다.
             </div>
           )}
-          {searchResult.map((person: UserType, idx) => {
+          {searchResult.map((person, idx) => {
             return (
-              <div key={uuid()} className="w-full">
+              <div key={`search,${idx},${person.id}`} className="w-full">
                 <InvitedOrSearchUser
                   user={user}
                   person={person}

@@ -3,7 +3,6 @@
 import React from 'react';
 import Slider from 'react-slick';
 
-import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import Image from 'next/image';
 
 import useModal from '@/hooks/useModal';
@@ -65,7 +64,7 @@ const Carousel = ({ pictures }: Props) => {
         {pictures.map((src, idx) => {
           return (
             <div
-              key={uuid()}
+              key={`${idx},${src}`}
               className=" 
                 md:w-[230px] md:h-[230px] md:p-[10px]
                 sm:w-[266px] sm:h-[266px] sm:p-[5px]

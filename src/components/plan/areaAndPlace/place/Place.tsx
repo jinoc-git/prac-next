@@ -2,7 +2,6 @@
 
 import React from 'react';
 
-import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import Image from 'next/image';
 
 import DragNDropProvider from '@/components/common/providers/dragNDropProvider/DragNDropProvider';
@@ -92,7 +91,7 @@ const Place = (props: Props) => {
           {pins[currentPage]?.map((pin, idx) => {
             return (
               <Pin
-                key={uuid()}
+                key={`${currentPage},${idx},${pin.id}`}
                 pin={pin}
                 idx={idx}
                 isModify={isModify}

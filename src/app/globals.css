@@ -135,14 +135,22 @@ body::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.header-auth-box > a {
+.header-link-box > a {
   color: #fff;
 }
 
 @media all and (min-width: 660px) {
-  .header-auth-box > a {
+  .header-link-box > a {
     color: #000;
   }
+}
+
+.alarm-drop-down > li:first-child {
+  border-radius: 8px 8px 0 0;
+}
+
+.alarm-drop-down > li:last-child {
+  border-radius: 0 0 8px 8px;
 }
 
 .react-datepicker {

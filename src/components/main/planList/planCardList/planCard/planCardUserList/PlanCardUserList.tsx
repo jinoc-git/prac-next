@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import Image from 'next/image';
 
 interface Props {
@@ -25,7 +24,7 @@ export default function PlanCardUserList(props: Props) {
 
           return avatar ? (
             <Image
-              key={uuid()}
+              key={`${i},${avatar}`}
               src={avatar}
               alt="유저아바타"
               width={20}
@@ -33,14 +32,14 @@ export default function PlanCardUserList(props: Props) {
               className={`w-[20px] h-[20px] rounded-full ${gap} border border-[#979797] object-cover `}
             />
           ) : (
-            <div className={`rounded-full ${gap} border border-[#979797] `} key={uuid()}>
-              <Image
-                src={'/images/svgs/userDefault.svg'}
-                alt="유저 기본 이미지"
-                width={20}
-                height={20}
-              />
-            </div>
+            <Image
+              key={`${i},avatar`}
+              src={'/images/svgs/userDefault.svg'}
+              alt="유저 기본 이미지"
+              width={20}
+              height={20}
+              className={`w-[20px] h-[20px] rounded-full ${gap} border border-[#979797] object-cover `}
+            />
           );
         })}
       </div>
