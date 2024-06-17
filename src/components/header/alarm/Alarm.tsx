@@ -24,12 +24,12 @@ const Alarm = () => {
       </button>
       {isOpen && (
         <ul
-          className={`alarm-drop-down absolute top-10 right-6 w-[200px] max-h-[120px] bg-white rounded-lg
+          className={`alarm-drop-down absolute top-10 right-6 w-[200px] max-h-[140px] bg-white rounded-lg
           ${mock.length > 5 ? 'overflow-y-scroll scrollbar-custom overscroll-y-contain' : ''}
         `}
         >
           {mock.map((text) => (
-            <li key={uuid()} className="w-full h-6 hover:bg-slate-200 cursor-pointer">
+            <li key={uuid()} className="w-full h-7 p-1 hover:bg-slate-200 cursor-pointer">
               {text}
             </li>
           ))}
