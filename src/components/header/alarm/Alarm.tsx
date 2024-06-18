@@ -4,17 +4,36 @@ import React from 'react';
 
 import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 
+import { addinviteAlarm } from '@/api/alarm';
+import { useAuthStoreState } from '@/store/authStore';
+
 import AlarmImage from './alarmImage/AlarmImage';
+
+import type { AlarmCallbackFuncArgs } from '@/types/aboutAlarm.type';
 
 const mock: any[] = ['알림1', '알림2', '알림3', '알림4', '알림5', '알림6'];
 
 const Alarm = () => {
   const [isOpen, setIsOpen] = React.useState(false);
 
+  const user = useAuthStoreState();
+
   const hasNewAlarm = mock.length > 0; // 수정 필요
 
   const handleToggleDropDownMenu = React.useCallback(() => {
     setIsOpen((prev) => !prev);
+  }, []);
+
+  const a = async () => {
+    await addinviteAlarm();
+  };
+
+  const handleAlarmCallback = (payload: AlarmCallbackFuncArgs) => {
+    console.log(payload);
+  };
+
+  React.useEffect(() => {
+    // if (user) userAlarmListener(user.id, handleAlarmCallback);
   }, []);
 
   return (
