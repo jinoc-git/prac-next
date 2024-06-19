@@ -6,18 +6,36 @@ import type { Database, InsertInviteAlarmType } from '@/types/supabase';
 const supabaseClientClient = createClientComponentClient<Database>();
 
 export const addinviteAlarm = async (data: InsertInviteAlarmType) => {
-  await supabaseClientClient.from('invite_alarm').insert({
-    invite_from: data.invite_from,
-    invite_to: data.invite_to,
-    invite_planId: data.invite_planId,
-    from_nickname: data.from_nickname,
-    plan_title: data.plan_title,
-  });
+  const hasAlarm = await getUserUnConfirmedAlarm(data);
+  if (hasAlarm) return;
 
-  console.log('add');
+  const { error } = await supabaseClientClient.from('invite_alarm').insert(data);
+
+  if (error) throw new Error('알림 추가 오류');
 };
 
-export const getUserUnConfirmedAlarm = async (userId: string | undefined) => {
+export const addInviteAlarmList = async (datas: InsertInviteAlarmType[]) => {
+  const { error } = await supabaseClientClient.from('invite_alarm').insert(datas);
+
+  if (error) throw new Error('알림 리스트 추가 오류');
+};
+
+export const getUserUnConfirmedAlarm = async (data: InsertInviteAlarmType) => {
+  const { data: hasAlarm, error } = await supabaseClientClient
+    .from('invite_alarm')
+    .select()
+    .eq('invite_to', data.invite_to)
+    .eq('invite_from', data.invite_from)
+    .eq('invite_planId', data.invite_planId)
+    .eq('isChecked', false)
+    .single();
+
+  if (error) throw new Error('확인하지 않은 알람 갖고오기 오류');
+
+  return !!hasAlarm;
+};
+
+export const getUserUnConfirmedAlarmList = async (userId: string | undefined) => {
   if (!userId) return null;
 
   const { data, error } = await supabaseClientClient

@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { getUserUnConfirmedAlarm } from '@/api/alarm';
+import { getUserUnConfirmedAlarmList } from '@/api/alarm';
 import { useAuthStoreState } from '@/store/authStore';
 
 const useAlarmMutation = () => {
@@ -10,7 +10,7 @@ const useAlarmMutation = () => {
   const queryClient = useQueryClient();
 
   const { mutate } = useMutation({
-    mutationFn: getUserUnConfirmedAlarm,
+    mutationFn: getUserUnConfirmedAlarmList,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['userAlaram', user?.id] });
     },

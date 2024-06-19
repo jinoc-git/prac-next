@@ -33,7 +33,7 @@ export default function SearchPeopleModal(props: Props) {
   const { modalBGRef, handleCloseModal, isAnimate, onClickModalBG } = props;
 
   const { invitedUser } = useInviteUserStoreState();
-  const { inviteUser, setUser, syncInvitedUser } = useInviteUserStoreActions();
+  const { inviteUser, removeUser } = useInviteUserStoreActions();
   const user = useAuthStoreState();
   const confirm = useConfirm();
 
@@ -79,17 +79,14 @@ export default function SearchPeopleModal(props: Props) {
     const confTitle = '동행 초대 삭제';
     const confDesc = '해당 여행에서 삭제하시겠습니까?';
     const confFunc = () => {
-      const deletedUser = invitedUser.filter(searchCallback.cancelInvite(idx));
-      setUser(deletedUser);
+      removeUser(idx);
     };
     confirm.delete(confTitle, confDesc, confFunc);
   };
 
   const saveInviteData = () => {
-    setUser(invitedUser);
-    toast.success('동행자가 추가됐습니다.');
+    toast.success('동행자가 변경됐습니다.');
     handleCloseModal();
-    syncInvitedUser();
   };
 
   const searchResult = people.filter(searchCallback.excludeInvitedUsers(invitedUser));

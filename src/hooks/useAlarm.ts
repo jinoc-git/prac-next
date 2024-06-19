@@ -1,11 +1,12 @@
 import React from 'react';
+import { toast } from 'react-toastify';
 
 import { useQuery } from '@tanstack/react-query';
 
 import {
   addinviteAlarm,
   confirmAlarm,
-  getUserUnConfirmedAlarm,
+  getUserUnConfirmedAlarmList,
   userAlarmListener,
 } from '@/api/alarm';
 import { useAuthStoreState } from '@/store/authStore';
@@ -26,13 +27,13 @@ const useAlarm = () => {
   const { alarmMutate } = useAlarmMutation();
 
   const { data: alarms } = useQuery({
-    queryFn: async () => await getUserUnConfirmedAlarm(user?.id),
+    queryFn: async () => await getUserUnConfirmedAlarmList(user?.id),
     queryKey: ['userAlaram', user?.id],
     enabled: user !== null,
   });
 
   const handleAlarmCallback = (payload: AlarmCallbackFuncArgs) => {
-    console.log(payload);
+    toast.info(`${payload.new.from_nickname}님이 ${payload.new.plan_title}에 초대했습니다.`);
     setHasNewAlarm(true);
     alarmMutate(user?.id);
   };
