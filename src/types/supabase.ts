@@ -83,14 +83,18 @@ export interface Database {
           invite_from: string;
           invite_planId: string;
           invite_to: string;
+          from_nickname: string;
+          plan_title: string;
           isChecked: boolean;
         };
         Insert: {
           created_at?: string;
           id?: string;
-          invite_from?: string;
-          invite_planId?: string;
-          invite_to?: string;
+          invite_from: string;
+          invite_planId: string;
+          invite_to: string;
+          from_nickname: string;
+          plan_title: string;
           isChecked?: boolean;
         };
         Update: {
@@ -99,6 +103,8 @@ export interface Database {
           invite_from?: string;
           invite_planId?: string;
           invite_to?: string;
+          from_nickname?: string;
+          plan_title?: string;
           isChecked?: boolean;
         };
         Relationships: [

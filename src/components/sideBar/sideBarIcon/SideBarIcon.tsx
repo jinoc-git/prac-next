@@ -17,7 +17,7 @@ export default function SideBarIcon() {
     <button
       onClick={toggleMenu}
       aria-label="side-bar-toggle-btn"
-      className=" fixed left-[24px] flex-box z-[32]
+      className=" fixed left-[24px] flex-box z-[42]
       sm:w-[34px] sm:h-[34px] sm:top-[25px] 
       md:w-[40px] md:h-[40px] md:top-[15px]
       "

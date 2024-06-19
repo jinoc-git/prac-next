@@ -1,22 +1,46 @@
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 import type { AlarmCallbackFunc } from '@/types/aboutAlarm.type';
-import type { Database } from '@/types/supabase';
+import type { Database, InsertInviteAlarmType } from '@/types/supabase';
 
 const supabaseClientClient = createClientComponentClient<Database>();
 
-export const addinviteAlarm = async () => {
+export const addinviteAlarm = async (data: InsertInviteAlarmType) => {
   await supabaseClientClient.from('invite_alarm').insert({
-    invite_from: '47f2dc43-c08f-4d96-b811-d4c7dec7de28',
-    invite_to: '89a939d2-56a4-4b08-85a6-29bb18f8012c',
-    invite_planId: '35c3343b-82ab-4933-992f-989ced991ca0',
-    isChecked: false,
+    invite_from: data.invite_from,
+    invite_to: data.invite_to,
+    invite_planId: data.invite_planId,
+    from_nickname: data.from_nickname,
+    plan_title: data.plan_title,
   });
 
   console.log('add');
 };
 
-export const getUserUnConfirmedArlarm = async () => {};
+export const getUserUnConfirmedAlarm = async (userId: string | undefined) => {
+  if (!userId) return null;
+
+  const { data, error } = await supabaseClientClient
+    .from('invite_alarm')
+    .select()
+    .eq('invite_to', userId)
+    .eq('isChecked', false)
+    .order('created_at', { ascending: true });
+
+  if (error) throw new Error('여행 초대 알림 데이터 불러오기 오류');
+
+  return data;
+};
+
+export const confirmAlarm = async (alarmId: string) => {
+  const { error } = await supabaseClientClient
+    .from('invite_alarm')
+    .update({ isChecked: true })
+    .eq('id', alarmId)
+    .select();
+
+  if (error) throw new Error('알림 확인 오류');
+};
 
 export const userAlarmListener = (userId: string, callback: AlarmCallbackFunc) => {
   supabaseClientClient
