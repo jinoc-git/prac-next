@@ -1,12 +1,14 @@
 'use client';
 
 import React, { useRef } from 'react';
+import { toast } from 'react-toastify';
 
 import { useQuery } from '@tanstack/react-query';
 
 import { getAllPinsByIdAndDates } from '@/api/pins';
 import PostPlanForm from '@/components/common/form/postPlanForm/PostPlanForm';
 import Loading from '@/components/common/loading/Loading';
+import useAuthority from '@/hooks/useAuthority';
 import { useModifyPlanStoreActions, useModifyPlanStoreState } from '@/store/modifyPlanStore';
 
 import PlanTopBar from '../planTopBar/PlanTopBar';
@@ -27,6 +29,7 @@ const AddOrEditPlan = ({ plan }: Props) => {
 
   const { modifyState } = useModifyPlanStoreState();
   const { setReadOnly, setModify } = useModifyPlanStoreActions();
+  const hasAuthority = useAuthority();
 
   const { data, isLoading } = useQuery({
     queryKey: ['pins', plan?.id],
@@ -39,6 +42,10 @@ const AddOrEditPlan = ({ plan }: Props) => {
 
   const handleSaveOrModifyBtnClick = () => {
     if (modifyState === 'readOnly') {
+      if (!hasAuthority) {
+        toast.error('본인이 속한 여행이 아닙니다.');
+        return;
+      }
       setModify();
       return;
     }
