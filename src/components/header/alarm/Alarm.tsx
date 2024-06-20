@@ -2,7 +2,6 @@
 
 import React from 'react';
 
-import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import { useRouter } from 'next/navigation';
 
 import useAlarm from '@/hooks/useAlarm';
@@ -49,7 +48,7 @@ const Alarm = ({}: Props) => {
         >
           {alarms?.map(({ id, from_nickname, plan_title, invite_planId }) => (
             <li
-              key={uuid()}
+              key={id}
               onMouseDown={(e) => e.preventDefault()}
               onClick={() => onClickAlarmList(id, invite_planId)}
               className="w-full h-7 p-1 text-sm truncate hover:bg-slate-200 cursor-pointer"

@@ -2,7 +2,6 @@
 
 import React from 'react';
 
-import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import Image from 'next/image';
 
 import { changeImgFormatAndCompression } from '@/utils/changeImgFormatAndCompression';
@@ -63,7 +62,7 @@ const UploadPhoto = ({ setUploadedImg }: Props) => {
       {preview.map((src, idx) => {
         return (
           <div
-            key={uuid()}
+            key={`${idx},${src}`}
             className="flex-box relative
               sm:w-[128px] sm:h-[128px]
               md:w-[200px] md:h-[200px] 

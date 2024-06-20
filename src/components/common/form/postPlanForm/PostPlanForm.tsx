@@ -21,7 +21,7 @@ import { addPlanSchema } from '@/schema/planSchema';
 import { useAuthStoreState } from '@/store/authStore';
 import { useDateStoreActions, useDateStoreState } from '@/store/dateStore';
 import { useInviteUserStoreActions, useInviteUserStoreState } from '@/store/inviteUserStore';
-import changeToAlarmData from '@/utils/changeToAlarmData';
+import { changeToAlarmData } from '@/utils/changeToAlarmData';
 import { addCommas } from '@/utils/numberFormat';
 
 import type { PlanContentsInputType } from '@/components/plan/addOrEditPlan/AddOrEditPlan';
@@ -127,7 +127,7 @@ export default function PostPlanForm(props: Props) {
         invitedUser,
         oldUser: oldInvitedUser,
       });
-      console.log(alarmData);
+
       await addInviteAlarmList(alarmData);
 
       pinMutate([plan.id, plan.dates]);

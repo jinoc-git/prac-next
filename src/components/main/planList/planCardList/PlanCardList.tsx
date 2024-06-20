@@ -3,7 +3,6 @@
 import React from 'react';
 import { toast } from 'react-toastify';
 
-import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import { useRouter } from 'next/navigation';
 
 import useBookMark from '@/hooks/useBookMark';
@@ -76,7 +75,7 @@ export default function PlanCardList(props: Props) {
 
       return (
         <PlanCard
-          key={uuid()}
+          key={`main,${plan.id}`}
           plan={plan}
           bookMarkData={bookMarkData}
           avatarList={avatarList}

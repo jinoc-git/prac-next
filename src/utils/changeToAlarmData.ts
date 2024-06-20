@@ -7,7 +7,12 @@ export interface ChangeToAlarmDataArgs {
   oldUser?: UserType[];
 }
 
-const changeToAlarmData = ({ currentUser, plan, invitedUser, oldUser }: ChangeToAlarmDataArgs) => {
+export const changeToAlarmData = ({
+  currentUser,
+  plan,
+  invitedUser,
+  oldUser,
+}: ChangeToAlarmDataArgs) => {
   const result: InsertInviteAlarmType[] = [];
 
   if (!oldUser) {
@@ -25,8 +30,6 @@ const changeToAlarmData = ({ currentUser, plan, invitedUser, oldUser }: ChangeTo
       result.push(alarmData);
     }
   } else {
-    console.log('in', invitedUser, oldUser);
-
     for (let user of invitedUser) {
       const isExist = oldUser.find(({ id }) => id === user.id);
       if (!isExist) {
@@ -43,9 +46,5 @@ const changeToAlarmData = ({ currentUser, plan, invitedUser, oldUser }: ChangeTo
     }
   }
 
-  console.log(result);
-
   return result;
 };
-
-export default changeToAlarmData;

@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 
-import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import { useRouter } from 'next/navigation';
 
 import { useTabMenuStoreActions } from '@/store/tabMenuStore';
@@ -63,7 +62,7 @@ export default function SideBarDropDown(props: Props) {
               md:w-[175px] md:my-[5px]
               sm:w-[234px] sm:mt-[5px]
               "
-            key={uuid()}
+            key={`dropdown,${plan.id}`}
           >
             <p
               className={`text-[13px]   ${aboveDropDownIsOpen ? '' : 'md:max-w-[100px] truncate'}`}

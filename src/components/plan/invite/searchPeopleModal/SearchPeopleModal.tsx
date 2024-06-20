@@ -4,7 +4,6 @@ import React from 'react';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
-import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import _ from 'lodash';
 import Image from 'next/image';
 
@@ -110,7 +109,7 @@ export default function SearchPeopleModal(props: Props) {
             {invitedUser.length !== 0 &&
               invitedUser.map((person, idx) => {
                 return (
-                  <div key={uuid()} className="w-full ">
+                  <div key={`invited,${idx},${person.id}`} className="w-full ">
                     <InvitedOrSearchUser
                       user={user}
                       person={person}
@@ -157,9 +156,9 @@ export default function SearchPeopleModal(props: Props) {
               검색 결과가 없습니다.
             </div>
           )}
-          {searchResult.map((person: UserType, idx) => {
+          {searchResult.map((person, idx) => {
             return (
-              <div key={uuid()} className="w-full">
+              <div key={`search,${idx},${person.id}`} className="w-full">
                 <InvitedOrSearchUser
                   user={user}
                   person={person}

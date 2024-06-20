@@ -3,18 +3,12 @@ import { toast } from 'react-toastify';
 
 import { useQuery } from '@tanstack/react-query';
 
-import {
-  addinviteAlarm,
-  confirmAlarm,
-  getUserUnConfirmedAlarmList,
-  userAlarmListener,
-} from '@/api/alarm';
+import { confirmAlarm, getUserUnConfirmedAlarmList, userAlarmListener } from '@/api/alarm';
 import { useAuthStoreState } from '@/store/authStore';
 
 import useAlarmMutation from './useAlarmMutation';
 
 import type { AlarmCallbackFuncArgs } from '@/types/aboutAlarm.type';
-import type { InsertInviteAlarmType } from '@/types/supabase';
 
 // const mockFrom = '47f2dc43-c08f-4d96-b811-d4c7dec7de28';
 // const mockTo = '89a939d2-56a4-4b08-85a6-29bb18f8012c';
@@ -36,10 +30,6 @@ const useAlarm = () => {
     toast.info(`${payload.new.from_nickname}님이 ${payload.new.plan_title}에 초대했습니다.`);
     setHasNewAlarm(true);
     alarmMutate(user?.id);
-  };
-
-  const add = async (data: InsertInviteAlarmType) => {
-    await addinviteAlarm(data);
   };
 
   const handleConfirmAlarm = async (alarmId: string) => {

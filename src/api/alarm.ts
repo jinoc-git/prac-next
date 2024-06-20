@@ -5,17 +5,15 @@ import type { Database, InsertInviteAlarmType } from '@/types/supabase';
 
 const supabaseClientClient = createClientComponentClient<Database>();
 
-export const addinviteAlarm = async (data: InsertInviteAlarmType) => {
-  const hasAlarm = await getUserUnConfirmedAlarm(data);
-  if (hasAlarm) return;
-
-  const { error } = await supabaseClientClient.from('invite_alarm').insert(data);
-
-  if (error) throw new Error('알림 추가 오류');
-};
-
 export const addInviteAlarmList = async (datas: InsertInviteAlarmType[]) => {
-  const { error } = await supabaseClientClient.from('invite_alarm').insert(datas);
+  const checkedData: InsertInviteAlarmType[] = [];
+
+  for (let data of datas) {
+    const hasAlarm = await getUserUnConfirmedAlarm(data);
+    if (!hasAlarm) checkedData.push(data);
+  }
+
+  const { error } = await supabaseClientClient.from('invite_alarm').insert(checkedData);
 
   if (error) throw new Error('알림 리스트 추가 오류');
 };

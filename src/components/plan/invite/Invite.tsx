@@ -2,7 +2,6 @@
 
 import React from 'react';
 
-import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
@@ -52,13 +51,13 @@ export default function Invite() {
               return (
                 <Image
                   alt={`profile-img ${idx}`}
-                  key={uuid()}
+                  key={`invite,${idx},${user.id}`}
                   src={user.avatar_url ?? '/images/svgs/userDefault.svg'}
                   width={24}
                   height={24}
                   className="object-cover rounded-full border-[#DCDCDC] border-[1px]
-                          sm:w-[16px] sm:h-[16px]
-                          md:w-6 md:h-6"
+                    sm:w-[16px] sm:h-[16px]
+                    md:w-6 md:h-6"
                 />
               );
             })}
@@ -66,7 +65,7 @@ export default function Invite() {
           {invitedUser.length > maxDisplayCount ? (
             <div className="flex items-center text-gray_dark_1 sm:text-xs sm:font-semibold md:text-sm md:font-semibold">
               {invitedUser.slice(0, maxDisplayCount).map((user) => (
-                <div key={uuid()} className="mr-[2px]">
+                <div key={`${user.id},${user.nickname}`} className="mr-[2px]">
                   {user.nickname}
                 </div>
               ))}
@@ -75,7 +74,7 @@ export default function Invite() {
           ) : (
             invitedUser.map((user) => (
               <div
-                key={uuid()}
+                key={`${user.id},${user.nickname}`}
                 className="mr-[2px] md:text-sm
                     sm:text-xs sm:font-semibold sm:text-gray_dark_1"
               >
