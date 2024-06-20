@@ -38,7 +38,7 @@ const Alarm = ({}: Props) => {
       </button>
       {isOpen && (
         <ul
-          className={`alarm-drop-down fixed top-10 right-6 w-[200px] max-h-[140px] bg-white rounded-lg 
+          className={`alarm-drop-down fixed sm:top-16 md:top-14 right-6 w-[240px] max-h-[140px] border border-white bg-navy rounded-lg 
           ${
             alarms && alarms.length > 5
               ? 'overflow-y-scroll scrollbar-custom overscroll-y-contain'
@@ -51,11 +51,16 @@ const Alarm = ({}: Props) => {
               key={id}
               onMouseDown={(e) => e.preventDefault()}
               onClick={() => onClickAlarmList(id, invite_planId)}
-              className="w-full h-7 p-1 text-sm truncate hover:bg-slate-200 cursor-pointer"
+              className="w-full h-7 py-1 px-2 text-white text-center text-sm truncate hover:bg-navy_light_3 cursor-pointer"
             >
               {from_nickname}님이 {plan_title}에 초대했습니다.
             </li>
           ))}
+          {alarms?.length === 0 && (
+            <li className="w-full h-7 py-1 px-2 text-white text-center text-sm ">
+              새로운 알림이 없습니다.
+            </li>
+          )}
         </ul>
       )}
     </div>
