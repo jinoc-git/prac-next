@@ -3,6 +3,7 @@
 import React from 'react';
 import { toast } from 'react-toastify';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 
@@ -15,7 +16,7 @@ interface Props {
 }
 
 export default function Authentication({ isLogin }: Props) {
-  const { authObserver, resetUser } = useAuthStoreActions();
+  const { resetUser } = useAuthStoreActions();
   const { setVisibilitySideBar } = useSideBarStoreActions();
 
   const router = useRouter();
@@ -34,15 +35,8 @@ export default function Authentication({ isLogin }: Props) {
 
   const isSigninPage = pathname === '/signin';
 
-  React.useEffect(() => {
-    authObserver();
-
-    if (isLogin && pathname !== '/') setVisibilitySideBar(true);
-    else setVisibilitySideBar(false);
-  }, [pathname]);
-
   return (
-    <div className="header-auth-box flex-box md:w-[134px] sm:w-[84px]">
+    <div className="header-link-box flex-box md:w-[134px] sm:w-[84px]">
       {!isLogin ? (
         isSigninPage ? (
           <Link href="/signup">회원가입</Link>
@@ -56,7 +50,23 @@ export default function Authentication({ isLogin }: Props) {
             pathname === '/main' ? 'text-white' : 'text-black'
           } sm:text-xs md:text-normal`}
         >
-          로그아웃
+          {pathname === '/main' ? (
+            <Image
+              src={'/images/svgs/logout-white.svg'}
+              width={24}
+              height={24}
+              alt="로그아웃 아이콘"
+              className="w-5 h-5"
+            />
+          ) : (
+            <Image
+              src={'/images/svgs/logout-gray.svg'}
+              width={24}
+              height={24}
+              alt="로그아웃 아이콘"
+              className="w-5 h-5"
+            />
+          )}
         </button>
       )}
     </div>

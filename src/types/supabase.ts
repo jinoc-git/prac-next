@@ -76,6 +76,61 @@ export interface Database {
           },
         ];
       };
+      invite_alarm: {
+        Row: {
+          created_at: string;
+          id: string;
+          invite_from: string;
+          invite_planId: string;
+          invite_to: string;
+          from_nickname: string;
+          plan_title: string;
+          isChecked: boolean;
+        };
+        Insert: {
+          created_at?: string;
+          id?: string;
+          invite_from: string;
+          invite_planId: string;
+          invite_to: string;
+          from_nickname: string;
+          plan_title: string;
+          isChecked?: boolean;
+        };
+        Update: {
+          created_at?: string;
+          id?: string;
+          invite_from?: string;
+          invite_planId?: string;
+          invite_to?: string;
+          from_nickname?: string;
+          plan_title?: string;
+          isChecked?: boolean;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'invite_alarm_invite_from_fkey';
+            columns: ['invite_from'];
+            isOneToOne: false;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'invite_alarm_invite_planId_fkey';
+            columns: ['invite_planId'];
+            isOneToOne: false;
+            referencedRelation: 'plans';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'invite_alarm_invite_to_fkey';
+            columns: ['invite_to'];
+            isOneToOne: false;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       pins: {
         Row: {
           contents: PinContentsType[];
@@ -251,6 +306,80 @@ export interface Database {
   };
 }
 
+type PublicSchema = Database[Extract<keyof Database, 'public'>];
+
+export type Tables<
+  PublicTableNameOrOptions extends
+    | keyof (PublicSchema['Tables'] & PublicSchema['Views'])
+    | { schema: keyof Database },
+  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
+    ? keyof (Database[PublicTableNameOrOptions['schema']]['Tables'] &
+        Database[PublicTableNameOrOptions['schema']]['Views'])
+    : never = never,
+> = PublicTableNameOrOptions extends { schema: keyof Database }
+  ? (Database[PublicTableNameOrOptions['schema']]['Tables'] &
+      Database[PublicTableNameOrOptions['schema']]['Views'])[TableName] extends {
+      Row: infer R;
+    }
+    ? R
+    : never
+  : PublicTableNameOrOptions extends keyof (PublicSchema['Tables'] & PublicSchema['Views'])
+    ? (PublicSchema['Tables'] & PublicSchema['Views'])[PublicTableNameOrOptions] extends {
+        Row: infer R;
+      }
+      ? R
+      : never
+    : never;
+
+export type TablesInsert<
+  PublicTableNameOrOptions extends keyof PublicSchema['Tables'] | { schema: keyof Database },
+  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
+    ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
+    : never = never,
+> = PublicTableNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
+      Insert: infer I;
+    }
+    ? I
+    : never
+  : PublicTableNameOrOptions extends keyof PublicSchema['Tables']
+    ? PublicSchema['Tables'][PublicTableNameOrOptions] extends {
+        Insert: infer I;
+      }
+      ? I
+      : never
+    : never;
+
+export type TablesUpdate<
+  PublicTableNameOrOptions extends keyof PublicSchema['Tables'] | { schema: keyof Database },
+  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
+    ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
+    : never = never,
+> = PublicTableNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
+      Update: infer U;
+    }
+    ? U
+    : never
+  : PublicTableNameOrOptions extends keyof PublicSchema['Tables']
+    ? PublicSchema['Tables'][PublicTableNameOrOptions] extends {
+        Update: infer U;
+      }
+      ? U
+      : never
+    : never;
+
+export type Enums<
+  PublicEnumNameOrOptions extends keyof PublicSchema['Enums'] | { schema: keyof Database },
+  EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
+    ? keyof Database[PublicEnumNameOrOptions['schema']]['Enums']
+    : never = never,
+> = PublicEnumNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicEnumNameOrOptions['schema']]['Enums'][EnumName]
+  : PublicEnumNameOrOptions extends keyof PublicSchema['Enums']
+    ? PublicSchema['Enums'][PublicEnumNameOrOptions]
+    : never;
+
 export interface PinContentsType {
   id?: string;
   lat: number;
@@ -273,3 +402,5 @@ export type PlanMatesType = Database['public']['Tables']['plan_mates']['Insert']
 export type CommentsType = Database['public']['Tables']['comments']['Row'];
 export type InsertCommentsType = Database['public']['Tables']['comments']['Insert'];
 export type EndingPlanType = Database['public']['Tables']['plans_ending']['Row'];
+export type InviteAlarmType = Database['public']['Tables']['invite_alarm']['Row'];
+export type InsertInviteAlarmType = Database['public']['Tables']['invite_alarm']['Insert'];

@@ -8,6 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import { useRouter } from 'next/navigation';
 
+import { addInviteAlarmList } from '@/api/alarm';
 import { addPlan, updatePlan } from '@/api/plan';
 import AreaAndPlace from '@/components/plan/areaAndPlace/AreaAndPlace';
 import DatePagination from '@/components/plan/datePagination/DatePagination';
@@ -20,6 +21,7 @@ import { addPlanSchema } from '@/schema/planSchema';
 import { useAuthStoreState } from '@/store/authStore';
 import { useDateStoreActions, useDateStoreState } from '@/store/dateStore';
 import { useInviteUserStoreActions, useInviteUserStoreState } from '@/store/inviteUserStore';
+import { changeToAlarmData } from '@/utils/changeToAlarmData';
 import { addCommas } from '@/utils/numberFormat';
 
 import type { PlanContentsInputType } from '@/components/plan/addOrEditPlan/AddOrEditPlan';
@@ -37,7 +39,7 @@ export default function PostPlanForm(props: Props) {
   const { plan, originPins, formRef, readonly, setReadOnly } = props;
 
   const user = useAuthStoreState();
-  const { invitedUser } = useInviteUserStoreState();
+  const { oldInvitedUser, invitedUser } = useInviteUserStoreState();
   const { inviteUser, syncInvitedUser } = useInviteUserStoreActions();
   const { dates } = useDateStoreState();
   const { resetDates } = useDateStoreActions();
@@ -94,6 +96,9 @@ export default function PostPlanForm(props: Props) {
 
       await addPlan(addPlanData);
 
+      const alarmData = changeToAlarmData({ currentUser: user, plan: newPlan, invitedUser });
+      await addInviteAlarmList(alarmData);
+
       toast.success('여행이 생성됐습니다.');
       router.push('main');
     } else {
@@ -116,8 +121,18 @@ export default function PostPlanForm(props: Props) {
 
       await updatePlan(updatePlanObj);
 
+      const alarmData = changeToAlarmData({
+        currentUser: user,
+        plan: updatedPlan,
+        invitedUser,
+        oldUser: oldInvitedUser,
+      });
+
+      await addInviteAlarmList(alarmData);
+
       pinMutate([plan.id, plan.dates]);
       setReadOnly();
+      syncInvitedUser();
       toast.success('여행이 수정됐습니다.');
     }
   };

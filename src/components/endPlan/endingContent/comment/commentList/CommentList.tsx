@@ -2,7 +2,6 @@
 
 import React from 'react';
 
-import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 
@@ -32,7 +31,7 @@ const CommentList = ({ planId }: Props) => {
           const author = invitedUser.find(({ id }) => user_id === id);
 
           return (
-            <div key={uuid()} className="flex justify-between comment-text">
+            <div key={id} className="flex justify-between comment-text">
               <div className="flex md:gap-5">
                 <Image
                   src={

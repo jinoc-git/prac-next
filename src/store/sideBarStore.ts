@@ -34,7 +34,7 @@ export const sideBarStore = create<Store>((set) => ({
       set(({ state }) => ({ state: { ...state, isSideBarOpen: val } }));
     },
     setVisibilitySideBar: (val: boolean) => {
-      set(({ state }) => ({ state: { ...state, isVisibleSideBar: val } }));
+      set(({ state }) => ({ state: { ...state, isSideBarOpen: false, isVisibleSideBar: val } }));
     },
     setIsNotFoundPage: (val: boolean) => {
       set(({ state }) => ({ state: { ...state, isNotFoundPage: val } }));

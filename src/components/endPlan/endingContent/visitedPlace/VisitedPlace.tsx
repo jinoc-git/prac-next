@@ -2,7 +2,6 @@
 
 import React from 'react';
 
-import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import Image from 'next/image';
 
 import DragNDropProvider from '@/components/common/providers/dragNDropProvider/DragNDropProvider';
@@ -35,7 +34,7 @@ const VisitedPlace = ({ plan, allPins }: Props) => {
         {allPins.map(({ contents, date }, i) => {
           const dayDistance = distanceList[i];
           return (
-            <div key={uuid()}>
+            <div key={`${plan.id},${date},${i}`}>
               <p
                 className="text-center font-semibold text-gray_dark_1
                   md:mt-[15px] md:mb-[35px] md:text-normal
@@ -44,12 +43,12 @@ const VisitedPlace = ({ plan, allPins }: Props) => {
               >
                 {date}
               </p>
-              <ol key={uuid()}>
+              <ol>
                 {contents.map((pin, idx) => {
                   const contentDistance = dayDistance[idx - 1];
                   return (
                     <Pin
-                      key={uuid()}
+                      key={`${plan.id},${date},${pin.id}`}
                       pin={pin}
                       idx={idx}
                       distance={idx > 0 ? contentDistance : undefined}

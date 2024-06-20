@@ -2,7 +2,6 @@
 
 import React from 'react';
 
-import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
@@ -15,8 +14,8 @@ import { useModifyPlanStoreState } from '@/store/modifyPlanStore';
 import SearchPeopleModal from './searchPeopleModal/SearchPeopleModal';
 
 export default function Invite() {
-  const { oldInvitedUser } = useInviteUserStoreState();
-  const { inviteUser, resetInvitedUser, syncInvitedUser } = useInviteUserStoreActions();
+  const { invitedUser } = useInviteUserStoreState();
+  const { initUser, resetInvitedUser } = useInviteUserStoreActions();
   const { modifyState } = useModifyPlanStoreState();
 
   const { modalBGRef, isOpenModal, isAnimate, handleOpenModal, handleCloseModal, onClickModalBG } =
@@ -29,7 +28,6 @@ export default function Invite() {
     queryFn: async () => await getMatesInfo(planId),
   });
 
-  const isOldInvitedUser = oldInvitedUser.length !== 0 && oldInvitedUser !== null;
   const maxDisplayCount = 3;
 
   React.useEffect(() => {
@@ -37,13 +35,7 @@ export default function Invite() {
   }, []);
 
   React.useEffect(() => {
-    if (data) {
-      resetInvitedUser();
-      data.forEach((user) => {
-        inviteUser(user);
-      });
-      syncInvitedUser();
-    }
+    if (data) initUser(data);
   }, [data]);
 
   return (
@@ -54,53 +46,41 @@ export default function Invite() {
           <p>동행</p>
         </div>
         <div className="flex items-center">
-          {isOldInvitedUser ? (
-            oldInvitedUser.length > 0 && (
-              <div className="flex mr-3">
-                {oldInvitedUser.slice(0, maxDisplayCount).map((user, idx) => {
-                  return (
-                    <Image
-                      alt={`profile-img ${idx}`}
-                      key={uuid()}
-                      src={user.avatar_url ?? '/images/svgs/userDefault.svg'}
-                      width={24}
-                      height={24}
-                      className="object-cover rounded-full border-[#DCDCDC] border-[1px]
-                          sm:w-[16px] sm:h-[16px]
-                          md:w-6 md:h-6"
-                    />
-                  );
-                })}
-              </div>
-            )
-          ) : (
-            <div className="w-6 h-6 mr-5 rounded-full bg-gray_light_3" />
-          )}
-          {isOldInvitedUser ? (
-            oldInvitedUser.length > maxDisplayCount ? (
-              <div className="flex items-center text-gray_dark_1 sm:text-xs sm:font-semibold md:text-sm md:font-semibold">
-                {oldInvitedUser.slice(0, maxDisplayCount).map((user) => (
-                  <div key={uuid()} className="mr-[2px]">
-                    {user.nickname}
-                  </div>
-                ))}
-                외 {oldInvitedUser.length - maxDisplayCount}명
-              </div>
-            ) : (
-              oldInvitedUser.map((user) => (
-                <div
-                  key={uuid()}
-                  className="mr-[2px] md:text-sm
-                    sm:text-xs sm:font-semibold sm:text-gray_dark_1"
-                >
-                  {user.nickname}&nbsp;
+          <div className="flex mr-3">
+            {invitedUser.slice(0, maxDisplayCount).map((user, idx) => {
+              return (
+                <Image
+                  alt={`profile-img ${idx}`}
+                  key={`invite,${idx},${user.id}`}
+                  src={user.avatar_url ?? '/images/svgs/userDefault.svg'}
+                  width={24}
+                  height={24}
+                  className="object-cover rounded-full border-[#DCDCDC] border-[1px]
+                    sm:w-[16px] sm:h-[16px]
+                    md:w-6 md:h-6"
+                />
+              );
+            })}
+          </div>
+          {invitedUser.length > maxDisplayCount ? (
+            <div className="flex items-center text-gray_dark_1 sm:text-xs sm:font-semibold md:text-sm md:font-semibold">
+              {invitedUser.slice(0, maxDisplayCount).map((user) => (
+                <div key={`${user.id},${user.nickname}`} className="mr-[2px]">
+                  {user.nickname}
                 </div>
-              ))
-            )
-          ) : (
-            <div className="sm:w-[50px] sm:h-[21px] sm:text-sm sm:font-semibold sm:text-gray_dark_1">
-              로딩중...
+              ))}
+              외 {invitedUser.length - maxDisplayCount}명
             </div>
+          ) : (
+            invitedUser.map((user) => (
+              <div
+                key={`${user.id},${user.nickname}`}
+                className="mr-[2px] md:text-sm
+                    sm:text-xs sm:font-semibold sm:text-gray_dark_1"
+              >
+                {user.nickname}&nbsp;
+              </div>
+            ))
           )}
         </div>
         {modifyState === 'modify' && (
