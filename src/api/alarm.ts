@@ -13,24 +13,27 @@ export const addInviteAlarmList = async (datas: InsertInviteAlarmType[]) => {
     if (!hasAlarm) checkedData.push(data);
   }
 
-  const { error } = await supabaseClientClient.from('invite_alarm').insert(checkedData);
+  if (checkedData.length > 0) {
+    const { error } = await supabaseClientClient.from('invite_alarm').insert(checkedData);
 
-  if (error) throw new Error('알림 리스트 추가 오류');
+    if (error) throw new Error('알림 리스트 추가 오류');
+  }
 };
 
 export const getUserUnConfirmedAlarm = async (data: InsertInviteAlarmType) => {
-  const { data: hasAlarm, error } = await supabaseClientClient
+  const { data: alarms, error } = await supabaseClientClient
     .from('invite_alarm')
     .select()
     .eq('invite_to', data.invite_to)
     .eq('invite_from', data.invite_from)
     .eq('invite_planId', data.invite_planId)
-    .eq('isChecked', false)
-    .single();
+    .eq('isChecked', false);
 
   if (error) throw new Error('확인하지 않은 알람 갖고오기 오류');
 
-  return !!hasAlarm;
+  const hasAlarm = alarms.length > 0 ? true : false;
+
+  return hasAlarm;
 };
 
 export const getUserUnConfirmedAlarmList = async (userId: string | undefined) => {

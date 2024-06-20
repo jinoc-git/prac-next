@@ -1,11 +1,13 @@
 'use client';
 
 import React from 'react';
+import { toast } from 'react-toastify';
 
 import { useRouter } from 'next/navigation';
 
 import { updatePlanStatus } from '@/api/plan';
 import ChangeStatusButton from '@/components/common/button/changeStatusButton/ChangeStatusButton';
+import useAuthority from '@/hooks/useAuthority';
 import useChangePlanStatus from '@/hooks/useChangePlanStatus';
 import useConfirm from '@/hooks/useConfirm';
 import { scrollTop } from '@/utils/aboutScroll';
@@ -23,7 +25,13 @@ const ChangePlanStatus = ({ status, planId }: Props) => {
   const router = useRouter();
   const confirm = useConfirm();
 
+  const hasAuthority = useAuthority();
+
   const handleChangePlanStatus = () => {
+    if (!hasAuthority) {
+      toast.error('본인이 속한 여행이 아닙니다.');
+      return;
+    }
     if (status === 'planning') {
       const confTitle = '여행 중으로 변경';
       const confDesc =
