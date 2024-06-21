@@ -10,7 +10,10 @@ export const getSessionFromServer = async () => {
 
   const {
     data: { session },
+    error,
   } = await supabaseServerClient.auth.getSession();
+
+  if (error) throw new Error('세션 불러오기 오류 발생');
 
   return session;
 };
