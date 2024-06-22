@@ -6,7 +6,6 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { AuthError } from '@supabase/supabase-js';
 import { useRouter } from 'next/navigation';
 
 import { signInWithSB } from '@/api/auth';
@@ -34,19 +33,18 @@ export default function SigninForm() {
   } = useForm({ mode: 'onChange', resolver });
 
   const onSubmit: SubmitHandler<SigninFormInputList> = async (data) => {
-    const { email, signinPassword: password } = data;
+    try {
+      const { email, signinPassword } = data;
 
-    const res = await signInWithSB(email, password);
+      await signInWithSB(email, signinPassword);
 
-    if (res instanceof AuthError) {
-      toast.error('로그인에 실패하였습니다.');
-      return false;
+      reset();
+      toast.success('로그인에 성공하였습니다.');
+      router.push('/main');
+      router.refresh();
+    } catch (error) {
+      if (error instanceof Error) toast.error('로그인에 실패하였습니다.');
     }
-
-    reset();
-    toast.success('로그인에 성공하였습니다.');
-    router.push('/main');
-    router.refresh();
   };
 
   const goToSignUp = () => {

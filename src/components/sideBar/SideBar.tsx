@@ -21,9 +21,7 @@ export default function SideBar() {
 
   const { data: matesData, isError: matesError } = useQuery({
     queryKey: ['plan_mates', user?.id],
-    queryFn: async () => {
-      return await getPlanListAndMateList(user ? user.id : '');
-    },
+    queryFn: async () => await getPlanListAndMateList(user?.id),
     enabled: user !== null,
     staleTime: 20 * 1000,
   });

@@ -16,7 +16,7 @@ export const getAllPinsByIdAndDates = async ([planId, dates]: [string, string[]]
     .in('date', dates)
     .order('date', { ascending: true });
 
-  if (error !== null) throw new Error('핀 가져오기 에러발생');
+  if (error) throw new Error('핀 가져오기 에러발생');
 
   return data;
 };

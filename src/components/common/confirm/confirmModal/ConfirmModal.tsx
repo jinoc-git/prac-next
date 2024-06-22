@@ -2,14 +2,13 @@
 
 import React from 'react';
 
-import {
-  useConfirmStoreActions,
-  useConfirmStoreState,
-} from '@/store/confirmStore';
+import { useConfirmStoreActions, useConfirmStoreState } from '@/store/confirmStore';
 
 import ConfirmModalLayout from '../../layout/ConfirmModalLayout';
 
 const ConfirmModal = () => {
+  const modalBGRef = React.useRef<HTMLDialogElement | null>(null);
+
   const { title, desc, func, buttonText } = useConfirmStoreState();
   const { closeConfirm } = useConfirmStoreActions();
 
@@ -18,8 +17,15 @@ const ConfirmModal = () => {
     closeConfirm();
   };
 
+  const onClickModalBG = React.useCallback(
+    (e: React.MouseEvent<HTMLDialogElement, MouseEvent>) => {
+      if (e.target === modalBGRef.current) closeConfirm();
+    },
+    [modalBGRef],
+  );
+
   return (
-    <ConfirmModalLayout>
+    <ConfirmModalLayout modalBGRef={modalBGRef} onClickModalBG={onClickModalBG}>
       <div className="text-lg font-bold text-navy_dark">{title}</div>
       <div className=" text-gray_dark_1 md:mb-6 sm:mb-3">{desc}</div>
       <div className="flex justify-center">

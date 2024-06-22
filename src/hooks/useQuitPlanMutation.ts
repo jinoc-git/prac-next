@@ -24,18 +24,18 @@ const useQuitPlanMutation = () => {
           ),
         };
 
-        queryClient.setQueryData(['plan_mates', userId], newData);
+        await queryClient.setQueryData(['plan_mates', userId], newData);
       }
 
       return { prevData };
     },
-    onError: (err, { userId }, context) => {
+    onError: async (err, { userId }, context) => {
       toast.error('여행 나가기 오류');
-      queryClient.setQueryData(['plan_mates', userId], context?.prevData);
+      await queryClient.setQueryData(['plan_mates', userId], context?.prevData);
     },
-    onSettled: (_, err, { userId }) => {
-      queryClient.invalidateQueries({ queryKey: ['plan_mates', userId] });
-      queryClient.invalidateQueries({ queryKey: ['book_mark', userId] });
+    onSettled: async (_, err, { userId }) => {
+      await queryClient.invalidateQueries({ queryKey: ['plan_mates', userId] });
+      await queryClient.invalidateQueries({ queryKey: ['book_mark', userId] });
     },
     onSuccess: () => {
       toast.success('여행 나가기 성공');

@@ -18,7 +18,11 @@ export const getPlanList = async (planIds: string[]) => {
   return data;
 };
 
-export const getPlansWithBookmarks = async (userId: string): Promise<PlanType[] | []> => {
+export const getPlansWithBookmarks = async (
+  userId: string | undefined,
+): Promise<PlanType[] | []> => {
+  if (!userId) return [];
+
   const { data, error } = await supabaseClientClient
     .from('book_mark')
     .select('plan_id')
@@ -30,13 +34,7 @@ export const getPlansWithBookmarks = async (userId: string): Promise<PlanType[] 
 
   const planIds = data.map((item) => item.plan_id);
 
-  const { data: bookMarkPlanData, error: plansError } = await supabaseClientClient
-    .from('plans')
-    .select()
-    .eq('isDeleted', false)
-    .in('id', planIds);
-
-  if (plansError) throw new Error('plans 데이터 불러오기 오류');
+  const bookMarkPlanData = await getPlanList(planIds);
 
   return bookMarkPlanData;
 };
@@ -53,7 +51,7 @@ export const getPlanIdAndMateListByUserId = async (userId: string) => {
 };
 
 export const getPlanListAndMateList = async (userId: string | undefined) => {
-  if (userId === undefined) return;
+  if (userId === undefined) return null;
 
   const planIdAndMateList = await getPlanIdAndMateListByUserId(userId);
 
