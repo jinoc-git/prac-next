@@ -16,14 +16,14 @@ const useComment = (planId: string) => {
 
       const prevData = queryClient.getQueryData<CommentsType[]>(['commentList', planId]);
 
-      if (prevData) queryClient.setQueryData(['commentList', planId], [...prevData, comment]);
-      else queryClient.setQueryData(['commentList', planId], [comment]);
+      if (prevData) await queryClient.setQueryData(['commentList', planId], [...prevData, comment]);
+      else await queryClient.setQueryData(['commentList', planId], [comment]);
 
       return { prevData };
     },
-    onError: (err, _, context) => {
+    onError: async (err, _, context) => {
       toast.error('댓글 작성에 실패했습니다.');
-      queryClient.setQueryData(['commentList', planId], context?.prevData);
+      await queryClient.setQueryData(['commentList', planId], context?.prevData);
     },
     onSettled: async () => {
       await queryClient.invalidateQueries({ queryKey: ['commentList', planId] });
@@ -39,14 +39,14 @@ const useComment = (planId: string) => {
 
       if (prevData) {
         const newComments = prevData.filter(({ id }) => id !== commentId);
-        queryClient.setQueryData(['commentList', planId], newComments);
+        await queryClient.setQueryData(['commentList', planId], newComments);
       }
 
       return { prevData };
     },
-    onError: (err, _, context) => {
+    onError: async (err, _, context) => {
       toast.error('댓글 삭제에 실패했습니다.');
-      queryClient.setQueryData(['commentList', planId], context?.prevData);
+      await queryClient.setQueryData(['commentList', planId], context?.prevData);
     },
     onSettled: async () => {
       await queryClient.invalidateQueries({ queryKey: ['commentList', planId] });

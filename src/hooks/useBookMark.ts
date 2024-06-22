@@ -20,18 +20,21 @@ const useBookMark = () => {
 
       const prevData = queryClient.getQueryData<BookMarkType[]>(['book_mark', newBookMark.user_id]);
 
-      if (prevData)
-        queryClient.setQueryData(['book_mark', newBookMark.user_id], [...prevData, newBookMark]);
-      else queryClient.setQueryData(['book_mark', newBookMark.user_id], [newBookMark]);
+      if (prevData) {
+        await queryClient.setQueryData(
+          ['book_mark', newBookMark.user_id],
+          [...prevData, newBookMark],
+        );
+      } else await queryClient.setQueryData(['book_mark', newBookMark.user_id], [newBookMark]);
 
       return { prevData };
     },
-    onError: (err, { user_id }, context) => {
+    onError: async (err, { user_id }, context) => {
       toast.error('북마크 추가 오류');
-      queryClient.setQueryData(['book_mark', user_id], context?.prevData);
+      await queryClient.setQueryData(['book_mark', user_id], context?.prevData);
     },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['book_mark'] });
+    onSettled: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['book_mark'] });
     },
   });
 
@@ -44,19 +47,17 @@ const useBookMark = () => {
 
       if (prevData) {
         const newBookMarkList = prevData.filter((item) => item.id !== bookMarkId);
-        queryClient.setQueryData(['book_mark', user?.id], newBookMarkList);
+        await queryClient.setQueryData(['book_mark', user?.id], newBookMarkList);
       }
 
       return { prevData };
     },
-    onError: (err, _, context) => {
+    onError: async (err, _, context) => {
       toast.error('북마크 삭제 오류');
-      queryClient.setQueryData(['book_mark', user?.id], context?.prevData);
+      await queryClient.setQueryData(['book_mark', user?.id], context?.prevData);
     },
-    onSettled: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['book_mark'],
-      });
+    onSettled: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['book_mark'] });
     },
   });
 

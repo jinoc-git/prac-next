@@ -27,6 +27,8 @@ export const getPlanByIdFromServer = async (planId: string) => {
     .eq('id', planId)
     .single();
 
+  if (error) throw new Error('여행 불러오기 오류 발생');
+
   return data;
 };
 

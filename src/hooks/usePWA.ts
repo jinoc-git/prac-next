@@ -1,9 +1,15 @@
 import React from 'react';
 
-const usePWA = () => {
-  const [installEvent, setInstallEvent] = React.useState<any>(null);
+interface BeforeInstallPromptEvent extends Event {
+  readonly platforms: string[];
+  readonly userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
+  prompt(): Promise<void>;
+}
 
-  const handleSaveEvent = (e: Event) => {
+const usePWA = () => {
+  const [installEvent, setInstallEvent] = React.useState<BeforeInstallPromptEvent | null>(null);
+
+  const handleSaveEvent = (e: BeforeInstallPromptEvent) => {
     e.preventDefault();
     setInstallEvent(e);
   };
@@ -20,9 +26,9 @@ const usePWA = () => {
   };
 
   React.useEffect(() => {
-    window.addEventListener('beforeinstallprompt', handleSaveEvent);
+    window.addEventListener('beforeinstallprompt', handleSaveEvent as EventListener);
     return () => {
-      window.removeEventListener('beforeinstallprompt', handleSaveEvent);
+      window.removeEventListener('beforeinstallprompt', handleSaveEvent as EventListener);
     };
   }, []);
 

@@ -28,7 +28,7 @@ export default function SideBarTrips(props: Props) {
 
   const { data: bookMarkPlanData } = useQuery<PlanType[] | []>({
     queryKey: ['book_mark', 'plans', user?.id],
-    queryFn: async () => await getPlansWithBookmarks(user === null ? '' : user.id),
+    queryFn: async () => await getPlansWithBookmarks(user?.id),
     enabled: user !== null,
     refetchOnWindowFocus: false,
   });

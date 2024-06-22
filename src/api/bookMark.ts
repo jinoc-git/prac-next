@@ -3,7 +3,7 @@ import { supabaseClientClient } from './auth';
 import type { InsertBookMarkType } from '@/types/supabase';
 
 export const getBookMarkDataByUserId = async (userId: string | undefined) => {
-  if (userId === undefined) return;
+  if (userId === undefined) return null;
 
   const { data, error } = await supabaseClientClient
     .from('book_mark')
@@ -17,6 +17,7 @@ export const getBookMarkDataByUserId = async (userId: string | undefined) => {
 
 export const addBookMark = async (newBookMark: InsertBookMarkType) => {
   const { plan_id: planId, user_id: userId } = newBookMark;
+
   const { error } = await supabaseClientClient.from('book_mark').insert({
     plan_id: planId,
     user_id: userId,

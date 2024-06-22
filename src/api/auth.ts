@@ -44,19 +44,16 @@ export const insertUser = async (user: UserType) => {
 };
 
 export const signInWithSB = async (email: string, password: string) => {
-  const { error: authError } = await supabaseClientClient.auth.signInWithPassword({
+  const { error } = await supabaseClientClient.auth.signInWithPassword({
     email,
     password,
   });
 
-  const isAuthError = Boolean(authError);
-  if (isAuthError) {
-    return authError;
-  }
+  if (error) throw new Error('로그인 오류');
 };
 
 export const signInWithGoogle = async () => {
-  await supabaseClientClient.auth.signInWithOAuth({
+  const { error } = await supabaseClientClient.auth.signInWithOAuth({
     provider: 'google',
     options: {
       redirectTo: `${window.location.origin}/authloading`,
@@ -66,12 +63,17 @@ export const signInWithGoogle = async () => {
       },
     },
   });
+
+  if (error) throw new Error('구글 로그인 오류');
 };
 
 export const checkOAuthUser = async () => {
   const {
     data: { session },
+    error,
   } = await supabaseClientClient.auth.getSession();
+
+  if (error) throw new Error('세션 불러오기 오류');
 
   if (session) {
     const {
@@ -80,7 +82,12 @@ export const checkOAuthUser = async () => {
       user_metadata: { name: nickname, avatar_url },
     } = session.user;
 
-    const { data: check } = await supabaseClientClient.from('users').select('id').eq('id', id);
+    const { data: check, error } = await supabaseClientClient
+      .from('users')
+      .select('id')
+      .eq('id', id);
+
+    if (error) throw new Error('유저 체크 오류');
 
     if (check && check.length === 0) {
       const user: UserType = {
@@ -96,7 +103,7 @@ export const checkOAuthUser = async () => {
 };
 
 export const signinWithKakao = async () => {
-  await supabaseClientClient.auth.signInWithOAuth({
+  const { error } = await supabaseClientClient.auth.signInWithOAuth({
     provider: 'kakao',
     options: {
       redirectTo: `${window.location.origin}/authloading`,
@@ -106,6 +113,8 @@ export const signinWithKakao = async () => {
       },
     },
   });
+
+  if (error) throw new Error('카카오 로그인 오류');
 };
 
 export const signOutForSB = async () => {
@@ -182,8 +191,10 @@ export const checkUserNickname = async (nickname: string) => {
 
   if (error) throw new Error('닉네임 중복 확인 오류');
 
-  if (data.length === 0) return true;
-  else return false;
+  const isOK = data.length === 0;
+  if (isOK) return true;
+
+  return false;
 };
 
 export const checkUserEmail = async (email: string) => {
