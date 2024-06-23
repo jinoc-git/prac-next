@@ -26,7 +26,7 @@ const Area = (props: Props) => {
         <Image src={'/images/svgs/area-pin.svg'} width={20} height={20} alt="여행 지역 아이콘" />
         <p>여행 지역</p>
       </div>
-      <KakaoMap pins={pins[currentPage]} drawLine={true} />
+      <KakaoMap pins={pins[currentPage]} drawLine={true} currentPage={currentPage} />
     </div>
   );
 };
