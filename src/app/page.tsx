@@ -6,8 +6,8 @@ import InstallAppOrNavigate from '@/components/landing/installAppOrNavigate/Inst
 import IntroduceBanner from '@/components/landing/introduceBanner/IntroduceBanner';
 import MainBanner from '@/components/landing/mainBanner/MainBanner';
 
-export default function Home() {
-  const session = getSessionFromServer();
+export default async function Home() {
+  const session = await getSessionFromServer();
 
   if (session !== null) redirect('/main');
 
