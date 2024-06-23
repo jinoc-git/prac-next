@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-import type { PinContentsType } from '@/types/supabase';
-
 interface Parameters {
   origin: string;
   destination: string;
@@ -34,27 +32,4 @@ export const getPath = async (params: Parameters) => {
   } catch (error) {
     throw new Error('카카오 모빌리티 계산 오류');
   }
-};
-
-export const calcPath = async (distance: PinContentsType[]) => {
-  const convertParameters = distance.map(({ lng, lat }) => {
-    if (lat && lng) return `${lng},${lat}`;
-
-    return undefined;
-  });
-
-  const newData: string[] = [];
-
-  for (let i = 0; i < convertParameters.length - 1; i++) {
-    const data = await getPath({
-      origin: convertParameters[i] as string,
-      destination: convertParameters[i + 1] as string,
-    });
-
-    const distanceInKm = data / 1000;
-
-    newData.push(distanceInKm.toFixed(1));
-  }
-
-  return newData;
 };

@@ -45,7 +45,7 @@ const UploadPhoto = ({ setUploadedImg }: Props) => {
       />
       <label
         htmlFor="addpicture-input"
-        className="flex-box border-dashed border rounded-lg cursor-pointer hover:bg-blue_light_0
+        className="flex-box border-dashed border rounded-lg cursor-pointer hover:bg-blue_light_0 normal-transition
         sm:w-[268px] sm:h-[56px] 
         md:w-[200px] md:h-[200px] "
       >
@@ -76,8 +76,9 @@ const UploadPhoto = ({ setUploadedImg }: Props) => {
               className="rounded-lg object-cover w-full h-full"
             />
             <button
-              className="absolute top-0 right-0 flex-box  w-8 h-8 bg-[#444040b8] text-white rounded-lg opacity-50 hover:opacity-100"
+              className="absolute top-0 right-0 flex-box  w-8 h-8 bg-[#444040b8] text-white rounded-lg opacity-50 hover:opacity-100 normal-transition"
               name="delete-uploaded-photo-button"
+              type="button"
               onClick={() => handleDeleteFile(idx)}
             >
               X

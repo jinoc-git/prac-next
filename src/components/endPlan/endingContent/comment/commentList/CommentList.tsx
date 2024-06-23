@@ -15,7 +15,7 @@ interface Props {
 
 const CommentList = ({ planId }: Props) => {
   const { invitedUser } = useInviteUserStoreState();
-  const { delCommentMutate } = useComment(planId);
+  const { handleDeleteComment } = useComment(planId);
 
   const { data, isLoading } = useQuery({
     queryKey: ['commentList', planId],
@@ -31,7 +31,7 @@ const CommentList = ({ planId }: Props) => {
           const author = invitedUser.find(({ id }) => user_id === id);
 
           return (
-            <div key={id} className="flex justify-between comment-text">
+            <div key={`comment,${id}`} className="flex justify-between comment-text">
               <div className="flex md:gap-5">
                 <Image
                   src={
@@ -58,7 +58,7 @@ const CommentList = ({ planId }: Props) => {
                   sm:w-[32px] sm:h-[24px]
                   md:w-[45px] md:h-[30px]
                   "
-                  onClick={() => delCommentMutate(id)}
+                  onClick={() => handleDeleteComment(id)}
                 >
                   삭제
                 </button>
