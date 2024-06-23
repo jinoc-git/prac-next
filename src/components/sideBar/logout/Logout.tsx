@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import { signOutForSB } from '@/api/auth';
+import useConfirm from '@/hooks/useConfirm';
 import { useAuthStoreActions } from '@/store/authStore';
 import { useSideBarStoreActions } from '@/store/sideBarStore';
 
@@ -19,16 +20,23 @@ const Logout = ({ isOpen }: Props) => {
 
   const { resetUser } = useAuthStoreActions();
   const { setVisibilitySideBar } = useSideBarStoreActions();
+  const confirm = useConfirm();
 
-  const onClickSignoutHandler = async () => {
-    await signOutForSB();
+  const onClickSignoutHandler = () => {
+    const confTitle = '로그아웃';
+    const confDesc = '로그아웃 하시겠습니까?';
+    const confFunc = async () => {
+      await signOutForSB();
 
-    toast.success('로그아웃에 성공하였습니다.');
-    setVisibilitySideBar(false);
-    resetUser();
+      toast.success('로그아웃에 성공하였습니다.');
+      setVisibilitySideBar(false);
+      resetUser();
 
-    router.push('/signin');
-    router.refresh();
+      router.push('/signin');
+      router.refresh();
+    };
+
+    confirm.default(confTitle, confDesc, confFunc);
   };
 
   return (

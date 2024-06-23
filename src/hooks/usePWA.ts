@@ -1,4 +1,5 @@
 import React from 'react';
+import { toast } from 'react-toastify';
 
 interface BeforeInstallPromptEvent extends Event {
   readonly platforms: string[];
@@ -15,13 +16,17 @@ const usePWA = () => {
   };
 
   const installApp = async () => {
-    if (installEvent) {
-      installEvent.prompt();
-      const { outcome } = await installEvent.userChoice;
+    try {
+      if (installEvent) {
+        await installEvent.prompt();
+        const { outcome } = await installEvent.userChoice;
 
-      if (outcome === 'accepted') {
-        setInstallEvent(null);
+        if (outcome === 'accepted') {
+          setInstallEvent(null);
+        }
       }
+    } catch (error) {
+      toast.error('앱 설치 오류가 발생했습니다.');
     }
   };
 
