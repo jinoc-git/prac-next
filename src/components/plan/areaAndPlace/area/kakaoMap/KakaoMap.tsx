@@ -10,9 +10,10 @@ import type { PinContentsType } from '@/types/supabase';
 interface Props {
   pins: PinContentsType[];
   drawLine: boolean;
+  currentPage?: number;
 }
 
-const KakaoMap = ({ pins, drawLine }: Props) => {
+const KakaoMap = ({ pins, drawLine, currentPage }: Props) => {
   const { map, makeMap, makeLatLng, makeMarker, makePolyline, makeBounds } = useKakaoMap();
 
   React.useEffect(() => {
@@ -27,7 +28,7 @@ const KakaoMap = ({ pins, drawLine }: Props) => {
     };
 
     init();
-  }, []);
+  }, [currentPage]);
 
   React.useEffect(() => {
     if (map && pins?.length > 0) {
