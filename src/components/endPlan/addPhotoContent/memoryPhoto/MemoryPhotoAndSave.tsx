@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { toast } from 'react-toastify';
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -28,26 +29,35 @@ const MemoryPhotoAndSave = ({ allPins, plan }: Props) => {
   const confirm = useConfirm();
 
   const savePlan = async () => {
+    if (isSubmitting) return;
+
     setIsSubmitting(true);
-    const distanceDatas = await calcAllPath(allPins.map(({ contents }) => contents));
-    const dateCostDatas = await calcCostAndInsertPlansEnding(plan.id);
-    const pictures = await addPictures(uploadedImg, plan.id);
+    try {
+      const [distanceDatas, dateCostDatas, pictures] = await Promise.all([
+        calcAllPath(allPins.map(({ contents }) => contents)),
+        calcCostAndInsertPlansEnding(plan.id),
+        addPictures(uploadedImg, plan.id),
+      ]);
 
-    const endingData: EndingPlanType = {
-      id: plan.id,
-      distance: distanceDatas,
-      dates_cost: dateCostDatas,
-      pictures,
-      title: plan.title,
-      total_cost: plan.total_cost,
-      dates: plan.dates,
-    };
+      const endingData: EndingPlanType = {
+        id: plan.id,
+        distance: distanceDatas,
+        dates_cost: dateCostDatas,
+        pictures,
+        title: plan.title,
+        total_cost: plan.total_cost,
+        dates: plan.dates,
+      };
 
-    await insertPlanEnding(endingData);
-    await updatePlanStatus(plan.id, 'end');
-    setIsSubmitting(false);
+      await Promise.all([insertPlanEnding(endingData), updatePlanStatus(plan.id, 'end')]);
 
-    router.push(`/ending/${plan.id}`);
+      setIsSubmitting(false);
+
+      router.push(`/ending/${plan.id}`);
+    } catch (error) {
+      setIsSubmitting(false);
+      toast.error('여행 저장 중 오류가 발생했습니다. 다시 시도해주세요.');
+    }
   };
 
   const handleSaveButton = () => {

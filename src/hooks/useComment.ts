@@ -4,10 +4,13 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { addComment, deleteComment } from '@/api/comment';
 
+import useConfirm from './useConfirm';
+
 import type { CommentsType } from '@/types/supabase';
 
 const useComment = (planId: string) => {
   const queryClient = useQueryClient();
+  const confirm = useConfirm();
 
   const { mutate: addCommentMutate } = useMutation({
     mutationFn: addComment,
@@ -53,7 +56,17 @@ const useComment = (planId: string) => {
     },
   });
 
-  return { addCommentMutate, delCommentMutate };
+  const handleDeleteComment = (commentId: string) => {
+    const confTitle = '댓글 삭제하기';
+    const confDesc = '삭제한 댓글은 복구할 수 없습니다. 삭제하시겠습니까?';
+    const confFunc = () => {
+      delCommentMutate(commentId);
+    };
+
+    confirm.delete(confTitle, confDesc, confFunc);
+  };
+
+  return { addCommentMutate, handleDeleteComment };
 };
 
 export default useComment;

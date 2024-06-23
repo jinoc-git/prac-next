@@ -90,9 +90,7 @@ export const addPlan = async (addPlanObj: AddPlanObj) => {
 
   if (error) throw new Error(error.message);
 
-  await addPins(plan, pins);
-
-  await addNewPlanMates(plan.id, invitedUser);
+  await Promise.all([addPins(plan, pins), addNewPlanMates(plan.id, invitedUser)]);
 
   return { data };
 };
@@ -152,7 +150,9 @@ export const quitPlan = async ({ userId, planId }: QuitPlanArgs) => {
   const needDelete = updatedMates.length === 0;
   if (needDelete) await deletePlan(planId);
   else {
-    await updateMates(updatedMates, planId);
-    await deleteBookMarkByUserAndPlanId(userId, planId);
+    await Promise.all([
+      updateMates(updatedMates, planId),
+      deleteBookMarkByUserAndPlanId(userId, planId),
+    ]);
   }
 };
