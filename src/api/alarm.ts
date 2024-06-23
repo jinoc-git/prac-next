@@ -1,9 +1,7 @@
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { supabaseClientClient } from './auth';
 
 import type { AlarmCallbackFunc } from '@/types/aboutAlarm.type';
-import type { Database, InsertInviteAlarmType } from '@/types/supabase';
-
-const supabaseClientClient = createClientComponentClient<Database>();
+import type { InsertInviteAlarmType } from '@/types/supabase';
 
 export const addInviteAlarmList = async (datas: InsertInviteAlarmType[]) => {
   const checkedData: InsertInviteAlarmType[] = [];

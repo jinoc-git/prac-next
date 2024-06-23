@@ -1,7 +1,5 @@
 import React from 'react';
 
-import Image from 'next/image';
-
 interface Props {
   planId: string;
   onClickQuitBtn: (id: string) => void;
@@ -12,21 +10,34 @@ export default function PlanCardQuitButton(props: Props) {
 
   return (
     <button
-      className="sm:mt-[2px] md:mt-[4px]"
+      className="group sm:mt-[2px] md:mt-[4px] sm:w-[16px] sm:h-[16px] md:w-[24px] md:h-[24px]"
       aria-label="card-quit-plan-btn"
       onClick={(e) => {
         e.stopPropagation();
         onClickQuitBtn(planId);
       }}
     >
-      <Image
-        alt="여행 나가기"
-        src={'/images/svgs/quit.svg'}
-        width={24}
-        height={24}
-        // 호버 시 색상 변경 수정 필요할듯?
-        className=" hover:fill-orange_dark hover:stroke-orange_light_2 sm:w-[16px] sm:h-[16px] md:w-[24px] md:h-[24px]"
-      />
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="sm:w-[16px] sm:h-[16px] md:w-[24px] md:h-[24px]"
+      >
+        <path
+          d="M10 2H2V22H10V20H4L4 4H10V2Z"
+          fill="#FFB979"
+          stroke="#FFB979"
+          className="group-hover:stroke-orange_dark group-hover:fill-orange_dark normal-transition"
+        />
+        <path
+          d="M6 10H16L16 6L24 12L16 18V14H6V10Z"
+          fill="#FFB979"
+          stroke="#FFB979"
+          className="group-hover:stroke-orange_dark group-hover:fill-orange_dark normal-transition"
+        />
+      </svg>
     </button>
   );
 }

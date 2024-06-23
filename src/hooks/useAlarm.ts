@@ -10,10 +10,6 @@ import useAlarmMutation from './useAlarmMutation';
 
 import type { AlarmCallbackFuncArgs } from '@/types/aboutAlarm.type';
 
-// const mockFrom = '47f2dc43-c08f-4d96-b811-d4c7dec7de28';
-// const mockTo = '89a939d2-56a4-4b08-85a6-29bb18f8012c';
-// const mockPlan = '35c3343b-82ab-4933-992f-989ced991ca0';
-
 const useAlarm = () => {
   const [hasNewAlarm, setHasNewAlarm] = React.useState<boolean>(false);
 
