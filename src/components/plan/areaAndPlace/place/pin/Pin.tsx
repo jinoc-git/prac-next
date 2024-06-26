@@ -87,9 +87,11 @@ const Pin = (props: Props) => {
     <li
       ref={dragBoxRef}
       data-handler-id={handlerId}
-      className="relative flex items-center justify-between gap-4
+      className={`relative flex items-center justify-between gap-4 ${
+        isDragging ? 'opacity-30' : 'opacity-100'
+      }
       sm:w-[286px] sm:mb-[37px] 
-      md:w-[651px] md:mx-[25px] md:ml-0"
+      md:w-[651px] md:mx-[25px] md:ml-0`}
     >
       <PinOrder idx={idx} />
       <PinDistance distance={distance} />

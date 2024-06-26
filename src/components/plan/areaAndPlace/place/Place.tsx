@@ -86,12 +86,12 @@ const Place = (props: Props) => {
         <Image src={'/images/svgs/pin.svg'} width={18} height={22} alt="여행 지역 아이콘" />
         <p>방문할 장소</p>
       </div>
-      <DragNDropProvider>
-        <ol>
+      <ol>
+        <DragNDropProvider>
           {pins[currentPage]?.map((pin, idx) => {
             return (
               <Pin
-                key={`${currentPage},${idx},${pin.id}`}
+                key={`${currentPage},${pin.id}`}
                 pin={pin}
                 idx={idx}
                 isModify={isModify}
@@ -101,8 +101,8 @@ const Place = (props: Props) => {
               />
             );
           })}
-        </ol>
-      </DragNDropProvider>
+        </DragNDropProvider>
+      </ol>
       {dates.length !== 0 && isModify && (
         <div
           className="flex items-center justify-between pb-[60px]
