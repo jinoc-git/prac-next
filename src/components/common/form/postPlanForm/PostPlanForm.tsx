@@ -180,7 +180,7 @@ export default function PostPlanForm(props: Props) {
       ref={formRef}
       onSubmit={handleSubmit(onSubmitAddOrModifyPlan)}
       className="flex flex-col content-layout
-        sm:pt-[140px]
+        sm:pt-[60px] sm:px-[10px]
         md:pt-[100px] md:px-[10px]"
     >
       <input

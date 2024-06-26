@@ -202,7 +202,7 @@ const AddPinModal = (props: Props) => {
             onClick={handleCloseModal}
           />
           <ModalButton
-            value="새 장소 추가"
+            value="장소 추가/수정"
             fill={true}
             type="button"
             name="add-pin-modal-submit-button"

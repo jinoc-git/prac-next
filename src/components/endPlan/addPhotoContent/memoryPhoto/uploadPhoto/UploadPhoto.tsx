@@ -46,7 +46,7 @@ const UploadPhoto = ({ setUploadedImg }: Props) => {
       <label
         htmlFor="addpicture-input"
         className="flex-box border-dashed border rounded-lg cursor-pointer hover:bg-blue_light_0 normal-transition
-        sm:w-[268px] sm:h-[56px] 
+        sm:w-full sm:h-[56px] 
         md:w-[200px] md:h-[200px] "
       >
         <div className="flex-box gap-2 text-gray-300">
@@ -64,7 +64,7 @@ const UploadPhoto = ({ setUploadedImg }: Props) => {
           <div
             key={`${idx},${src}`}
             className="flex-box relative
-              sm:w-[128px] sm:h-[128px]
+              sm:w-[138px] sm:h-[138px]
               md:w-[200px] md:h-[200px] 
             "
           >

@@ -29,7 +29,7 @@ export default function SideBarStatus(props: SideBarStatusProps) {
     >
       <div
         className={`flex items-center justify-between mb-[15px] side-bar-transition ${
-          isOpen ? 'sm:w-[309px] md:w-[221px] ' : ' md:w-[40px] md:flex-col '
+          isOpen ? 'sm:w-[280px] md:w-[221px] ' : ' md:w-[40px] md:flex-col '
         }`}
       >
         <span className="font-semibold text-xs text-gray_dark_1">STATUS</span>

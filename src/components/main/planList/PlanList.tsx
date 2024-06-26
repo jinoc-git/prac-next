@@ -71,7 +71,7 @@ export default function PlanList() {
   return (
     <section
       className="flex flex-col mx-auto my-0
-        sm:w-[320px] 
+        sm:w-[300px] 
         md:w-[800px] "
     >
       <AddPlanBtn />

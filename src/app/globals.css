@@ -22,7 +22,7 @@
     @apply px-[20px] py-[8px] w-[100%] duration-200 rounded-lg disabled:bg-gray;
   }
   .content-layout {
-    @apply mx-auto sm:w-[310px] md:w-[720px];
+    @apply mx-auto sm:w-[300px] md:w-[720px];
   }
   .content-lable {
     @apply flex items-center gap-2 sm:min-w-[90px] md:min-w-[138px] sm:text-sm md:text-normal font-semibold text-gray_dark_1;

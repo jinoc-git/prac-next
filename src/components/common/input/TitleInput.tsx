@@ -11,15 +11,7 @@ interface Props extends InputCompProps<AddPinInputType> {
 }
 
 const TitleInput = (props: Props) => {
-  const {
-    showErrorText,
-    title,
-    name,
-    placeholder,
-    defaultValue,
-    register,
-    errors,
-  } = props;
+  const { showErrorText, title, name, placeholder, defaultValue, register, errors } = props;
 
   return (
     <div className="flex flex-col">
@@ -36,9 +28,7 @@ const TitleInput = (props: Props) => {
           sm:h-[44px] sm:text-sm sm:font-medium"
       />
       {showErrorText && (
-        <p className="text-red-400 text-[12px] h-[24px] my-[5px]">
-          {errors?.placeName?.message}
-        </p>
+        <p className="text-red-400 text-[12px] h-[18px] my-[5px]">{errors?.placeName?.message}</p>
       )}
     </div>
   );

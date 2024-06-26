@@ -43,7 +43,7 @@ const Logout = ({ isOpen }: Props) => {
     <div
       onClick={onClickSignoutHandler}
       className={`flex items-center gap-8 w-[222px] rounded-[8px] cursor-pointer side-bar-transition
-        sm:w-[310px] md:w-[222px] 
+        sm:w-[280px] md:w-[222px] 
         ${isOpen ? 'hover:bg-[#e7e7e7]' : ''}
       `}
     >

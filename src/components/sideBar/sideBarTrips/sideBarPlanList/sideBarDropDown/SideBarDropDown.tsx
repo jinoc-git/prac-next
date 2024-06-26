@@ -41,10 +41,10 @@ export default function SideBarDropDown(props: Props) {
   return (
     <ul
       style={{ overflow: aboveDropDownIsOpen ? 'visible' : '' }}
-      className={` flex flex-col md:w-[200px] sm:w-[285px] ${
+      className={` flex flex-col md:w-full sm:w-[280px] ${
         aboveDropDownIsOpen
           ? ' fixed flex-center ml-[68px] mt-[-40px] w-[190px] border border-gray_light_3 rounded-lg  bg-white'
-          : 'items-end ml-[22px]'
+          : 'items-end '
       } `}
     >
       {activeDropDown &&

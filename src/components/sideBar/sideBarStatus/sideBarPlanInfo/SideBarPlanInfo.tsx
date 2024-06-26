@@ -39,7 +39,7 @@ export default function SideBarPlanInfo(props: SideBarPlanInfoProps) {
         isOpen ? 'gap-2' : ''
       } rounded-xl overflow-hidden side-bar-transition ${
         isOpen
-          ? 'flex-box flex-col sm:w-[308px] sm:h-[125px] md:w-[197px] h-[125px]'
+          ? 'flex-box flex-col sm:w-[280px] sm:h-[125px] md:w-[197px] h-[125px]'
           : 'md:w-[40px] h-[125px]'
       } ${SIDE_INFO_BG[status]}`}
     >

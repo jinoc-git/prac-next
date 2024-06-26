@@ -1,10 +1,11 @@
 import React, { Suspense } from 'react';
 
-import { redirect } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 
-import { getSessionFromServer } from '@/api/serverAction';
+import { getPlanByIdFromServer, getSessionFromServer } from '@/api/serverAction';
 import Loading from '@/components/common/loading/Loading';
-import PlanContent from '@/components/plan/planContent/PlanContent';
+import AddOrEditPlan from '@/components/plan/addOrEditPlan/AddOrEditPlan';
+import ChangePlanStatus from '@/components/plan/changePlanStatus/ChangePlanStatus';
 
 interface Props {
   params: { planId: string };
@@ -15,9 +16,16 @@ export default async function Plan({ params }: Props) {
 
   if (session === null) redirect('/signin');
 
+  const plan = await getPlanByIdFromServer(params.planId);
+
+  if (plan === null) notFound();
+
   return (
     <Suspense fallback={<Loading full={true} />}>
-      <PlanContent params={params} />
+      <section className=" relative sm:pt-[80px] md:pt-[70px]">
+        <AddOrEditPlan plan={plan} />
+        <ChangePlanStatus status={plan.plan_state} planId={plan.id} />
+      </section>
     </Suspense>
   );
 }
