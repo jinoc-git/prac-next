@@ -21,8 +21,8 @@ export default function Profile() {
     <section className="pt-[108px]">
       <div
         className="flex items-center my-0 mx-auto
-      sm:gap-[16px] sm:w-[310px]
-      md:gap-[40px] md:w-[800px]"
+        sm:gap-[16px] sm:w-[300px]
+        md:gap-[40px] md:w-[800px]"
       >
         <div
           onClick={handleOpenModal}

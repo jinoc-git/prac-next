@@ -144,7 +144,7 @@ const EditProfileModal = ({ isAnimate, handleCloseModal, modalBGRef, onClickModa
         onSubmit={handleSubmit(onSubmit)}
         className="relative flexcol items-center align-middle rounded-xl
         md:h-[575px] md:w-[396px] md:justify-between md:gap-0
-        sm:h-[404px] sm:w-[310px] sm:gap-[15px]"
+        sm:h-[404px] sm:w-full sm:gap-[15px]"
       >
         <button
           onClick={handleCloseModal}
@@ -216,14 +216,14 @@ const EditProfileModal = ({ isAnimate, handleCloseModal, modalBGRef, onClickModa
           errors={errors}
           checkFunc={checkNickname}
         />
-        <div className="flex justify-between md:w-[408px] sm:w-[310px]">
+        <div className="flex justify-between md:w-[408px] sm:w-full gap-[10px]">
           <button
             name="profile-remove-avatar-btn"
             type="button"
             onClick={handleRemoveAvartar}
-            className="border border-navy rounded-lg text-navy hover:bg-navy_light_1 disabled:bg-gray_light_3 normal-transition
-              md:w-[200px] md:h-[45px]
-              sm:w-[150px] sm:h-[41px]
+            className="w-full border border-navy rounded-lg text-navy hover:bg-navy_light_1 disabled:bg-gray_light_3 normal-transition
+              md:h-[45px]
+              sm:h-[41px]
               "
             disabled={preview === ''}
           >
@@ -233,9 +233,9 @@ const EditProfileModal = ({ isAnimate, handleCloseModal, modalBGRef, onClickModa
             name="profile-change-btn"
             disabled={blockSubmit}
             type="submit"
-            className="flex-box gap-2 border rounded-lg bg-navy text-white hover:bg-navy_light_3 disabled:bg-gray_light_3 normal-transition
-              md:w-[200px] md:h-[45px]
-              sm:w-[150px] sm:h-[41px]
+            className="flex-box gap-2 w-full border rounded-lg bg-navy text-white hover:bg-navy_light_3 disabled:bg-gray_light_3 normal-transition
+              md:h-[45px]
+              sm:h-[41px]
               "
           >
             프로필 변경

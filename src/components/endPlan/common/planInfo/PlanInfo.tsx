@@ -16,7 +16,7 @@ interface Props {
 
 const PlanInfo = ({ plan, allPins }: Props) => {
   return (
-    <section className="content-layout sm:pt-[133px] md:pt-[140px]">
+    <section className="content-layout sm:pt-[90px] md:pt-[140px]">
       <EndPlanTitle title={plan.title} />
       <EndPlanDate dates={plan.dates} />
       <Invite />
