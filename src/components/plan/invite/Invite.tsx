@@ -40,51 +40,53 @@ export default function Invite() {
 
   return (
     <>
-      <div className="inner-content-layout md:justify-normal sm:justify-between">
-        <div className="content-lable">
-          <Image alt="친구 아이콘" src={'/images/svgs/friend.svg'} width={20} height={15} />
-          <p>동행</p>
-        </div>
-        <div className="flex items-center">
-          <div className="flex mr-3">
-            {invitedUser.slice(0, maxDisplayCount).map((user, idx) => {
-              return (
-                <Image
-                  alt={`profile-img ${idx}`}
-                  key={`invite,${idx},${user.id}`}
-                  src={user.avatar_url ?? '/images/svgs/userDefault.svg'}
-                  width={24}
-                  height={24}
-                  className="object-cover rounded-full border-[#DCDCDC] border-[1px]
+      <div className="inner-content-layout md:justify-normal md:flex-row sm:flex-col sm:items-start">
+        <div className="sm:w-full md:w-auto flex justify-between">
+          <div className="content-lable">
+            <Image alt="친구 아이콘" src={'/images/svgs/friend.svg'} width={20} height={15} />
+            <p>동행</p>
+          </div>
+          <div className="flex items-center">
+            <div className="flex mr-3">
+              {invitedUser.slice(0, maxDisplayCount).map((user, idx) => {
+                return (
+                  <Image
+                    alt={`profile-img ${idx}`}
+                    key={`invite,${idx},${user.id}`}
+                    src={user.avatar_url ?? '/images/svgs/userDefault.svg'}
+                    width={24}
+                    height={24}
+                    className="object-cover rounded-full border-[#DCDCDC] border-[1px]
                     sm:w-[16px] sm:h-[16px]
                     md:w-6 md:h-6"
-                />
-              );
-            })}
-          </div>
-          {invitedUser.length > maxDisplayCount ? (
-            <div className="flex items-center text-gray_dark_1 sm:text-xs sm:font-semibold md:text-sm md:font-semibold">
-              {invitedUser.slice(0, maxDisplayCount).map((user) => (
-                <div key={`${user.id},${user.nickname}`} className="mr-[2px]">
-                  {user.nickname}
-                </div>
-              ))}
-              외 {invitedUser.length - maxDisplayCount}명
+                  />
+                );
+              })}
             </div>
-          ) : (
-            invitedUser.map((user) => (
-              <div
-                key={`${user.id},${user.nickname}`}
-                className="mr-[2px] md:text-sm
-                    sm:text-xs sm:font-semibold sm:text-gray_dark_1"
-              >
-                {user.nickname}&nbsp;
+            {invitedUser.length > maxDisplayCount ? (
+              <div className="flex items-center text-gray_dark_1 sm:text-xs sm:font-semibold md:text-sm md:font-semibold">
+                {invitedUser.slice(0, maxDisplayCount).map((user) => (
+                  <div key={`${user.id},${user.nickname}`} className="mr-[2px]">
+                    {user.nickname}
+                  </div>
+                ))}
+                외 {invitedUser.length - maxDisplayCount}명
               </div>
-            ))
-          )}
+            ) : (
+              invitedUser.map((user) => (
+                <p
+                  key={`${user.id},${user.nickname}`}
+                  className="mr-[2px] md:text-sm
+                    sm:text-xs sm:font-semibold sm:text-gray_dark_1"
+                >
+                  {user.nickname}&nbsp;
+                </p>
+              ))
+            )}
+          </div>
         </div>
         {modifyState === 'modify' && (
-          <div className="md:mt-0 sm:flex sm:justify-end sm:h-[30px] sm:mt-[5px] items-center">
+          <div className="sm:w-full md:w-auto md:mt-0 sm:flex sm:justify-end sm:h-[30px] sm:mt-[5px] items-center">
             <button
               name="invite-invite-btn"
               type="button"

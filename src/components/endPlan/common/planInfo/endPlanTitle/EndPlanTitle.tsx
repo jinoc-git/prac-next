@@ -7,9 +7,9 @@ interface Props {
 const EndPlanTitle = ({ title }: Props) => {
   return (
     <div
-      className="flex items-center justify-between
-      sm:mb-[35px]
-      md:mb-[18px]"
+      className="flex items-center justify-between 
+      sm:mb-[35px] sm:mx-[7px]
+      md:mb-[18px] md:mx-0"
     >
       <h3
         className="font-bold text-gray_dark_1

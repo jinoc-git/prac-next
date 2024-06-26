@@ -33,7 +33,7 @@ const PinContents = (props: Props) => {
         md:w-[600px] md:h-[120px] md:mb-[10px] md:px-[15px]"
     >
       {!isEnding && isModify && (
-        <button ref={dragRef} className="sm:w-[30px] md:w-[50px] sm:p-1 md:p-3">
+        <button type="button" ref={dragRef} className="sm:w-[30px] md:w-[50px] sm:p-1 md:p-3">
           <Image
             src={'/images/svgs/drag-area.svg'}
             alt="드래그 영역 아이콘"
@@ -78,8 +78,8 @@ const PinContents = (props: Props) => {
           {dropDownIsOpen && (
             <ul
               className="absolute border border-gray_dark_1  bg-white z-10 overflow-hidden
-              md:left-[40px] md:bottom-[-50px] md:text-[16px] md:w-[100px] md:rounded-md
-              sm:left-[-17px] sm:bottom-[-27px] sm:text-[10px] sm:h-[80px] sm:w-[45px] sm:rounded-l-none sm:rounded-r-md
+              md:left-[40px] md:bottom-[-50px] md:text-[16px] md:h-[80px] md:w-[100px] md:rounded-md
+              sm:left-[-17px] sm:bottom-[-40px] sm:text-[10px] sm:h-[60px] sm:w-[45px] sm:rounded-md
             "
             >
               <li
@@ -91,7 +91,7 @@ const PinContents = (props: Props) => {
                 }}
                 className="flex-box border-b border-gray_dark_1 cursor-pointer hover:bg-gray_light_3
                 md:w-[100px] md:h-[40px]
-                sm:w-[45px] sm:h-[40px]
+                sm:w-[45px] sm:h-[30px]
                 "
               >
                 <div className="flex items-center">
@@ -114,7 +114,7 @@ const PinContents = (props: Props) => {
                 }}
                 className="flex-box border-b border-gray_dark_1 cursor-pointer hover:bg-gray_light_3
                 md:w-[100px] md:h-[40px]
-                sm:w-[45px] sm:h-[40px]
+                sm:w-[45px] sm:h-[30px]
                 "
               >
                 <div className="flex items-center">
