@@ -8,7 +8,14 @@ import ToastProvider from '@/components/common/providers/toastProvider/ToastProv
 import Header from '@/components/header/Header';
 import Footer from '@/components/landing/footer/Footer';
 import SideBar from '@/components/sideBar/SideBar';
-import { META_DESC, META_ICONS, META_NAME, META_SITE_URL, META_TITLE } from '@/constant/metadatas';
+import {
+  META_DESC,
+  META_ICONS,
+  META_NAME,
+  META_OG_IMAGE,
+  META_SITE_URL,
+  META_TITLE,
+} from '@/constant/metadatas';
 
 import type { Metadata, Viewport } from 'next';
 
@@ -37,7 +44,7 @@ export const metadata: Metadata = {
     title: META_TITLE,
     description: META_DESC,
     images: {
-      url: '/images/traduler_intro.png',
+      url: META_OG_IMAGE,
       alt: 'Traduler 미리보기 사진',
       width: 1920,
       height: 1080,
