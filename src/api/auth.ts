@@ -1,9 +1,12 @@
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
+import { createBrowserClient } from '@supabase/ssr';
+import { v4 as uuidv4 } from 'uuid';
 
 import { type Database, type UserType } from '@/types/supabase';
 
-const supabaseClientClient = createClientComponentClient<Database>();
+const supabaseClientClient = createBrowserClient<Database>(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+);
 
 export { supabaseClientClient };
 
@@ -125,7 +128,7 @@ export const signOutForSB = async () => {
 export const uploadProfileImg = async (avatarFile: File, email: string) => {
   const { data, error } = await supabaseClientClient.storage
     .from('profile_img')
-    .upload(`${email}/${uuid()}`, avatarFile, {
+    .upload(`${email}/${uuidv4()}`, avatarFile, {
       cacheControl: '3600',
       upsert: false,
     });

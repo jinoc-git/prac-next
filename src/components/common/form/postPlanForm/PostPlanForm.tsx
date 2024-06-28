@@ -5,8 +5,8 @@ import { type SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import { useRouter } from 'next/navigation';
+import { v4 as uuidv4 } from 'uuid';
 
 import { addInviteAlarmList } from '@/api/alarm';
 import { addPlan, updatePlan } from '@/api/plan';
@@ -79,7 +79,7 @@ export default function PostPlanForm(props: Props) {
 
     if (isAddPlan) {
       const newPlan: InsertPlanType = {
-        id: uuid(),
+        id: uuidv4(),
         users_id: user.id,
         dates,
         title,

@@ -1,4 +1,4 @@
-import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
+import { v4 as uuidv4 } from 'uuid';
 
 import { supabaseClientClient } from './auth';
 
@@ -8,7 +8,7 @@ export const addPictures = async (fileList: File[], planId: string) => {
   for (const file of fileList) {
     const { data } = await supabaseClientClient.storage
       .from('add-photo')
-      .upload(`${planId}/${uuid()}`, file);
+      .upload(`${planId}/${uuidv4()}`, file);
 
     if (data) {
       const URL = `${process.env.NEXT_PUBLIC_SB_STORAGE_URL}/add-photo/${data.path}`;
