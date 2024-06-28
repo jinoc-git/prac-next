@@ -5,8 +5,8 @@ import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { uuid } from '@supabase/gotrue-js/dist/module/lib/helpers';
 import _ from 'lodash';
+import { v4 as uuidv4 } from 'uuid';
 
 import ModalButton from '@/components/common/button/modalButton/ModalButton';
 import TitleInput from '@/components/common/input/TitleInput';
@@ -105,7 +105,7 @@ const AddPinModal = (props: Props) => {
     const removeCommaCost = cost ? removeCommas(cost) : '0';
 
     const newPin: PinContentsType = {
-      id: uuid(),
+      id: uuidv4(),
       lat: position.lat,
       lng: position.lng,
       placeName,

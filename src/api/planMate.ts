@@ -19,6 +19,8 @@ export const findUsers = async (input: string) => {
 };
 
 export const getMatesInfo = async (planId: string) => {
+  if (!planId) return null;
+
   const { data, error } = await supabaseClientClient
     .from('plan_mates')
     .select('users_id')
