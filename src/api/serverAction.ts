@@ -1,13 +1,26 @@
 import { cache } from 'react';
 
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 
 import type { Database, EndingPlanType, PlanType } from '@/types/supabase';
 
-export const getSessionFromServer = async () => {
-  const supabaseServerClient = createServerComponentClient<Database>({ cookies });
+const supabaseServerClient = createServerClient<Database>(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+  {
+    cookies: {
+      getAll() {
+        return cookies().getAll();
+      },
+      setAll(cookiesToSet) {
+        cookiesToSet.forEach(({ name, value, options }) => cookies().set(name, value, options));
+      },
+    },
+  },
+);
 
+export const getSessionFromServer = async () => {
   const {
     data: { session },
     error,
@@ -19,8 +32,6 @@ export const getSessionFromServer = async () => {
 };
 
 export const getPlanByIdFromServer = async (planId: string) => {
-  const supabaseServerClient = createServerComponentClient<Database>({ cookies });
-
   const { data, error } = await supabaseServerClient
     .from('plans')
     .select()
@@ -33,8 +44,6 @@ export const getPlanByIdFromServer = async (planId: string) => {
 };
 
 export const getAllPinsByPlanFromServer = async (plan: PlanType | EndingPlanType) => {
-  const supabaseServerClient = createServerComponentClient<Database>({ cookies });
-
   const { data, error } = await supabaseServerClient
     .from('pins')
     .select()
@@ -48,8 +57,6 @@ export const getAllPinsByPlanFromServer = async (plan: PlanType | EndingPlanType
 };
 
 export const getEndingPlanFromServer = cache(async (planId: string) => {
-  const supabaseServerClient = createServerComponentClient<Database>({ cookies });
-
   const { data, error } = await supabaseServerClient
     .from('plans_ending')
     .select()
