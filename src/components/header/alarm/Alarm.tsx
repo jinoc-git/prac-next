@@ -1,20 +1,27 @@
 'use client';
 
 import React from 'react';
+import { toast } from 'react-toastify';
 
 import { useRouter } from 'next/navigation';
 
+import { getTargetUserNotificationToken } from '@/api/notification';
+import { getNotificationToken } from '@/firebase/firebase';
 import useAlarm from '@/hooks/useAlarm';
+import useConfirm from '@/hooks/useConfirm';
 
 import AlarmImage from './alarmImage/AlarmImage';
 
-interface Props {}
+interface Props {
+  userId: string | undefined;
+}
 
-const Alarm = ({}: Props) => {
+const Alarm = ({ userId }: Props) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
   const router = useRouter();
   const { alarms, handleConfirmAlarm, hasNewAlarm } = useAlarm();
+  const confirm = useConfirm();
 
   const handleToggleDropDownMenu = React.useCallback(() => {
     setIsOpen((prev) => !prev);
@@ -25,6 +32,37 @@ const Alarm = ({}: Props) => {
     setIsOpen(false);
     router.push(`/plan/${planId}`);
   }, []);
+
+  React.useEffect(() => {
+    // const isApp = () => {
+    //   return window.matchMedia('(display-mode: standalone)').matches;
+    // };
+
+    // if (isApp()) {
+    const confirmPushNotification = async () => {
+      if (!userId) return;
+
+      const hasToken = await getTargetUserNotificationToken(userId);
+      if (!hasToken) {
+        const confTitle = '푸시 알림 동의';
+        const confDesc = '오프라인 푸시 알림 미동의시 서비스 이용이 어렵습니다.';
+        const confFunc = async () => {
+          const res = await Notification.requestPermission();
+
+          if (res !== 'granted') {
+            toast.warning('푸시 알림 미동의 시 서비스 이용이 어렵습니다.');
+          } else {
+            await getNotificationToken(userId);
+          }
+        };
+
+        confirm.default(confTitle, confDesc, confFunc);
+      }
+    };
+
+    confirmPushNotification();
+    // }
+  }, [userId]);
 
   return (
     <div className=" pr-6 h-6">

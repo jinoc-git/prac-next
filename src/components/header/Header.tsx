@@ -46,7 +46,7 @@ export default function Header({ session }: Props) {
       <Logo isLogin={isLogin} isMain={pathname === '/main'} />
 
       {isLogin ? (
-        <Alarm />
+        <Alarm userId={session?.user.id} />
       ) : (
         <div className="header-link-box flex-box md:w-[134px] sm:w-[84px]">
           {pathname === '/signin' ? (
