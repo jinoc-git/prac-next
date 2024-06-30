@@ -1,5 +1,6 @@
 const withPWA = require('@ducanh2912/next-pwa').default({
   dest: 'public',
+  customWorkerSrc: '/firebase-messaging-sw.js',
   cacheOnFrontEndNav: true,
   aggressiveFrontEndNavCaching: true,
   reloadOnOnline: true,
@@ -35,6 +36,10 @@ const nextConfig = {
         resourceQuery: { not: [...fileLoaderRule.resourceQuery.not, /url/] },
         use: ['@svgr/webpack'],
       },
+      // {
+      //   test: /\.wasm$/,
+      //   type: 'webassembly/async',
+      // },
     );
 
     fileLoaderRule.exclude = /\.svg$/i;
