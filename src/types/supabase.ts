@@ -206,6 +206,7 @@ export interface Database {
           email: string;
           id: string;
           nickname: string;
+          push_notification: string | null;
         };
         Insert: {
           avatar_url?: string | null;
@@ -213,6 +214,7 @@ export interface Database {
           email: string;
           id: string;
           nickname: string;
+          push_notification?: string | null;
         };
         Update: {
           avatar_url?: string | null;
@@ -220,6 +222,7 @@ export interface Database {
           email?: string;
           id?: string;
           nickname?: string;
+          push_notification?: string | null;
         };
 
         Relationships: [
