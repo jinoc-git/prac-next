@@ -1,18 +1,17 @@
+import { NextResponse } from 'next/server';
+
 import { sendFCMNotification } from '@/api/sendFCM';
 
-import type { NextApiRequest, NextApiResponse } from 'next';
+import type { NextRequest } from 'next/server';
 
-export const POST = async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method === 'POST') {
-    const { message } = req.body;
+export const POST = async (req: NextRequest, res: NextResponse) => {
+  const { message } = await req.json();
 
-    try {
-      const result = await sendFCMNotification(message);
-      res.status(200).json({ result });
-    } catch (error) {
-      console.error('Error sending notification:', error);
-    }
-  } else {
-    res.status(405).end();
+  try {
+    const result = await sendFCMNotification(message);
+
+    return NextResponse.json(result);
+  } catch (error) {
+    console.error('Error sending notification:', error);
   }
 };
