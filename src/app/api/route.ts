@@ -2,7 +2,7 @@ import { sendFCMNotification } from '@/api/sendFCM';
 
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-const sendFCMHandler = async (req: NextApiRequest, res: NextApiResponse) => {
+export const POST = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
     const { message } = req.body;
 
@@ -16,5 +16,3 @@ const sendFCMHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     res.status(405).end();
   }
 };
-
-export default sendFCMHandler;
