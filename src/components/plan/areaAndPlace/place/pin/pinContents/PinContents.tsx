@@ -32,17 +32,19 @@ const PinContents = (props: Props) => {
         sm:w-[239px] sm:h-[80px] sm:px-2
         md:w-[600px] md:h-[120px] md:mb-[10px] md:px-[15px]"
     >
-      {!isEnding && isModify && (
-        <button type="button" ref={dragRef} className="sm:w-[30px] md:w-[50px] sm:p-1 md:p-3">
-          <Image
-            src={'/images/svgs/drag-area.svg'}
-            alt="드래그 영역 아이콘"
-            width={25}
-            height={29}
-            className="sm:w-[15px] sm:h-[18px] md:w-[25px] md:h-[29px] "
-          />
-        </button>
-      )}
+      {!isEnding &&
+        isModify &&
+        dragRef(
+          <button type="button" className="sm:w-[30px] md:w-[50px] sm:p-1 md:p-3">
+            <Image
+              src={'/images/svgs/drag-area.svg'}
+              alt="드래그 영역 아이콘"
+              width={25}
+              height={29}
+              className="sm:w-[15px] sm:h-[18px] md:w-[25px] md:h-[29px] "
+            />
+          </button>,
+        )}
       <div
         className={`flex flex-col text-left  text-gray_dark_1  gap-y-[2px]
           sm:text-[11px] sm:w-[200px]
