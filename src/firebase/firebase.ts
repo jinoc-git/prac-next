@@ -5,6 +5,8 @@ import { getMessaging, getToken } from 'firebase/messaging';
 
 import { savaNotificationToken } from '@/api/notification';
 
+const VAPID_KEY = process.env.NEXT_PUBLIC_VAPID_KEY;
+
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FB_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FB_AUTH_DOMAIN,
@@ -19,10 +21,8 @@ const app = initializeApp(firebaseConfig);
 export const getNotificationToken = async (userId: string) => {
   try {
     const messaging = getMessaging(app);
-
-    const token = await getToken(messaging, {
-      vapidKey: process.env.NEXT_PUBLIC_VAPID_KEY,
-    });
+    // 현재 배포된 서비스에서 토큰 발급 시 토큰 발급 오류가 뜸
+    const token = await getToken(messaging, { vapidKey: VAPID_KEY });
 
     if (!token) {
       toast.warning('푸시 알림에 동의해야 원할한 서비스 이용이 가능합니다.');

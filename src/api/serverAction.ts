@@ -5,7 +5,7 @@ import { createClientFromServer } from '@/utils/supabase/server';
 import type { EndingPlanType, PlanType } from '@/types/supabase';
 
 export const getSessionFromServer = async () => {
-  const supabaseServerClient = createClientFromServer();
+  const supabaseServerClient = await createClientFromServer();
 
   const {
     data: { session },
@@ -18,7 +18,7 @@ export const getSessionFromServer = async () => {
 };
 
 export const getPlanByIdFromServer = async (planId: string) => {
-  const supabaseServerClient = createClientFromServer();
+  const supabaseServerClient = await createClientFromServer();
 
   const { data, error } = await supabaseServerClient
     .from('plans')
@@ -32,7 +32,7 @@ export const getPlanByIdFromServer = async (planId: string) => {
 };
 
 export const getAllPinsByPlanFromServer = async (plan: PlanType | EndingPlanType) => {
-  const supabaseServerClient = createClientFromServer();
+  const supabaseServerClient = await createClientFromServer();
 
   const { data, error } = await supabaseServerClient
     .from('pins')
@@ -47,7 +47,7 @@ export const getAllPinsByPlanFromServer = async (plan: PlanType | EndingPlanType
 };
 
 export const getEndingPlanFromServer = cache(async (planId: string) => {
-  const supabaseServerClient = createClientFromServer();
+  const supabaseServerClient = await createClientFromServer();
 
   const { data, error } = await supabaseServerClient
     .from('plans_ending')
