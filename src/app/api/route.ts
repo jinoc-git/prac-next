@@ -12,6 +12,6 @@ export const POST = async (req: NextRequest) => {
 
     return NextResponse.json(message, { status: 200 });
   } catch (error) {
-    console.error('Error sending notification:', error);
+    return console.error('Error sending notification:', error);
   }
 };

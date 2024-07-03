@@ -21,7 +21,7 @@ const app = initializeApp(firebaseConfig);
 export const getNotificationToken = async (userId: string) => {
   try {
     const messaging = getMessaging(app);
-    // 현재 배포된 서비스에서 토큰 발급 시 토큰 발급 오류가 뜸
+
     const token = await getToken(messaging, { vapidKey: VAPID_KEY });
 
     if (!token) {
