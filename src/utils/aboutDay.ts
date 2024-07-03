@@ -98,3 +98,9 @@ export const getDatesArrFromStartEnd = (startDate: Date, endDate: Date) => {
 
   return dates;
 };
+
+export const is30DaysPast = (origin: Date) => {
+  const now = new Date();
+  const max = new Date(origin.getTime() + 30 * 24 * 60 * 60 * 1000);
+  return now > max;
+};

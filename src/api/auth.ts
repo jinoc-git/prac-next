@@ -67,18 +67,18 @@ export const signInWithGoogle = async () => {
 
 export const checkOAuthUser = async () => {
   const {
-    data: { session },
+    data: { user },
     error,
-  } = await supabaseClientClient.auth.getSession();
+  } = await supabaseClientClient.auth.getUser();
 
-  if (error) throw new Error('세션 불러오기 오류');
+  if (error) throw new Error('유저 정보 불러오기 오류');
 
-  if (session) {
+  if (user) {
     const {
       id,
       email,
       user_metadata: { name: nickname, avatar_url },
-    } = session.user;
+    } = user;
 
     const { data: check, error } = await supabaseClientClient
       .from('users')

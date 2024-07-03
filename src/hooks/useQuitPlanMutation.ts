@@ -36,6 +36,7 @@ const useQuitPlanMutation = () => {
     onSettled: async (_, err, { userId }) => {
       await queryClient.invalidateQueries({ queryKey: ['plan_mates', userId] });
       await queryClient.invalidateQueries({ queryKey: ['book_mark', userId] });
+      await queryClient.invalidateQueries({ queryKey: ['userAlaram', userId] });
     },
     onSuccess: () => {
       toast.success('여행 나가기 성공');

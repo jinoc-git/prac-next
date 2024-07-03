@@ -3,7 +3,7 @@
 import React from 'react';
 import { toast } from 'react-toastify';
 
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 import { getTargetUserNotificationToken } from '@/api/notification';
 import { getNotificationToken } from '@/firebase/firebase';
@@ -20,6 +20,7 @@ const Alarm = ({ userId }: Props) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
   const router = useRouter();
+  const pathname = usePathname();
   const { alarms, handleConfirmAlarm, hasNewAlarm } = useAlarm();
   const confirm = useConfirm();
 
@@ -38,31 +39,35 @@ const Alarm = ({ userId }: Props) => {
     //   return window.matchMedia('(display-mode: standalone)').matches;
     // };
 
-    // if (isApp()) {
-    const confirmPushNotification = async () => {
-      if (!userId) return;
+    const showNotificationPermission = pathname === '/' || pathname === '/main';
+    if (showNotificationPermission) {
+      const confirmPushNotification = async () => {
+        if (!userId) return;
 
-      const hasToken = await getTargetUserNotificationToken(userId);
-      if (!hasToken) {
-        const confTitle = '푸시 알림 동의';
-        const confDesc = '오프라인 푸시 알림 미동의시 서비스 이용이 어렵습니다.';
-        const confFunc = async () => {
-          const res = await Notification.requestPermission();
+        const targetData = await getTargetUserNotificationToken(userId);
+        await navigator.serviceWorker.register('/firebase-messaging-sw.js', {
+          scope: '/firebase-cloud-messaging-push-scope',
+        });
 
-          if (res !== 'granted') {
-            toast.warning('푸시 알림 미동의 시 서비스 이용이 어렵습니다.');
-          } else {
-            await getNotificationToken(userId);
-          }
-        };
+        if (targetData === null) {
+          const confTitle = '푸시 알림 동의';
+          const confDesc = '오프라인 푸시 알림 미동의시 서비스 이용이 어렵습니다.';
+          const confFunc = async () => {
+            if (!('Notification' in window)) return;
 
-        confirm.default(confTitle, confDesc, confFunc);
-      }
-    };
+            const res = await Notification.requestPermission();
 
-    confirmPushNotification();
-    // }
-  }, [userId]);
+            if (res === 'granted') await getNotificationToken(userId);
+            else toast.warning('푸시 알림 미동의 시 서비스 이용이 어렵습니다.');
+          };
+
+          confirm.default(confTitle, confDesc, confFunc);
+        }
+      };
+
+      confirmPushNotification();
+    }
+  }, [userId, pathname]);
 
   return (
     <div className=" pr-6 h-6">

@@ -2,12 +2,14 @@ import axios from 'axios';
 
 import { createClientFromClient } from '@/utils/supabase/client';
 
+import type { Message } from 'firebase-admin/messaging';
+
 const supabaseClientClient = createClientFromClient();
 
 export const savaNotificationToken = async (userId: string, token: string) => {
   const { error } = await supabaseClientClient
     .from('users')
-    .update({ push_notification: token })
+    .update({ push_notification: { token, update_at: new Date() } })
     .eq('id', userId);
 
   if (error) throw new Error('푸시 알림 토큰 저장 오류');
@@ -22,27 +24,10 @@ export const getTargetUserNotificationToken = async (userId: string) => {
 
   if (error) throw new Error('유저 토큰 불러오기 오류');
 
-  if (data.push_notification) return data.push_notification;
-  else return false;
+  return data.push_notification;
 };
 
-export interface NotificationMessage {
-  title: string;
-  body: string;
-  click_action: string;
-  token: string;
-}
-
-export const reqSendPush = async (args: NotificationMessage) => {
-  const { title, body, token, click_action } = args;
-  const message = {
-    data: {
-      title,
-      body,
-      click_action,
-    },
-    token,
-  };
-
-  await axios.post(window?.location?.origin + '/api', message);
+export const reqSendPush = async (args: Message) => {
+  console.log('req send push', args);
+  await axios.post(window?.location?.origin + '/api/push', args);
 };
