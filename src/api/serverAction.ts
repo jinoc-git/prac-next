@@ -17,6 +17,19 @@ export const getSessionFromServer = async () => {
   return session;
 };
 
+export const getUserFromServer = async () => {
+  const supabaseServerClient = await createClientFromServer();
+
+  const {
+    data: { user },
+    error,
+  } = await supabaseServerClient.auth.getUser();
+
+  if (error) throw new Error('유저 정보 불러오기 오류 발생');
+
+  return user;
+};
+
 export const getPlanByIdFromServer = async (planId: string) => {
   const supabaseServerClient = await createClientFromServer();
 

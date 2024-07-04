@@ -18,64 +18,61 @@ interface Store {
 export const authStore = create<Store>((set, get) => ({
   user: null,
   actions: {
-    authObserver: () => {
+    authObserver: async () => {
       const supabaseClientClient = createClientFromClient();
+      const {
+        data: { user: newUser },
+      } = await supabaseClientClient.auth.getUser();
 
-      supabaseClientClient.auth.onAuthStateChange((event, session) => {
-        const currentUser = get().user;
-        if (session !== null && currentUser === null) {
-          localStorage.setItem('isLogin', 'true');
+      const currentUser = get().user;
+      if (newUser !== null && currentUser === null) {
+        if (newUser.app_metadata.provider === 'google') {
+          const {
+            id,
+            email,
+            user_metadata: { name, nickname, profileImg },
+          } = newUser;
 
-          if (session.user.app_metadata.provider === 'google') {
-            const {
-              id,
-              email,
-              user_metadata: { name, nickname, profileImg },
-            } = session.user;
+          const user: UserType = {
+            id,
+            email: email as string,
+            nickname: nickname ?? name,
+            avatar_url: profileImg ?? null,
+          };
 
-            const user: UserType = {
-              id,
-              email: email as string,
-              nickname: nickname ?? name,
-              avatar_url: profileImg ?? null,
-            };
+          set({ user });
+        } else if (newUser.app_metadata.provider === 'kakao') {
+          const {
+            id,
+            email,
+            user_metadata: { name, user_name, avatar_url },
+          } = newUser;
 
-            set({ user });
-          } else if (session.user.app_metadata.provider === 'kakao') {
-            const {
-              id,
-              email,
-              user_metadata: { name, user_name, avatar_url },
-            } = session.user;
+          const user: UserType = {
+            id,
+            email: email as string,
+            nickname: name ?? user_name,
+            avatar_url: avatar_url ?? null,
+          };
 
-            const user: UserType = {
-              id,
-              email: email as string,
-              nickname: name ?? user_name,
-              avatar_url: avatar_url ?? null,
-            };
+          set({ user });
+        } else {
+          const {
+            id,
+            email,
+            user_metadata: { nickname, profileImg },
+          } = newUser;
 
-            set({ user });
-          } else {
-            const {
-              id,
-              email,
-              user_metadata: { nickname, profileImg },
-            } = session.user;
+          const user: UserType = {
+            id,
+            email: email as string,
+            nickname,
+            avatar_url: profileImg ?? null,
+          };
 
-            const user: UserType = {
-              id,
-              email: email as string,
-              nickname,
-              avatar_url: profileImg ?? null,
-            };
-
-            set({ user });
-          }
-        } else if (session === null) {
-          localStorage.setItem('isLogin', 'false');
+          set({ user });
         }
-      });
+      }
     },
 
     setUser: (user: UserType) => {

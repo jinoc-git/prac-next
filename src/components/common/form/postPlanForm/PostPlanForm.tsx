@@ -55,7 +55,7 @@ export default function PostPlanForm(props: Props) {
     register,
     handleSubmit,
     setValue,
-    formState: { errors },
+    formState: { isSubmitting, errors },
   } = useForm<PlanContentsInputType>({
     resolver,
     mode: 'onChange',
@@ -69,7 +69,7 @@ export default function PostPlanForm(props: Props) {
     title,
     totalCost,
   }) => {
-    if (user === null) return;
+    if (user === null || isSubmitting) return;
     if (dates.length === 0) {
       toast.error('여행 날짜는 필수입니다.');
       return;

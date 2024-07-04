@@ -44,5 +44,5 @@ export const reqSendPush = async (args: NotificationMessage) => {
     token,
   };
 
-  await axios.post(window?.location?.origin + '/api', message);
+  await axios.post(window?.location?.origin + '/api/push', message);
 };

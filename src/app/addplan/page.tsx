@@ -2,13 +2,13 @@ import React from 'react';
 
 import { redirect } from 'next/navigation';
 
-import { getSessionFromServer } from '@/api/serverAction';
+import { getUserFromServer } from '@/api/serverAction';
 import AddOrEditPlan from '@/components/plan/addOrEditPlan/AddOrEditPlan';
 
 export default async function AddPlan() {
-  const session = await getSessionFromServer();
+  const user = await getUserFromServer();
 
-  if (session === null) redirect('/signin');
+  if (user === null) redirect('/signin');
 
   return (
     <section className="sm:pt-[80px] md:pt-[70px]">

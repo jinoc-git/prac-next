@@ -1,15 +1,15 @@
 import { redirect } from 'next/navigation';
 
-import { getSessionFromServer } from '@/api/serverAction';
+import { getUserFromServer } from '@/api/serverAction';
 import GuideBanner from '@/components/landing/guideBanner/GuideBanner';
 import InstallAppOrNavigate from '@/components/landing/installAppOrNavigate/InstallAppOrNavigate';
 import IntroduceBanner from '@/components/landing/introduceBanner/IntroduceBanner';
 import MainBanner from '@/components/landing/mainBanner/MainBanner';
 
 export default async function Home() {
-  const session = await getSessionFromServer();
+  const user = await getUserFromServer();
 
-  if (session !== null) redirect('/main');
+  if (user !== null) redirect('/main');
 
   return (
     <>
