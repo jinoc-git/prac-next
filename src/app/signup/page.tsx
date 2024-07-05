@@ -3,13 +3,13 @@ import React from 'react';
 import Image from 'next/image';
 import { redirect } from 'next/navigation';
 
-import { getUserFromServer } from '@/api/serverAction';
+import { getSessionFromServer } from '@/api/serverAction';
 import SignupForm from '@/components/common/form/signupForm/SignupForm';
 
 export default async function Signup() {
-  const user = await getUserFromServer();
+  const session = await getSessionFromServer();
 
-  if (user) redirect('/main');
+  if (session) redirect('/main');
 
   return (
     <section className="flex-box w-full h-full">

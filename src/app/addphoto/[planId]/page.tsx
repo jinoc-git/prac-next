@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 
 import { redirect } from 'next/navigation';
 
-import { getUserFromServer } from '@/api/serverAction';
+import { getSessionFromServer } from '@/api/serverAction';
 import Loading from '@/components/common/loading/Loading';
 import AddPhotoContent from '@/components/endPlan/addPhotoContent/AddPhotoContent';
 
@@ -11,9 +11,9 @@ interface Props {
 }
 
 export default async function AddPhoto({ params }: Props) {
-  const user = await getUserFromServer();
+  const session = await getSessionFromServer();
 
-  if (user === null) redirect('/signin');
+  if (session === null) redirect('/signin');
 
   return (
     <Suspense fallback={<Loading full={true} />}>

@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 
 import { notFound, redirect } from 'next/navigation';
 
-import { getPlanByIdFromServer, getUserFromServer } from '@/api/serverAction';
+import { getPlanByIdFromServer, getSessionFromServer } from '@/api/serverAction';
 import Loading from '@/components/common/loading/Loading';
 import AddOrEditPlan from '@/components/plan/addOrEditPlan/AddOrEditPlan';
 import ChangePlanStatus from '@/components/plan/changePlanStatus/ChangePlanStatus';
@@ -12,9 +12,9 @@ interface Props {
 }
 
 export default async function Plan({ params }: Props) {
-  const user = await getUserFromServer();
+  const session = await getSessionFromServer();
 
-  if (user === null) redirect('/signin');
+  if (session === null) redirect('/signin');
 
   const plan = await getPlanByIdFromServer(params.planId);
 

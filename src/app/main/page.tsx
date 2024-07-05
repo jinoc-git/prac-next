@@ -2,15 +2,15 @@ import React from 'react';
 
 import { redirect } from 'next/navigation';
 
-import { getUserFromServer } from '@/api/serverAction';
+import { getSessionFromServer } from '@/api/serverAction';
 import InstallApp from '@/components/main/installApp/InstallApp';
 import PlanList from '@/components/main/planList/PlanList';
 import Profile from '@/components/main/profile/Profile';
 
 export default async function Main() {
-  const user = await getUserFromServer();
+  const session = await getSessionFromServer();
 
-  if (user === null) redirect('/signin');
+  if (session === null) redirect('/signin');
 
   return (
     <>

@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 
 import { redirect } from 'next/navigation';
 
-import { getUserFromServer } from '@/api/serverAction';
+import { getSessionFromServer } from '@/api/serverAction';
 import Loading from '@/components/common/loading/Loading';
 import EndingContent from '@/components/endPlan/endingContent/EndingContent';
 
@@ -13,9 +13,9 @@ interface Props {
 }
 
 export default async function Ending({ params }: Props) {
-  const user = await getUserFromServer();
+  const session = await getSessionFromServer();
 
-  if (user === null) redirect('/signin');
+  if (session === null) redirect('/signin');
 
   return (
     <Suspense fallback={<Loading full={true} />}>
