@@ -10,20 +10,20 @@ firebase.initializeApp({
   appId: '1:136663781474:web:a2288251716d0d81ca413b',
 });
 
-// const messaging = firebase.messaging();
+const messaging = firebase.messaging();
 
-// messaging.onBackgroundMessage(({ data }) => {
-//   console.log(data);
+messaging.onBackgroundMessage(({ data }) => {
+  console.log(data);
 
-//   self.registration.showNotification(data.title, {
-//     body: data.body,
-//     icon: '/images/android/android-launchericon-192-192.png',
-//     image: '/images/android/android-launchericon-192-192.png',
-//     data: {
-//       click_action: data.click_action,
-//     },
-//   });
-// });
+  self.registration.showNotification(data.title, {
+    body: data.body,
+    icon: '/images/android/android-launchericon-192-192.png',
+    image: '/images/android/android-launchericon-192-192.png',
+    data: {
+      click_action: data.click_action,
+    },
+  });
+});
 
 self.addEventListener('push', (event) => {
   if (event.data) {
@@ -45,6 +45,7 @@ self.addEventListener('push', (event) => {
 });
 
 self.addEventListener('notificationclick', (event) => {
+  event.preventDefault();
   event.notification.close();
 
   const urlToOpen = event.notification.data.click_action;
