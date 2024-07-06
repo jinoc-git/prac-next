@@ -43,6 +43,6 @@ export const reqSendPush = async (args: NotificationMessage) => {
     },
     token,
   };
-
+  console.log('req send push notification', message);
   await axios.post(window?.location?.origin + '/api/push', message);
 };

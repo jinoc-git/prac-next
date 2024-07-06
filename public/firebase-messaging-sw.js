@@ -13,7 +13,7 @@ firebase.initializeApp({
 const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage(({ data }) => {
-  console.log('back', data);
+  console.log('background', data);
 
   self.registration.showNotification(data.title, {
     body: data.body,

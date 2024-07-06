@@ -25,7 +25,7 @@ export const sendFCMNotification = async (data: NotificationData) => {
   }
   try {
     const res = await admin.messaging().send(data);
-
+    console.log('result', res, data);
     return res;
   } catch (error) {
     console.log('sendNotification', error);
