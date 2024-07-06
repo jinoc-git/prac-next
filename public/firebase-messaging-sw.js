@@ -13,7 +13,7 @@ firebase.initializeApp({
 const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage(({ data }) => {
-  console.log(data);
+  console.log('back', data);
 
   self.registration.showNotification(data.title, {
     body: data.body,
@@ -28,7 +28,7 @@ messaging.onBackgroundMessage(({ data }) => {
 self.addEventListener('push', (event) => {
   if (event.data) {
     const data = event.data.json().data;
-
+    console.log('data', data);
     const options = {
       body: data.body,
       icon: '/images/android/android-launchericon-192-192.png',
