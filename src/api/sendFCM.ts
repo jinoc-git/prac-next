@@ -7,11 +7,12 @@ export interface NotificationData {
     title: string;
     body: string;
     click_action: string;
+    token: string;
   };
-  token: string;
 }
 
-export const sendFCMNotification = async (data: NotificationData) => {
+export const sendFCMNotification = async ({ data }: NotificationData) => {
+  console.log('receive send push func', data);
   try {
     const serviceAccount: ServiceAccount = {
       projectId: process.env.NEXT_PUBLIC_FB_PROJECT_ID,
@@ -20,14 +21,13 @@ export const sendFCMNotification = async (data: NotificationData) => {
     };
 
     if (!admin.apps.length) {
-      console.log('firebase initialize');
       admin.initializeApp({
         credential: admin.credential.cert(serviceAccount),
       });
     }
-    console.log('start push');
+
     const res = await admin.messaging().send(data);
-    console.log('result', res, data);
+
     return res;
   } catch (error) {
     console.log('sendNotification', error);

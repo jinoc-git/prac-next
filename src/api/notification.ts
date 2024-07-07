@@ -35,6 +35,7 @@ export interface NotificationMessage {
 
 export const reqSendPush = async (args: NotificationMessage) => {
   const { title, body, token, click_action } = args;
+
   const message = {
     data: {
       title,
@@ -43,6 +44,6 @@ export const reqSendPush = async (args: NotificationMessage) => {
     },
     token,
   };
-  console.log('req send push notification', message);
-  await axios.post(window?.location?.origin + '/api/push', message);
+  console.log('req send push', message);
+  await axios.post(window?.location?.origin + '/api/push', { message });
 };
