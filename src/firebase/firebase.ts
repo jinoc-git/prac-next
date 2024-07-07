@@ -16,10 +16,10 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
+const messaging = getMessaging(app);
+
 export const getNotificationToken = async (userId: string) => {
   try {
-    const messaging = getMessaging(app);
-
     const token = await getToken(messaging, { vapidKey: VAPID_KEY });
 
     if (token) await savaNotificationToken(userId, token);
