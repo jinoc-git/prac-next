@@ -2,7 +2,7 @@ import { createClientFromClient } from '@/utils/supabase/client';
 
 import { getTargetUserNotificationToken, reqSendPush } from './notification';
 
-import type { NotificationMessage } from './notification';
+import type { NotificationData } from './sendFCM';
 import type { AlarmCallbackFunc } from '@/types/aboutAlarm.type';
 import type { InsertInviteAlarmType } from '@/types/supabase';
 
@@ -18,10 +18,12 @@ export const addInviteAlarmList = async (datas: InsertInviteAlarmType[]) => {
     const targetNotificationToken = await getTargetUserNotificationToken(data.invite_to);
 
     if (targetNotificationToken) {
-      const message: NotificationMessage = {
-        title: '여행 초대 알림',
-        body: `${data.from_nickname}님이 ${data.plan_title}에 초대했습니다.`,
-        click_action: `${window?.location?.origin}/plan/${data.invite_planId}`,
+      const message: NotificationData = {
+        data: {
+          title: '여행 초대 알림',
+          body: `${data.from_nickname}님이 ${data.plan_title}에 초대했습니다.`,
+          click_action: `${window?.location?.origin}/plan/${data.invite_planId}`,
+        },
         token: targetNotificationToken,
       };
 

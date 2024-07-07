@@ -2,6 +2,8 @@ import axios from 'axios';
 
 import { createClientFromClient } from '@/utils/supabase/client';
 
+import type { NotificationData } from './sendFCM';
+
 const supabaseClientClient = createClientFromClient();
 
 export const savaNotificationToken = async (userId: string, token: string) => {
@@ -26,24 +28,7 @@ export const getTargetUserNotificationToken = async (userId: string) => {
   else return false;
 };
 
-export interface NotificationMessage {
-  title: string;
-  body: string;
-  click_action: string;
-  token: string;
-}
-
-export const reqSendPush = async (args: NotificationMessage) => {
-  const { title, body, token, click_action } = args;
-
-  const message = {
-    data: {
-      title,
-      body,
-      click_action,
-    },
-    token,
-  };
-  console.log('req send push', message);
-  await axios.post(window?.location?.origin + '/api/push', { message });
+export const reqSendPush = async (args: NotificationData) => {
+  console.log('req send push', args);
+  await axios.post(window?.location?.origin + '/api/push', args);
 };

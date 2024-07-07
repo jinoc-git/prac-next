@@ -7,11 +7,11 @@ export interface NotificationData {
     title: string;
     body: string;
     click_action: string;
-    token: string;
   };
+  token: string;
 }
 
-export const sendFCMNotification = async ({ data }: NotificationData) => {
+export const sendFCMNotification = async (data: NotificationData) => {
   console.log('receive send push func', data);
   try {
     const serviceAccount: ServiceAccount = {
