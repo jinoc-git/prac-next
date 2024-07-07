@@ -10,21 +10,6 @@ firebase.initializeApp({
   appId: '1:136663781474:web:a2288251716d0d81ca413b',
 });
 
-// const messaging = firebase.messaging();
-
-// messaging.onBackgroundMessage(({ data }) => {
-//   console.log('background', data);
-
-//   self.registration.showNotification(data.title, {
-//     body: data.body,
-//     icon: '/images/android/android-launchericon-192-192.png',
-//     image: '/images/android/android-launchericon-192-192.png',
-//     data: {
-//       click_action: data.click_action,
-//     },
-//   });
-// });
-
 self.addEventListener('push', (event) => {
   if (event.data) {
     const data = event.data.json().data;
@@ -51,17 +36,19 @@ self.addEventListener('notificationclick', (event) => {
   const urlToOpen = event.notification.data.click_action;
 
   event.waitUntil(
-    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
-      if (clientList.length > 0) {
-        let client = clientList[0];
-        for (let i = 0; i < clientList.length; i++) {
-          if (clientList[i].focused) {
-            client = clientList[i];
-          }
+    clients.matchAll({ type: 'window', includeUncontrolled: true }).then((windowClients) => {
+      let matchingClient = null;
+
+      for (let i = 0; i < windowClients.length; i++) {
+        const windowClient = windowClients[i];
+        if (windowClient.url.includes(urlToOpen)) {
+          matchingClient = windowClient;
+          break;
         }
-        return client.focus();
       }
-      return self.clients.openWindow(urlToOpen);
+
+      if (matchingClient) return matchingClient.focus();
+      else return clients.openWindow(urlToOpen);
     }),
   );
 });
