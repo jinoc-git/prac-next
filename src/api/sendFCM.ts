@@ -21,9 +21,7 @@ export const sendFCMNotification = async (data: NotificationData) => {
     };
 
     if (!admin.apps.length) {
-      admin.initializeApp({
-        credential: admin.credential.cert(serviceAccount),
-      });
+      admin.initializeApp({ credential: admin.credential.cert(serviceAccount) });
     }
 
     const res = await admin.messaging().send(data);
