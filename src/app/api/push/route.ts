@@ -6,9 +6,9 @@ import type { NotificationData } from '@/api/sendFCM';
 
 export const POST = async (req: NextRequest) => {
   try {
-    const message: NotificationData = await req.json();
+    const { message } = await req.json();
 
-    await sendFCMNotification(message);
+    await sendFCMNotification(message as NotificationData);
 
     return NextResponse.json(message, { status: 200 });
   } catch (error) {
