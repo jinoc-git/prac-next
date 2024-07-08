@@ -45,7 +45,6 @@ messaging.onBackgroundMessage(({ data }) => {
 // });
 
 self.addEventListener('notificationclick', (event) => {
-  event.preventDefault();
   event.notification.close();
 
   const urlToOpen = event.notification.data.click_action;

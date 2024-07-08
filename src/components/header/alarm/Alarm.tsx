@@ -45,10 +45,16 @@ const Alarm = ({ userId }: Props) => {
         if (!userId) return;
 
         const hasToken = await getTargetUserNotificationToken(userId);
+        await navigator.serviceWorker.register('/firebase-messaging-sw.js', {
+          scope: '/firebase-cloud-messaging-push-scope',
+        });
+
         if (!hasToken) {
           const confTitle = '푸시 알림 동의';
           const confDesc = '오프라인 푸시 알림 미동의시 서비스 이용이 어렵습니다.';
           const confFunc = async () => {
+            if (!('Notification' in window)) return;
+
             const res = await Notification.requestPermission();
 
             if (res === 'granted') await getNotificationToken(userId);
