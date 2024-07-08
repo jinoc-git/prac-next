@@ -2,9 +2,9 @@ import { createClientFromClient } from '@/utils/supabase/client';
 
 import { getTargetUserNotificationToken, reqSendPush } from './notification';
 
-import type { NotificationData } from './sendFCM';
 import type { AlarmCallbackFunc } from '@/types/aboutAlarm.type';
 import type { InsertInviteAlarmType } from '@/types/supabase';
+import type { Message } from 'firebase-admin/messaging';
 
 export const addInviteAlarmList = async (datas: InsertInviteAlarmType[]) => {
   const supabaseClientClient = createClientFromClient();
@@ -18,7 +18,7 @@ export const addInviteAlarmList = async (datas: InsertInviteAlarmType[]) => {
     const targetNotificationToken = await getTargetUserNotificationToken(data.invite_to);
 
     if (targetNotificationToken) {
-      const message: NotificationData = {
+      const message: Message = {
         data: {
           title: '여행 초대 알림',
           body: `${data.from_nickname}님이 ${data.plan_title}에 초대했습니다.`,
@@ -26,7 +26,7 @@ export const addInviteAlarmList = async (datas: InsertInviteAlarmType[]) => {
         },
         token: targetNotificationToken,
       };
-
+      console.log('target', message);
       await reqSendPush(message);
     }
   }

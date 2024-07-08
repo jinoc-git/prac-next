@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { createClientFromClient } from '@/utils/supabase/client';
 
-import type { NotificationData } from './sendFCM';
+import type { Message } from 'firebase-admin/messaging';
 
 const supabaseClientClient = createClientFromClient();
 
@@ -28,7 +28,7 @@ export const getTargetUserNotificationToken = async (userId: string) => {
   else return false;
 };
 
-export const reqSendPush = async (args: NotificationData) => {
+export const reqSendPush = async (args: Message) => {
   console.log('req send push', args);
   await axios.post(window?.location?.origin + '/api/push', args);
 };
