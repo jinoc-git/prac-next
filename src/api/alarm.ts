@@ -15,16 +15,17 @@ export const addInviteAlarmList = async (datas: InsertInviteAlarmType[]) => {
     const hasAlarm = await getUserUnConfirmedAlarm(data);
     if (!hasAlarm) checkedData.push(data);
 
-    const targetNotificationToken = await getTargetUserNotificationToken(data.invite_to);
+    const targeTokenData = await getTargetUserNotificationToken(data.invite_to);
 
-    if (targetNotificationToken) {
+    if (targeTokenData) {
+      const { token, update_at } = targeTokenData;
       const message: Message = {
         data: {
           title: '여행 초대 알림',
           body: `${data.from_nickname}님이 ${data.plan_title}에 초대했습니다.`,
           click_action: `${window?.location?.origin}/plan/${data.invite_planId}`,
         },
-        token: targetNotificationToken,
+        token,
       };
       console.log('target', message);
       await reqSendPush(message);
