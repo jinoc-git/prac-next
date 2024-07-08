@@ -27,7 +27,7 @@ firebase.initializeApp({
 
 self.addEventListener('push', (event) => {
   if (event.data) {
-    const data = event.data.json().notification;
+    const data = event.data.json().data;
     console.log('in sw data', data);
     const options = {
       body: data.body,
