@@ -119,7 +119,7 @@ export default function SignupForm() {
       "
       onSubmit={handleSubmit(onSubmit)}
     >
-      <h3 className="text-blue border-blue border-b-2 w-[64px] text-lg font-semibold">회원가입</h3>
+      <h3 className="text-blue border-blue border-b-2 w-fit text-lg font-semibold">회원가입</h3>
       <DuplicateInput<SignupFormInputList>
         name="nickname"
         placeholder="닉네임을 입력해주세요."
@@ -165,7 +165,7 @@ export default function SignupForm() {
       <GoogleLoginButton />
       <KakaoLoginButton />
       <p
-        className="absolute left-1/2 -translate-x-1/2 w-[235px] text-sm p-2 rounded-lg font-semibold text-gray_dark_1 
+        className="absolute left-1/2 -translate-x-1/2 w-fit text-sm p-2 rounded-lg font-semibold text-gray_dark_1 
           md:bottom-[-50px] md:bg-white/20
           sm:bottom-[-50px] sm:bg-white/50
         "

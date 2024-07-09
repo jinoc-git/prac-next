@@ -10,29 +10,14 @@ firebase.initializeApp({
   appId: '1:136663781474:web:a2288251716d0d81ca413b',
 });
 
-// const messaging = firebase.messaging();
-
-// messaging.onBackgroundMessage(({ data }) => {
-//   console.log('in sw data', data);
-
-//   self.registration.showNotification(data.title, {
-//     body: data.body,
-//     icon: '/images/android/android-launchericon-192-192.png',
-//     image: '/images/android/android-launchericon-192-192.png',
-//     data: {
-//       click_action: data.click_action,
-//     },
-//   });
-// });
-
 self.addEventListener('push', (event) => {
   if (event.data) {
     const data = event.data.json().data;
-    console.log('in sw data', data);
+
     const options = {
       body: data.body,
-      icon: '/images/android/android-launchericon-192-192.png',
-      image: '/images/android/android-launchericon-192-192.png',
+      icon: '/images/android/android-launchericon-48-48.png',
+      image: '/images/android/android-launchericon-48-48.png',
       data: {
         click_action: data.click_action,
       },

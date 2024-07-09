@@ -416,3 +416,4 @@ export type InsertCommentsType = Database['public']['Tables']['comments']['Inser
 export type EndingPlanType = Database['public']['Tables']['plans_ending']['Row'];
 export type InviteAlarmType = Database['public']['Tables']['invite_alarm']['Row'];
 export type InsertInviteAlarmType = Database['public']['Tables']['invite_alarm']['Insert'];
+export type UserTokenData = Database['public']['Tables']['users']['Row']['push_notification'];

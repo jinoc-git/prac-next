@@ -59,7 +59,7 @@ export default function SigninForm() {
         "
       onSubmit={handleSubmit(onSubmit)}
     >
-      <h3 className="border-b-2 w-[48px] text-lg font-semibold	text-blue border-blue">로그인</h3>
+      <h3 className="border-b-2 w-fit text-lg font-semibold	text-blue border-blue">로그인</h3>
       <IconInput
         name="email"
         placeholder="이메일을 입력해주세요."
@@ -92,7 +92,7 @@ export default function SigninForm() {
       <GoogleLoginButton />
       <KakaoLoginButton />
       <p
-        className="absolute left-1/2 -translate-x-1/2 w-[190px] text-sm p-2 rounded-lg font-semibold text-gray_dark_1
+        className="absolute left-1/2 -translate-x-1/2 w-fit text-sm p-2 rounded-lg font-semibold text-gray_dark_1
           md:bottom-[-50px] md:bg-white/20
           sm:bottom-[-60px] sm:bg-white/50
         "

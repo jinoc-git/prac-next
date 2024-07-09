@@ -1,7 +1,10 @@
 import axios from 'axios';
 
+import { getNotificationToken } from '@/firebase/firebase';
+import { is30DaysPast } from '@/utils/aboutDay';
 import { createClientFromClient } from '@/utils/supabase/client';
 
+import type { UserTokenData } from '@/types/supabase';
 import type { Message } from 'firebase-admin/messaging';
 
 const supabaseClientClient = createClientFromClient();
@@ -28,6 +31,14 @@ export const getTargetUserNotificationToken = async (userId: string) => {
 };
 
 export const reqSendPush = async (args: Message) => {
-  console.log('req send push', args);
   await axios.post(window?.location?.origin + '/api/push', args);
+};
+
+export const checkTokenTime = async (userId: string, tokenData: UserTokenData) => {
+  if (!tokenData) return;
+
+  const { update_at } = tokenData;
+
+  const needNew = is30DaysPast(update_at);
+  if (needNew) await getNotificationToken(userId);
 };
