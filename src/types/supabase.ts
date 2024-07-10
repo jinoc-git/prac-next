@@ -208,7 +208,7 @@ export interface Database {
           nickname: string;
           push_notification: {
             token: string;
-            update_at: Date;
+            update_at: string;
           } | null;
         };
         Insert: {
@@ -219,7 +219,7 @@ export interface Database {
           nickname: string;
           push_notification?: {
             token: string;
-            update_at: Date;
+            update_at: string;
           } | null;
         };
         Update: {
@@ -417,3 +417,5 @@ export type EndingPlanType = Database['public']['Tables']['plans_ending']['Row']
 export type InviteAlarmType = Database['public']['Tables']['invite_alarm']['Row'];
 export type InsertInviteAlarmType = Database['public']['Tables']['invite_alarm']['Insert'];
 export type UserTokenData = Database['public']['Tables']['users']['Row']['push_notification'];
+export type UpdateUserTokenData =
+  Database['public']['Tables']['users']['Update']['push_notification'];
