@@ -22,10 +22,14 @@ export const getNotificationToken = async (userId: string) => {
   try {
     const token = await getToken(messaging, { vapidKey: VAPID_KEY });
 
-    if (token) await savaNotificationToken(userId, token);
+    const tokenData = { token, update_at: new Date() };
+    await savaNotificationToken(userId, tokenData);
+
+    return tokenData;
   } catch (error) {
     if (error instanceof Error) {
       if (error.message !== '푸시 알림 토큰 저장 오류') throw new Error('토큰 발급 오류');
     }
+    return null;
   }
 };

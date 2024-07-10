@@ -18,7 +18,8 @@ export const addInviteAlarmList = async (datas: InsertInviteAlarmType[]) => {
     const targeTokenData = await getTargetUserNotificationToken(data.invite_to);
 
     if (targeTokenData) {
-      const { token, update_at } = targeTokenData;
+      const { token } = targeTokenData;
+
       const message: Message = {
         data: {
           title: '여행 초대 알림',
@@ -27,7 +28,7 @@ export const addInviteAlarmList = async (datas: InsertInviteAlarmType[]) => {
         },
         token,
       };
-      console.log('target', message);
+
       await reqSendPush(message);
     }
   }
