@@ -17,7 +17,6 @@ export const POST = async (req: NextRequest) => {
     if (!admin.apps.length) {
       admin.initializeApp({ credential: admin.credential.cert(serviceAccount) });
     }
-    console.log('receive send push func', message);
 
     await admin.messaging().send(message);
 

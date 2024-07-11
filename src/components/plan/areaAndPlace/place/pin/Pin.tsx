@@ -74,10 +74,6 @@ const Pin = (props: Props) => {
     }),
     end: (item, moniter) => {
       const didDrop = moniter.didDrop();
-
-      if (didDrop) {
-        // changeOrderAtDidDrop();
-      }
     },
   });
 

@@ -66,7 +66,6 @@ const PinContents = (props: Props) => {
             onBlur={() => {
               setDropDownIsOpen(false);
             }}
-            // onMouseOut={handleMouseOut}
             className="md:p-3 sm:p-1"
           >
             <Image
