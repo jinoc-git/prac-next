@@ -41,34 +41,30 @@ export default function PlanCard(props: Props) {
   return (
     <div
       className="flex bg-white shadow-card rounded-[7px] cursor-pointer
-        sm:w-[318px] sm:h-[80px] sm:mx-[1px]
+        sm:w-[300px] sm:h-[80px] sm:mx-[1px]
         md:w-[800px] md:h-[150px] "
       onClick={() => {
         onClickPlanCard(plan.plan_state, plan.id);
       }}
     >
-      <div
-        className="sm:w-[45px] sm:mt-[23px] 
-              md:w-[80px] md:h-[16px] md:mt-[25px] md:ml-[28px]"
-      >
+      <div className="flexcol items-center gap-1 pt-[17px] sm:px-[5px] md:w-[80px]">
         <BookMark bookMarkData={bookMarkData} handleBookMark={handleBookMark} planId={plan.id} />
-        <div className="mt-[0px] h-[12px]">
-          {plan.plan_state === 'end' ? null : (
-            <p
-              className="text-yellow text-center font-bold
+
+        {plan.plan_state === 'end' ? null : (
+          <p
+            className="text-yellow text-center font-bold
                 sm:text-[10px] 
-                md:text-[18px] md:mt-[11px]"
-            >
-              {calcDday(new Date(plan.dates[0]))}
-            </p>
-          )}
-        </div>
+                md:text-[18px]"
+          >
+            {calcDday(new Date(plan.dates[0]))}
+          </p>
+        )}
       </div>
       <div
-        className="sm:w-[238px] sm:h-2/3 sm:ml-[5px]
-          md:w-4/5 md:h-[16px] md:items-center "
+        className="flexcol justify-center sm:w-full sm:px-[5px]
+          md:w-4/5 md:px-[20px] "
       >
-        <div className="flex items-center sm:mt-[20px] md:mt-[22px]">
+        <div className="flex items-center">
           <p className="text-gray_dark_1 sm:text-sm md:text-xlg font-bold mr-[16px]">
             {plan.title}
           </p>
@@ -78,9 +74,9 @@ export default function PlanCard(props: Props) {
         <PlanCardUserList avatarList={avatarList} nicknameList={nicknameList} />
       </div>
       <div
-        className="flex justify-center h-[16px]
-          sm:w-[15px] sm:ml-[10px] sm:mr-[10px] sm:mt-[20px] 
-          md:w-[80px] md:mr-[25px] md:mt-[22px]"
+        className="flex justify-center
+          sm:w-[40px] sm:pt-[20px] 
+          md:w-[80px] md:pr-[25px] md:pt-[22px]"
       >
         <PlanCardQuitButton planId={plan.id} onClickQuitBtn={onClickQuitBtn} />
       </div>

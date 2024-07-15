@@ -10,7 +10,7 @@ export default function PlanCardQuitButton(props: Props) {
 
   return (
     <button
-      className="group sm:mt-[2px] md:mt-[4px] sm:w-[16px] sm:h-[16px] md:w-[24px] md:h-[24px]"
+      className="flex-box group sm:mt-[2px] md:mt-[4px] sm:w-[24px] sm:h-[24px] md:w-[48px] md:h-[48px]"
       aria-label="card-quit-plan-btn"
       onClick={(e) => {
         e.stopPropagation();

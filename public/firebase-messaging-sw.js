@@ -16,8 +16,8 @@ self.addEventListener('push', (event) => {
 
     const options = {
       body: data.body,
-      icon: '/images/android/android-launchericon-48-48.png',
-      image: '/images/android/android-launchericon-48-48.png',
+      icon: '/images/android/android-launchericon-144-144.png',
+      image: '/images/android/android-launchericon-144-144.png',
       data: {
         click_action: data.click_action,
       },

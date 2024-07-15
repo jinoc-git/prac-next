@@ -21,9 +21,9 @@ const BookMark = ({ bookMarkData, planId, handleBookMark }: Props) => {
     <button
       onClick={(e) => handleBookMark(e, bookMarkData, planId)}
       aria-label="bookmark-toggle-btn"
-      className="flex justify-center 
-        sm:w-[21px] sm:h-[21px] sm:ml-[11px] 
-        md:w-[30px] md:h-[30px] md:ml-[20px]"
+      className="flex-box 
+        sm:w-[24px] sm:h-[24px] 
+        md:w-[48px] md:h-[48px]"
     >
       <Image
         src={bookMarkData ? '/images/svgs/star-fill.svg' : '/images/svgs/star-gray.svg'}
