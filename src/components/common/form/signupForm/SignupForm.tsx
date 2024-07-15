@@ -164,17 +164,17 @@ export default function SignupForm() {
       </div>
       <GoogleLoginButton />
       <KakaoLoginButton />
-      <p
-        className="absolute left-1/2 -translate-x-1/2 w-fit text-sm p-2 rounded-lg font-semibold text-gray_dark_1 
+      <div
+        className="flex justify-center gap-1 absolute left-1/2 -translate-x-1/2 min-w-[240px] p-2 rounded-lg text-sm font-semibold
           md:bottom-[-50px] md:bg-white/20
-          sm:bottom-[-50px] sm:bg-white/50
+          sm:bottom-[-60px] sm:bg-white/50
         "
       >
-        이미 계정이 있나요?
-        <span onClick={goToSignIn} className="ml-2 underline text-black cursor-pointer">
+        <p className=" text-gray_dark_1">이미 계정이 있나요?</p>
+        <p onClick={goToSignIn} className="w-fit underline text-black cursor-pointer">
           지금 로그인하세요!
-        </span>
-      </p>
+        </p>
+      </div>
     </form>
   );
 }
