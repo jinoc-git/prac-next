@@ -15,7 +15,7 @@ export default function Profile() {
 
   const user = useAuthStoreState();
 
-  const avatarURL = user?.avatar_url ? user.avatar_url : '/images/svgs/userDefault.svg';
+  const avatarURL = user?.avatar_url || '/images/svgs/userDefault.svg';
 
   return (
     <section className="pt-[108px]">
