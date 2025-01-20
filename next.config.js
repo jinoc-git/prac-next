@@ -10,7 +10,24 @@ const withPWA = require('@ducanh2912/next-pwa').default({
 const nextConfig = {
   reactStrictMode: false,
   images: {
-    domains: ['rkdykaeilrlrtrowawoe.supabase.co', 'k.kakaocdn.net'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'rkdykaeilrlrtrowawoe.supabase.co',
+      },
+      {
+        protocol: 'http',
+        hostname: 'k.kakaocdn.net',
+      },
+      {
+        protocol: 'http',
+        hostname: 't1.kakaocdn.net',
+      },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+      },
+    ],
   },
   experimental: {
     serverActions: true,
