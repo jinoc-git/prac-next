@@ -14,7 +14,6 @@ export default function Profile() {
     useModal();
 
   const user = useAuthStoreState();
-
   const avatarURL = user?.avatar_url || '/images/svgs/userDefault.svg';
 
   return (
@@ -33,11 +32,9 @@ export default function Profile() {
           <Image
             alt="user-profile-img"
             src={avatarURL}
-            width={85}
-            height={85}
-            className="rounded-full border-[2.5px] border-blue_light_1 object-cover cursor-pointer
-              sm:w-[66px] sm:h-[66px]
-              md:w-[85px] md:h-[85px]"
+            width={200}
+            height={200}
+            className="w-full h-full rounded-full border-[2.5px] border-blue_light_1 object-cover cursor-pointer"
             priority
           />
 

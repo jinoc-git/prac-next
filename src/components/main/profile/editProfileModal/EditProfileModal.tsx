@@ -34,7 +34,7 @@ const EditProfileModal = ({ isAnimate, handleCloseModal, modalBGRef, onClickModa
   const { setUser } = useAuthStoreActions();
   const { userInfoMutate } = useUserInfoMutation(user?.id);
 
-  const [preview, setPreview] = React.useState(user?.avatar_url ? user.avatar_url : '');
+  const [preview, setPreview] = React.useState(user?.avatar_url || '');
   const [isRemoveAvartar, setIsRemoveAvartar] = React.useState(false);
   const [isDuplicateNickname, setIsDuplicateNickname] = React.useState(true);
 
@@ -162,10 +162,10 @@ const EditProfileModal = ({ isAnimate, handleCloseModal, modalBGRef, onClickModa
         </button>
         <div className="md:flex items-center gap-3 w-full">
           <Image
-            src={user?.avatar_url ? user.avatar_url : '/images/svgs/userDefault.svg'}
+            src={user?.avatar_url || '/images/svgs/userDefault.svg'}
             alt="프로필 아이콘"
-            width={30}
-            height={30}
+            width={200}
+            height={200}
             className="w-[30px] h-[30px] md:block sm:hidden rounded-full border border-gray"
           />
           <p className="font-semibold md:text-xlg sm:text-lg text-gray_dark_2">프로필 편집</p>
@@ -174,7 +174,7 @@ const EditProfileModal = ({ isAnimate, handleCloseModal, modalBGRef, onClickModa
         <div className="relative hover:brightness-75 sm:w-[150px] sm:h-[150px] md:w-[200px] md:h-[200px] normal-transition">
           <label htmlFor="avatar">
             <Image
-              src={preview ? preview : '/images/svgs/userDefault.svg'}
+              src={preview || '/images/svgs/userDefault.svg'}
               alt="유저 프로필 사진"
               width={200}
               height={200}
