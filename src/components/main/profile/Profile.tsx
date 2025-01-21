@@ -34,6 +34,7 @@ export default function Profile() {
             src={avatarURL}
             width={200}
             height={200}
+            unoptimized
             className="w-full h-full rounded-full border-[2.5px] border-blue_light_1 object-cover cursor-pointer"
             priority
           />
