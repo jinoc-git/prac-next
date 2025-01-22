@@ -54,10 +54,11 @@ export default function Invite() {
                     alt={`profile-img ${idx}`}
                     key={`invite,${idx},${user.id}`}
                     src={user.avatar_url ?? '/images/svgs/userDefault.svg'}
-                    width={24}
-                    height={24}
+                    width={200}
+                    height={200}
+                    unoptimized
                     className="object-cover rounded-full border-[#DCDCDC] border-[1px]
-                    sm:w-[16px] sm:h-[16px]
+                    sm:w-4 sm:h-4
                     md:w-6 md:h-6"
                   />
                 );
