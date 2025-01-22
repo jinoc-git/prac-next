@@ -29,6 +29,7 @@ export default function PlanCardUserList(props: Props) {
               alt="유저아바타"
               width={20}
               height={20}
+              unoptimized
               className={`w-[20px] h-[20px] rounded-full ${gap} border border-[#979797] object-cover `}
             />
           ) : (
